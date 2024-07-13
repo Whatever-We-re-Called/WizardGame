@@ -10,6 +10,16 @@ func _ready():
 	OS.set_environment("SteamGameId", str(app_id))
 	Steam.steamInitEx()
 	
+	Steam.join_game_requested.connect(_handle_join_game)
+	
 	
 func _process(_delta):
 	Steam.run_callbacks()
+	
+	
+func _handle_join_game(id, connect):
+	if connect:
+		SessionManager.set_strategy(SteamBasedStrategy.new(id))
+		SessionManager.connect_to_server()
+	
+	
