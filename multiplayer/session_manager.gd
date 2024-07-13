@@ -1,0 +1,39 @@
+extends Node
+
+## Group of Signals that help standardize and clarify the mechanics of the default
+## Godot multiplayer signals.
+# Called on both client and server, but primarily clients to notify of a connections
+signal clientbound_client_connected_to_server(id)
+# Called on both client and server, notifying of a disconnect
+signal clientbound_client_disconnected(id)
+# Called only on server. Will be used to track player information on the server side
+signal serverbound_client_connected_to_server
+# Called only on the client when they fail to connect. *This is not a packet based signal.*
+signal client_connection_failed
+
+
+var connection_strategy: MultiplayerConnectionStrategy
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	multiplayer.peer_connected.connect(func f(id): clientbound_client_connected_to_server.emit(id))
+	multiplayer.peer_disconnected.connect(func f(id): clientbound_client_disconnected.emit(id))
+	multiplayer.connected_to_server.connect(func f(): serverbound_client_connected_to_server.emit())
+	multiplayer.connection_failed.connect(func f(): client_connection_failed.emit())
+
+
+func set_strategy(connection_strategy: MultiplayerConnectionStrategy):
+	self.connection_strategy = connection_strategy
+	
+	
+func create_server():
+	connection_strategy.create_server()
+	
+	
+func disconnect_client():
+	connection_strategy.discconect_from_client()
+	
+	
+func connect_to_server():
+	connection_strategy.create_connection()
