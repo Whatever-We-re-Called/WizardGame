@@ -9,37 +9,69 @@ var peer: SteamMultiplayerPeer
 
 func _init(lobby_id = -1):
 	self.lobby_id = lobby_id
-
+	SessionManager.clientbound_client_disconnected.connect(_disconnect)
+	
 
 func create_connection():
 	if lobby_id == -1:
 		print("Invalid Lobby ID")
 		return
+		
+	Steam.lobby_joined.connect(_lobby_joined)
+	Steam.joinLobby(lobby_id)
+	
+	
+func _lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int):
+	if response != 1:
+		print("There was an error while joining that lobby:")
+		var fail_reason: String
+		match response:
+			2:  fail_reason = "That lobby no longer exists."
+			3:  fail_reason = "You don't have permissions to join that lobby."
+			4:  fail_reason = "That lobby is full."
+			5:  fail_reason = "There was an unexpected error while joining that lobby."
+			6:  fail_reason = "You are banned from that lobby."
+			7:  fail_reason = "You cannot join that lobby due to having a limited account."
+			8:  fail_reason = "That lobby is locked or disabled."
+			9:  fail_reason = "That lobby is community locked."
+			10: fail_reason = "A user in that lobby has blocked you from joining."
+			11: fail_reason = "A user you have blocked is in that lobby."
+		print(fail_reason)
+		return
+		
 	peer = SteamMultiplayerPeer.new()
-	var error = peer.connect_lobby(lobby_id)
+	var error = peer.create_client(Steam.getLobbyOwner(lobby_id), 0, [])
 	if error != OK:
 		print("There was an error while connecting to a Steam lobby:")
 		print(error)
 		return
 	
 	multiplayer.set_multiplayer_peer(peer)
-	
-
-func disconnect_from_server():
-	if peer != null:
-		# Closes peer connection with server, will throw disconnect on other clients
-		peer.disconnect_peer(1, true)
+	print("Connected")
 	
 	
 func create_server():
-	peer = SteamMultiplayerPeer.new()
-	var error = peer.create_lobby(SteamMultiplayerPeer.LOBBY_TYPE_FRIENDS_ONLY)
-	if error != OK:
-		print("There was an error while creating a Staem lobby:")
-		print(error)
-		return
+	Steam.lobby_created.connect(_lobby_created)
+	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, 32)
 	
-	peer.set_lobby_data("name", Steam.getPersonaName() + "'s Lobby")
-	peer.set_lobby_joinable(true)
 	
-	multiplayer.set_multiplayer_peer(peer)
+func _lobby_created(connect, lobby_id):
+	if connect == 1:
+		self.lobby_id = lobby_id
+		
+		Steam.setLobbyData(lobby_id, "name", Steam.getPersonaName() + "'s Lobby")
+		Steam.setLobbyJoinable(lobby_id, true)
+		
+		peer = SteamMultiplayerPeer.new()
+		var error = peer.create_host(0, [])
+		if error != OK:
+			print("There was an error while creating a Steam Lobby:")
+			print(error)
+			return
+		
+		multiplayer.set_multiplayer_peer(peer)
+		print("Steam Lobby started: ", Steam.getLobbyData(lobby_id, "name"), " ({0})".format([lobby_id]))
+
+
+func _disconnect(id):
+	Steam.leaveLobby(lobby_id)

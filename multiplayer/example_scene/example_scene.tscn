@@ -1,0 +1,105 @@
+[gd_scene load_steps=5 format=3 uid="uid://tiksfbloc3eh"]
+
+[ext_resource type="Script" path="res://multiplayer/example_scene/example_scene.gd" id="1_cbbie"]
+[ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/resources/selected_button_theme.tres" id="2_0v1n8"]
+[ext_resource type="Script" path="res://multiplayer/example_scene/ip.gd" id="3_0yk8y"]
+[ext_resource type="Script" path="res://multiplayer/example_scene/steam.gd" id="4_o3pvj"]
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_cbbie")
+
+[node name="IP" type="Button" parent="."]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 50.0
+offset_right = 319.0
+offset_bottom = 97.0
+focus_mode = 0
+theme = ExtResource("2_0v1n8")
+theme_override_colors/icon_normal_color = Color(0, 1, 0, 1)
+theme_override_colors/icon_disabled_color = Color(0, 1, 0, 1)
+text = "IP"
+script = ExtResource("3_0yk8y")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="IP"]
+layout_mode = 0
+offset_left = 293.0
+offset_top = 164.0
+offset_right = 367.0
+offset_bottom = 188.0
+text = "Address"
+
+[node name="Address" type="TextEdit" parent="IP"]
+layout_mode = 0
+offset_left = 291.0
+offset_top = 194.0
+offset_right = 687.0
+offset_bottom = 231.0
+placeholder_text = "127.0.0.1"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="IP"]
+layout_mode = 0
+offset_left = 293.0
+offset_top = 260.0
+offset_right = 367.0
+offset_bottom = 284.0
+text = "Port
+"
+
+[node name="Port" type="TextEdit" parent="IP"]
+layout_mode = 0
+offset_left = 291.0
+offset_top = 289.0
+offset_right = 687.0
+offset_bottom = 326.0
+placeholder_text = "9001"
+
+[node name="Host" type="Button" parent="IP"]
+layout_mode = 0
+offset_left = 291.0
+offset_top = 373.0
+offset_right = 685.0
+offset_bottom = 413.0
+text = "HOST"
+
+[node name="Join" type="Button" parent="IP"]
+layout_mode = 0
+offset_left = 293.0
+offset_top = 443.0
+offset_right = 687.0
+offset_bottom = 483.0
+text = "JOIN"
+
+[node name="Steam" type="Button" parent="."]
+layout_mode = 0
+offset_left = 438.0
+offset_top = 49.0
+offset_right = 683.0
+offset_bottom = 96.0
+focus_mode = 0
+text = "Steam"
+script = ExtResource("4_o3pvj")
+
+[node name="Host" type="Button" parent="Steam"]
+layout_mode = 0
+offset_left = -71.0
+offset_top = 260.0
+offset_right = 323.0
+offset_bottom = 300.0
+theme = ExtResource("2_0v1n8")
+text = "HOST"
+
+[node name="Local" type="Button" parent="."]
+layout_mode = 0
+offset_left = 788.0
+offset_top = 49.0
+offset_right = 1033.0
+offset_bottom = 96.0
+focus_mode = 0
+text = "Local"
+
+[connection signal="pressed" from="IP/Host" to="IP" method="_on_host_pressed"]
+[connection signal="pressed" from="IP/Join" to="IP" method="_on_join_pressed"]
+[connection signal="pressed" from="Steam/Host" to="Steam" method="_on_host_pressed"]

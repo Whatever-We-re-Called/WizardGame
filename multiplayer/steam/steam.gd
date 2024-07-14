@@ -10,7 +10,8 @@ func _ready():
 	OS.set_environment("SteamGameId", str(app_id))
 	Steam.steamInitEx()
 	
-	Steam.join_game_requested.connect(_handle_join_game)
+	# This is what's called when a user accepts an invite or clicks join game
+	Steam.join_requested.connect(_handle_join_game)
 	
 	
 func _process(_delta):
@@ -18,6 +19,7 @@ func _process(_delta):
 	
 	
 func _handle_join_game(id, connect):
+	print("Connect: ", id)
 	if connect:
 		SessionManager.set_strategy(SteamBasedStrategy.new(id))
 		SessionManager.connect_to_server()

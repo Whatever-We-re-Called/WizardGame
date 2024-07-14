@@ -1,6 +1,7 @@
 extends MultiplayerConnectionStrategy
 class_name IPBasedConnection
 
+static var DEFAULT_PORT = 9002
 
 var address
 var port
@@ -8,7 +9,7 @@ var port
 var peer: ENetMultiplayerPeer
 
 
-func _init(address = "127.0.0.1", port = 9001):
+func _init(address = "127.0.0.1", port = DEFAULT_PORT):
 	self.address = address
 	self.port = port
 
@@ -23,11 +24,6 @@ func create_connection():
 		
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
-
-func disconnect_from_server():
-	if peer != null:
-		# Closes peer connection with server, will throw disconnect on other clients
-		peer.disconnect_peer(1, true)
 	
 	
 func create_server():
