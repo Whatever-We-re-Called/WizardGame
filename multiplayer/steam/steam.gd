@@ -19,7 +19,6 @@ func _process(_delta):
 	
 	
 func _handle_join_game(id, connect):
-	print("Connect: ", id)
 	if connect:
 		SessionManager.set_strategy(SteamBasedStrategy.new(id))
 		SessionManager.connect_to_server()

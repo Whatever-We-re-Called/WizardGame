@@ -1,7 +1,7 @@
 extends Control
 
 @onready var buttons = [ $IP, $Steam, $Local ]
-var selected_button = load("res://multiplayer/scene/selected_button_theme.tres")
+var selected_button = load("res://multiplayer/example_scene/resources/selected_button_theme.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -9,6 +9,7 @@ func _ready():
 		button.pressed.connect(_update_button.bind(button))
 	_update_button(null)
 	SessionManager.clientbound_client_connected_to_server.connect(on_connect)
+	SessionManager.client_connection_failed.connect(on_fail)
 	
 	
 func _update_button(selected):
@@ -26,3 +27,6 @@ func _update_button(selected):
 
 func on_connect(id):
 	print("Client connected: ", id)
+	
+func on_fail():
+	print("Connection failed")

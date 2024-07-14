@@ -9,7 +9,6 @@ var peer: SteamMultiplayerPeer
 
 func _init(lobby_id = -1):
 	self.lobby_id = lobby_id
-	SessionManager.clientbound_client_disconnected.connect(_disconnect)
 	
 
 func create_connection():
@@ -47,7 +46,6 @@ func _lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int)
 		return
 	
 	multiplayer.set_multiplayer_peer(peer)
-	print("Connected")
 	
 	
 func create_server():
@@ -71,7 +69,3 @@ func _lobby_created(connect, lobby_id):
 		
 		multiplayer.set_multiplayer_peer(peer)
 		print("Steam Lobby started: ", Steam.getLobbyData(lobby_id, "name"), " ({0})".format([lobby_id]))
-
-
-func _disconnect(id):
-	Steam.leaveLobby(lobby_id)

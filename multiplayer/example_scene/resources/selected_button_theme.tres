@@ -2,12 +2,24 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpcn4"]
 bg_color = Color(0.152941, 0.568627, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxft1"]
 bg_color = Color(0, 0.729412, 0.00392157, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wj5t"]
 bg_color = Color(0.152941, 0.568627, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [resource]
 Button/styles/hover = SubResource("StyleBoxFlat_jpcn4")
