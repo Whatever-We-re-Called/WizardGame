@@ -15,6 +15,10 @@ jobs:
       # your project is available for Godot to export
     - name: checkout
       uses: actions/checkout@v3.3.0
+    - name: Set outputs
+      id: vars1
+      run: 
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
   
     - name: export game
       id: export
@@ -22,8 +26,8 @@ jobs:
       uses: firebelley/godot-export@v5.2.0
       with:
         # Defining all the required inputs
-        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_linux.x86_64.zip
-        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/Godot_v4.0-stable_export_templates.tpz
+        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.2/Godot_v4.2-stable_linux.x86_64.zip
+        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.2/Godot_v4.2-stable_export_templates.tpz
         relative_project_path: ./
         archive_output: true
 
@@ -34,5 +38,5 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: true
-        tag: ${{ github.ref_name }}
+        tag: ${{ github.ref_name }}_${{ steps.vars1.outputs.sha_short }}
         artifacts: ${{ steps.export.outputs.archive_directory }}/*
