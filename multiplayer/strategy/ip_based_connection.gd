@@ -12,6 +12,8 @@ var peer: ENetMultiplayerPeer
 func _init(address = "127.0.0.1", port = DEFAULT_PORT):
 	self.address = address
 	self.port = port
+	
+	SessionManager.client_connected_to_server.connect(_on_connect)
 
 
 func create_connection():
@@ -19,11 +21,20 @@ func create_connection():
 	var error = peer.create_client(address, port)
 	if error != OK:
 		print("There was an error while attempting to connect to ", address, ":", port)
-		print(error)
+		var message
+		match error:
+			20: message = "The port is already in use by another application."
+			22: message = "You are already connected to or hosting a different server."
+			_ : message = "An unknown error occurred."
+		print(message)
 		return
 		
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
+	
+	
+func _on_connect():
+	SessionManager.add_player({ "name": null, "peer_id": peer.get_unique_id()})
 	
 	
 func create_server():
@@ -31,9 +42,17 @@ func create_server():
 	var error = peer.create_server(self.port, 32)
 	if error != OK:
 		print("There was an error while attempting to create a server on port ", port)
-		print(error)
+		var message
+		match error:
+			20: message = "The port is already in use by another application."
+			22: message = "You are already connected to or hosting a different server."
+			_ : message = "An unknown error occurred."
+		print(message)
 		return
 		
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
-	print("Server online!")
+	SessionManager.connected = true
+	SessionManager.add_player({ "name": null, "peer_id": 1})
+	if SessionManager.debug:
+		print("Server online!")

@@ -42,10 +42,16 @@ func _lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int)
 	var error = peer.create_client(Steam.getLobbyOwner(lobby_id), 0, [])
 	if error != OK:
 		print("There was an error while connecting to a Steam lobby:")
-		print(error)
+		var message
+		match error:
+			20: message = "The port is already in use by another application."
+			22: message = "You are already connected to or hosting a different server."
+			_ : message = "An unknown error occurred."
+		print(message)
 		return
 	
 	multiplayer.set_multiplayer_peer(peer)
+	SessionManager.add_player({"steam_id": Steam.getSteamID(), "peer_id": peer.get_unique_id()})
 	
 	
 func create_server():
@@ -64,8 +70,16 @@ func _lobby_created(connect, lobby_id):
 		var error = peer.create_host(0, [])
 		if error != OK:
 			print("There was an error while creating a Steam Lobby:")
-			print(error)
+			var message
+			match error:
+				20: message = "The port is already in use by another application."
+				22: message = "You are already connected to or hosting a different server."
+				_ : message = "An unknown error occurred."
+			print(message)
 			return
 		
 		multiplayer.set_multiplayer_peer(peer)
-		print("Steam Lobby started: ", Steam.getLobbyData(lobby_id, "name"), " ({0})".format([lobby_id]))
+		SessionManager.connected = true
+		SessionManager.add_player({"steam_id": Steam.getLobbyOwner(lobby_id), "peer_id": 1})
+		if SessionManager.debug:
+			print("Steam Lobby started: ", Steam.getLobbyData(lobby_id, "name"), " ({0})".format([lobby_id]))

@@ -1,105 +1,184 @@
-[gd_scene load_steps=5 format=3 uid="uid://tiksfbloc3eh"]
+[gd_scene load_steps=8 format=3 uid="uid://tiksfbloc3eh"]
 
 [ext_resource type="Script" path="res://multiplayer/example_scene/example_scene.gd" id="1_cbbie"]
-[ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/resources/selected_button_theme.tres" id="2_0v1n8"]
-[ext_resource type="Script" path="res://multiplayer/example_scene/ip.gd" id="3_0yk8y"]
-[ext_resource type="Script" path="res://multiplayer/example_scene/steam.gd" id="4_o3pvj"]
+[ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="2_0v1n8"]
+[ext_resource type="Script" path="res://multiplayer/example_scene/ui/ui.gd" id="2_ldq3n"]
+[ext_resource type="Script" path="res://multiplayer/example_scene/ui/ip.gd" id="3_0yk8y"]
+[ext_resource type="Script" path="res://multiplayer/example_scene/ui/steam.gd" id="4_o3pvj"]
+[ext_resource type="Script" path="res://multiplayer/example_scene/ui/screen_button.gd" id="5_aokf6"]
 
-[node name="Node2D" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ad8f1"]
+size = Vector2(1180, 103)
+
+[node name="Node2D" type="Node2D"]
 script = ExtResource("1_cbbie")
 
-[node name="IP" type="Button" parent="."]
-layout_mode = 0
-offset_left = 74.0
-offset_top = 50.0
-offset_right = 319.0
-offset_bottom = 97.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_ldq3n")
+
+[node name="LocalScreen" type="CenterContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/LocalScreen"]
+custom_minimum_size = Vector2(500, 25)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Press any button to join!"
+
+[node name="IPScreen" type="CenterContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/IPScreen"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "ADDRESS"
+
+[node name="Address" type="TextEdit" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+focus_mode = 0
+placeholder_text = "127.0.0.1"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+text = "PORT"
+
+[node name="Port" type="TextEdit" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+focus_mode = 0
+placeholder_text = "9001"
+
+[node name="Spacer" type="Container" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="Host" type="Button" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_0v1n8")
+text = "HOST"
+
+[node name="Spacer2" type="Container" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="Join" type="Button" parent="CanvasLayer/IPScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_0v1n8")
+text = "JOIN"
+
+[node name="SteamScreen" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Host" type="Button" parent="CanvasLayer/SteamScreen"]
+custom_minimum_size = Vector2(300, 35)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_0v1n8")
+text = "HOST"
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 145.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+
+[node name="IP" type="Button" parent="CanvasLayer/CenterContainer/HBoxContainer" node_paths=PackedStringArray("screen")]
+clip_contents = true
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_0v1n8")
 theme_override_colors/icon_normal_color = Color(0, 1, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 1, 0, 1)
 text = "IP"
 script = ExtResource("3_0yk8y")
+screen = NodePath("../../../IPScreen")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="IP"]
-layout_mode = 0
-offset_left = 293.0
-offset_top = 164.0
-offset_right = 367.0
-offset_bottom = 188.0
-text = "Address"
-
-[node name="Address" type="TextEdit" parent="IP"]
-layout_mode = 0
-offset_left = 291.0
-offset_top = 194.0
-offset_right = 687.0
-offset_bottom = 231.0
-placeholder_text = "127.0.0.1"
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="IP"]
-layout_mode = 0
-offset_left = 293.0
-offset_top = 260.0
-offset_right = 367.0
-offset_bottom = 284.0
-text = "Port
-"
-
-[node name="Port" type="TextEdit" parent="IP"]
-layout_mode = 0
-offset_left = 291.0
-offset_top = 289.0
-offset_right = 687.0
-offset_bottom = 326.0
-placeholder_text = "9001"
-
-[node name="Host" type="Button" parent="IP"]
-layout_mode = 0
-offset_left = 291.0
-offset_top = 373.0
-offset_right = 685.0
-offset_bottom = 413.0
-text = "HOST"
-
-[node name="Join" type="Button" parent="IP"]
-layout_mode = 0
-offset_left = 293.0
-offset_top = 443.0
-offset_right = 687.0
-offset_bottom = 483.0
-text = "JOIN"
-
-[node name="Steam" type="Button" parent="."]
-layout_mode = 0
-offset_left = 438.0
-offset_top = 49.0
-offset_right = 683.0
-offset_bottom = 96.0
+[node name="Steam" type="Button" parent="CanvasLayer/CenterContainer/HBoxContainer" node_paths=PackedStringArray("screen")]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
 focus_mode = 0
-text = "Steam"
+text = "STEAM"
 script = ExtResource("4_o3pvj")
+screen = NodePath("../../../SteamScreen")
 
-[node name="Host" type="Button" parent="Steam"]
-layout_mode = 0
-offset_left = -71.0
-offset_top = 260.0
-offset_right = 323.0
-offset_bottom = 300.0
-theme = ExtResource("2_0v1n8")
-text = "HOST"
-
-[node name="Local" type="Button" parent="."]
-layout_mode = 0
-offset_left = 788.0
-offset_top = 49.0
-offset_right = 1033.0
-offset_bottom = 96.0
+[node name="Local" type="Button" parent="CanvasLayer/CenterContainer/HBoxContainer" node_paths=PackedStringArray("screen")]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
 focus_mode = 0
-text = "Local"
+text = "LOCAL"
+script = ExtResource("5_aokf6")
+screen = NodePath("../../../LocalScreen")
 
-[connection signal="pressed" from="IP/Host" to="IP" method="_on_host_pressed"]
-[connection signal="pressed" from="IP/Join" to="IP" method="_on_join_pressed"]
-[connection signal="pressed" from="Steam/Host" to="Steam" method="_on_host_pressed"]
+[node name="Users" type="Button" parent="CanvasLayer"]
+offset_left = 883.0
+offset_top = 579.0
+offset_right = 1121.0
+offset_bottom = 629.0
+focus_mode = 0
+text = "PRINT USERS"
+
+[node name="Disconnect" type="Button" parent="CanvasLayer"]
+offset_left = 21.0
+offset_top = 581.0
+offset_right = 271.0
+offset_bottom = 629.0
+focus_mode = 0
+text = "DISCONNECT"
+
+[node name="Toggle UI" type="Button" parent="CanvasLayer"]
+offset_left = 883.0
+offset_top = 515.0
+offset_right = 1121.0
+offset_bottom = 565.0
+focus_mode = 0
+text = "TOGGLE UI"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(1, 282.5)
+shape = SubResource("RectangleShape2D_ad8f1")
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://multiplayer/example_scene/player/player.tscn")
+spawn_path = NodePath("../Players")
+
+[connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/SteamScreen/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/HBoxContainer/Local" to="CanvasLayer" method="_on_local_pressed"]
+[connection signal="pressed" from="CanvasLayer/Users" to="CanvasLayer" method="_on_users_pressed"]
+[connection signal="pressed" from="CanvasLayer/Disconnect" to="CanvasLayer" method="_on_disconnect_pressed"]
+[connection signal="pressed" from="CanvasLayer/Toggle UI" to="CanvasLayer" method="_on_toggle_ui_pressed"]

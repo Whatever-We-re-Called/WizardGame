@@ -15,7 +15,8 @@ func _ready():
 	
 	
 func _process(_delta):
-	Steam.run_callbacks()
+	if Steam.isSteamRunning():
+		Steam.run_callbacks()
 	
 	
 func _handle_join_game(id, connect):

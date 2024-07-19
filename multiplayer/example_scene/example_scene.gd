@@ -1,32 +1,25 @@
-extends Control
+extends Node2D
 
-@onready var buttons = [ $IP, $Steam, $Local ]
-var selected_button = load("res://multiplayer/example_scene/resources/selected_button_theme.tres")
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	for button in buttons:
-		button.pressed.connect(_update_button.bind(button))
-	_update_button(null)
-	SessionManager.clientbound_client_connected_to_server.connect(on_connect)
-	SessionManager.client_connection_failed.connect(on_fail)
+	SessionManager.session_added.connect(_add_player)
+	SessionManager.serverbound_client_disconnected.connect(_remove_player)
+	SessionManager.server_closed.connect(_server_closed)
 	
-	
-func _update_button(selected):
-	if selected != null and selected.theme != null:
-		return
-	for button in buttons:
-		button.theme = null
-		for child in button.get_children():
-			child.visible = false
-	if selected:
-		selected.theme = selected_button
-		for child in selected.get_children():
-			child.visible = true
+
+func _add_player(data):
+	if multiplayer.is_server():
+		var player = preload("res://multiplayer/example_scene/player/player.tscn").instantiate()
+		player.name = str(data.peer_id)
+		$Players.add_child(player, true)
 
 
-func on_connect(id):
-	print("Client connected: ", id)
-	
-func on_fail():
-	print("Connection failed")
+func _remove_player(id):
+	for child in $Players.get_children():
+		if child.name == str(id):
+			child.queue_free()
+
+
+func _server_closed():
+	for child in $Players.get_children():
+		child.queue_free()
