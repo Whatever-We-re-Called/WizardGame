@@ -6,14 +6,13 @@
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/ip.gd" id="3_0yk8y"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/steam.gd" id="4_o3pvj"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/screen_button.gd" id="5_aokf6"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ad8f1"]
-size = Vector2(1180, 103)
+[ext_resource type="Texture2D" uid="uid://vgmyypvtv7qb" path="res://leveltests1_players.png" id="7_u4w36"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_cbbie")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("2_ldq3n")
 
 [node name="LocalScreen" type="CenterContainer" parent="CanvasLayer"]
@@ -103,7 +102,7 @@ text = "HOST"
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 145.0
+offset_bottom = 133.0
 grow_horizontal = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer"]
@@ -138,41 +137,53 @@ script = ExtResource("5_aokf6")
 screen = NodePath("../../../LocalScreen")
 
 [node name="Users" type="Button" parent="CanvasLayer"]
-offset_left = 883.0
-offset_top = 579.0
-offset_right = 1121.0
-offset_bottom = 629.0
+offset_left = 1655.0
+offset_top = 1007.0
+offset_right = 1893.0
+offset_bottom = 1057.0
 focus_mode = 0
 text = "PRINT USERS"
 
 [node name="Disconnect" type="Button" parent="CanvasLayer"]
-offset_left = 21.0
-offset_top = 581.0
-offset_right = 271.0
-offset_bottom = 629.0
+offset_left = 30.0
+offset_top = 993.0
+offset_right = 280.0
+offset_bottom = 1041.0
 focus_mode = 0
 text = "DISCONNECT"
 
 [node name="Toggle UI" type="Button" parent="CanvasLayer"]
-offset_left = 883.0
-offset_top = 515.0
-offset_right = 1121.0
-offset_bottom = 565.0
+offset_left = 1653.0
+offset_top = 942.0
+offset_right = 1891.0
+offset_bottom = 992.0
 focus_mode = 0
 text = "TOGGLE UI"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Floor" type="StaticBody2D" parent="."]
+[node name="Leveltests1Players" type="Sprite2D" parent="."]
+texture = ExtResource("7_u4w36")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(1, 282.5)
-shape = SubResource("RectangleShape2D_ad8f1")
+[node name="StaticBody2D" type="StaticBody2D" parent="Leveltests1Players"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+polygon = PackedVector2Array(-975, 429, -500, 432, -321, 346, -278, 459, -140, 399, -20, 378, 52, 378, 163, 407, 254, 465, 314, 340, 489, 432, 985, 432, 990, 588, -990, 581)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(-722, 77, -978, 84, -977, -561, -673, -559, -755, -374, -745, -377, -749, -316, -782, -307, -806, -248, -421, -240, -390, -193, -828, -189, -903, -18, -875, -22, -872, 29, -804, 64, -804, 79)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+build_mode = 1
+polygon = PackedVector2Array(711, 87, 803, 88, 801, 128, 975, 133, 970, -562, 665, -558, 753, -375, 740, -375, 741, -318, 775, -310, 804, -250, 413, -239, 390, -191, 828, -194, 902, -19, 864, -15, 864, 39, 805, 68, 779, 85)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+polygon = PackedVector2Array(-76, -195, -117, -207, -183, -140, -192, -41, -129, 12, -72, 11, -52, -2, -80, -44, -115, -26, -152, -38, -154, -116, -105, -138, -53, -123, -18, -119, 5, -134, 43, -151, 97, -136, 109, -65, 74, -39, 32, -54, 15, -13, 29, 0, 74, -3, 89, -2, 149, -51, 131, -157, 44, -222, -5, -199, -28, -208, -57, -207)
 
 [node name="Players" type="Node2D" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://multiplayer/example_scene/player/player.tscn")
 spawn_path = NodePath("../Players")
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]

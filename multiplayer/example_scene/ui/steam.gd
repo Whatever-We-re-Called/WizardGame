@@ -8,4 +8,4 @@ func _on_host_pressed():
 
 func _ready():
 	if Steam.isSteamRunning():
-		$Host.theme = load("res://multiplayer/example_scene/resources/selected_button_theme.tres")
+		screen.get_child(0).theme = load("res://multiplayer/example_scene/ui/resources/selected_button_theme.tres")

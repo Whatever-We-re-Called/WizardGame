@@ -5,6 +5,8 @@ var selected_button = load("res://multiplayer/example_scene/ui/resources/selecte
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	self.visible = true
+	
 	for button in buttons:
 		button.pressed.connect(_update_button.bind(button))
 	_update_button(null)

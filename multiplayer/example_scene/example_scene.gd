@@ -9,9 +9,11 @@ func _ready():
 
 func _add_player(data):
 	if multiplayer.is_server():
-		var player = preload("res://multiplayer/example_scene/player/player.tscn").instantiate()
+		var player = preload("res://player/player.tscn").instantiate()
 		player.name = str(data.peer_id)
 		$Players.add_child(player, true)
+		if data.has("device_ids"):
+			player.set_device(data.device_ids)
 
 
 func _remove_player(id):

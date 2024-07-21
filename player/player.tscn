@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=5 format=3 uid="uid://5kswkk5balu6"]
 
-[ext_resource type="Script" path="res://multiplayer/example_scene/player/player.gd" id="1_qk1vx"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_d0hr0"]
+[ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
 radius = 32.0
@@ -14,8 +15,9 @@ properties/1/path = NodePath("RichTextLabel:text")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_qk1vx")
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("controller")]
+script = ExtResource("1_d0hr0")
+controller = NodePath("PlayerController")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -61)
@@ -30,3 +32,20 @@ offset_top = -148.0
 offset_right = 74.0
 offset_bottom = -108.0
 bbcode_enabled = true
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("2_ist2s")
+jump_velocity = -500.0
+coyote_time = 0.15
+jump_buffer_time = 0.15
+gravity_jump_time = 0.15
+gravity_scale = 275.0
+movement_speed = 600.0
+ground_acceleration = 1600.0
+ground_friction = 4000.0
+air_acceleration = 2000.0
+air_friction = 750.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
