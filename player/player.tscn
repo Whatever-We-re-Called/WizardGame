@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=6 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_d0hr0"]
+[ext_resource type="Texture2D" uid="uid://c2sycukx1lnho" path="res://player/textures/playerGrey_stand.png" id="2_3wedb"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
-radius = 32.0
-height = 122.0
+radius = 36.0
+height = 92.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gpxhm"]
 properties/0/path = NodePath(".:position")
@@ -19,8 +20,13 @@ properties/1/replication_mode = 1
 script = ExtResource("1_d0hr0")
 controller = NodePath("PlayerController")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -45)
+scale = Vector2(2, 2)
+texture = ExtResource("2_3wedb")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -61)
+position = Vector2(0, -46)
 shape = SubResource("CapsuleShape2D_ehwds")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

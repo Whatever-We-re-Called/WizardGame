@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://tiksfbloc3eh"]
+[gd_scene load_steps=9 format=3 uid="uid://tiksfbloc3eh"]
 
 [ext_resource type="Script" path="res://multiplayer/example_scene/example_scene.gd" id="1_cbbie"]
 [ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="2_0v1n8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/steam.gd" id="4_o3pvj"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/screen_button.gd" id="5_aokf6"]
 [ext_resource type="Texture2D" uid="uid://vgmyypvtv7qb" path="res://leveltests1_players.png" id="7_u4w36"]
+[ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://environment/green_box.tscn" id="8_ydbpy"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_cbbie")
@@ -182,9 +183,22 @@ polygon = PackedVector2Array(711, 87, 803, 88, 801, 128, 975, 133, 970, -562, 66
 polygon = PackedVector2Array(-76, -195, -117, -207, -183, -140, -192, -41, -129, 12, -72, 11, -52, -2, -80, -44, -115, -26, -152, -38, -154, -116, -105, -138, -53, -123, -18, -119, 5, -134, 43, -151, 97, -136, 109, -65, 74, -39, 32, -54, 15, -13, 29, 0, 74, -3, 89, -2, 149, -51, 131, -157, 44, -222, -5, -199, -28, -208, -57, -207)
 
 [node name="Players" type="Node2D" parent="."]
+position = Vector2(0, 208)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("../Players")
+
+[node name="GreenBox" parent="." instance=ExtResource("8_ydbpy")]
+position = Vector2(-320, 192)
+
+[node name="GreenBox2" parent="." instance=ExtResource("8_ydbpy")]
+position = Vector2(-320, 128)
+
+[node name="GreenBox3" parent="." instance=ExtResource("8_ydbpy")]
+position = Vector2(-384, 128)
+
+[node name="GreenBox4" parent="." instance=ExtResource("8_ydbpy")]
+position = Vector2(-384, 192)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6ejqpk54biey"]
+
+[ext_resource type="Script" path="res://player/abilities/scenes/wind_gust_area.gd" id="1_ixhop"]
+
+[node name="WindGustArea" type="Area2D"]
+script = ExtResource("1_ixhop")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 50, 0, -50, 300, -75, 300, 75)
+disabled = true

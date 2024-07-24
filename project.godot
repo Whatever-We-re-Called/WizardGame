@@ -20,11 +20,16 @@ config/icon="res://icon.svg"
 
 SessionManager="*res://multiplayer/session_manager.gd"
 SteamSetup="*res://multiplayer/steam/steam.gd"
+RigidBodyAutoScaler="*res://addons/rigidbody_auto_scaler/RigidBodyAutoScaler.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg", "res://addons/rigidbody_auto_scaler/plugin.cfg")
 
 [input]
 
