@@ -10,11 +10,11 @@ var im: DeviceInputMap
 
 func _enter_tree():
 	var peer_id = name.to_int()
-	if peer_id in multiplayer.get_peers():
+	if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
 		set_multiplayer_authority(peer_id, true)
 	$RichTextLabel.text = "[center]" + name
 	
-	im = DeviceInputMap.new(peer_id, [0, 2])
+	im = DeviceInputMap.new(self, peer_id, [0, 2])
 
 
 func set_device(device_ids: Array):
@@ -22,7 +22,7 @@ func set_device(device_ids: Array):
 		im.cleanup()
 		
 	var peer_id = name.to_int()
-	im = DeviceInputMap.new(peer_id, device_ids)
+	im = DeviceInputMap.new(self, peer_id, device_ids)
 
 
 func _physics_process(delta):

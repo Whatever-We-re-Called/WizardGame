@@ -1,6 +1,12 @@
 extends Node
 class_name DeviceInputMap
 
+# Any variables that start with _ will be ignored by the processing.
+# If it does not start with _, the system will attempt to add a keybind for it
+var _player: Node
+var _device_ids: Array
+var _device_type: DeviceType
+
 
 var move_left = DefaultMappings.new([_keyboard(KEY_A)], [_axis(JOY_AXIS_LEFT_X, -1)])
 var move_right = DefaultMappings.new([_keyboard(KEY_D)], [_axis(JOY_AXIS_LEFT_X, 1)])
@@ -16,11 +22,8 @@ var debug_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DP
 var debug_4 = DefaultMappings.new([_keyboard(KEY_4)], [_controller(JOY_BUTTON_DPAD_LEFT)])
 
 
-func _init(peer_id: int, device_ids: Array):
-	for property in get_script().get_script_property_list():
-		if property.name.ends_with(".gd"):
-			continue
-			
+func _init(player: Node, peer_id: int, device_ids: Array):
+	for property in _get_property_list():
 		var name = property.name
 		var val = self[name]
 			
@@ -37,13 +40,50 @@ func _init(peer_id: int, device_ids: Array):
 				
 		self[name] = action_name
 	
+	self._player = player
+	self._device_ids = device_ids
+	
+	self._player.add_child(self)
+		
+		
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		cleanup()
+	
 	
 func cleanup():
-	for property in get_script().get_script_property_list():
-		if property.name.ends_with(".gd"):
-			continue
-			
+	for property in _get_property_list():
 		InputMap.erase_action(self[property.name])
+		
+	self._player.remove_child(self)
+		
+		
+func _input(event):
+	var owns_device = false
+	for property in _get_property_list():
+		if event.is_action(self[property.name]):
+			owns_device = true
+	if not owns_device:
+		return
+	
+	if event is InputEventKey or event is InputEventMouse:
+		_device_type = DeviceType.KEYBOARD_MOUSE
+			
+	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		_device_type = DeviceType.CONTROLLER
+		
+		
+func get_device_type() -> DeviceType:
+	return _device_type
+		
+		
+func _get_property_list():
+	var properties = []
+	for property in get_script().get_script_property_list():
+		if property.name.ends_with(".gd") or property.name.begins_with("_"):
+			continue
+		properties.append(property)
+	return properties
 		
 		
 func _keyboard(key: Key):
@@ -83,3 +123,9 @@ class DefaultMappings:
 	func _init(keyboard: Array, controller: Array):
 		self.keyboard = keyboard
 		self.controller = controller
+		
+		
+enum DeviceType {
+	KEYBOARD_MOUSE,
+	CONTROLLER
+}

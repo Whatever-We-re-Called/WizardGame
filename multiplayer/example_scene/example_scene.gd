@@ -6,6 +6,9 @@ func _ready():
 	SessionManager.serverbound_client_disconnected.connect(_remove_player)
 	SessionManager.server_closed.connect(_server_closed)
 	
+	for data in SessionManager.connected_clients.values():
+		_add_player(data)
+
 
 func _add_player(data):
 	if multiplayer.is_server():
