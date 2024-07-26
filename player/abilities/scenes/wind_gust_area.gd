@@ -19,9 +19,11 @@ func _ready():
 	# enabled.
 	collision_polygon_2d.set_deferred("disabled", false)
 	
-	global_position = executor_player.global_position
+	global_position = executor_player.get_center_global_position()
 	var rotated_polygon: PackedVector2Array
 	for point in collision_polygon_2d.polygon:
+		print(-direction.angle_to(Vector2.RIGHT))
+		print(direction)
 		rotated_polygon.append(point.rotated(-direction.angle_to(Vector2.RIGHT)))
 	collision_polygon_2d.polygon = rotated_polygon
 	
@@ -49,7 +51,7 @@ func _push_rigid_body(rigid_body: RigidBody2D):
 
 func _get_push_force(body: PhysicsBody2D) -> float:
 	var distance = global_position.distance_to(body.global_position)
-	var distance_ratio = 1.0 - (distance / 300.0)
+	var distance_ratio = 1.0 - (distance / 500.0)
 	distance_ratio = clamp(distance_ratio, 0.0, 1.0)
 	var power_ratio = EasingFunctions.ease_out_circ(0.0, 1.0, distance_ratio)
 	return max_push_force * power_ratio

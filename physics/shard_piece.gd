@@ -35,6 +35,7 @@ func init(polygon: PackedVector2Array, texture: Texture2D, disappear: bool = fal
 
 func _disappear():
 	await get_tree().create_timer(DISAPPEAR_DELAY).timeout
+	await body_entered
 	
 	disappear_timer = Timer.new()
 	disappear_timer.one_shot = true
