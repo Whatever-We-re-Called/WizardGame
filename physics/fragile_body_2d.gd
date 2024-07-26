@@ -31,6 +31,18 @@ func _enter_tree():
 	minimum_shard_area = total_area / float(number_of_break_points)
 	
 	freeze = true
+	_init_multiplayer_handling()
+
+
+func _init_multiplayer_handling():
+	# TODO MultiplayerSynchronizer
+	
+	var multiplayer_spawner = MultiplayerSpawner.new()
+	add_child(multiplayer_spawner)
+	multiplayer_spawner.spawn_path = shard_pieces_parent_node.get_path()
+	multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
+	
+	pass
 
 
 func break_apart(incoming_collision_polygon: CollisionPolygon2D) -> Array[ShardPiece]:
@@ -139,7 +151,7 @@ func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2
 
 func _init_shard_piece(shard_polygon: PackedVector2Array, texture: Texture2D, disappear: bool = false) -> ShardPiece:
 	var shard = SHARD_PIECE.instantiate()
-	shard_pieces_parent_node.add_child(shard)
+	shard_pieces_parent_node.add_child(shard, true)
 	shard.init(shard_polygon, texture, disappear)
 	return shard
 

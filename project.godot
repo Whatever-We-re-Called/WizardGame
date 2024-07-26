@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 SessionManager="*res://multiplayer/session_manager.gd"
 SteamSetup="*res://multiplayer/steam/steam.gd"
 RigidBodyAutoScaler="*res://addons/rigidbody_auto_scaler/RigidBodyAutoScaler.gd"
+AbilityExecution="*res://player/abilities/ability_execution.tscn"
 
 [display]
 
