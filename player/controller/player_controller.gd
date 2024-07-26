@@ -51,6 +51,8 @@ func handle_physics(delta):
 	_handle_gravity(delta)
 	_handle_jump()
 	_handle_wasd(delta)
+	_handle_abilities()
+	_handle_debug()
 	
 	
 func handle_post_physics(delta):
@@ -92,3 +94,24 @@ func _handle_jump():
 		jump_buffer.stop()
 		coyote_timer.stop()
 		gravity_jump_timer.start()
+
+
+func _handle_abilities():
+	if Input.is_action_just_pressed(player.im.use_ability_1):
+		_use_ability(1)
+	if Input.is_action_just_pressed(player.im.use_ability_2):
+		_use_ability(2)
+	if Input.is_action_just_pressed(player.im.use_ability_3):
+		_use_ability(3)
+
+
+func _handle_debug():
+	if Input.is_action_just_pressed(player.im.debug_1):
+		get_tree().reload_current_scene()
+
+
+func _use_ability(slot: int):
+	if slot <= 0 or slot > player.abilities.size(): return
+	
+	var used_ability = player.abilities[slot - 1]
+	AbilityExecution.try_to_execute(used_ability, player)

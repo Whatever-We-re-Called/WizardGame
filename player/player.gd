@@ -6,31 +6,6 @@ class_name Player extends CharacterBody2D
 @onready var center_point = %CenterPoint
 
 var im: DeviceInputMap
-var selected_ability_slot: int = 1
-
-
-func _input(event):
-	if event.is_action_pressed("use_ability"):
-		_use_selected_ability()
-	if event.is_action_pressed("choose_ability_slot_1"):
-		_switch_to_ability_slot(1)
-	if event.is_action_pressed("choose_ability_slot_2"):
-		_switch_to_ability_slot(2)
-	if event.is_action_pressed("choose_ability_slot_3"):
-		_switch_to_ability_slot(3)
-	if Input.is_action_pressed("reload_scene"):
-		get_tree().reload_current_scene()
-
-
-func _use_selected_ability():
-	var current_selected_ability = abilities[selected_ability_slot - 1]
-	AbilityExecution.try_to_execute(current_selected_ability, self)
-
-
-func _switch_to_ability_slot(slot: int):
-	if slot > abilities.size(): return
-	
-	selected_ability_slot = slot
 
 
 func _enter_tree():
@@ -61,5 +36,10 @@ func _physics_process(delta):
 
 
 func get_center_global_position() -> Vector2:
-	print(global_position, " dwdwadwadw ", center_point.global_position)
 	return center_point.global_position
+
+
+func get_pointer_direction() -> Vector2:
+	# TODO Add support for different logic for different devices.
+	return get_center_global_position().direction_to(get_global_mouse_position()).normalized()
+	

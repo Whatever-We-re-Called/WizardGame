@@ -28,8 +28,7 @@ static func _execute(ability_execution_data: AbilityExecutionData):
 static func _wind_gust(ability_execution_data: AbilityExecutionData):
 	var executor_player = ability_execution_data.executor_player
 	
-	var player_center_global_position = executor_player.get_center_global_position()
-	var direction = player_center_global_position.direction_to(executor_player.get_global_mouse_position())
+	var direction = executor_player.get_center_global_position().direction_to(executor_player.get_global_mouse_position())
 	direction = direction.normalized()
 	
 	var wind_gust_area = WIND_GUST_AREA.instantiate()

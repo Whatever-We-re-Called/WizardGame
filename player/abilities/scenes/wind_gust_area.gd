@@ -22,8 +22,6 @@ func _ready():
 	global_position = executor_player.get_center_global_position()
 	var rotated_polygon: PackedVector2Array
 	for point in collision_polygon_2d.polygon:
-		print(-direction.angle_to(Vector2.RIGHT))
-		print(direction)
 		rotated_polygon.append(point.rotated(-direction.angle_to(Vector2.RIGHT)))
 	collision_polygon_2d.polygon = rotated_polygon
 	

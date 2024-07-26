@@ -7,6 +7,13 @@ var move_right = DefaultMappings.new([_keyboard(KEY_D)], [_axis(JOY_AXIS_LEFT_X,
 var move_up = DefaultMappings.new([_keyboard(KEY_W)], [_axis(JOY_AXIS_LEFT_Y, -1)])
 var move_down = DefaultMappings.new([_keyboard(KEY_S)], [_axis(JOY_AXIS_LEFT_Y, 1)])
 var jump = DefaultMappings.new([_keyboard(KEY_SPACE)], [_controller(JOY_BUTTON_A)])
+var use_ability_1 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_LEFT)], [_controller(JOY_BUTTON_X)])
+var use_ability_2 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_MIDDLE)], [_controller(JOY_BUTTON_Y)])
+var use_ability_3 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_RIGHT)], [_controller(JOY_BUTTON_B)])
+var debug_1 = DefaultMappings.new([_keyboard(KEY_1)], [_controller(JOY_BUTTON_DPAD_UP)])
+var debug_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(JOY_BUTTON_DPAD_RIGHT)])
+var debug_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DPAD_DOWN)])
+var debug_4 = DefaultMappings.new([_keyboard(KEY_4)], [_controller(JOY_BUTTON_DPAD_LEFT)])
 
 
 func _init(peer_id: int, device_ids: Array):
@@ -66,8 +73,8 @@ func _axis(axis: JoyAxis, value: float):
 	var input = InputEventJoypadMotion.new()
 	input.axis = axis
 	input.axis_value = value
-	return input
-	
+	return input 
+
 
 class DefaultMappings:
 	var keyboard: Array
