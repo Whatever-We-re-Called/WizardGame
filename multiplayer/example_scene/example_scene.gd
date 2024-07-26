@@ -8,10 +8,6 @@ func _ready():
 	
 	for data in SessionManager.connected_clients.values():
 		_add_player(data)
-	
-func _process(delta):
-	if Input.is_action_just_pressed("debug_1"):
-		get_tree().reload_current_scene()
 
 
 func _add_player(data):

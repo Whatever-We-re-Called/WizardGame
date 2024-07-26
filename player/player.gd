@@ -5,7 +5,7 @@ var im: DeviceInputMap
 
 func _enter_tree():
 	var peer_id = name.to_int()
-	if peer_id in multiplayer.get_peers():
+	if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
 		set_multiplayer_authority(peer_id, true)
 	$RichTextLabel.text = "[center]" + name
 	
