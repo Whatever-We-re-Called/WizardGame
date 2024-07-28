@@ -6,8 +6,8 @@ class_name FragileBody2D extends RigidBody2D
 @export var edge_threshold: float = 10.0
 @export var length_limit: float = 20
 
+var original_scale: Vector2
 var shard_pieces_parent_node: Node2D
-var multiplayer_spawner: MultiplayerSpawner
 var total_area: float
 var minimum_shard_area: float
 
@@ -20,9 +20,11 @@ const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
 func _enter_tree():
 	# Scaling and using a parent node to counteract a weird Godot
 	# physics bug.
+	_init_scaling()
+	original_scale = scale
 	shard_pieces_parent_node = Node2D.new()
 	shard_pieces_parent_node.name = "ShardPieces"
-	shard_pieces_parent_node.scale = scale
+	#shard_pieces_parent_node.scale = scale
 	add_child(shard_pieces_parent_node)
 	
 	for child in get_children():
@@ -35,14 +37,22 @@ func _enter_tree():
 	_init_multiplayer_handling()
 
 
-func _init_multiplayer_handling():
-	# TODO MultiplayerSynchronizer
+func _init_scaling():
+	original_scale = scale
 	
-	#multiplayer_spawner = MultiplayerSpawner.new()
-	#add_child(multiplayer_spawner)
-	#multiplayer_spawner.spawn_path = get_path()
-	#multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
-	#
+	for child in get_children():
+		if child is SpritePolygon2D:
+			child.update_scaling(original_scale)
+	
+	scale = Vector2.ONE
+
+
+func _init_multiplayer_handling():
+	var multiplayer_spawner = MultiplayerSpawner.new()
+	add_child(multiplayer_spawner)
+	multiplayer_spawner.spawn_path = shard_pieces_parent_node.get_path()
+	multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
+	
 	pass
 
 
@@ -133,9 +143,11 @@ func _get_delaunay_with_placed_points(delaunay: Delaunay, overlap_rect: Rect2, o
 func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2Array, sites: Array) -> Array[ShardPiece]:
 	var shards: Array[ShardPiece]
 	var texture = sprite_polygon.texture
+	var texture_offset = sprite_polygon.texture_offset
+	var texture_scale = sprite_polygon.texture_scale
 	
 	if PolygonUtil.get_area_of_polygon(overlap_polygon) < minimum_shard_area:
-		var shard = _init_shard_piece(overlap_polygon, texture)
+		var shard = _init_shard_piece(overlap_polygon, texture, texture_offset, texture_scale)
 		shards.append(shard)
 	else:
 		for site in sites:
@@ -144,18 +156,18 @@ func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2
 			if potential_shard_polygons.size() > 0:
 				var shard_polygon = potential_shard_polygons[0]
 				var should_disappear = not _is_polygon_a_valid_shard(shard_polygon, false)
-				var shard = _init_shard_piece(shard_polygon, texture, should_disappear)
+				var shard = _init_shard_piece(shard_polygon, texture, texture_offset, texture_scale, should_disappear)
 				shards.append(shard)
 	
 	return shards
 
 
-func _init_shard_piece(shard_polygon: PackedVector2Array, texture: Texture2D, disappear: bool = false) -> ShardPiece:
+func _init_shard_piece(shard_polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2, disappear: bool = false) -> ShardPiece:
 	if not multiplayer.is_server(): return null
 	
 	var shard = SHARD_PIECE.instantiate()
-	add_child(shard, true)
-	shard.init.rpc(shard_polygon, texture, disappear)
+	shard_pieces_parent_node.add_child(shard, true)
+	shard.init.rpc(shard_polygon, texture, texture_offset, texture_scale, disappear)
 	return shard
 
 
@@ -170,6 +182,7 @@ func _create_new_sprite_polygons(sprite_polygon: SpritePolygon2D, collision_poly
 			var new_sprite_polygon = SpritePolygon2D.new()
 			new_sprite_polygon.texture = sprite_polygon.texture
 			new_sprite_polygon.texture_offset = sprite_polygon.texture_offset
+			new_sprite_polygon.texture_scale = sprite_polygon.texture_scale
 			new_sprite_polygon.polygon = non_overlap_polygon
 			add_child(new_sprite_polygon)
 			
@@ -178,9 +191,10 @@ func _create_new_sprite_polygons(sprite_polygon: SpritePolygon2D, collision_poly
 			add_child(new_collision_polygon)
 			new_sprite_polygon.connected_collision_polygon_2d = new_collision_polygon
 		else:
-			var new_shard = _init_shard_piece(non_overlap_polygon, sprite_polygon.texture, true)
+			var new_shard = _init_shard_piece(non_overlap_polygon, sprite_polygon.texture, sprite_polygon.texture_offset, sprite_polygon.texture_scale, true)
 			potential_new_shards.append(new_shard)
 	
+	scale = original_scale
 	sprite_polygon.kill()
 	return potential_new_shards
 

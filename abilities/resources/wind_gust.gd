@@ -63,4 +63,5 @@ func _get_push_force(body: PhysicsBody2D) -> float:
 	var distance_ratio = 1.0 - (distance / 500.0)
 	distance_ratio = clamp(distance_ratio, 0.0, 1.0)
 	var power_ratio = EasingFunctions.ease_out_circ(0.0, 1.0, distance_ratio)
+	print(MAX_PUSH_FORCE * power_ratio)
 	return MAX_PUSH_FORCE * power_ratio

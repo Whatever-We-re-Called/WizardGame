@@ -195,35 +195,12 @@ position = Vector2(-320, 192)
 [node name="GreenBox2" parent="." instance=ExtResource("8_ydbpy")]
 position = Vector2(-320, 128)
 
+[node name="GreenBox5" parent="." instance=ExtResource("8_ydbpy")]
+position = Vector2(592, 184)
+scale = Vector2(2, 2)
+
 [node name="GreenBox3" parent="." instance=ExtResource("8_ydbpy")]
 position = Vector2(-384, 128)
-
-[node name="GreenBox5" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(72, 144)
-
-[node name="GreenBox6" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(344, -40)
-
-[node name="GreenBox7" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(248, 32)
-
-[node name="GreenBox8" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(-304, -80)
-
-[node name="GreenBox9" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(736, 400)
-
-[node name="GreenBox10" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(736, 336)
-
-[node name="GreenBox11" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(736, 272)
-
-[node name="GreenBox12" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(736, 208)
-
-[node name="GreenBox13" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(736, 144)
 
 [node name="GreenBox4" parent="." instance=ExtResource("8_ydbpy")]
 position = Vector2(-384, 192)

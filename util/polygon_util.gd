@@ -127,3 +127,12 @@ static func get_smallest_center_delta(polygon: PackedVector2Array) -> float:
 					result = distance
 	
 	return result
+
+
+static func get_scaled_polygon(polygon: PackedVector2Array, scale: Vector2):
+	var result: PackedVector2Array
+	for point in polygon:
+		var scaled_point = Vector2(point.x * scale.x, point.y * scale.y)
+		result.append(scaled_point)
+	
+	return result
