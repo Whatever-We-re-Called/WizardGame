@@ -1,16 +1,11 @@
 class_name AbilityExecution extends Node2D
 
 
-@rpc("any_peer", "call_local")
-func _on_button_down(executor_peer_id: int):
+func _handle_input(player: Player, button_input: String):
 	pass
 
 
-@rpc("any_peer", "call_local")
-func _on_button_up(executor_peer_id: int):
-	pass
-
-
-@rpc("any_peer", "call_local")
-func _on_button_hold(executor_peer_id: int):
-	pass
+func get_player(peer_id: int) -> Player:
+	# TODO Improve this. Will require a better session/game handling
+	# system, I think. This works for now.
+	return get_parent().get_parent()

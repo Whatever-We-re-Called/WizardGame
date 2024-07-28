@@ -21,7 +21,6 @@ var debug_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(JOY_BUTTON_DP
 var debug_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DPAD_DOWN)])
 var debug_4 = DefaultMappings.new([_keyboard(KEY_4)], [_controller(JOY_BUTTON_DPAD_LEFT)])
 
-
 func _init(player: Node, peer_id: int, device_ids: Array):
 	for property in _get_property_list():
 		var name = property.name

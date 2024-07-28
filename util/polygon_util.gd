@@ -22,12 +22,12 @@ static func get_global_collision_polygon_polygon_from_local(collision_polygon: C
 	return result
 
 
-static func get_global_polygon_from_local_space(polygon: PackedVector2Array, parent_node: Node2D) -> PackedVector2Array:
+static func get_global_polygon_from_local_space(polygon: PackedVector2Array, global_position: Vector2) -> PackedVector2Array:
 	var result: PackedVector2Array
 	
 	for point in polygon:
-		var new_x = point.x + parent_node.global_position.x
-		var new_y = point.y + parent_node.global_position.y
+		var new_x = point.x + global_position.x
+		var new_y = point.y + global_position.y
 		result.append(Vector2(new_x, new_y))
 	
 	return result

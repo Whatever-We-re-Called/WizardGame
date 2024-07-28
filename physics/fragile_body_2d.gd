@@ -197,7 +197,7 @@ func _is_polygon_a_valid_shard(polygon: PackedVector2Array, check_nearby_collisi
 func _get_nearby_collisions(check_range: float, polygon: PackedVector2Array) -> Array[Dictionary]:
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsShapeQueryParameters2D.new()
-	var global_polygon = PolygonUtil.get_global_polygon_from_local_space(polygon, self)
+	var global_polygon = PolygonUtil.get_global_polygon_from_local_space(polygon, global_position)
 	var check_rect = PolygonUtil.get_rect_from_polygon(global_polygon).grow(check_range)
 	var check_shape = RectangleShape2D.new()
 	check_shape.size = check_rect.size

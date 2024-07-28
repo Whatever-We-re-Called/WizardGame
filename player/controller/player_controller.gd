@@ -104,12 +104,10 @@ func _handle_abilities():
 	]
 	
 	for i in range(3):
-		if Input.is_action_just_pressed(ability_input_strings[i]):
-			player.ability_nodes.get_child(i)._on_button_down.rpc_id(1, player.get_peer_id())
-		elif Input.is_action_just_released(ability_input_strings[i]):
-			player.ability_nodes.get_child(i)._on_button_up.rpc_id(1, player.get_peer_id())
-		elif Input.is_action_pressed(ability_input_strings[i]):
-			player.ability_nodes.get_child(i)._on_button_hold.rpc_id(1, player.get_peer_id())
+		var ability_node = player.ability_nodes.get_child(i)
+		var ability_input_string = ability_input_strings[i]
+		if ability_node.get_script() != null:
+			ability_node._handle_input(player, ability_input_string)
 
 
 func _handle_debug():

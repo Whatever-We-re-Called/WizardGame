@@ -44,7 +44,15 @@ func _physics_process(delta):
 
 @rpc("any_peer", "call_local")
 func update_ability_nodes():
-	ability_nodes.get_child(0).set_script(Abilities.get_ability(ability_1).execution_script)
+	var abilities = [ ability_1, ability_2, ability_3 ]
+	
+	for i in range(3):
+		var ability = abilities[i]
+		
+		if ability == Abilities.Type.NONE:
+			ability_nodes.get_child(i).set_script(null)
+		else:
+			ability_nodes.get_child(i).set_script(Abilities.get_ability(ability).execution_script)
 
 
 func get_center_global_position() -> Vector2:
