@@ -22,6 +22,7 @@ SessionManager="*res://multiplayer/session_manager.gd"
 SteamSetup="*res://multiplayer/steam/steam.gd"
 RigidBodyAutoScaler="*res://addons/rigidbody_auto_scaler/RigidBodyAutoScaler.gd"
 Abilities="*res://abilities/abilities.gd"
+MultiplayerUtil="*res://util/multiplayer_util.gd"
 
 [display]
 

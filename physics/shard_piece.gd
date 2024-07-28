@@ -3,15 +3,22 @@ class_name ShardPiece extends RigidBody2D
 
 var polygon_2d: Polygon2D
 var collision_polygon_2d: CollisionPolygon2D
+var polygon: PackedVector2Array
+var texture: Texture2D
+var disappear: bool
 var disappear_timer: Timer
 
 const DISAPPEAR_DELAY = 0.5
 const DISAPPEAR_DURATION = 1.0
 
 
+@rpc("any_peer", "call_local", "reliable")
 func init(polygon: PackedVector2Array, texture: Texture2D, disappear: bool = false):
 	self.polygon_2d = %Polygon2D
 	self.collision_polygon_2d = %CollisionPolygon2D
+	self.polygon = polygon
+	self.texture = texture
+	self.disappear = disappear
 	
 	# Polygon2D
 	polygon_2d.polygon = polygon
@@ -29,6 +36,12 @@ func init(polygon: PackedVector2Array, texture: Texture2D, disappear: bool = fal
 	contact_monitor = true
 	max_contacts_reported = 4
 	
+	if not multiplayer.is_server():
+		freeze_mode = FREEZE_MODE_KINEMATIC
+		freeze = true
+
+
+func _ready():
 	if disappear == true:
 		_disappear()
 

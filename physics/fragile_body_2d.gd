@@ -7,6 +7,7 @@ class_name FragileBody2D extends RigidBody2D
 @export var length_limit: float = 20
 
 var shard_pieces_parent_node: Node2D
+var multiplayer_spawner: MultiplayerSpawner
 var total_area: float
 var minimum_shard_area: float
 
@@ -37,11 +38,11 @@ func _enter_tree():
 func _init_multiplayer_handling():
 	# TODO MultiplayerSynchronizer
 	
-	var multiplayer_spawner = MultiplayerSpawner.new()
-	add_child(multiplayer_spawner)
-	multiplayer_spawner.spawn_path = shard_pieces_parent_node.get_path()
-	multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
-	
+	#multiplayer_spawner = MultiplayerSpawner.new()
+	#add_child(multiplayer_spawner)
+	#multiplayer_spawner.spawn_path = get_path()
+	#multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
+	#
 	pass
 
 
@@ -153,8 +154,8 @@ func _init_shard_piece(shard_polygon: PackedVector2Array, texture: Texture2D, di
 	if not multiplayer.is_server(): return null
 	
 	var shard = SHARD_PIECE.instantiate()
-	shard_pieces_parent_node.add_child(shard, true)
-	shard.init(shard_polygon, texture, disappear)
+	add_child(shard, true)
+	shard.init.rpc(shard_polygon, texture, disappear)
 	return shard
 
 
