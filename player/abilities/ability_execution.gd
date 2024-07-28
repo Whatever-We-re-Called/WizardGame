@@ -1,6 +1,6 @@
 extends Node
 
-const WIND_GUST_AREA = preload("res://player/abilities/scenes/wind_gust_area.tscn")
+#const WIND_GUST_AREA = preload("res://player/abilities/scenes/wind_gust_area.tscn")
 
 class AbilityExecutionData:
 	var ability: Ability
@@ -37,9 +37,9 @@ func _wind_gust(deconstructed_ability_execution_data: Array):
 	direction = direction.normalized()
 	
 	print(executor_player)
-	var wind_gust_area = WIND_GUST_AREA.instantiate()
-	wind_gust_area.setup(direction, executor_player, 1000.0)
-	AbilityExecution.add_child(wind_gust_area)
+	#var wind_gust_area = WIND_GUST_AREA.instantiate()
+	#wind_gust_area.setup(direction, executor_player, 1000.0)
+	#AbilityExecution.add_child(wind_gust_area)
 
 
 func _deconstruct_ability_execution_data(ability_execution_data: AbilityExecutionData) -> Array:

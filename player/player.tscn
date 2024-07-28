@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=6 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
 [ext_resource type="Texture2D" uid="uid://c2sycukx1lnho" path="res://player/textures/playerGrey_stand.png" id="2_3wedb"]
-[ext_resource type="Resource" uid="uid://ch8u62u556ynj" path="res://player/abilities/resources/wind_gust.tres" id="2_8g1ua"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
@@ -19,7 +18,7 @@ properties/1/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("controller")]
 script = ExtResource("1_v4k2b")
-abilities = Array[Resource("res://player/abilities/resources/ability.gd")]([ExtResource("2_8g1ua")])
+ability_1 = 1
 controller = NodePath("PlayerController")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -30,6 +29,19 @@ texture = ExtResource("2_3wedb")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -46)
 shape = SubResource("CapsuleShape2D_ehwds")
+
+[node name="CenterPoint" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -46)
+
+[node name="AbilityNodes" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Ability1" type="Node2D" parent="AbilityNodes"]
+
+[node name="Ability2" type="Node2D" parent="AbilityNodes"]
+
+[node name="Ability3" type="Node2D" parent="AbilityNodes"]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gpxhm")
@@ -57,7 +69,3 @@ air_friction = 750.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
-
-[node name="CenterPoint" type="Node2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(0, -46)

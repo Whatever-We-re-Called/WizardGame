@@ -19,7 +19,6 @@ func _ready():
 	# enabled.
 	collision_polygon_2d.set_deferred("disabled", false)
 	
-	print(executor_player)
 	global_position = executor_player.get_center_global_position()
 	var rotated_polygon: PackedVector2Array
 	for point in collision_polygon_2d.polygon:

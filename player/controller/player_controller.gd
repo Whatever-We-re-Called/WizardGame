@@ -97,21 +97,21 @@ func _handle_jump():
 
 
 func _handle_abilities():
-	if Input.is_action_just_pressed(player.im.use_ability_1):
-		_use_ability(1)
-	if Input.is_action_just_pressed(player.im.use_ability_2):
-		_use_ability(2)
-	if Input.is_action_just_pressed(player.im.use_ability_3):
-		_use_ability(3)
+	var ability_input_strings = [
+		player.im.use_ability_1,
+		player.im.use_ability_2,
+		player.im.use_ability_3
+	]
+	
+	for i in range(3):
+		if Input.is_action_just_pressed(ability_input_strings[i]):
+			player.ability_nodes.get_child(i)._on_button_down.rpc_id(1, player.get_peer_id())
+		elif Input.is_action_just_released(ability_input_strings[i]):
+			player.ability_nodes.get_child(i)._on_button_up.rpc_id(1, player.get_peer_id())
+		elif Input.is_action_pressed(ability_input_strings[i]):
+			player.ability_nodes.get_child(i)._on_button_hold.rpc_id(1, player.get_peer_id())
 
 
 func _handle_debug():
 	if Input.is_action_just_pressed(player.im.debug_1):
 		get_tree().reload_current_scene()
-
-
-func _use_ability(slot: int):
-	if slot <= 0 or slot > player.abilities.size(): return
-	
-	var used_ability = player.abilities[slot - 1]
-	AbilityExecution.try_to_execute(used_ability, player)

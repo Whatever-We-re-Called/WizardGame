@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=2 format=3 uid="uid://ch8u62u556ynj"]
-
-[ext_resource type="Script" path="res://player/abilities/resources/ability.gd" id="1_e4r4g"]
-
-[resource]
-script = ExtResource("1_e4r4g")

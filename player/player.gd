@@ -1,8 +1,11 @@
 class_name Player extends CharacterBody2D
 
-@export var abilities: Array[Ability]
+@export var ability_1: Abilities.Type
+@export var ability_2: Abilities.Type
+@export var ability_3: Abilities.Type
 @export var controller: PlayerController
 
+@onready var ability_nodes = %AbilityNodes
 @onready var center_point = %CenterPoint
 
 var im: DeviceInputMap
@@ -15,6 +18,10 @@ func _enter_tree():
 	$RichTextLabel.text = "[center]" + name
 	
 	im = DeviceInputMap.new(self, peer_id, [0, 2])
+
+
+func _ready():
+	update_ability_nodes.rpc()
 
 
 func set_device(device_ids: Array):
@@ -35,6 +42,11 @@ func _physics_process(delta):
 		controller.handle_post_physics(delta)
 
 
+@rpc("any_peer", "call_local")
+func update_ability_nodes():
+	ability_nodes.get_child(0).set_script(Abilities.get_ability(ability_1).execution_script)
+
+
 func get_center_global_position() -> Vector2:
 	return center_point.global_position
 
@@ -42,4 +54,7 @@ func get_center_global_position() -> Vector2:
 func get_pointer_direction() -> Vector2:
 	# TODO Add support for different logic for different devices.
 	return get_center_global_position().direction_to(get_global_mouse_position()).normalized()
-	
+
+
+func get_peer_id() -> int:
+	return int("" + name)
