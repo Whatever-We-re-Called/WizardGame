@@ -150,6 +150,8 @@ func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2
 
 
 func _init_shard_piece(shard_polygon: PackedVector2Array, texture: Texture2D, disappear: bool = false) -> ShardPiece:
+	if not multiplayer.is_server(): return null
+	
 	var shard = SHARD_PIECE.instantiate()
 	shard_pieces_parent_node.add_child(shard, true)
 	shard.init(shard_polygon, texture, disappear)

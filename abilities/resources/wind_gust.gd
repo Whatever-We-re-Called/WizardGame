@@ -24,6 +24,11 @@ func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
 		rotated_polygon.append(point.rotated(-direction.angle_to(Vector2.RIGHT)))
 	var calculated_polygon = PolygonUtil.get_global_polygon_from_local_space(rotated_polygon, executor_player.get_center_global_position())
 	
+	_execute_wind_gust.rpc(calculated_polygon, direction)
+
+
+@rpc("any_peer", "call_local")
+func _execute_wind_gust(calculated_polygon: PackedVector2Array, direction: Vector2):
 	var area = Area2D.new()
 	var collision_polygon = CollisionPolygon2D.new()
 	collision_polygon.polygon = calculated_polygon
@@ -41,7 +46,8 @@ func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
 			_push_rigid_body(overlapping_body, direction)
 	
 	for shard in all_created_shards:
-		_push_rigid_body(shard as RigidBody2D, direction)
+		if shard is RigidBody2D:
+			_push_rigid_body(shard as RigidBody2D, direction)
 	
 	await get_tree().create_timer(1.0).timeout
 	collision_polygon.call_deferred("queue_free")
