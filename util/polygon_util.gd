@@ -136,3 +136,11 @@ static func get_scaled_polygon(polygon: PackedVector2Array, scale: Vector2):
 		result.append(scaled_point)
 	
 	return result
+
+
+static func get_rotated_polygon(polygon: PackedVector2Array, angle: float):
+	var result: PackedVector2Array
+	for point in polygon:
+		result.append(point.rotated(angle))
+	
+	return result
