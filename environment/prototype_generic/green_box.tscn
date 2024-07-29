@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_yclnn"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="2_3k1xv"]
-[ext_resource type="Texture2D" uid="uid://bwdyrbu0oxs7n" path="res://environment/blockGreen_puzzle.png" id="2_mm0md"]
+[ext_resource type="Texture2D" uid="uid://bwdyrbu0oxs7n" path="res://environment/prototype_generic/blockGreen_puzzle.png" id="2_mm0md"]
 
 [node name="GreenBox" type="RigidBody2D"]
 script = ExtResource("1_yclnn")

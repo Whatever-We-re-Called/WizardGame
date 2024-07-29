@@ -35,11 +35,6 @@ func _wind_gust(deconstructed_ability_execution_data: Array):
 	
 	var direction = executor_player.get_center_global_position().direction_to(executor_player.get_global_mouse_position())
 	direction = direction.normalized()
-	
-	print(executor_player)
-	#var wind_gust_area = WIND_GUST_AREA.instantiate()
-	#wind_gust_area.setup(direction, executor_player, 1000.0)
-	#AbilityExecution.add_child(wind_gust_area)
 
 
 func _deconstruct_ability_execution_data(ability_execution_data: AbilityExecutionData) -> Array:

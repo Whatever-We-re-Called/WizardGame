@@ -35,9 +35,7 @@ func init(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vecto
 	if not multiplayer.is_server():
 		freeze_mode = FREEZE_MODE_KINEMATIC
 		freeze = true
-
-
-func _ready():
+	
 	if disappear == true:
 		_disappear()
 

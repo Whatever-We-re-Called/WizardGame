@@ -11,7 +11,7 @@ var shard_pieces_parent_node: Node2D
 var total_area: float
 var minimum_shard_area: float
 
-const MINIMUM_ALLOWED_AREA: float = 400.0
+const MINIMUM_ALLOWED_AREA: float = 500.0
 const MINIMUM_ALLOWED_CENTER_DELTA: float = 7.5
 const NEARBY_CHECK_RANGE: float = 4.0
 const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
