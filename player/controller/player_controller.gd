@@ -13,8 +13,6 @@ var was_on_floor: bool
 @export var jump_buffer_time: float
 var jump_buffer: Timer
 
-@export var gravity_jump_time: float
-var gravity_jump_timer: Timer
 @export var gravity_scale: float
 const GRAVITY: float = 9.81
 
@@ -22,8 +20,11 @@ const GRAVITY: float = 9.81
 @export var movement_speed: float
 @export var ground_acceleration: float
 @export var ground_friction: float
+@export var ground_slide_friction: float
 @export var air_acceleration: float
 @export var air_friction: float
+
+var previous_input_direction: Vector2
 
 
 func _ready():
@@ -36,23 +37,20 @@ func _ready():
 	self.jump_buffer.wait_time = jump_buffer_time
 	self.jump_buffer.one_shot = true
 	add_child(jump_buffer)
-	
-	self.gravity_jump_timer = Timer.new()
-	self.gravity_jump_timer.wait_time = gravity_jump_time
-	self.gravity_jump_timer.one_shot = true
-	add_child(gravity_jump_timer)
-	
-	
+
+
 func handle_pre_physics(delta):
 	was_on_floor = player.is_on_floor()
-	
-	
+
+
 func handle_physics(delta):
 	_handle_gravity(delta)
 	_handle_jump()
 	_handle_wasd(delta)
 	_handle_abilities()
 	_handle_debug()
+	
+	player.move_and_slide()
 	
 	
 func handle_post_physics(delta):
@@ -61,30 +59,42 @@ func handle_post_physics(delta):
 	
 	
 func _handle_gravity(delta):
-	if not player.is_on_floor() and gravity_jump_timer.is_stopped():
+	if not player.is_on_floor():
 		player.velocity.y += GRAVITY * delta * gravity_scale
-	
-	
+
+
 func _handle_wasd(delta):
+	var input_direction = _get_input_direction()
+	
+	if (input_direction.x > 0 and player.velocity.x > 0) or (input_direction.x < 0 and player.velocity.x < 0):
+		previous_input_direction = input_direction
+	
 	if player.is_on_floor():
-		_handle_horizontal_movement(movement_speed, ground_acceleration, ground_friction, delta)
+		_handle_ground_horizontal_movement(input_direction, delta)
 	else:
-		_handle_horizontal_movement(movement_speed, air_acceleration, air_friction, delta)
-	
-	player.move_and_slide()
-	
-	
-func _handle_horizontal_movement(speed: float, acceleration: float, friction: float, delta: float):
-	var input_direction = Input.get_vector(player.im.move_left, player.im.move_right, player.im.move_up, player.im.move_down)
-	
+		_handle_air_horizontal_movement(input_direction, delta)
+
+
+# It's usually a good idea to seperate floor and air movement
+# for fine-tuning game feel.
+func _handle_ground_horizontal_movement(input_direction: Vector2, delta: float):
 	if input_direction != Vector2.ZERO:
-		player.velocity.x = move_toward(player.velocity.x, input_direction.x * speed, acceleration * delta)
-		#player.velocity.y = move_toward(player.velocity.y, input_direction.y * speed, acceleration * delta)
+		if input_direction != previous_input_direction and player.is_on_floor():
+			previous_input_direction = input_direction
+			player.velocity.x = move_toward(player.velocity.x, 0.0, ground_slide_friction * delta)
+		else:
+			player.velocity.x = move_toward(player.velocity.x, input_direction.x * movement_speed, ground_acceleration * delta)
 	else:
-		player.velocity.x = move_toward(player.velocity.x, 0.0, friction * delta)
-		#player.velocity.y = move_toward(player.velocity.y, 0.0, friction * delta)
-	
-	
+		player.velocity.x = move_toward(player.velocity.x, 0.0, ground_friction * delta)
+
+
+func _handle_air_horizontal_movement(input_direction: Vector2, delta: float):
+	if input_direction != Vector2.ZERO:
+		player.velocity.x = move_toward(player.velocity.x, input_direction.x * movement_speed, air_acceleration * delta)
+	else:
+		player.velocity.x = move_toward(player.velocity.x, 0.0, air_friction * delta)
+
+
 func _handle_jump():
 	if Input.is_action_just_pressed(player.im.jump):
 		jump_buffer.start()
@@ -93,7 +103,6 @@ func _handle_jump():
 		player.velocity.y = jump_velocity
 		jump_buffer.stop()
 		coyote_timer.stop()
-		gravity_jump_timer.start()
 
 
 func _handle_abilities():
@@ -113,3 +122,7 @@ func _handle_abilities():
 func _handle_debug():
 	if Input.is_action_just_pressed(player.im.debug_1):
 		get_tree().reload_current_scene()
+
+
+func _get_input_direction() -> Vector2:
+	return Input.get_vector(player.im.move_left, player.im.move_right, player.im.move_up, player.im.move_down).normalized()

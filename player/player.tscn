@@ -17,6 +17,7 @@ properties/1/spawn = true
 properties/1/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("controller")]
+floor_snap_length = 16.0
 script = ExtResource("1_v4k2b")
 ability_1 = 1
 controller = NodePath("PlayerController")
@@ -52,16 +53,16 @@ bbcode_enabled = true
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("2_ist2s")
-jump_velocity = -500.0
-coyote_time = 0.15
-jump_buffer_time = 0.15
-gravity_jump_time = 0.15
-gravity_scale = 275.0
-movement_speed = 600.0
-ground_acceleration = 1600.0
-ground_friction = 4000.0
-air_acceleration = 2000.0
-air_friction = 750.0
+jump_velocity = -1100.0
+coyote_time = 0.075
+jump_buffer_time = 0.1
+gravity_scale = 350.0
+movement_speed = 650.0
+ground_acceleration = 2500.0
+ground_friction = 6000.0
+ground_slide_friction = 30000.0
+air_acceleration = 2500.0
+air_friction = 4000.0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.15
