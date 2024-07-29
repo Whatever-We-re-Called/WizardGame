@@ -86,7 +86,7 @@ func _handle_horizontal_movement(speed: float, acceleration: float, friction: fl
 	
 	
 func _handle_jump():
-	if Input.is_action_pressed(player.im.jump):
+	if Input.is_action_just_pressed(player.im.jump):
 		jump_buffer.start()
 		
 	if (player.is_on_floor() or not coyote_timer.is_stopped()) and not jump_buffer.is_stopped():
