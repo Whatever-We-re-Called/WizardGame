@@ -5,6 +5,7 @@ class_name Player extends CharacterBody2D
 @export var ability_3: Abilities.Type
 @export var controller: PlayerController
 
+@onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var ability_nodes = %AbilityNodes
 @onready var center_point = %CenterPoint
 

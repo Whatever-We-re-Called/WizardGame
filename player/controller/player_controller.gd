@@ -73,6 +73,9 @@ func _handle_wasd(delta):
 		_handle_ground_horizontal_movement(input_direction, delta)
 	else:
 		_handle_air_horizontal_movement(input_direction, delta)
+	
+	#if input_direction != Vector2.ZERO:
+		#player.sprite_2d.flip_h = input_direction.x < 0
 
 
 # It's usually a good idea to seperate floor and air movement

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://tiksfbloc3eh"]
+[gd_scene load_steps=11 format=3 uid="uid://tiksfbloc3eh"]
 
 [ext_resource type="Script" path="res://multiplayer/example_scene/example_scene.gd" id="1_cbbie"]
 [ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="2_0v1n8"]
@@ -6,8 +6,10 @@
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/ip.gd" id="3_0yk8y"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/steam.gd" id="4_o3pvj"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/screen_button.gd" id="5_aokf6"]
-[ext_resource type="Texture2D" uid="uid://vgmyypvtv7qb" path="res://leveltests1_players.png" id="7_u4w36"]
+[ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://environment/prototype_first_concept_level/bgb.png" id="7_gkya6"]
+[ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://environment/prototype_first_concept_level/foreground_background.png" id="8_cwhqr"]
 [ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://environment/prototype_generic/green_box.tscn" id="8_ydbpy"]
+[ext_resource type="PackedScene" uid="uid://bh583te3i166d" path="res://environment/prototype_first_concept_level/first_prototype_fragile_part_1.tscn" id="10_a1ean"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_cbbie")
@@ -163,24 +165,27 @@ text = "TOGGLE UI"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Leveltests1Players" type="Sprite2D" parent="."]
-texture = ExtResource("7_u4w36")
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Leveltests1Players"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-975, 429, -500, 432, -321, 346, -278, 459, -140, 399, -20, 378, 52, 378, 163, 407, 254, 465, 314, 340, 489, 432, 985, 432, 990, 588, -990, 581)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
 build_mode = 1
-polygon = PackedVector2Array(-722, 77, -978, 84, -977, -561, -673, -559, -755, -374, -745, -377, -749, -316, -782, -307, -806, -248, -421, -240, -390, -193, -828, -189, -903, -18, -875, -22, -872, 29, -804, 64, -804, 79)
+polygon = PackedVector2Array(-960, 104, -977, -561, -673, -559, -755, -374, -782, -307, -806, -248, -828, -189, -903, -18)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
 build_mode = 1
-polygon = PackedVector2Array(711, 87, 803, 88, 801, 128, 975, 133, 970, -562, 665, -558, 753, -375, 740, -375, 741, -318, 775, -310, 804, -250, 413, -239, 390, -191, 828, -194, 902, -19, 864, -15, 864, 39, 805, 68, 779, 85)
+polygon = PackedVector2Array(960, 120, 970, -562, 665, -558, 753, -375, 804, -250, 828, -194, 902, -19)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Leveltests1Players/StaticBody2D"]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-76, -195, -117, -207, -183, -140, -192, -41, -129, 12, -72, 11, -52, -2, -80, -44, -115, -26, -152, -38, -154, -116, -105, -138, -53, -123, -18, -119, 5, -134, 43, -151, 97, -136, 109, -65, 74, -39, 32, -54, 15, -13, 29, 0, 74, -3, 89, -2, 149, -51, 131, -157, 44, -222, -5, -199, -28, -208, -57, -207)
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("7_gkya6")
+
+[node name="ForegroundBackground" type="Sprite2D" parent="."]
+texture = ExtResource("8_cwhqr")
 
 [node name="Players" type="Node2D" parent="."]
 position = Vector2(0, 208)
@@ -190,20 +195,23 @@ _spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../Players")
 
 [node name="GreenBox" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(-320, 192)
+position = Vector2(248, 144)
 
 [node name="GreenBox2" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(-320, 128)
+position = Vector2(248, 80)
 
 [node name="GreenBox5" parent="." instance=ExtResource("8_ydbpy")]
 position = Vector2(592, 184)
 scale = Vector2(2, 2)
 
 [node name="GreenBox3" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(-384, 128)
+position = Vector2(184, 80)
 
 [node name="GreenBox4" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(-384, 192)
+position = Vector2(184, 144)
+
+[node name="FirstPrototypeFragilePart1" parent="." instance=ExtResource("10_a1ean")]
+position = Vector2(-960, -16)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]

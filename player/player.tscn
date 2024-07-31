@@ -1,12 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
-[ext_resource type="Texture2D" uid="uid://c2sycukx1lnho" path="res://player/textures/playerGrey_stand.png" id="2_3wedb"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
+[ext_resource type="Texture2D" uid="uid://d2kdvrnsglfkg" path="res://player/textures/prototype_player.png" id="2_tkvjb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
 radius = 36.0
-height = 92.0
+height = 128.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gpxhm"]
 properties/0/path = NodePath(".:position")
@@ -23,8 +23,9 @@ ability_1 = 1
 controller = NodePath("PlayerController")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)
-texture = ExtResource("2_3wedb")
+unique_name_in_owner = true
+position = Vector2(10, 0)
+texture = ExtResource("2_tkvjb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ehwds")
