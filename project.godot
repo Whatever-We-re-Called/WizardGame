@@ -108,6 +108,13 @@ reload_scene={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="environment_static"
+2d_physics/layer_2="environment_fragile_foreground"
+2d_physics/layer_3="environment_fragile_background"
+2d_physics/layer_4="player"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
