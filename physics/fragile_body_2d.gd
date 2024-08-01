@@ -112,7 +112,6 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 	
 	var overlap_polygons = Geometry2D.intersect_polygons(global_collision_polygon, global_incoming_collision_polygon)
 	var overlap_polygon = overlap_polygons[0] if overlap_polygons.size() > 0 else []
-	print(overlap_polygon)
 	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
 
 
@@ -151,7 +150,6 @@ func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2
 	var texture_offset = sprite_polygon.texture_offset
 	var texture_scale = sprite_polygon.texture_scale
 	
-	print(overlap_polygon, " ", PolygonUtil.get_area_of_polygon(overlap_polygon))
 	if PolygonUtil.get_area_of_polygon(overlap_polygon) < minimum_shard_area:
 		var shard = _init_shard_piece(overlap_polygon, texture, texture_offset, texture_scale, true)
 		shards.append(shard)
