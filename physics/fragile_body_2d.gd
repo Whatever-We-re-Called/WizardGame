@@ -19,11 +19,8 @@ const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
 
 
 func _enter_tree():
-	# Scaling and using a parent node to counteract a weird Godot
-	# physics bug.
 	_init_scaling()
 	_update_collision_layer(self)
-	
 	
 	for child in get_children():
 		if child is CollisionPolygon2D:
@@ -88,10 +85,6 @@ func _break_apart_sprite(sprite_polygon: SpritePolygon2D, incoming_collision_pol
 	
 	# Create overlap polygon.
 	var overlap_polygon = _get_overlap_polygon(collision_polygon, incoming_collision_polygon)
-	if PolygonUtil.get_area_of_polygon(overlap_polygon) < MINIMUM_ALLOWED_AREA and PolygonUtil.get_area_of_polygon(collision_polygon.polygon) >= MINIMUM_ALLOWED_AREA:
-		return []
-	elif PolygonUtil.get_smallest_center_delta(overlap_polygon) < MINIMUM_ALLOWED_CENTER_DELTA and PolygonUtil.get_smallest_center_delta(collision_polygon.polygon) >= MINIMUM_ALLOWED_CENTER_DELTA:
-		return []
 	
 	# Create Delaunay.
 	var overlap_rect = PolygonUtil.get_rect_from_polygon(overlap_polygon)
@@ -119,6 +112,7 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 	
 	var overlap_polygons = Geometry2D.intersect_polygons(global_collision_polygon, global_incoming_collision_polygon)
 	var overlap_polygon = overlap_polygons[0] if overlap_polygons.size() > 0 else []
+	print(overlap_polygon)
 	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
 
 
@@ -157,8 +151,9 @@ func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2
 	var texture_offset = sprite_polygon.texture_offset
 	var texture_scale = sprite_polygon.texture_scale
 	
+	print(overlap_polygon, " ", PolygonUtil.get_area_of_polygon(overlap_polygon))
 	if PolygonUtil.get_area_of_polygon(overlap_polygon) < minimum_shard_area:
-		var shard = _init_shard_piece(overlap_polygon, texture, texture_offset, texture_scale)
+		var shard = _init_shard_piece(overlap_polygon, texture, texture_offset, texture_scale, true)
 		shards.append(shard)
 	else:
 		for site in sites:
@@ -213,6 +208,13 @@ func _create_new_sprite_polygons(sprite_polygon: SpritePolygon2D, collision_poly
 
 func _is_polygon_a_valid_shard(polygon: PackedVector2Array, check_nearby_collisions: bool = true) -> bool:
 	if PolygonUtil.get_area_of_polygon(polygon) < MINIMUM_ALLOWED_AREA:
+		if check_nearby_collisions == true:
+			var nearby_collisions = _get_nearby_collisions(NEARBY_CHECK_RANGE, polygon)
+			for collision in nearby_collisions:
+				if collision.collider is FragileBody2D:
+					return true
+		return false
+	elif PolygonUtil.get_smallest_center_delta(polygon) < MINIMUM_ALLOWED_CENTER_DELTA:
 		if check_nearby_collisions == true:
 			var nearby_collisions = _get_nearby_collisions(NEARBY_CHECK_RANGE, polygon)
 			for collision in nearby_collisions:
