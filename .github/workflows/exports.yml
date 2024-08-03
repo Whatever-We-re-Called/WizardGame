@@ -14,8 +14,8 @@ jobs:
     # Install OpenGL 3.3
     - name: Update packages
       run: sudo apt-get update
-    - name: Install packages
-      run: sudo apt-get install --fix-missing freeglut3-dev
+    - name: Install drivers
+      run: sudo ubuntu-drivers install
       
     - name: checkout
       uses: actions/checkout@v3.3.0
