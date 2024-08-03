@@ -14,7 +14,9 @@ jobs:
     # Install OpenGL 3.3
     - name: Update packages
       run: sudo apt-get update
-    - name: Install drivers
+    - name: Install drivers 1
+      run: sudo apt install ubuntu-drivers-common
+    - name: Install drivers 2
       run: sudo ubuntu-drivers install
       
     - name: checkout
