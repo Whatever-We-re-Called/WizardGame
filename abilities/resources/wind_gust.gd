@@ -48,7 +48,7 @@ func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id
 	
 	for shard in all_created_shards:
 		if shard is RigidBody2D:
-			_push_rigid_body(shard as RigidBody2D, executor_player, direction)
+			_push_rigid_body(shard, executor_player, direction)
 	
 	await get_tree().create_timer(1.0).timeout
 	area.call_deferred("queue_free")

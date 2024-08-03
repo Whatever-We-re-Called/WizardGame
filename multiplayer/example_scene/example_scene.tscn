@@ -204,7 +204,8 @@ position = Vector2(592, 184)
 scale = Vector2(2, 2)
 
 [node name="GreenBox3" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(184, 80)
+position = Vector2(-200, 112)
+layer = 1
 
 [node name="GreenBox4" parent="." instance=ExtResource("8_ydbpy")]
 position = Vector2(184, 144)

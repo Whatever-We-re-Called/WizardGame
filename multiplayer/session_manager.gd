@@ -21,7 +21,7 @@ signal server_closed
 var connection_strategy: MultiplayerConnectionStrategy
 var connected_clients = {}
 var connected: bool = false
-var debug = false
+var debug = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
