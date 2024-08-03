@@ -11,10 +11,15 @@ jobs:
     # Job name, can be anything
     name: Export Game
     steps:
-      # Always include the checkout step so that 
-      # your project is available for Godot to export
+    # Install OpenGL 3.3
+    - name: Update packages
+      run: sudo apt-get update
+    - name: Install packages
+      run: sudo apt-get install --fix-missing libgl1-mesa-dev
+      
     - name: checkout
       uses: actions/checkout@v3.3.0
+      
     - name: Set outputs
       id: vars1
       run: 
