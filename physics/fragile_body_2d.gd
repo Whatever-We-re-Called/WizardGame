@@ -1,10 +1,10 @@
 # Shard logic modified from https://www.reddit.com/r/godot/comments/nimkqg/how_to_break_a_2d_sprite_in_a_cool_and_easy_way/.
 class_name FragileBody2D extends RigidBody2D
 
-enum Layer { FOREGROUND, BACKGROUND }
+enum EnvironmentLayer { FRONT, BASE, BACK }
 
 @export_category("Shards")
-@export var layer: Layer
+@export var environment_layer: EnvironmentLayer = EnvironmentLayer.BASE
 @export_range(0, 200) var number_of_break_points: int = 5
 @export var edge_threshold: float = 10.0
 @export var length_limit: float = 20
@@ -20,7 +20,7 @@ const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
 
 func _enter_tree():
 	_init_scaling()
-	_update_collision_layer(self)
+	_update_environment_layer_physics(self, environment_layer)
 	
 	for child in get_children():
 		if child is CollisionPolygon2D:
@@ -40,21 +40,6 @@ func _init_scaling():
 	scale = Vector2.ONE
 
 
-func _update_collision_layer(body: PhysicsBody2D):
-	body.set_collision_layer_value(1, false)
-	match layer:
-		Layer.FOREGROUND:
-			body.set_collision_layer_value(2, true)
-			body.set_collision_layer_value(3, false)
-			PhysicsUtil.set_environment_collision_masks(body, true, false)
-			body.z_index = 0
-		Layer.BACKGROUND:
-			body.set_collision_layer_value(2, false)
-			body.set_collision_layer_value(3, true)
-			PhysicsUtil.set_environment_collision_masks(body, false, true)
-			body.z_index = -1
-
-
 func _init_multiplayer_handling():
 	var multiplayer_spawner = MultiplayerSpawner.new()
 	add_child(multiplayer_spawner)
@@ -62,6 +47,25 @@ func _init_multiplayer_handling():
 	multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
 	
 	pass
+
+
+func _update_environment_layer_physics(node: Node, environment_layer: EnvironmentLayer):
+	node.set_collision_layer_value(1, false)
+	node.set_collision_layer_value(2, environment_layer == EnvironmentLayer.FRONT)
+	node.set_collision_layer_value(3, environment_layer == EnvironmentLayer.BASE)
+	node.set_collision_layer_value(4, environment_layer == EnvironmentLayer.BACK)
+	node.set_collision_mask_value(1, true)
+	node.set_collision_mask_value(2, environment_layer == EnvironmentLayer.FRONT)
+	node.set_collision_mask_value(3, environment_layer == EnvironmentLayer.BASE)
+	node.set_collision_mask_value(4, environment_layer == EnvironmentLayer.BACK)
+	
+	match environment_layer:
+		EnvironmentLayer.FRONT:
+			node.z_index = 1
+		EnvironmentLayer.BASE:
+			node.z_index = 0
+		EnvironmentLayer.BACK:
+			node.z_index = -1
 
 
 func break_apart(incoming_collision_polygon: CollisionPolygon2D) -> Array[ShardPiece]:
@@ -170,7 +174,7 @@ func _init_shard_piece(shard_polygon: PackedVector2Array, texture: Texture2D, te
 	if not multiplayer.is_server(): return null
 	
 	var shard = SHARD_PIECE.instantiate()
-	_update_collision_layer(shard)
+	_update_environment_layer_physics(shard, environment_layer)
 	add_child(shard, true)
 	shard.init.rpc(shard_polygon, texture, texture_offset, texture_scale, disappear)
 	return shard

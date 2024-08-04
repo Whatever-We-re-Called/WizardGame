@@ -30,7 +30,7 @@ func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id
 	var executor_player = get_player(executor_peer_id)
 	
 	var area = Area2D.new()
-	PhysicsUtil.set_environment_collision_masks(area, true, true)
+	PhysicsUtil.set_environment_mask_to_all(area)
 	var collision_polygon = CollisionPolygon2D.new()
 	collision_polygon.polygon = calculated_polygon
 	area.add_child(collision_polygon)

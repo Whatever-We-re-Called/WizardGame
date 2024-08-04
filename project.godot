@@ -110,10 +110,11 @@ reload_scene={
 
 [layer_names]
 
-2d_physics/layer_1="environment_static"
-2d_physics/layer_2="environment_fragile_foreground"
-2d_physics/layer_3="environment_fragile_background"
-2d_physics/layer_4="player"
+2d_physics/layer_1="environment"
+2d_physics/layer_2="environment_layer_front"
+2d_physics/layer_3="environment_layer_base"
+2d_physics/layer_4="environment_layer_back"
+2d_physics/layer_5="player"
 
 [rendering]
 
