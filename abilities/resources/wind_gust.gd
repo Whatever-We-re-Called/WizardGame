@@ -34,6 +34,12 @@ func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id
 	var collision_polygon = CollisionPolygon2D.new()
 	collision_polygon.polygon = calculated_polygon
 	area.add_child(collision_polygon)
+	var sprite = Sprite2D.new()
+	sprite.global_position = executor_player.global_position
+	sprite.rotation = -direction.angle_to(Vector2.RIGHT)
+	sprite.texture = preload("res://abilities/textures/shitty_wind_gust_texture.png")
+	sprite.offset = Vector2(250, 0)
+	area.add_child(sprite)
 	add_child(area)
 	
 	await get_tree().physics_frame
