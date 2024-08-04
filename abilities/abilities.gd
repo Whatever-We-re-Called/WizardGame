@@ -51,7 +51,9 @@ static func load_all_abilities():
 			var file_name = result_string.substr(0, result_string.length() - 5)
 			var ability_type = Type.get(file_name.to_upper())
 			
-			load_ability(ability_type, load(resource_file_path))
+			# Added ".trim_suffix(".remap")" to fix a strange Godot 4.3 build 
+			# export bug.
+			load_ability(ability_type, load(resource_file_path.trim_suffix(".remap")))
 
 
 static func _get_all_ability_resource_file_paths(path: String) -> Array[String]:  
