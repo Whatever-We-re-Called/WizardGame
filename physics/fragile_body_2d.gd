@@ -3,7 +3,7 @@ class_name FragileBody2D extends RigidBody2D
 
 enum EnvironmentLayer { FRONT, BASE, BACK }
 
-@export_category("Shards")
+@export var health: int = 10
 @export var environment_layer: EnvironmentLayer = EnvironmentLayer.BASE
 @export_range(0, 200) var number_of_break_points: int = 5
 @export var edge_threshold: float = 10.0
@@ -68,7 +68,7 @@ func _update_environment_layer_physics(node: Node, environment_layer: Environmen
 			node.z_index = -1
 
 
-func break_apart(incoming_collision_polygon: CollisionPolygon2D) -> Array[ShardPiece]:
+func break_apart(incoming_collision_polygon: CollisionPolygon2D = null) -> Array[ShardPiece]:
 	var all_created_shards: Array[ShardPiece]
 	
 	var sprite_polygons_to_break: Array[SpritePolygon2D]
@@ -77,7 +77,11 @@ func break_apart(incoming_collision_polygon: CollisionPolygon2D) -> Array[ShardP
 			sprite_polygons_to_break.append(child)
 	
 	for sprite_polygon in sprite_polygons_to_break:
-		var created_shards = _break_apart_sprite(sprite_polygon, incoming_collision_polygon)
+		var created_shards: Array[ShardPiece]
+		if incoming_collision_polygon == null:
+			created_shards = _break_apart_sprite(sprite_polygon, sprite_polygon.connected_collision_polygon_2d)
+		else:
+			created_shards = _break_apart_sprite(sprite_polygon, incoming_collision_polygon)
 		all_created_shards.append_array(created_shards)
 	
 	return all_created_shards
@@ -240,3 +244,14 @@ func _get_nearby_collisions(check_range: float, polygon: PackedVector2Array) -> 
 	query.transform = check_transform
 	query.exclude = [self]
 	return space_state.intersect_shape(query)
+
+
+func damage(damage_dealt: int) -> Array[ShardPiece]:
+	if health <= 0: return []
+	
+	health -= damage_dealt
+	
+	if health <= 0:
+		return break_apart(null)
+	else:
+		return []
