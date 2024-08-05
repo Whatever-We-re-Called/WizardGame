@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jw6fujlxpeei"
-path="res://.godot/imported/shitty_wind_gust_texture.png-b903e9a1769fe5891b25c088399f99a0.ctex"
+uid="uid://dk5bqp8lelwcr"
+path="res://.godot/imported/shitty_wayback_point_texture.png-a7168b2c423d74e22f99c4be3b04322a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://abilities/textures/shitty_wind_gust_texture.png"
-dest_files=["res://.godot/imported/shitty_wind_gust_texture.png-b903e9a1769fe5891b25c088399f99a0.ctex"]
+source_file="res://abilities/textures/shitty_wayback_point_texture.png"
+dest_files=["res://.godot/imported/shitty_wayback_point_texture.png-a7168b2c423d74e22f99c4be3b04322a.ctex"]
 
 [params]
 

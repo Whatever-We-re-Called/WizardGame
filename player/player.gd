@@ -8,6 +8,7 @@ class_name Player extends CharacterBody2D
 @onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var ability_nodes = %AbilityNodes
 @onready var center_point = %CenterPoint
+@onready var ability_multiplayer_spawner: MultiplayerSpawner = %AbilityMultiplayerSpawner
 
 var im: DeviceInputMap
 
@@ -72,3 +73,7 @@ func get_pointer_direction() -> Vector2:
 
 func get_peer_id() -> int:
 	return int("" + name)
+
+
+func apply_central_impulse(force: Vector2):
+	velocity += force

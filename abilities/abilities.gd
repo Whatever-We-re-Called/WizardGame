@@ -11,7 +11,9 @@ extends Node
 # value on the bottom.
 enum Type {
 	NONE = 0,
-	WIND_GUST = 1
+	WIND_GUST = 1,
+	WAYBACK_POINT = 2,
+	REMOTE_LAND_MINE = 3
 }
 
 static var loaded_abilities = {}
