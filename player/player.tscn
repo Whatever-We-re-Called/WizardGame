@@ -23,6 +23,7 @@ floor_snap_length = 16.0
 script = ExtResource("1_v4k2b")
 ability_1 = 1
 ability_2 = 2
+ability_3 = 3
 controller = NodePath("PlayerController")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

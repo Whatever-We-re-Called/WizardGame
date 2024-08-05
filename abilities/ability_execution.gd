@@ -5,7 +5,7 @@ func _handle_input(player: Player, button_input: String):
 	pass
 
 
-func get_player(peer_id: int) -> Player:
+func get_executor_player() -> Player:
 	# TODO Improve this. Will require a better session/game handling
 	# system, I think. This works for now.
 	return get_parent().get_parent()

@@ -15,7 +15,7 @@ func _handle_input(player: Player, button_input: String):
 
 @rpc("any_peer", "call_local")
 func _place_wayback_point_scene(executor_peer_id: int):
-	var executor_player = get_player(executor_peer_id)
+	var executor_player = get_executor_player()
 	
 	current_wayback_point_scene = WAYBACK_POINT_SCENE.instantiate()
 	current_wayback_point_scene.global_position = executor_player.global_position
@@ -24,7 +24,9 @@ func _place_wayback_point_scene(executor_peer_id: int):
 
 @rpc("any_peer", "call_local")
 func _teleport_player_to_wayback_point(executor_peer_id: int):
-	var executor_player = get_player(executor_peer_id)
+	var executor_player = get_executor_player()
 	
 	executor_player.global_position = current_wayback_point_scene.global_position
+	executor_player.velocity = Vector2.ZERO
+	
 	current_wayback_point_scene.queue_free()

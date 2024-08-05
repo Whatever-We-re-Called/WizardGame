@@ -144,3 +144,14 @@ static func get_rotated_polygon(polygon: PackedVector2Array, angle: float):
 		result.append(point.rotated(angle))
 	
 	return result
+
+
+static func get_polygon_from_radius(point_count: int, radius: float) -> PackedVector2Array:
+	var result: PackedVector2Array
+	
+	for i in range(point_count):
+		var angle = deg_to_rad(i * (360.0 / float(point_count)))
+		var new_point = (Vector2.UP * radius).rotated(angle)
+		result.append(new_point)
+	
+	return result
