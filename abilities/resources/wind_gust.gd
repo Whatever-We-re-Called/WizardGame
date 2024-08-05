@@ -69,7 +69,8 @@ func _push_rigid_body(rigid_body: RigidBody2D, executor_player: Player, directio
 
 
 func _push_player(player: Player, executor_player: Player, direction: Vector2):
-	var push_force = _get_push_force(player, executor_player) * 3.0
+	var push_force = _get_push_force(player, executor_player) *  3.0
+	player.velocity = Vector2.ZERO
 	player.apply_central_impulse(direction * push_force)
 
 

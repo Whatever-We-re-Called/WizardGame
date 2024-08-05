@@ -41,7 +41,7 @@ func _explode_remote_land_mine():
 	var sprite = Sprite2D.new()
 	sprite.texture = preload("res://abilities/textures/shitty_remote_land_mine_explosion_texture.png")
 	area.add_child(sprite)
-	add_child(area)
+	call_deferred("add_child", area)
 	
 	await get_tree().physics_frame
 	await get_tree().physics_frame
@@ -71,7 +71,8 @@ func _push_rigid_body(rigid_body: RigidBody2D, executor_player: Player, directio
 
 
 func _push_player(player: Player, executor_player: Player, direction: Vector2):
-	var push_force = _get_push_force(player, executor_player) * 2.0
+	var push_force = _get_push_force(player, executor_player) * 2.5
+	player.velocity = Vector2.ZERO
 	player.apply_central_impulse(direction * push_force)
 
 
