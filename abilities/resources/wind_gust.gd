@@ -47,14 +47,14 @@ func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id
 	await get_tree().physics_frame
 	var all_created_shards: Array[ShardPiece]
 	for overlapping_body in area.get_overlapping_bodies():
+		print(overlapping_body)
 		if overlapping_body is FragileBody2D:
 			var created_shards = overlapping_body.break_apart(collision_polygon)
 			all_created_shards.append_array(created_shards)
 		elif overlapping_body is RigidBody2D:
 			_push_rigid_body(overlapping_body, executor_player, direction)
-		elif overlapping_body is FragileBody2D:
-			print("!")
-			_push_character_body(overlapping_body, executor_player, direction)
+		elif overlapping_body is Player and overlapping_body != executor_player:
+			_push_player(overlapping_body, executor_player, direction)
 	
 	for shard in all_created_shards:
 		if shard is RigidBody2D:
@@ -69,9 +69,9 @@ func _push_rigid_body(rigid_body: RigidBody2D, executor_player: Player, directio
 	rigid_body.apply_central_impulse(direction * push_force)
 
 
-func _push_character_body(character_body: CharacterBody2D, executor_player: Player, direction: Vector2):
-	var push_force = _get_push_force(character_body, executor_player)
-	character_body.apply_central_impulse(direction * push_force)
+func _push_player(player: Player, executor_player: Player, direction: Vector2):
+	var push_force = _get_push_force(player, executor_player) * 3.0
+	player.apply_central_impulse(direction * push_force)
 
 
 func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:
