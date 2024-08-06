@@ -8,9 +8,11 @@ const WAYBACK_POINT_SCENE = preload("res://abilities/scenes/wayback_point_scene.
 func _handle_input(player: Player, button_input: String):
 	if Input.is_action_just_pressed(button_input):
 		if current_wayback_point_scene == null:
-			_place_wayback_point_scene.rpc(player.get_peer_id())
+			if not is_on_cooldown():
+				_place_wayback_point_scene.rpc(player.get_peer_id())
 		else:
 			_teleport_player_to_wayback_point.rpc(player.get_peer_id())
+			start_cooldown()
 
 
 @rpc("any_peer", "call_local")

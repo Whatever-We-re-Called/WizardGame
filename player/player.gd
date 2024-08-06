@@ -55,6 +55,7 @@ func update_ability_nodes():
 			ability_nodes.get_child(i).set_script(null)
 		else:
 			ability_nodes.get_child(i).set_script(Abilities.get_ability(ability).execution_script)
+			ability_nodes.get_child(i).setup(Abilities.get_ability(ability))
 
 
 func get_center_global_position() -> Vector2:

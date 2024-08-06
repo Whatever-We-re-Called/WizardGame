@@ -7,4 +7,5 @@
 script = ExtResource("2_om3ra")
 name = "Wayback Point"
 description = "ahhhh poopy stinky teehee"
+cooldown = 4.0
 execution_script = ExtResource("1_1pwvj")

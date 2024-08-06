@@ -8,9 +8,11 @@ const REMOTE_LAND_MINE_SCENE = preload("res://abilities/scenes/remote_land_mine_
 func _handle_input(player: Player, button_input: String):
 	if Input.is_action_just_pressed(button_input):
 		if current_remote_land_mine_scene == null:
-			_place_remote_land_mine.rpc(player.get_peer_id())
+			if not is_on_cooldown():
+				_place_remote_land_mine.rpc(player.get_peer_id())
 		else:
 			_explode_remote_land_mine.rpc()
+			start_cooldown()
 
 
 @rpc("any_peer", "call_local")
@@ -85,6 +87,5 @@ func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:
 
 
 func _remote_land_mine_triggered(body: Node):
-	print(body)
 	if body != get_executor_player() and body != current_remote_land_mine_scene:
 		_explode_remote_land_mine.rpc()
