@@ -7,5 +7,5 @@
 script = ExtResource("2_ptkx2")
 name = "Remote Land Mine"
 description = "ahhhh poopy stinky teehee"
-cooldown = 4.0
+cooldown = 3.0
 execution_script = ExtResource("1_gsn8l")
