@@ -11,14 +11,6 @@ jobs:
     # Job name, can be anything
     name: Export Game
     steps:
-    # Install OpenGL 3.3
-    - name: Update packages
-      run: sudo apt-get update
-    - name: Install drivers 1
-      run: sudo apt install ubuntu-drivers-common
-    - name: Install drivers 2
-      run: sudo ubuntu-drivers install
-      
     - name: checkout
       uses: actions/checkout@v3.3.0
       
@@ -33,8 +25,8 @@ jobs:
       uses: firebelley/godot-export@v5.2.1
       with:
         # Defining all the required inputs
-        godot_executable_download_url: https://github.com/godotengine/godot-builds/releases/download/4.3-rc1/Godot_v4.3-rc1_linux.x86_64.zip
-        godot_export_templates_download_url: https://github.com/godotengine/godot-builds/releases/download/4.3-rc1/Godot_v4.3-rc1_export_templates.tpz
+        godot_executable_download_url: https://github.com/godotengine/godot-builds/releases/download/4.3-rc2/Godot_v4.3-rc2_linux.x86_64.zip
+        godot_export_templates_download_url: https://github.com/godotengine/godot-builds/releases/download/4.3-rc2/Godot_v4.3-rc2_export_templates.tpz
         relative_project_path: ./
         archive_output: true
 
