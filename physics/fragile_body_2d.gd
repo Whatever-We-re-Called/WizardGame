@@ -55,9 +55,9 @@ func _update_environment_layer_physics(node: Node, environment_layer: Environmen
 	node.set_collision_layer_value(3, environment_layer == EnvironmentLayer.BASE)
 	node.set_collision_layer_value(4, environment_layer == EnvironmentLayer.BACK)
 	node.set_collision_mask_value(1, true)
-	node.set_collision_mask_value(2, environment_layer == EnvironmentLayer.FRONT)
-	node.set_collision_mask_value(3, environment_layer == EnvironmentLayer.BASE)
-	node.set_collision_mask_value(4, environment_layer == EnvironmentLayer.BACK)
+	node.set_collision_mask_value(2, environment_layer != EnvironmentLayer.BACK)
+	node.set_collision_mask_value(3, true)
+	node.set_collision_mask_value(4, environment_layer != EnvironmentLayer.FRONT)
 	
 	match environment_layer:
 		EnvironmentLayer.FRONT:

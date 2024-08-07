@@ -19,7 +19,7 @@ z_index = -100
 custom_minimum_size = Vector2(1920, 1080)
 offset_right = 1920.0
 offset_bottom = 1080.0
-color = Color(0.392157, 0.392157, 0.392157, 1)
+color = Color(0.352941, 0.352941, 0.352941, 1)
 
 [node name="BreakableNode" type="Node" parent="."]
 
