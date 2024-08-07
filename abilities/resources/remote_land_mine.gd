@@ -77,7 +77,8 @@ func _push_player(player: Player, executor_player: Player, direction: Vector2):
 	player.velocity = Vector2.ZERO
 	player.apply_central_impulse(direction * push_force)
 
-
+# TODO Revisit game feel of this (literally just inappropriately copied
+# from wind_gust.gd.
 func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:
 	var distance = executor_player.global_position.distance_to(body.global_position)
 	var distance_ratio = 1.0 - (distance / 500.0)
