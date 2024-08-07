@@ -203,14 +203,6 @@ position = Vector2(248, 80)
 position = Vector2(592, 184)
 scale = Vector2(2, 2)
 
-[node name="GreenBox3" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(-200, 112)
-environment_layer = 0
-
-[node name="GreenBox4" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(184, 144)
-environment_layer = 2
-
 [node name="FirstPrototypeFragilePart1" parent="." instance=ExtResource("10_a1ean")]
 position = Vector2(-960, -16)
 

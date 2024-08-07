@@ -215,13 +215,13 @@ func _is_polygon_a_valid_shard(polygon: PackedVector2Array, check_nearby_collisi
 				if collision.collider is FragileBody2D:
 					return true
 		return false
-	elif PolygonUtil.get_smallest_center_delta(polygon) < MINIMUM_ALLOWED_CENTER_DELTA:
-		if check_nearby_collisions == true:
-			var nearby_collisions = _get_nearby_collisions(NEARBY_CHECK_RANGE, polygon)
-			for collision in nearby_collisions:
-				if collision.collider is FragileBody2D:
-					return true
-		return false
+	#elif PolygonUtil.get_smallest_center_delta(polygon) < MINIMUM_ALLOWED_CENTER_DELTA:
+		#if check_nearby_collisions == true:
+			#var nearby_collisions = _get_nearby_collisions(NEARBY_CHECK_RANGE, polygon)
+			#for collision in nearby_collisions:
+				#if collision.collider is FragileBody2D:
+					#return true
+		#return false
 	else:
 		return true
 

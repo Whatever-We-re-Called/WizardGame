@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_x53bc"]
 [ext_resource type="PackedScene" uid="uid://438vb86uyyob" path="res://environment/prototype_second_concept_level/scenes/boat.tscn" id="2_1q5kc"]
-[ext_resource type="Script" path="res://player/player.gd" id="3_i5xw2"]
+[ext_resource type="PackedScene" uid="uid://5kswkk5balu6" path="res://player/player.tscn" id="3_5741k"]
 
 [node name="PrototypeSecondConceptLevel" type="RigidBody2D"]
 script = ExtResource("1_x53bc")
 
 [node name="Boat" parent="." instance=ExtResource("2_1q5kc")]
 
-[node name="Player" type="CharacterBody2D" parent="."]
-script = ExtResource("3_i5xw2")
+[node name="Player" parent="." instance=ExtResource("3_5741k")]
+position = Vector2(223, 464)
