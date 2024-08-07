@@ -2,7 +2,6 @@
 class_name ShardPiece extends RigidBody2D
 
 var sprite_polygon: SpritePolygon2D
-var collision_polygon_2d: CollisionPolygon2D
 var disappear: bool
 var disappear_timer: Timer
 
@@ -13,21 +12,23 @@ const DISAPPEAR_DURATION = 1.0
 @rpc("any_peer", "call_local", "reliable")
 func init(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2, disappear: bool = false):
 	self.sprite_polygon = %SpritePolygon2D
-	self.collision_polygon_2d = %CollisionPolygon2D
 	self.disappear = disappear
 	
-	# Polygon2D
-	sprite_polygon.polygon = polygon
-	sprite_polygon.texture = texture
-	sprite_polygon.texture_offset = texture_offset
-	sprite_polygon.texture_scale = texture_scale
+	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(polygon, global_position)
+	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
+	global_position += position_delta
+	var corrected_polygon = PolygonUtil.get_translated_polygon(polygon, -position_delta)
 	
-	# CollisionPolygon2D
-	collision_polygon_2d.polygon = polygon
+	# SpritePolygon2D
+	sprite_polygon.polygon = corrected_polygon
+	sprite_polygon.texture = texture
+	sprite_polygon.texture_offset = texture_offset + position_delta
+	sprite_polygon.texture_scale = texture_scale
+	sprite_polygon.update_collision_polygon()
 	
 	# RigidBody2D
 	center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
-	center_of_mass = PolygonUtil.get_center_of_polygon(polygon)
+	center_of_mass = PolygonUtil.get_center_of_polygon(corrected_polygon)
 	
 	contact_monitor = true
 	max_contacts_reported = 4

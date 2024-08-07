@@ -193,10 +193,10 @@ func _create_new_sprite_polygons(sprite_polygon: SpritePolygon2D, collision_poly
 			non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
 			
 			var new_sprite_polygon = SpritePolygon2D.new()
+			new_sprite_polygon.polygon = non_overlap_polygon
 			new_sprite_polygon.texture = sprite_polygon.texture
 			new_sprite_polygon.texture_offset = sprite_polygon.texture_offset
 			new_sprite_polygon.texture_scale = sprite_polygon.texture_scale
-			new_sprite_polygon.polygon = non_overlap_polygon
 			add_child(new_sprite_polygon)
 		else:
 			var new_shard = _init_shard_piece(non_overlap_polygon, sprite_polygon.texture, sprite_polygon.texture_offset, sprite_polygon.texture_scale, true)

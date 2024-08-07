@@ -4,7 +4,8 @@ var connected_collision_polygon_2d: CollisionPolygon2D
 
 
 func _ready() -> void:
-	create_connected_polygon()
+	if connected_collision_polygon_2d == null:
+		update_collision_polygon()
 
 
 func update_scaling(new_scale):
@@ -15,21 +16,18 @@ func update_scaling(new_scale):
 	texture_offset *= new_scale
 	
 	if connected_collision_polygon_2d == null:
-		create_connected_polygon(scaled_polygon)
+		update_collision_polygon()
 	else:
 		connected_collision_polygon_2d.polygon = scaled_polygon
 
 
-func create_connected_polygon(polygon_override: PackedVector2Array = []) -> void:
-	if connected_collision_polygon_2d != null: return
-	
-	connected_collision_polygon_2d = CollisionPolygon2D.new()
-	if polygon_override.is_empty():
+func update_collision_polygon() -> void:
+	if connected_collision_polygon_2d == null:
+		connected_collision_polygon_2d = CollisionPolygon2D.new()
 		connected_collision_polygon_2d.polygon = polygon
+		get_parent().add_child.call_deferred(connected_collision_polygon_2d)
 	else:
-		connected_collision_polygon_2d.polygon = polygon_override
-	
-	get_parent().add_child.call_deferred(connected_collision_polygon_2d)
+		connected_collision_polygon_2d.polygon = polygon
 
 
 func kill():

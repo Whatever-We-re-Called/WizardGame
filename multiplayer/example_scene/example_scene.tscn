@@ -194,10 +194,10 @@ _spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../Players")
 
 [node name="GreenBox" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(248, 144)
+position = Vector2(-208, 144)
 
 [node name="GreenBox2" parent="." instance=ExtResource("8_ydbpy")]
-position = Vector2(248, 80)
+position = Vector2(-208, 80)
 
 [node name="GreenBox5" parent="." instance=ExtResource("8_ydbpy")]
 position = Vector2(592, 184)

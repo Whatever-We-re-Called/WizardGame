@@ -155,3 +155,12 @@ static func get_polygon_from_radius(point_count: int, radius: float) -> PackedVe
 		result.append(new_point)
 	
 	return result
+
+
+static func get_translated_polygon(polygon: PackedVector2Array, translation: Vector2) -> PackedVector2Array:
+	var result: PackedVector2Array
+	
+	for point in polygon:
+		result.append(Vector2(point.x + translation.x, point.y + translation.y))
+	
+	return result
