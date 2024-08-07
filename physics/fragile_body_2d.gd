@@ -198,11 +198,6 @@ func _create_new_sprite_polygons(sprite_polygon: SpritePolygon2D, collision_poly
 			new_sprite_polygon.texture_scale = sprite_polygon.texture_scale
 			new_sprite_polygon.polygon = non_overlap_polygon
 			add_child(new_sprite_polygon)
-			
-			var new_collision_polygon = CollisionPolygon2D.new()
-			new_collision_polygon.polygon = non_overlap_polygon
-			add_child(new_collision_polygon)
-			new_sprite_polygon.connected_collision_polygon_2d = new_collision_polygon
 		else:
 			var new_shard = _init_shard_piece(non_overlap_polygon, sprite_polygon.texture, sprite_polygon.texture_offset, sprite_polygon.texture_scale, true)
 			potential_new_shards.append(new_shard)

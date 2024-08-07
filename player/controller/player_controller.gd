@@ -101,7 +101,7 @@ func _handle_air_horizontal_movement(input_direction: Vector2, delta: float):
 func _handle_jump():
 	if Input.is_action_just_pressed(player.im.jump):
 		jump_buffer.start()
-		
+	
 	if (player.is_on_floor() or not coyote_timer.is_stopped()) and not jump_buffer.is_stopped():
 		player.velocity.y = jump_velocity
 		jump_buffer.stop()
