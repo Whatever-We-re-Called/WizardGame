@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://0hfksywaknru"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_kf5ti"]
+[ext_resource type="Texture2D" uid="uid://khr78o5pb63n" path="res://environment/prototype_second_concept_level/textures/dock.png" id="2_v4twk"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_t7uh4"]
+
+[node name="Dock" type="RigidBody2D"]
+script = ExtResource("1_kf5ti")
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_v4twk")
+polygon = PackedVector2Array(1102, 966, 1105, 939, 1136, 940, 1136, 893, 1174, 893, 1175, 939, 1375, 937, 1379, 889, 1418, 891, 1421, 937, 1614, 934, 1618, 896, 1654, 897, 1654, 934, 1830, 933, 1830, 897, 1866, 898, 1868, 930, 1921, 932, 1921, 970, 1868, 971, 1864, 1031, 1829, 1031, 1829, 969, 1653, 975, 1652, 1023, 1645, 1031, 1629, 1035, 1614, 1025, 1614, 973, 1611, 971, 1421, 978, 1419, 1030, 1378, 1030, 1375, 978, 1177, 984, 1177, 1030, 1137, 1031, 1135, 986, 1105, 985)
+script = ExtResource("3_t7uh4")

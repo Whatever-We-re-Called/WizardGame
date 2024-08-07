@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://inynjvfgstah" path="res://environment/prototype_second_concept_level/textures/cabin.png" id="2_tn0eq"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_we0ls"]
 
-[node name="Boat" type="RigidBody2D"]
+[node name="Cabin" type="RigidBody2D"]
 script = ExtResource("1_1jcu6")
+environment_layer = 2
 
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 texture = ExtResource("2_tn0eq")

@@ -22,12 +22,13 @@ func update_scaling(new_scale):
 
 
 func update_collision_polygon() -> void:
+	var new_collision_polygon = PolygonUtil.get_translated_polygon(polygon, offset)
 	if connected_collision_polygon_2d == null:
 		connected_collision_polygon_2d = CollisionPolygon2D.new()
-		connected_collision_polygon_2d.polygon = polygon
+		connected_collision_polygon_2d.polygon = new_collision_polygon
 		get_parent().add_child.call_deferred(connected_collision_polygon_2d)
 	else:
-		connected_collision_polygon_2d.polygon = polygon
+		connected_collision_polygon_2d.polygon = new_collision_polygon
 
 
 func kill():

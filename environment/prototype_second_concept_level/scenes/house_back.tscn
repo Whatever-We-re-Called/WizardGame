@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://h274jeu5m5ln"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_soiah"]
+[ext_resource type="Texture2D" uid="uid://c1vqrgye34xj1" path="res://environment/prototype_second_concept_level/textures/house_back.png" id="2_407s3"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_iiytv"]
+
+[node name="HouseBack" type="RigidBody2D"]
+script = ExtResource("1_soiah")
+environment_layer = 2
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_407s3")
+polygon = PackedVector2Array(1297, 623, 1340, 532, 1410, 540, 1464, 533, 1467, 520, 1513, 521, 1514, 495, 1520, 492, 1520, 481, 1511, 480, 1512, 463, 1555, 462, 1561, 466, 1562, 476, 1552, 480, 1552, 490, 1559, 491, 1556, 516, 1580, 516, 1580, 508, 1594.72, 505.487, 1611, 508, 1609.78, 433.095, 1615, 433, 1615, 418, 1603, 416, 1605, 393, 1670, 394, 1670, 421, 1658, 421, 1657, 434, 1663, 435, 1662, 479, 1664, 521, 1657, 521, 1658, 538, 1641, 560, 1641, 570, 1636, 570, 1622, 585, 1603, 609, 1604, 617, 1585, 632, 1585, 646, 1577, 655, 1575, 666, 1568, 666, 1551, 688, 1554.24, 692.144, 1550, 700, 1541, 705, 1537, 713, 1542, 716, 1556, 710, 1568, 725, 1582, 742, 1583, 759, 1576, 768, 1577.59, 781.246, 1574, 788, 1581, 789, 1585, 801, 1580, 820, 1586, 822, 1588, 843, 1579, 858, 1584, 883, 1569, 923, 1567, 938, 1429, 941, 1425, 814, 1357, 764, 1351, 778, 1312, 778, 1282, 772, 1302, 706, 1294, 705, 1302, 673, 1312, 626)
+script = ExtResource("3_iiytv")
