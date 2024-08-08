@@ -125,11 +125,11 @@ func _handle_abilities():
 func _handle_debug():
 	if Input.is_action_just_pressed(player.im.debug_1):
 		player.received_debug_input.emit(1)
-	if Input.is_action_just_pressed(player.im.debug_1):
+	if Input.is_action_just_pressed(player.im.debug_2):
 		player.received_debug_input.emit(2)
-	if Input.is_action_just_pressed(player.im.debug_1):
+	if Input.is_action_just_pressed(player.im.debug_3):
 		player.received_debug_input.emit(3)
-	if Input.is_action_just_pressed(player.im.debug_1):
+	if Input.is_action_just_pressed(player.im.debug_4):
 		player.received_debug_input.emit(4)
 
 

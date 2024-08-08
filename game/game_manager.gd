@@ -70,18 +70,22 @@ func load_random_level():
 	var rng = RandomNumberGenerator.new()
 	var chosen_level = temp_level_pool[rng.randi_range(0, temp_level_pool.size() - 1)]
 	
-	print("A")
 	_change_scene_to_level.rpc(chosen_level.resource_path)
 
 
 @rpc("any_peer", "call_local")
 func _change_scene_to_level(new_level_resource_path: String):
-	print("B")
-	print(new_level_resource_path)
 	_clear_active_scene()
 	var new_level_scene = load(new_level_resource_path).instantiate()
 	new_level_scene.game_manager = self
-	active_scene.add_child(new_level_scene)
+	active_scene.add_child(new_level_scene, true)
+
+
+@rpc("any_peer", "call_local")
+func _change_scene_to_wait_lobby():
+	_clear_active_scene()
+	var new_level_scene = load("res://game/wait_lobby/wait_lobby.tscn").instantiate()
+	active_scene.add_child(new_level_scene, true)
 
 
 func _clear_active_scene():
@@ -102,3 +106,5 @@ func _handle_player_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
 			load_random_level.rpc_id(1)
+		2:
+			_change_scene_to_wait_lobby.rpc()
