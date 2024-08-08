@@ -124,6 +124,7 @@ func _handle_abilities():
 
 func _handle_debug():
 	if Input.is_action_just_pressed(player.im.debug_1):
+		print(player.name)
 		player.received_debug_input.emit(1)
 	if Input.is_action_just_pressed(player.im.debug_2):
 		player.received_debug_input.emit(2)

@@ -39,13 +39,19 @@ func _add_player(data):
 		var player = PLAYER_SCENE.instantiate()
 		player.name = str(data.peer_id)
 		player.peer_id = data.peer_id
-		player.received_debug_input.connect(_handle_player_debug_input)
 		players_root.add_child(player, true)
 		
 		if data.has("device_ids"):
 			player.set_device(data.device_ids)
 		
 		teleport_player_to_random_spawn_point.rpc_id(1, data.peer_id)
+		_handle_add_player_signals.rpc()
+
+
+@rpc("any_peer", "call_local")
+func _handle_add_player_signals():
+	for player in players:
+		player.received_debug_input.connect(_handle_player_debug_input)
 
 
 func _remove_player(id):
@@ -98,8 +104,9 @@ func teleport_player_to_random_spawn_point(peer_id: int):
 
 
 func _handle_player_debug_input(debug_value: int) -> void:
+	print("handle: ", debug_value)
 	match debug_value:
 		1:
 			load_random_level.rpc_id(1)
 		2:
-			_change_to_playable_scene.rpc("res://game/wait_lobby/wait_lobby.tscn")
+			_change_to_playable_scene.rpc_id(1, "res://game/wait_lobby/wait_lobby.tscn")
