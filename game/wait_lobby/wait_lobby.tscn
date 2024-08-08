@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
 
+[ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://level/spawn_points.tscn" id="1_qggt3"]
 [ext_resource type="Script" path="res://game/wait_lobby/ui/ui.gd" id="2_4rllb"]
 [ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="3_hph5r"]
 [ext_resource type="Script" path="res://game/wait_lobby/ui/ip.gd" id="4_8sotc"]
@@ -10,8 +11,12 @@
 [ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://environment/prototype_generic/green_box.tscn" id="9_fusdj"]
 [ext_resource type="PackedScene" uid="uid://bh583te3i166d" path="res://environment/prototype_first_concept_level/first_prototype_fragile_part_1.tscn" id="10_sv10l"]
 
-[node name="WaitLobby" type="Node2D"]
-position = Vector2(960, 540)
+[node name="WaitLobby" type="Node"]
+
+[node name="SpawnPoints" parent="." instance=ExtResource("1_qggt3")]
+
+[node name="Node2D" type="Node2D" parent="SpawnPoints"]
+position = Vector2(960, 576)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -163,8 +168,10 @@ focus_mode = 0
 text = "TOGGLE UI"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(960, 540)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-975, 429, -500, 432, -321, 346, -278, 459, -140, 399, -20, 378, 52, 378, 163, 407, 254, 465, 314, 340, 489, 432, 985, 432, 990, 588, -990, 581)
@@ -179,24 +186,26 @@ polygon = PackedVector2Array(960, 120, 970, -562, 665, -558, 753, -375, 804, -25
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -10
+position = Vector2(960, 540)
 texture = ExtResource("7_oy4lr")
 
 [node name="ForegroundBackground" type="Sprite2D" parent="."]
 z_index = -9
+position = Vector2(960, 540)
 texture = ExtResource("8_6ha4y")
 
 [node name="GreenBox" parent="." instance=ExtResource("9_fusdj")]
-position = Vector2(-208, 144)
+position = Vector2(752, 684)
 
 [node name="GreenBox2" parent="." instance=ExtResource("9_fusdj")]
-position = Vector2(-208, 80)
+position = Vector2(752, 620)
 
 [node name="GreenBox5" parent="." instance=ExtResource("9_fusdj")]
-position = Vector2(592, 184)
+position = Vector2(1552, 724)
 scale = Vector2(2, 2)
 
 [node name="FirstPrototypeFragilePart1" parent="." instance=ExtResource("10_sv10l")]
-position = Vector2(-960, -16)
+position = Vector2(0, 524)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]

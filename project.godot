@@ -35,6 +35,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg", "res://addons/rigidbody_auto_scaler/plugin.cfg")
 
+[global_group]
+
+spawn_points=""
+
 [input]
 
 ui_accept={

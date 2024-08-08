@@ -12,16 +12,17 @@ signal received_debug_input(int)
 @onready var center_point = %CenterPoint
 @onready var ability_multiplayer_spawner: MultiplayerSpawner = %AbilityMultiplayerSpawner
 
+var peer_id: int
 var im: DeviceInputMap
 
 
 func _enter_tree():
 	var peer_id = name.to_int()
+	
+	im = DeviceInputMap.new(self, peer_id, [0, 2])
 	if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
 		set_multiplayer_authority(peer_id, true)
 	$RichTextLabel.text = "[center]" + name
-	
-	im = DeviceInputMap.new(self, peer_id, [0, 2])
 
 
 func _ready():
@@ -80,3 +81,8 @@ func get_peer_id() -> int:
 
 func apply_central_impulse(force: Vector2):
 	velocity += force
+
+
+@rpc("any_peer", "call_local")
+func teleport(target_global_position: Vector2):
+	global_position = target_global_position

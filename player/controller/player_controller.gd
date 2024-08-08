@@ -51,8 +51,8 @@ func handle_physics(delta):
 	_handle_debug()
 	
 	player.move_and_slide()
-	
-	
+
+
 func handle_post_physics(delta):
 	if was_on_floor and not player.is_on_floor():
 		coyote_timer.start()

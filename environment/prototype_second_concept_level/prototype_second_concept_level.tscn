@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://tjmncfnms2m0"]
+[gd_scene load_steps=11 format=3 uid="uid://tjmncfnms2m0"]
 
+[ext_resource type="Script" path="res://level/level.gd" id="1_7fumv"]
 [ext_resource type="PackedScene" uid="uid://438vb86uyyob" path="res://environment/prototype_second_concept_level/scenes/boat.tscn" id="2_1q5kc"]
+[ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://level/spawn_points.tscn" id="2_sr0yk"]
 [ext_resource type="PackedScene" uid="uid://6ghlx0yjaura" path="res://environment/prototype_second_concept_level/scenes/cabin.tscn" id="4_8ast6"]
 [ext_resource type="PackedScene" uid="uid://dctvxxi12kxdr" path="res://environment/prototype_second_concept_level/scenes/crane.tscn" id="5_istq4"]
 [ext_resource type="PackedScene" uid="uid://0hfksywaknru" path="res://environment/prototype_second_concept_level/scenes/dock.tscn" id="6_e5qqf"]
@@ -9,7 +11,32 @@
 [ext_resource type="PackedScene" uid="uid://c5aa4xug8sp3b" path="res://environment/prototype_second_concept_level/scenes/rope.tscn" id="9_cu1v8"]
 [ext_resource type="Texture2D" uid="uid://cktfkodn4sbpo" path="res://environment/prototype_second_concept_level/textures/water.png" id="9_lydpb"]
 
-[node name="PrototypeSecondConceptLevel" type="Node"]
+[node name="PrototypeSecondConceptLevel" type="Node" node_paths=PackedStringArray("spawn_points")]
+script = ExtResource("1_7fumv")
+spawn_points = NodePath("SpawnPoints")
+
+[node name="SpawnPoints" parent="." instance=ExtResource("2_sr0yk")]
+
+[node name="Node2D" type="Node2D" parent="SpawnPoints"]
+position = Vector2(147, 753)
+
+[node name="Node2D2" type="Node2D" parent="SpawnPoints"]
+position = Vector2(362, 766)
+
+[node name="Node2D3" type="Node2D" parent="SpawnPoints"]
+position = Vector2(588, 814)
+
+[node name="Node2D4" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1008, 814)
+
+[node name="Node2D5" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1283, 829)
+
+[node name="Node2D6" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1499, 837)
+
+[node name="Node2D7" type="Node2D" parent="SpawnPoints"]
+position = Vector2(1791, 189)
 
 [node name="Background" type="ColorRect" parent="."]
 z_index = -100

@@ -59,8 +59,8 @@ func _explode_remote_land_mine():
 			_push_player(overlapping_body, executor_player, direction)
 	
 	for shard in all_created_shards:
-		var direction = (shard.global_position - remote_land_mine_global_position).normalized()
 		if shard is RigidBody2D:
+			var direction = (shard.global_position - remote_land_mine_global_position).normalized()
 			_push_rigid_body(shard, executor_player, direction)
 	
 	await get_tree().create_timer(1.0).timeout
