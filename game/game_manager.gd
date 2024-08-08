@@ -104,9 +104,10 @@ func teleport_player_to_random_spawn_point(peer_id: int):
 
 
 func _handle_player_debug_input(debug_value: int) -> void:
-	print("handle: ", debug_value)
 	match debug_value:
 		1:
-			load_random_level.rpc_id(1)
+			if multiplayer.is_server():
+				load_random_level.rpc_id(1)
 		2:
-			_change_to_playable_scene.rpc_id(1, "res://game/wait_lobby/wait_lobby.tscn")
+			if multiplayer.is_server():
+				_change_to_playable_scene.rpc_id(1, "res://game/wait_lobby/wait_lobby.tscn")
