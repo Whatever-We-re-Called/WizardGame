@@ -6,6 +6,7 @@ const MAX_PUSH_FORCE = 750.0
 func _handle_input(player: Player, button_input: String):
 	if Input.is_action_just_pressed(button_input) and not is_on_cooldown():
 		var direction = player.get_pointer_direction()
+		print(_calculate_wind_gust)
 		_calculate_wind_gust.rpc_id(1, player.get_peer_id(), direction)
 		start_cooldown()
 

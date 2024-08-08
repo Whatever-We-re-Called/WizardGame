@@ -9,6 +9,7 @@ func _handle_input(player: Player, button_input: String):
 	if Input.is_action_just_pressed(button_input):
 		if current_remote_land_mine_scene == null:
 			if not is_on_cooldown():
+				print(_place_remote_land_mine)
 				_place_remote_land_mine.rpc(player.get_peer_id())
 		else:
 			_explode_remote_land_mine.rpc()

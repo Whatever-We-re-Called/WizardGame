@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=8 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
+[ext_resource type="Script" path="res://player/change_abilities_panel.gd" id="2_5idy2"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
 [ext_resource type="Texture2D" uid="uid://d2kdvrnsglfkg" path="res://player/textures/prototype_player.png" id="2_tkvjb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0pup"]
+bg_color = Color(0.295867, 0.295866, 0.295866, 0.784314)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
 radius = 36.0
@@ -25,6 +29,68 @@ ability_1 = 1
 ability_2 = 2
 ability_3 = 3
 controller = NodePath("PlayerController")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ChangeAbilitiesPanel" type="PanelContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b0pup")
+script = ExtResource("2_5idy2")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ChangeAbilitiesPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Ability #1"
+
+[node name="Ability1OptionButton" type="OptionButton" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(192, 37)
+layout_mode = 2
+focus_mode = 0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Ability #2"
+
+[node name="Ability2OptionButton" type="OptionButton" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(192, 37)
+layout_mode = 2
+focus_mode = 0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Ability #3"
+
+[node name="Ability3OptionButton" type="OptionButton" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(192, 37)
+layout_mode = 2
+focus_mode = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

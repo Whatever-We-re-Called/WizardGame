@@ -109,6 +109,8 @@ func _handle_jump():
 
 
 func _handle_abilities():
+	if not player.can_use_abilities: return
+	
 	var ability_input_strings = [
 		player.im.use_ability_1,
 		player.im.use_ability_2,
@@ -130,7 +132,12 @@ func _handle_debug():
 	if Input.is_action_just_pressed(player.im.debug_3):
 		player.received_debug_input.emit(3)
 	if Input.is_action_just_pressed(player.im.debug_4):
-		player.received_debug_input.emit(4)
+		if player.change_abilities_panel.visible:
+			player.change_abilities_panel.visible = false
+			player.can_use_abilities = true
+		else:
+			player.change_abilities_panel.visible = true
+			player.can_use_abilities = false
 
 
 func _get_input_direction() -> Vector2:

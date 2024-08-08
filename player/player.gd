@@ -11,9 +11,12 @@ signal received_debug_input(int)
 @onready var ability_nodes = %AbilityNodes
 @onready var center_point = %CenterPoint
 @onready var ability_multiplayer_spawner: MultiplayerSpawner = %AbilityMultiplayerSpawner
+@onready var change_abilities_panel: PanelContainer = %ChangeAbilitiesPanel
+@onready var abilities = [ ability_1, ability_2, ability_3 ]
 
 var peer_id: int
 var im: DeviceInputMap
+var can_use_abilities: bool = true
 
 
 func _enter_tree():
@@ -26,6 +29,7 @@ func _enter_tree():
 
 
 func _ready():
+	change_abilities_panel.setup(self)
 	update_ability_nodes.rpc()
 
 
@@ -49,8 +53,6 @@ func _physics_process(delta):
 
 @rpc("any_peer", "call_local")
 func update_ability_nodes():
-	var abilities = [ ability_1, ability_2, ability_3 ]
-	
 	for i in range(3):
 		var ability = abilities[i]
 		
