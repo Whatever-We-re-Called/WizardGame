@@ -1,5 +1,7 @@
 class_name Player extends CharacterBody2D
 
+signal received_debug_input(int)
+
 @export var ability_1: Abilities.Type
 @export var ability_2: Abilities.Type
 @export var ability_3: Abilities.Type

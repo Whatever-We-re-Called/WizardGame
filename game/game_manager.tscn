@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://blt14wtf4aypq"]
+
+[ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
+[ext_resource type="PackedScene" uid="uid://tjmncfnms2m0" path="res://environment/prototype_second_concept_level/prototype_second_concept_level.tscn" id="2_1d5yd"]
+[ext_resource type="PackedScene" uid="uid://ms1v61f8e6f3" path="res://game/wait_lobby/wait_lobby.tscn" id="2_awg3u"]
+
+[node name="GameManager" type="Node"]
+script = ExtResource("1_juohy")
+temp_level_pool = Array[PackedScene]([ExtResource("2_1d5yd")])
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+unique_name_in_owner = true
+_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="Players" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="SceneSpawner" type="MultiplayerSpawner" parent="."]
+unique_name_in_owner = true
+_spawnable_scenes = PackedStringArray("res://game/wait_lobby/wait_lobby.tscn", "res://environment/prototype_second_concept_level/prototype_second_concept_level.tscn")
+spawn_path = NodePath("..")
+
+[node name="ActiveScene" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="WaitLobby" parent="ActiveScene" instance=ExtResource("2_awg3u")]

@@ -1,8 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://tjmncfnms2m0"]
+[gd_scene load_steps=9 format=3 uid="uid://tjmncfnms2m0"]
 
-[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_x53bc"]
 [ext_resource type="PackedScene" uid="uid://438vb86uyyob" path="res://environment/prototype_second_concept_level/scenes/boat.tscn" id="2_1q5kc"]
-[ext_resource type="PackedScene" uid="uid://5kswkk5balu6" path="res://player/player.tscn" id="3_5741k"]
 [ext_resource type="PackedScene" uid="uid://6ghlx0yjaura" path="res://environment/prototype_second_concept_level/scenes/cabin.tscn" id="4_8ast6"]
 [ext_resource type="PackedScene" uid="uid://dctvxxi12kxdr" path="res://environment/prototype_second_concept_level/scenes/crane.tscn" id="5_istq4"]
 [ext_resource type="PackedScene" uid="uid://0hfksywaknru" path="res://environment/prototype_second_concept_level/scenes/dock.tscn" id="6_e5qqf"]
@@ -11,8 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c5aa4xug8sp3b" path="res://environment/prototype_second_concept_level/scenes/rope.tscn" id="9_cu1v8"]
 [ext_resource type="Texture2D" uid="uid://cktfkodn4sbpo" path="res://environment/prototype_second_concept_level/textures/water.png" id="9_lydpb"]
 
-[node name="PrototypeSecondConceptLevel" type="RigidBody2D"]
-script = ExtResource("1_x53bc")
+[node name="PrototypeSecondConceptLevel" type="Node"]
 
 [node name="Background" type="ColorRect" parent="."]
 z_index = -100
@@ -21,26 +18,23 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.352941, 0.352941, 0.352941, 1)
 
-[node name="BreakableNode" type="Node" parent="."]
+[node name="BreakableNodes" type="Node" parent="."]
 
-[node name="Rope" parent="BreakableNode" instance=ExtResource("9_cu1v8")]
+[node name="Rope" parent="BreakableNodes" instance=ExtResource("9_cu1v8")]
 
-[node name="HouseBack" parent="BreakableNode" instance=ExtResource("7_k71a2")]
+[node name="HouseBack" parent="BreakableNodes" instance=ExtResource("7_k71a2")]
 
-[node name="HouseFront" parent="BreakableNode" instance=ExtResource("8_occo6")]
+[node name="HouseFront" parent="BreakableNodes" instance=ExtResource("8_occo6")]
 
-[node name="Dock" parent="BreakableNode" instance=ExtResource("6_e5qqf")]
+[node name="Dock" parent="BreakableNodes" instance=ExtResource("6_e5qqf")]
 
-[node name="Crane" parent="BreakableNode" instance=ExtResource("5_istq4")]
+[node name="Crane" parent="BreakableNodes" instance=ExtResource("5_istq4")]
 
-[node name="Cabin" parent="BreakableNode" instance=ExtResource("4_8ast6")]
+[node name="Cabin" parent="BreakableNodes" instance=ExtResource("4_8ast6")]
 
-[node name="Boat" parent="BreakableNode" instance=ExtResource("2_1q5kc")]
+[node name="Boat" parent="BreakableNodes" instance=ExtResource("2_1q5kc")]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="WaterSprite" type="Sprite2D" parent="."]
 z_index = 1
 position = Vector2(960, 540)
 texture = ExtResource("9_lydpb")
-
-[node name="Player" parent="." instance=ExtResource("3_5741k")]
-position = Vector2(756, 515)
