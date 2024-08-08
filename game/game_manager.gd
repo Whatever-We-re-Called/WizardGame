@@ -88,6 +88,8 @@ func _change_to_playable_scene(new_level_resource_path: String):
 	var new_active_scene = load(new_level_resource_path).instantiate()
 	new_active_scene.game_manager = self
 	active_scene_root.add_child(new_active_scene, true)
+	
+	new_active_scene.teleport_players_to_random_spawn_points.rpc_id(1)
 
 
 @rpc("any_peer", "call_local")

@@ -5,16 +5,7 @@ class_name PlayableScene extends Node
 var game_manager: GameManager
 
 
-func _ready() -> void:
-	_handle_server_setup()
-
-
-func _handle_server_setup():
-	if not multiplayer.is_server(): return
-	
-	teleport_players_to_random_spawn_points()
-
-
+@rpc("any_peer", "call_local")
 func teleport_players_to_random_spawn_points():
 	if not multiplayer.is_server(): return
 	
