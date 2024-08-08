@@ -5,9 +5,20 @@ class_name GameManager extends Node
 @onready var player_spawner: MultiplayerSpawner = %PlayerSpawner
 @onready var players_root: Node = %PlayersRoot
 @onready var scene_spawner: MultiplayerSpawner = %SceneSpawner
-@onready var active_scene: Node = %ActiveScene
+@onready var active_scene_root: Node = %ActiveSceneRoot
 
-var active_level: Level
+var players: Array[Player]:
+	get:
+		var result: Array[Player]
+		for child in players_root.get_children():
+			if child is Player: result.append(child)
+		return result
+var active_scene: PlayableScene:
+	get:
+		for child in active_scene_root.get_children():
+			if child is PlayableScene: return child
+		return null
+
 
 const PLAYER_SCENE = preload("res://player/player.tscn")
 
@@ -19,6 +30,8 @@ func _ready() -> void:
 	
 	for data in SessionManager.connected_clients.values():
 		_add_player(data)
+	
+	_change_to_playable_scene.rpc_id(1, "res://game/wait_lobby/wait_lobby.tscn")
 
 
 func _add_player(data):
@@ -46,16 +59,6 @@ func _server_closed():
 		child.queue_free()
 
 
-func get_players() -> Array[Player]:
-	var result: Array[Player]
-	
-	for child in players_root.get_children():
-		if child is Player:
-			result.append(child as Player)
-	
-	return result
-
-
 func get_player_from_peer_id(peer_id: int) -> Player:
 	for child in players_root.get_children():
 		if child is Player and child.peer_id == peer_id:
@@ -70,26 +73,20 @@ func load_random_level():
 	var rng = RandomNumberGenerator.new()
 	var chosen_level = temp_level_pool[rng.randi_range(0, temp_level_pool.size() - 1)]
 	
-	_change_scene_to_level.rpc(chosen_level.resource_path)
+	_change_to_playable_scene.rpc_id(1, chosen_level.resource_path)
 
 
 @rpc("any_peer", "call_local")
-func _change_scene_to_level(new_level_resource_path: String):
-	_clear_active_scene()
-	var new_level_scene = load(new_level_resource_path).instantiate()
-	new_level_scene.game_manager = self
-	active_scene.add_child(new_level_scene, true)
+func _change_to_playable_scene(new_level_resource_path: String):
+	_clear_active_scene.rpc()
+	var new_active_scene = load(new_level_resource_path).instantiate()
+	new_active_scene.game_manager = self
+	active_scene_root.add_child(new_active_scene, true)
 
 
 @rpc("any_peer", "call_local")
-func _change_scene_to_wait_lobby():
-	_clear_active_scene()
-	var new_level_scene = load("res://game/wait_lobby/wait_lobby.tscn").instantiate()
-	active_scene.add_child(new_level_scene, true)
-
-
 func _clear_active_scene():
-	for child in active_scene.get_children():
+	for child in active_scene_root.get_children():
 		child.queue_free()
 
 
@@ -98,8 +95,6 @@ func teleport_player_to_random_spawn_point(peer_id: int):
 	var target_player = get_player_from_peer_id(peer_id)
 	var spawn_location = get_tree().get_first_node_in_group("spawn_points").get_random_spawn_location()
 	target_player.teleport.rpc_id(peer_id, spawn_location)
-	print(target_player.name)
-	
 
 
 func _handle_player_debug_input(debug_value: int) -> void:
@@ -107,4 +102,4 @@ func _handle_player_debug_input(debug_value: int) -> void:
 		1:
 			load_random_level.rpc_id(1)
 		2:
-			_change_scene_to_wait_lobby.rpc()
+			_change_to_playable_scene.rpc("res://game/wait_lobby/wait_lobby.tscn")

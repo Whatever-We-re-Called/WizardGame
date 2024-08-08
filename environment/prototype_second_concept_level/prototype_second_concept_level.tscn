@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://tjmncfnms2m0"]
 
-[ext_resource type="Script" path="res://level/level.gd" id="1_7fumv"]
+[ext_resource type="Script" path="res://game/level/level.gd" id="1_7fumv"]
 [ext_resource type="PackedScene" uid="uid://438vb86uyyob" path="res://environment/prototype_second_concept_level/scenes/boat.tscn" id="2_1q5kc"]
-[ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://level/spawn_points.tscn" id="2_sr0yk"]
+[ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="2_sr0yk"]
 [ext_resource type="PackedScene" uid="uid://6ghlx0yjaura" path="res://environment/prototype_second_concept_level/scenes/cabin.tscn" id="4_8ast6"]
 [ext_resource type="PackedScene" uid="uid://dctvxxi12kxdr" path="res://environment/prototype_second_concept_level/scenes/crane.tscn" id="5_istq4"]
 [ext_resource type="PackedScene" uid="uid://0hfksywaknru" path="res://environment/prototype_second_concept_level/scenes/dock.tscn" id="6_e5qqf"]
