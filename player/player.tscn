@@ -103,19 +103,12 @@ shape = SubResource("CapsuleShape2D_ehwds")
 [node name="CenterPoint" type="Node2D" parent="."]
 unique_name_in_owner = true
 
+[node name="AbilityMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+unique_name_in_owner = true
+spawn_path = NodePath("../AbilityNodes")
+
 [node name="AbilityNodes" type="Node" parent="."]
 unique_name_in_owner = true
-
-[node name="Ability1" type="Node2D" parent="AbilityNodes"]
-
-[node name="Ability2" type="Node2D" parent="AbilityNodes"]
-
-[node name="Ability3" type="Node2D" parent="AbilityNodes"]
-
-[node name="AbilityMultiplayerSpawner" type="MultiplayerSpawner" parent="AbilityNodes"]
-unique_name_in_owner = true
-_spawnable_scenes = PackedStringArray("res://abilities/scenes/wayback_point_scene.tscn")
-spawn_path = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gpxhm")

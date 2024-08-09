@@ -22,12 +22,23 @@ func setup(player: Player):
 			if ability_value == player.abilities[i]:
 				option_button.selected = ability_value
 		
-		option_button.item_selected.connect(_update_player_abilities)
+		option_button.item_selected.connect(_on_item_selected)
 
 
-func _update_player_abilities(index: int):
+func _on_item_selected(index: int):
+	print("A")
+	var new_abilities: Array[Abilities.Type]
 	for i in range(abilitity_option_buttons.size()):
 		var option_button = abilitity_option_buttons[i]
-		player.abilities[i] = option_button.selected
+		new_abilities.append(option_button.selected)
+	_update_player_abilities.rpc(new_abilities)
+
+
+@rpc("any_peer", "call_local")
+func _update_player_abilities(new_abilities: Array[Abilities.Type]):
+	print("B", " ", new_abilities)
+	for i in range(new_abilities.size()):
+		player.abilities[i] = new_abilities[i]
 	
-	player.update_ability_nodes.rpc()
+	player.clear_ability_nodes.rpc()
+	player.create_ability_nodes.rpc_id(player.peer_id)

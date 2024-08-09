@@ -30,7 +30,9 @@ func _enter_tree():
 
 func _ready():
 	change_abilities_panel.setup(self)
-	update_ability_nodes.rpc()
+	for ability_scene in Abilities.loaded_ability_scenes.values():
+		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
+	create_ability_nodes.rpc_id(peer_id)
 
 
 func set_device(device_ids: Array):
@@ -52,15 +54,22 @@ func _physics_process(delta):
 
 
 @rpc("any_peer", "call_local")
-func update_ability_nodes():
+func create_ability_nodes():
 	for i in range(3):
 		var ability = abilities[i]
+		var ability_resource = Abilities.get_ability_resource(ability)
+		var ability_scene = Abilities.get_ability_scene(ability)
+		print(ability_scene)
 		
-		if ability == Abilities.Type.NONE:
-			ability_nodes.get_child(i).set_script(null)
-		else:
-			ability_nodes.get_child(i).set_script(Abilities.get_ability(ability).execution_script)
-			ability_nodes.get_child(i).setup(Abilities.get_ability(ability))
+		var new_ability_scene = ability_scene.instantiate()
+		new_ability_scene.setup(ability_resource)
+		ability_nodes.add_child(new_ability_scene, true)
+
+
+@rpc("any_peer", "call_local")
+func clear_ability_nodes():
+	for child in ability_nodes.get_children():
+		child.queue_free()
 
 
 func get_center_global_position() -> Vector2:
