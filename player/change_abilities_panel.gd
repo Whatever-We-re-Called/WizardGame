@@ -26,7 +26,6 @@ func setup(player: Player):
 
 
 func _on_item_selected(index: int):
-	print("A")
 	var new_abilities: Array[Abilities.Type]
 	for i in range(abilitity_option_buttons.size()):
 		var option_button = abilitity_option_buttons[i]
@@ -36,7 +35,6 @@ func _on_item_selected(index: int):
 
 @rpc("any_peer", "call_local")
 func _update_player_abilities(new_abilities: Array[Abilities.Type]):
-	print("B", " ", new_abilities)
 	for i in range(new_abilities.size()):
 		player.abilities[i] = new_abilities[i]
 	

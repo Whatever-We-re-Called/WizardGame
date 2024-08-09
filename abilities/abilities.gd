@@ -13,7 +13,8 @@ enum Type {
 	NONE = 0,
 	WIND_GUST = 1,
 	WAYBACK_POINT = 2,
-	REMOTE_LAND_MINE = 3
+	REMOTE_LAND_MINE = 3,
+	DASH = 4
 }
 
 static var loaded_ability_resources = {}

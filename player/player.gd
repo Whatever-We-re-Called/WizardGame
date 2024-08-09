@@ -17,6 +17,7 @@ signal received_debug_input(int)
 var peer_id: int
 var im: DeviceInputMap
 var can_use_abilities: bool = true
+var last_input_direction: Vector2 = Vector2.ZERO
 
 
 func _enter_tree():
@@ -59,7 +60,6 @@ func create_ability_nodes():
 		var ability = abilities[i]
 		var ability_resource = Abilities.get_ability_resource(ability)
 		var ability_scene = Abilities.get_ability_scene(ability)
-		print(ability_scene)
 		
 		var new_ability_scene = ability_scene.instantiate()
 		new_ability_scene.setup(ability_resource)
@@ -81,10 +81,14 @@ func get_pointer_direction() -> Vector2:
 		DeviceInputMap.DeviceType.KEYBOARD_MOUSE:
 			return get_center_global_position().direction_to(get_global_mouse_position()).normalized()
 		DeviceInputMap.DeviceType.CONTROLLER:
-			var direction = Input.get_vector(im.move_left, im.move_right, im.move_up, im.move_down)
-			return direction
+			return get_direction()
 		_:
 			return Vector2.ZERO
+
+
+func get_direction() -> Vector2:
+	return last_input_direction
+
 
 func get_peer_id() -> int:
 	return int("" + name)

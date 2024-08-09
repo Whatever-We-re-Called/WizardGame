@@ -51,6 +51,10 @@ func handle_physics(delta):
 	_handle_debug()
 	
 	player.move_and_slide()
+	
+	var input_direction = _get_input_direction()
+	if input_direction != Vector2.ZERO:
+		player.last_input_direction = input_direction
 
 
 func handle_post_physics(delta):

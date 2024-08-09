@@ -6,6 +6,7 @@
 
 [node name="Mid" type="RigidBody2D"]
 script = ExtResource("1_phkh2")
+number_of_break_points = 8
 
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 texture = ExtResource("2_sx8g3")
