@@ -114,9 +114,11 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 133.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/CenterContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="IP" type="Button" parent="CanvasLayer/CenterContainer/HBoxContainer" node_paths=PackedStringArray("screen")]
 clip_contents = true
