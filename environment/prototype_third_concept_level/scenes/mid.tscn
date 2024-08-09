@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1fa2bp1lfvqk"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_phkh2"]
+[ext_resource type="Texture2D" uid="uid://dbpg4jrommyux" path="res://environment/prototype_third_concept_level/textures/mid.png" id="2_sx8g3"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_k6tie"]
+
+[node name="Mid" type="RigidBody2D"]
+script = ExtResource("1_phkh2")
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_sx8g3")
+polygon = PackedVector2Array(743, 666, 744, 1013, 1174, 1013, 1175, 665)
+script = ExtResource("3_k6tie")

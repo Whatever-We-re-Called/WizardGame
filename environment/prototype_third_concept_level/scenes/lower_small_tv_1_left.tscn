@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://pblbw0e5ejor"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_gotus"]
+[ext_resource type="Texture2D" uid="uid://bq4vw11eup4ss" path="res://environment/prototype_third_concept_level/textures/lower_small_tv_1_left.png" id="2_26e75"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_e51xk"]
+
+[node name="LowerSmallTV1Left" type="RigidBody2D"]
+script = ExtResource("1_gotus")
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_26e75")
+polygon = PackedVector2Array(188, 705, 245, 694, 255, 740, 197, 751)
+script = ExtResource("3_e51xk")

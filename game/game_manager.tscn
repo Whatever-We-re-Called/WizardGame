@@ -1,13 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=5 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="PackedScene" uid="uid://tjmncfnms2m0" path="res://environment/prototype_second_concept_level/prototype_second_concept_level.tscn" id="2_1d5yd"]
+[ext_resource type="PackedScene" uid="uid://ddgmp4m45agmj" path="res://environment/prototype_third_concept_level.tscn" id="3_k7mdj"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_smshx"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_juohy")
-temp_level_pool = Array[PackedScene]([ExtResource("2_1d5yd")])
+temp_level_pool = Array[PackedScene]([ExtResource("2_1d5yd"), ExtResource("3_k7mdj")])
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_smshx")

@@ -1,4 +1,9 @@
+@tool
 class_name SpritePolygon2D extends Polygon2D
+
+@export var generate_polygon_rect: bool:
+	set(value):
+		_generate_polygon_rect()
 
 var connected_collision_polygon_2d: CollisionPolygon2D
 
@@ -22,6 +27,8 @@ func update_scaling(new_scale):
 
 
 func update_collision_polygon() -> void:
+	if Engine.is_editor_hint(): return
+	
 	var new_collision_polygon = PolygonUtil.get_translated_polygon(polygon, offset)
 	if connected_collision_polygon_2d == null:
 		connected_collision_polygon_2d = CollisionPolygon2D.new()
@@ -34,3 +41,17 @@ func update_collision_polygon() -> void:
 func kill():
 	queue_free()
 	connected_collision_polygon_2d.queue_free()
+
+
+func _generate_polygon_rect():
+	var half_width = texture.get_size().x / 2.0
+	var half_height = texture.get_size().y / 2.0
+	var polygon_rect: PackedVector2Array
+	
+	polygon_rect.append(Vector2(-half_width, half_height))
+	polygon_rect.append(Vector2(half_width, half_height))
+	polygon_rect.append(Vector2(half_width, -half_height))
+	polygon_rect.append(Vector2(-half_width, -half_height))
+	
+	polygon = polygon_rect
+	

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dx5c6ystouule"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_14qsy"]
+[ext_resource type="Texture2D" uid="uid://bi7lu5xmxd1ys" path="res://environment/prototype_third_concept_level/textures/platform_right.png" id="2_ylajg"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_yvw5b"]
+
+[node name="PlatformRight" type="RigidBody2D"]
+script = ExtResource("1_14qsy")
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_ylajg")
+polygon = PackedVector2Array(1469, 513, 1920, 513, 1920, 542, 1469, 541)
+script = ExtResource("3_yvw5b")

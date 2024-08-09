@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg0aej12pbqsy"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_jfxqg"]
+[ext_resource type="Texture2D" uid="uid://crwnt712f35gm" path="res://environment/prototype_third_concept_level/textures/stair_bg_left.png" id="2_74qkt"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_nyok1"]
+
+[node name="StairBGLeft" type="RigidBody2D"]
+script = ExtResource("1_jfxqg")
+environment_layer = 2
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_74qkt")
+polygon = PackedVector2Array(454, 1011, 723, 721, 726, 1011)
+script = ExtResource("3_nyok1")
