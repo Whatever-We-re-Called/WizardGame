@@ -27,7 +27,7 @@ floor_max_angle = 1.0472
 floor_snap_length = 16.0
 script = ExtResource("1_v4k2b")
 ability_1 = 1
-ability_2 = 2
+ability_2 = 5
 ability_3 = 4
 controller = NodePath("PlayerController")
 

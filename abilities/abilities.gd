@@ -14,7 +14,8 @@ enum Type {
 	WIND_GUST = 1,
 	WAYBACK_POINT = 2,
 	REMOTE_LAND_MINE = 3,
-	DASH = 4
+	DASH = 4,
+	PLATFORM = 5
 }
 
 static var loaded_ability_resources = {}
