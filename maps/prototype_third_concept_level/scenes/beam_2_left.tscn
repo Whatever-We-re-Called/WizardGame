@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bldv7ik3iwc4o"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_xi4fm"]
+[ext_resource type="Texture2D" uid="uid://c7ai3rd4dshgp" path="res://maps/prototype_third_concept_level/textures/beam_2_left.png" id="2_uyjbf"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_60l2k"]
+
+[node name="Beam2Left" type="RigidBody2D"]
+script = ExtResource("1_xi4fm")
+environment_layer = 2
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_uyjbf")
+polygon = PackedVector2Array(185, 537, 202, 537, 213, 553, 213, 537, 238, 537, 238, 554, 250, 537, 267, 537, 267, 542, 238, 583, 236, 1014, 213, 1014, 213, 582, 185, 542)
+script = ExtResource("3_60l2k")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://ln5chs5kne5n"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_vr1yd"]
+[ext_resource type="Texture2D" uid="uid://dndqo1q4ycuij" path="res://maps/prototype_third_concept_level/textures/house_left.png" id="2_ykwd3"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_4t1u4"]
+
+[node name="HouseLeft" type="RigidBody2D"]
+script = ExtResource("1_vr1yd")
+environment_layer = 2
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_ykwd3")
+polygon = PackedVector2Array(0, 166, 35, 166, 35, 53, 49, 53, 48, 166, 61, 166, 61, 196, 87, 196, 101, 226, 108, 143, 122, 143, 126, 147, 113, 246, 127, 246, 127, 225, 182, 225, 183, 246, 198, 246, 203, 255, 220, 172, 234, 177, 211, 269, 233, 304, 233, 309, 199, 309, 199, 517, 0, 517)
+script = ExtResource("3_4t1u4")

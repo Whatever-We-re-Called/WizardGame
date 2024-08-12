@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="DisasterInfo" load_steps=2 format=3 uid="uid://odl3w5qmcgur"]
+
+[ext_resource type="Script" path="res://disasters/resources/disaster_info.gd" id="1_rpreo"]
+
+[resource]
+script = ExtResource("1_rpreo")
+display_name = "Earthquake"
+severity = 0

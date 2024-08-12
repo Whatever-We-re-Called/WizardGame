@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://6ghlx0yjaura"]
+
+[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_1jcu6"]
+[ext_resource type="Texture2D" uid="uid://inynjvfgstah" path="res://maps/prototype_second_concept_level/textures/cabin.png" id="2_tn0eq"]
+[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_we0ls"]
+
+[node name="Cabin" type="RigidBody2D"]
+script = ExtResource("1_1jcu6")
+environment_layer = 2
+
+[node name="SpritePolygon2D" type="Polygon2D" parent="."]
+texture = ExtResource("2_tn0eq")
+polygon = PackedVector2Array(60, 841, 80, 802, 74, 802, 69, 797, 82, 768, 99, 771, 131, 690, 87, 682, 163, 550, 221, 553, 227, 476, 193, 474, 198, 454, 289, 453, 290, 474, 250, 474, 247, 555, 253, 555, 257, 520, 306, 520, 307, 543, 355, 543, 356, 568, 370, 570, 385, 719, 383, 722, 360, 720, 350, 795, 380, 799, 384, 784, 409, 788, 413, 766, 419, 767, 420, 760, 411, 759, 415, 740, 474, 750, 461, 812, 496, 817, 494, 847, 524, 883, 572, 928, 572, 933, 401, 914, 404, 878, 61, 847)
+script = ExtResource("3_we0ls")

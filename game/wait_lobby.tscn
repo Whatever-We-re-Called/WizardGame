@@ -5,10 +5,10 @@
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/ip.gd" id="4_j66hj"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/steam.gd" id="5_tnyqy"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/screen_button.gd" id="6_jlcle"]
-[ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://environment/prototype_first_concept_level/bgb.png" id="7_7pyox"]
-[ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://environment/prototype_first_concept_level/foreground_background.png" id="8_yfdx1"]
-[ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://environment/prototype_generic/green_box.tscn" id="9_qdnvq"]
-[ext_resource type="PackedScene" uid="uid://bh583te3i166d" path="res://environment/prototype_first_concept_level/first_prototype_fragile_part_1.tscn" id="10_i7ko8"]
+[ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_7pyox"]
+[ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_yfdx1"]
+[ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://maps/prototype_generic/green_box.tscn" id="9_qdnvq"]
+[ext_resource type="PackedScene" uid="uid://bh583te3i166d" path="res://maps/prototype_first_concept_level/first_prototype_fragile_part_1.tscn" id="10_i7ko8"]
 
 [sub_resource type="GDScript" id="GDScript_frw3p"]
 script/source = "extends Node2D

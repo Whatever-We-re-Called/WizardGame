@@ -1,14 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=8 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
-[ext_resource type="PackedScene" uid="uid://tjmncfnms2m0" path="res://environment/prototype_second_concept_level/prototype_second_concept_level.tscn" id="2_1d5yd"]
-[ext_resource type="PackedScene" uid="uid://ddgmp4m45agmj" path="res://environment/prototype_third_concept_level/prototype_third_concept_level.tscn" id="3_k7mdj"]
+[ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
+[ext_resource type="Script" path="res://game/map_progress_ui.gd" id="3_q0doh"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_smshx"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_5u4d7"]
+font_size = 32
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58dkl"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glu88"]
+bg_color = Color(0.784314, 0.784314, 0.784314, 1)
+
 [node name="GameManager" type="Node"]
 script = ExtResource("1_juohy")
-temp_level_pool = Array[PackedScene]([ExtResource("2_1d5yd"), ExtResource("3_k7mdj")])
+game_settings = ExtResource("2_58jvp")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_smshx")
@@ -28,3 +38,34 @@ spawn_path = NodePath("../ActiveSceneRoot")
 
 [node name="ActiveSceneRoot" type="Node" parent="."]
 unique_name_in_owner = true
+
+[node name="GameUI" type="CanvasLayer" parent="."]
+
+[node name="MapProgressUI" type="CenterContainer" parent="GameUI"]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("3_q0doh")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/MapProgressUI"]
+layout_mode = 2
+alignment = 1
+
+[node name="CurrentDisasterLabel" type="Label" parent="GameUI/MapProgressUI/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Disaster arriving in 5..."
+label_settings = SubResource("LabelSettings_5u4d7")
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
+
+[node name="CurrentMapProgressBar" type="ProgressBar" parent="GameUI/MapProgressUI/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 16)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_58dkl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_glu88")
+show_percentage = false

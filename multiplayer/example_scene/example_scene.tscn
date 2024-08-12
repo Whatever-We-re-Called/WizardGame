@@ -6,10 +6,10 @@
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/ip.gd" id="3_0yk8y"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/steam.gd" id="4_o3pvj"]
 [ext_resource type="Script" path="res://multiplayer/example_scene/ui/screen_button.gd" id="5_aokf6"]
-[ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://environment/prototype_first_concept_level/bgb.png" id="7_gkya6"]
-[ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://environment/prototype_first_concept_level/foreground_background.png" id="8_cwhqr"]
-[ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://environment/prototype_generic/green_box.tscn" id="8_ydbpy"]
-[ext_resource type="PackedScene" uid="uid://bh583te3i166d" path="res://environment/prototype_first_concept_level/first_prototype_fragile_part_1.tscn" id="10_a1ean"]
+[ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_gkya6"]
+[ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_cwhqr"]
+[ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://maps/prototype_generic/green_box.tscn" id="8_ydbpy"]
+[ext_resource type="PackedScene" uid="uid://bh583te3i166d" path="res://maps/prototype_first_concept_level/first_prototype_fragile_part_1.tscn" id="10_a1ean"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_cbbie")
