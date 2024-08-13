@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=6 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
@@ -9,12 +9,6 @@
 [sub_resource type="LabelSettings" id="LabelSettings_5u4d7"]
 font_size = 32
 outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_58dkl"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glu88"]
-bg_color = Color(0.784314, 0.784314, 0.784314, 1)
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_juohy")
@@ -43,29 +37,40 @@ unique_name_in_owner = true
 
 [node name="MapProgressUI" type="CenterContainer" parent="GameUI"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 10
 anchor_right = 1.0
 grow_horizontal = 2
+mouse_filter = 2
 script = ExtResource("3_q0doh")
 metadata/_edit_use_anchors_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/MapProgressUI"]
+[node name="PanelContainer" type="PanelContainer" parent="GameUI/MapProgressUI"]
 layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameUI/MapProgressUI/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/MapProgressUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
 alignment = 1
 
-[node name="CurrentDisasterLabel" type="Label" parent="GameUI/MapProgressUI/VBoxContainer"]
+[node name="CurrentDisasterLabel" type="Label" parent="GameUI/MapProgressUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Disaster arriving in 5..."
 label_settings = SubResource("LabelSettings_5u4d7")
 horizontal_alignment = 1
 vertical_alignment = 2
-autowrap_mode = 2
 
-[node name="CurrentMapProgressBar" type="ProgressBar" parent="GameUI/MapProgressUI/VBoxContainer"]
+[node name="DisasterIcons" type="HBoxContainer" parent="GameUI/MapProgressUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(800, 16)
 layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_58dkl")
-theme_override_styles/fill = SubResource("StyleBoxFlat_glu88")
-show_percentage = false
+mouse_filter = 2
+alignment = 1

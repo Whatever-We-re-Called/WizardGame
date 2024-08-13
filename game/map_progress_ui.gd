@@ -2,43 +2,52 @@ extends CenterContainer
 
 @onready var current_disaster_label: Label = %CurrentDisasterLabel
 @onready var current_map_progress_bar: ProgressBar = %CurrentMapProgressBar
+@onready var disaster_icons: HBoxContainer = %DisasterIcons
 
-const DISASTER_SEVERITY_PRIMARY_COLORS = {
+const DISASTER_SEVERITY_COLORS = {
 	DisasterInfo.Severity.LOW: Color.GREEN,
 	DisasterInfo.Severity.MEDIUM: Color.YELLOW,
 	DisasterInfo.Severity.HIGH: Color.RED,
 	DisasterInfo.Severity.VERY_HIGH: Color.DARK_RED,
 }
-const DISASTER_SEVERITY_SECONDARY_COLOR = Color.SLATE_GRAY
+const DISASTER_SELECT_COLOR = Color.WHITE
+const DISASTER_UNKNOWN_COLOR = Color.WEB_GRAY
+const DISASTER_FINISHED_COLOR = Color(0.35, 0.35, 0.35)
+const UNKNOWN_DISASTER_TEXTURE = preload("res://disasters/textures/icons/shitty_hidden_disaster_icon.png")
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func countdown_to_next_disaster(countdown: int, is_first: bool):
+	for i in range(countdown):
+		if is_first == true:
+			current_disaster_label.text = "First disaster starting in " + str(countdown) + "s"
+		else:
+			current_disaster_label.text = "Next disaster starting in " + str(countdown) + "s"
+		await get_tree().create_timer(1.0).timeout
+		countdown -= 1
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func init_progress_bar(chosen_disasters: Array[DisasterInfo], disaster_duration: float, time_inbetween_disasters: float):
-	var total_time: float = 0.0
-	var time_points: Dictionary = {}
-	
-	total_time += time_inbetween_disasters
-	for disaster_info in chosen_disasters:
-		time_points[total_time] = DISASTER_SEVERITY_PRIMARY_COLORS[disaster_info.severity]
-		total_time += disaster_duration
-		time_points[total_time] = DISASTER_SEVERITY_SECONDARY_COLOR
-		total_time += time_inbetween_disasters
-	
-	for time_point in time_points:
-		var color = time_points[time_point]
-		var color_rect = ColorRect.new()
-		color_rect.color = color
-		color_rect.size = Vector2(16, 16)
-		current_map_progress_bar.add_child(color_rect)
+func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_number: int, revealed: bool):
+	for i in range(disasters.size()):
+		var disaster = disasters[i]
+		var index_disaster_number = i + 1
 		
-		var t = (time_point / total_time) * current_map_progress_bar.custom_minimum_size.x
-		color_rect.position.x = t - 8.0
+		var texture_rect = TextureRect.new()
+		texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		texture_rect.custom_minimum_size = Vector2(64, 64)
+		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		
+		if index_disaster_number < current_disaster_number:
+			texture_rect.texture = disaster.icon_texture
+			texture_rect.self_modulate = DISASTER_FINISHED_COLOR
+		elif index_disaster_number == current_disaster_number:
+			if revealed:
+				texture_rect.texture = disaster.icon_texture
+				texture_rect.self_modulate = DISASTER_SEVERITY_COLORS[disaster.severity]
+			else:
+				texture_rect.texture = UNKNOWN_DISASTER_TEXTURE
+				texture_rect.self_modulate = DISASTER_SELECT_COLOR
+		else:
+			texture_rect.texture = UNKNOWN_DISASTER_TEXTURE
+			texture_rect.self_modulate = DISASTER_UNKNOWN_COLOR
+		
+		disaster_icons.add_child(texture_rect)

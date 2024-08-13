@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="DisasterInfo" load_steps=2 format=3 uid="uid://odl3w5qmcgur"]
+[gd_resource type="Resource" script_class="DisasterInfo" load_steps=3 format=3 uid="uid://odl3w5qmcgur"]
 
+[ext_resource type="Texture2D" uid="uid://c1p00idnh05bj" path="res://disasters/textures/icons/shitty_earthquake_icon.png" id="1_i5xr3"]
 [ext_resource type="Script" path="res://disasters/resources/disaster_info.gd" id="1_rpreo"]
 
 [resource]
 script = ExtResource("1_rpreo")
 display_name = "Earthquake"
+icon_texture = ExtResource("1_i5xr3")
 severity = 0

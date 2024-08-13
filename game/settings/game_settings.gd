@@ -7,5 +7,6 @@ class_name GameSettings extends Resource
 @export var map_disaster_severity: int
 @export_category("Disasters")
 @export var disaster_duration: float
+@export var time_before_first_disaster: float
 @export var time_inbetween_disasters: float
 @export var disaster_pool: Array[DisasterInfo]

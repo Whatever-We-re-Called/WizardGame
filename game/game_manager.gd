@@ -33,7 +33,6 @@ func _ready() -> void:
 		_add_player(data)
 	
 	_change_to_playable_scene.rpc_id(1, "res://game/wait_lobby/wait_lobby.tscn")
-	map_progress_ui.init_progress_bar(game_settings.disaster_pool, game_settings.disaster_duration, game_settings.time_inbetween_disasters)
 
 
 func _add_player(data):
@@ -76,7 +75,21 @@ func get_player_from_peer_id(peer_id: int) -> Player:
 
 
 @rpc("any_peer", "call_local")
-func load_random_map():
+func start_game():
+	_load_random_map.rpc_id(1)
+	
+	map_progress_ui.visible = true
+	map_progress_ui.countdown_to_next_disaster(game_settings.time_before_first_disaster, true)
+	map_progress_ui.update_disaster_icons(game_settings.disaster_pool, 1, false)
+
+
+@rpc("any_peer", "call_local")
+func stop_game():
+	_change_to_playable_scene.rpc_id(1, preload("res://game/wait_lobby/wait_lobby.tscn"))
+
+
+@rpc("any_peer", "call_local")
+func _load_random_map():
 	randomize()
 	var rng = RandomNumberGenerator.new()
 	var chosen_level = game_settings.map_pool[rng.randi_range(0, game_settings.map_pool.size() - 1)]
@@ -111,7 +124,7 @@ func _handle_player_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
 			if multiplayer.is_server():
-				load_random_map.rpc_id(1)
+				start_game.rpc_id(1)
 		2:
 			if multiplayer.is_server():
-				_change_to_playable_scene.rpc_id(1, "res://game/wait_lobby/wait_lobby.tscn")
+				stop_game.rpc_id(1)
