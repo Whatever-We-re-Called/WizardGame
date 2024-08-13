@@ -32,7 +32,9 @@ func _ready() -> void:
 	for data in SessionManager.connected_clients.values():
 		_add_player(data)
 	
-	_change_to_playable_scene.rpc_id(1, "res://game/wait_lobby/wait_lobby.tscn")
+	
+	_change_to_playable_scene("res://game/wait_lobby/wait_lobby.tscn")
+	set_multiplayer_authority(1)
 
 
 func _add_player(data):
@@ -74,7 +76,7 @@ func get_player_from_peer_id(peer_id: int) -> Player:
 	return null
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func start_game():
 	_load_random_map.rpc_id(1)
 	
@@ -83,12 +85,12 @@ func start_game():
 	map_progress_ui.update_disaster_icons(game_settings.disaster_pool, 1, false)
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func stop_game():
 	_change_to_playable_scene.rpc_id(1, preload("res://game/wait_lobby/wait_lobby.tscn"))
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func _load_random_map():
 	randomize()
 	var rng = RandomNumberGenerator.new()
@@ -97,11 +99,12 @@ func _load_random_map():
 	_change_to_playable_scene.rpc_id(1, chosen_level.resource_path)
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func _change_to_playable_scene(new_level_resource_path: String):
 	_clear_active_scene.rpc()
 	var new_active_scene = load(new_level_resource_path).instantiate()
 	new_active_scene.game_manager = self
+	scene_spawner.add_spawnable_scene(new_level_resource_path)
 	active_scene_root.add_child(new_active_scene, true)
 	
 	new_active_scene.teleport_players_to_random_spawn_points.rpc_id(1)
@@ -113,7 +116,7 @@ func _clear_active_scene():
 		child.queue_free()
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func teleport_player_to_random_spawn_point(peer_id: int):
 	var target_player = get_player_from_peer_id(peer_id)
 	var spawn_location = get_tree().get_first_node_in_group("spawn_points").get_random_spawn_location()

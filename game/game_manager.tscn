@@ -27,7 +27,6 @@ unique_name_in_owner = true
 
 [node name="SceneSpawner" type="MultiplayerSpawner" parent="."]
 unique_name_in_owner = true
-_spawnable_scenes = PackedStringArray("res://game/wait_lobby/wait_lobby.tscn", "res://environment/prototype_second_concept_level/prototype_second_concept_level.tscn")
 spawn_path = NodePath("../ActiveSceneRoot")
 
 [node name="ActiveSceneRoot" type="Node" parent="."]
