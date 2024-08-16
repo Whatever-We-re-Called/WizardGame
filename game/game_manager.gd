@@ -30,34 +30,15 @@ const PLAYER_SCENE = preload("res://player/player.tscn")
 func _ready() -> void:
 	set_multiplayer_authority(1)
 	
-	SessionManager.server_opened.connect(_on_server_opened)
-	
+	#SessionManager.server_opened.connect(_on_server_opened)
+	SessionManager.session_added.connect(_add_player)
+	SessionManager.serverbound_client_disconnected.connect(_remove_player)
+	SessionManager.server_closed.connect(_server_closed)
 	#for data in SessionManager.connected_clients.values():
 		#_add_player(data)
 	
 	# TODO Change this to load correct current game scene.
 	change_to_scene("res://game/wait_lobby/wait_lobby.tscn")
-
-
-func _on_server_opened():
-	if is_multiplayer_authority():
-		_setup_states()
-	
-		for data in SessionManager.connected_clients.values():
-			_add_player(data)
-		
-		SessionManager.session_added.connect(_add_player)
-		SessionManager.serverbound_client_disconnected.connect(_remove_player)
-		SessionManager.server_closed.connect(_server_closed)
-
-
-func _setup_states():
-	for child in game_states_node.get_children():
-		if child is GameState:
-			game_states[child.name.to_lower()] = child
-			child.game_manager = self
-
-	transition_to_state.rpc_id(1, "waiting", true, true)
 
 
 func _process(delta: float) -> void:
@@ -68,6 +49,9 @@ func _process(delta: float) -> void:
 
 func _add_player(data):
 	if multiplayer.is_server():
+		if players.size() == 0:
+			_setup_server()
+		
 		var player = PLAYER_SCENE.instantiate()
 		player.name = str(data.peer_id)
 		player.peer_id = data.peer_id
@@ -78,6 +62,19 @@ func _add_player(data):
 		
 		teleport_player_to_random_spawn_point.rpc_id(1, data.peer_id)
 		_handle_add_player_signals.rpc()
+
+
+func _setup_server():
+	_setup_states()
+
+
+func _setup_states():
+	for child in game_states_node.get_children():
+		if child is GameState:
+			game_states[child.name.to_lower()] = child
+			child.game_manager = self
+	
+	transition_to_state.rpc_id(1, "waiting", true, true)
 
 
 @rpc("any_peer", "call_local")
