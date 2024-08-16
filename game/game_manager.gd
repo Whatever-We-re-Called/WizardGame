@@ -36,7 +36,7 @@ func _ready() -> void:
 		#_add_player(data)
 	
 	# TODO Change this to load correct current game scene.
-	_change_to_scene("res://game/wait_lobby/wait_lobby.tscn")
+	change_to_scene("res://game/wait_lobby/wait_lobby.tscn")
 
 
 func _on_server_opened():
@@ -55,8 +55,9 @@ func _setup_states():
 	for child in game_states_node.get_children():
 		if child is GameState:
 			game_states[child.name.to_lower()] = child
+			child.game_manager = self
 
-	transition_to_state.rpc_id(1, "waiting")
+	transition_to_state.rpc_id(1, "waiting", true, true)
 
 
 func _process(delta: float) -> void:
@@ -105,45 +106,31 @@ func get_player_from_peer_id(peer_id: int) -> Player:
 
 
 @rpc("authority", "call_local")
-func transition_to_state(new_state_name: String):
+func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_exit: bool = false):
 	pass
 	var new_state = game_states.get(new_state_name.to_lower())
 	if not new_state: return
-	if current_state == new_state: return
 	
-	if current_state:
+	if current_state != null and skip_exit == false:
 		current_state._exit()
 	
-	new_state._enter()
+	if skip_enter == false:
+		new_state._enter()
 	
 	current_state = new_state
 
 
 @rpc("authority", "call_local")
-func start_game():
-	_load_random_map.rpc_id(1)
-	
-	map_progress_ui.visible = true
-	map_progress_ui.countdown_to_next_disaster(game_settings.time_before_first_disaster, true)
-	map_progress_ui.update_disaster_icons(game_settings.disaster_pool, 1, false)
-
-
-@rpc("authority", "call_local")
-func stop_game():
-	_change_to_scene.rpc_id(1, preload("res://game/wait_lobby/wait_lobby.tscn"))
-
-
-@rpc("authority", "call_local")
-func _load_random_map():
+func load_random_map():
 	randomize()
 	var rng = RandomNumberGenerator.new()
 	var chosen_level = game_settings.map_pool[rng.randi_range(0, game_settings.map_pool.size() - 1)]
 	
-	_change_to_scene.rpc_id(1, chosen_level.resource_path)
+	change_to_scene.rpc_id(1, chosen_level.resource_path)
 
 
 @rpc("authority", "call_local", "reliable")
-func _change_to_scene(new_scene_resource_path: String):
+func change_to_scene(new_scene_resource_path: String):
 	_prepare_for_next_scene.rpc(new_scene_resource_path)
 	
 	var new_scene = load(new_scene_resource_path).instantiate()
@@ -172,7 +159,7 @@ func _handle_player_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
 			if multiplayer.is_server():
-				start_game.rpc_id(1)
+				transition_to_state.rpc_id(1, "playing")
 		2:
 			if multiplayer.is_server():
-				stop_game.rpc_id(1)
+				transition_to_state.rpc_id(1, "waiting")
