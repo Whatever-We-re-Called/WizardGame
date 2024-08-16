@@ -99,5 +99,7 @@ func apply_central_impulse(force: Vector2):
 
 
 @rpc("any_peer", "call_local")
-func teleport(target_global_position: Vector2):
+func teleport(target_global_position: Vector2, halt_velocity: bool = true):
+	if halt_velocity == true:
+		velocity = Vector2.ZERO
 	global_position = target_global_position

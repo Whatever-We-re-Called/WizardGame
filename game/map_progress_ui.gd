@@ -1,7 +1,6 @@
 extends CenterContainer
 
 @onready var current_disaster_label: Label = %CurrentDisasterLabel
-@onready var current_map_progress_bar: ProgressBar = %CurrentMapProgressBar
 @onready var disaster_icons: HBoxContainer = %DisasterIcons
 
 const DISASTER_SEVERITY_COLORS = {
@@ -27,6 +26,9 @@ func countdown_to_next_disaster(countdown: int, is_first: bool):
 
 
 func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_number: int, revealed: bool):
+	for child in disaster_icons.get_children():
+		child.queue_free()
+	
 	for i in range(disasters.size()):
 		var disaster = disasters[i]
 		var index_disaster_number = i + 1
@@ -39,6 +41,7 @@ func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_numb
 		if index_disaster_number < current_disaster_number:
 			texture_rect.texture = disaster.icon_texture
 			texture_rect.self_modulate = DISASTER_FINISHED_COLOR
+			texture_rect.custom_minimum_size = Vector2(48, 48)
 		elif index_disaster_number == current_disaster_number:
 			if revealed:
 				texture_rect.texture = disaster.icon_texture
@@ -46,8 +49,10 @@ func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_numb
 			else:
 				texture_rect.texture = UNKNOWN_DISASTER_TEXTURE
 				texture_rect.self_modulate = DISASTER_SELECT_COLOR
+			texture_rect.custom_minimum_size = Vector2(64, 64)
 		else:
 			texture_rect.texture = UNKNOWN_DISASTER_TEXTURE
 			texture_rect.self_modulate = DISASTER_UNKNOWN_COLOR
+			texture_rect.custom_minimum_size = Vector2(48, 48)
 		
 		disaster_icons.add_child(texture_rect)

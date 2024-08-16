@@ -7,6 +7,10 @@ class_name GameManager extends Node
 @onready var scene_spawner: MultiplayerSpawner = %SceneSpawner
 @onready var active_scene_root: Node = %ActiveSceneRoot
 @onready var map_progress_ui: CenterContainer = %MapProgressUI
+@onready var game_states_node: Node = %GameStates
+
+var current_state: GameState
+var game_states: Dictionary
 
 var players: Array[Player]:
 	get:
@@ -20,21 +24,45 @@ var active_scene: PlayableScene:
 			if child is PlayableScene: return child
 		return null
 
-
 const PLAYER_SCENE = preload("res://player/player.tscn")
 
 
 func _ready() -> void:
-	SessionManager.session_added.connect(_add_player)
-	SessionManager.serverbound_client_disconnected.connect(_remove_player)
-	SessionManager.server_closed.connect(_server_closed)
-	
-	for data in SessionManager.connected_clients.values():
-		_add_player(data)
-	
-	
-	_change_to_playable_scene("res://game/wait_lobby/wait_lobby.tscn")
 	set_multiplayer_authority(1)
+	
+	SessionManager.server_opened.connect(_on_server_opened)
+	
+	#for data in SessionManager.connected_clients.values():
+		#_add_player(data)
+	
+	# TODO Change this to load correct current game scene.
+	_change_to_scene("res://game/wait_lobby/wait_lobby.tscn")
+
+
+func _on_server_opened():
+	if is_multiplayer_authority():
+		_setup_states()
+	
+		for data in SessionManager.connected_clients.values():
+			_add_player(data)
+		
+		SessionManager.session_added.connect(_add_player)
+		SessionManager.serverbound_client_disconnected.connect(_remove_player)
+		SessionManager.server_closed.connect(_server_closed)
+
+
+func _setup_states():
+	for child in game_states_node.get_children():
+		if child is GameState:
+			game_states[child.name.to_lower()] = child
+
+	transition_to_state.rpc_id(1, "waiting")
+
+
+func _process(delta: float) -> void:
+	if is_multiplayer_authority():
+		pass
+		#current_state._update(delta)
 
 
 func _add_player(data):
@@ -77,6 +105,21 @@ func get_player_from_peer_id(peer_id: int) -> Player:
 
 
 @rpc("authority", "call_local")
+func transition_to_state(new_state_name: String):
+	pass
+	var new_state = game_states.get(new_state_name.to_lower())
+	if not new_state: return
+	if current_state == new_state: return
+	
+	if current_state:
+		current_state._exit()
+	
+	new_state._enter()
+	
+	current_state = new_state
+
+
+@rpc("authority", "call_local")
 func start_game():
 	_load_random_map.rpc_id(1)
 	
@@ -87,7 +130,7 @@ func start_game():
 
 @rpc("authority", "call_local")
 func stop_game():
-	_change_to_playable_scene.rpc_id(1, preload("res://game/wait_lobby/wait_lobby.tscn"))
+	_change_to_scene.rpc_id(1, preload("res://game/wait_lobby/wait_lobby.tscn"))
 
 
 @rpc("authority", "call_local")
@@ -96,22 +139,24 @@ func _load_random_map():
 	var rng = RandomNumberGenerator.new()
 	var chosen_level = game_settings.map_pool[rng.randi_range(0, game_settings.map_pool.size() - 1)]
 	
-	_change_to_playable_scene.rpc_id(1, chosen_level.resource_path)
+	_change_to_scene.rpc_id(1, chosen_level.resource_path)
 
 
-@rpc("authority", "call_local")
-func _change_to_playable_scene(new_level_resource_path: String):
-	_clear_active_scene.rpc()
-	var new_active_scene = load(new_level_resource_path).instantiate()
-	new_active_scene.game_manager = self
-	scene_spawner.add_spawnable_scene(new_level_resource_path)
-	active_scene_root.add_child(new_active_scene, true)
+@rpc("authority", "call_local", "reliable")
+func _change_to_scene(new_scene_resource_path: String):
+	_prepare_for_next_scene.rpc(new_scene_resource_path)
 	
-	new_active_scene.teleport_players_to_random_spawn_points.rpc_id(1)
+	var new_scene = load(new_scene_resource_path).instantiate()
+	new_scene.game_manager = self
+	active_scene_root.add_child(new_scene, true)
+	
+	new_scene.teleport_players_to_random_spawn_points.rpc_id(1)
 
 
-@rpc("any_peer", "call_local")
-func _clear_active_scene():
+@rpc("any_peer", "call_local", "reliable")
+func _prepare_for_next_scene(new_scene_resource_path: String):
+	scene_spawner.add_spawnable_scene(new_scene_resource_path)
+	
 	for child in active_scene_root.get_children():
 		child.queue_free()
 
