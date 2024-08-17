@@ -1,5 +1,6 @@
 class_name Player extends CharacterBody2D
 
+signal killed(int)
 signal received_debug_input(int)
 
 @export var ability_1: Abilities.Type
@@ -18,6 +19,7 @@ var peer_id: int
 var im: DeviceInputMap
 var can_use_abilities: bool = true
 var last_input_direction: Vector2 = Vector2.ZERO
+var is_dead = false
 
 
 func _enter_tree():
@@ -49,13 +51,16 @@ func _physics_process(delta):
 		return
 	
 	if controller != null:
-		controller.handle_pre_physics(delta)
-		controller.handle_physics(delta)
-		controller.handle_post_physics(delta)
+		controller.handle_debug_inputs()
+		if not is_dead:
+			controller.handle_pre_physics(delta)
+			controller.handle_physics(delta)
+			controller.handle_post_physics(delta)
 
 
 @rpc("any_peer", "call_local")
 func create_ability_nodes():
+	print(name)
 	for i in range(3):
 		var ability = abilities[i]
 		var ability_resource = Abilities.get_ability_resource(ability)
@@ -103,3 +108,18 @@ func teleport(target_global_position: Vector2, halt_velocity: bool = true):
 	if halt_velocity == true:
 		velocity = Vector2.ZERO
 	global_position = target_global_position
+
+
+@rpc("any_peer", "call_local")
+func kill():
+	visible = false
+	can_use_abilities = false
+	is_dead = true
+	killed.emit(peer_id)
+
+
+@rpc("any_peer", "call_local")
+func revive():
+	visible = true
+	can_use_abilities = true
+	is_dead = false

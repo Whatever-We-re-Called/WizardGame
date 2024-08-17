@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://tjmncfnms2m0"]
+[gd_scene load_steps=12 format=3 uid="uid://tjmncfnms2m0"]
 
 [ext_resource type="Script" path="res://game/level/level.gd" id="1_7fumv"]
 [ext_resource type="PackedScene" uid="uid://438vb86uyyob" path="res://maps/prototype_second_concept_level/scenes/boat.tscn" id="2_1q5kc"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://crsmchrv8f248" path="res://maps/prototype_second_concept_level/scenes/house_front.tscn" id="8_occo6"]
 [ext_resource type="PackedScene" uid="uid://c5aa4xug8sp3b" path="res://maps/prototype_second_concept_level/scenes/rope.tscn" id="9_cu1v8"]
 [ext_resource type="Texture2D" uid="uid://cktfkodn4sbpo" path="res://maps/prototype_second_concept_level/textures/water.png" id="9_lydpb"]
+[ext_resource type="PackedScene" uid="uid://bd4aa4bjc71o4" path="res://game/level/kill_zone.tscn" id="11_0ki5m"]
 
 [node name="PrototypeSecondConceptLevel" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_7fumv")
@@ -65,3 +66,15 @@ color = Color(0.352941, 0.352941, 0.352941, 1)
 z_index = 1
 position = Vector2(960, 540)
 texture = ExtResource("9_lydpb")
+
+[node name="KillZone" parent="." instance=ExtResource("11_0ki5m")]
+position = Vector2(960, 1248)
+zone_size = Vector2(3840, 200)
+
+[node name="KillZone2" parent="." instance=ExtResource("11_0ki5m")]
+position = Vector2(-160, 432)
+zone_size = Vector2(200, 1440)
+
+[node name="KillZone3" parent="." instance=ExtResource("11_0ki5m")]
+position = Vector2(2080, 432)
+zone_size = Vector2(200, 1440)

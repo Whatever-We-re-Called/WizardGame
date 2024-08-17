@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://ddgmp4m45agmj"]
+[gd_scene load_steps=36 format=3 uid="uid://ddgmp4m45agmj"]
 
 [ext_resource type="Script" path="res://game/level/level.gd" id="1_ikh77"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="2_5f3yf"]
@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://c1ytk48koq14q" path="res://maps/prototype_third_concept_level/scenes/stair_bg_right.tscn" id="31_k3re8"]
 [ext_resource type="PackedScene" uid="uid://bg7iimg8076o2" path="res://maps/prototype_third_concept_level/scenes/stair_left.tscn" id="32_lbxm2"]
 [ext_resource type="PackedScene" uid="uid://bgevbjv4i5sx5" path="res://maps/prototype_third_concept_level/scenes/stair_right.tscn" id="33_5fr10"]
+[ext_resource type="PackedScene" uid="uid://bd4aa4bjc71o4" path="res://game/level/kill_zone.tscn" id="35_kqok7"]
 
 [node name="PrototypeSecondConceptLevel" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_ikh77")
@@ -135,3 +136,15 @@ texture = ExtResource("4_gvxui")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(0, 1007, 1920, 1009, 1920, 1080, 0, 1080)
+
+[node name="KillZone" parent="." instance=ExtResource("35_kqok7")]
+position = Vector2(960, 1256)
+zone_size = Vector2(3840, 200)
+
+[node name="KillZone2" parent="." instance=ExtResource("35_kqok7")]
+position = Vector2(2080, 440)
+zone_size = Vector2(200, 1440)
+
+[node name="KillZone3" parent="." instance=ExtResource("35_kqok7")]
+position = Vector2(-160, 440)
+zone_size = Vector2(200, 1440)

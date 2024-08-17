@@ -12,6 +12,7 @@ class_name GameManager extends Node
 var current_state: GameState
 var game_states: Dictionary
 var current_disaster_number: int = 1
+var dead_players: Array[Player]
 
 var players: Array[Player]:
 	get:
@@ -31,12 +32,9 @@ const PLAYER_SCENE = preload("res://player/player.tscn")
 func _ready() -> void:
 	set_multiplayer_authority(1)
 	
-	#SessionManager.server_opened.connect(_on_server_opened)
 	SessionManager.session_added.connect(_add_player)
 	SessionManager.serverbound_client_disconnected.connect(_remove_player)
 	SessionManager.server_closed.connect(_server_closed)
-	#for data in SessionManager.connected_clients.values():
-		#_add_player(data)
 	
 	# TODO Change this to load correct current game scene.
 	change_to_scene("res://game/wait_lobby/wait_lobby.tscn")
@@ -81,7 +79,8 @@ func _setup_states():
 @rpc("any_peer", "call_local")
 func _handle_add_player_signals():
 	for player in players:
-		player.received_debug_input.connect(_handle_player_debug_input)
+		player.killed.connect(_on_player_killed)
+		player.received_debug_input.connect(_on_player_received_debug_input)
 
 
 func _remove_player(id):
@@ -146,13 +145,34 @@ func _prepare_for_next_scene(new_scene_resource_path: String):
 
 
 @rpc("authority", "call_local")
+func revive_dead_players():
+	var respawn_points = active_scene.spawn_points.get_random_list_of_spawn_locations(players.size(), true)
+	for i in range(dead_players.size()):
+		var dead_player = dead_players[i]
+		dead_player.revive.rpc_id(dead_player.peer_id)
+		dead_player.teleport.rpc_id(dead_player.peer_id, respawn_points[i])
+	dead_players.clear()
+
+
+@rpc("authority", "call_local")
 func teleport_player_to_random_spawn_point(peer_id: int):
 	var target_player = get_player_from_peer_id(peer_id)
-	var spawn_location = get_tree().get_first_node_in_group("spawn_points").get_random_spawn_location()
+	var spawn_location = active_scene.spawn_points.get_random_spawn_location()
 	target_player.teleport.rpc_id(peer_id, spawn_location)
 
 
-func _handle_player_debug_input(debug_value: int) -> void:
+func _on_player_killed(peer_id: int):
+	_kill_player.rpc_id(1, peer_id)
+
+
+@rpc("authority", "call_local")
+func _kill_player(peer_id: int):
+	var killed_player = get_player_from_peer_id(peer_id)
+	if not dead_players.has(killed_player):
+		dead_players.append(killed_player)
+
+
+func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
 			if multiplayer.is_server():
