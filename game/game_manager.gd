@@ -11,6 +11,7 @@ class_name GameManager extends Node
 
 var current_state: GameState
 var game_states: Dictionary
+var current_disaster_number: int = 1
 
 var players: Array[Player]:
 	get:
@@ -43,8 +44,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():
-		pass
-		#current_state._update(delta)
+		if current_state != null:
+			current_state._update(delta)
 
 
 func _add_player(data):
@@ -155,7 +156,7 @@ func _handle_player_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
 			if multiplayer.is_server():
-				transition_to_state.rpc_id(1, "playing")
+				transition_to_state.rpc_id(1, "mapstart")
 		2:
 			if multiplayer.is_server():
 				transition_to_state.rpc_id(1, "waiting")

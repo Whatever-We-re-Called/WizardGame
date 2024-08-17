@@ -1,12 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=12 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
 [ext_resource type="Script" path="res://game/map_progress_ui.gd" id="3_q0doh"]
 [ext_resource type="Script" path="res://game/states/waiting_game_state.gd" id="4_0m4h4"]
-[ext_resource type="Script" path="res://game/states/playing_game_state.gd" id="5_0oanp"]
+[ext_resource type="Script" path="res://game/states/map_start_game_state.gd" id="5_78ssb"]
+[ext_resource type="Script" path="res://game/states/disaster_countdown_game_state.gd" id="6_k8xa5"]
+[ext_resource type="Script" path="res://game/states/disaster_game_state.gd" id="6_xatxq"]
+[ext_resource type="Script" path="res://game/states/map_end_game_state.gd" id="8_4pkwd"]
+[ext_resource type="Script" path="res://game/states/intermission_game_state.gd" id="9_iy1xj"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_smshx"]
+properties/0/path = NodePath("GameUI/MapProgressUI:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_5u4d7"]
 font_size = 32
@@ -82,9 +89,19 @@ unique_name_in_owner = true
 [node name="Waiting" type="Node" parent="GameStates"]
 script = ExtResource("4_0m4h4")
 
-[node name="Playing" type="Node" parent="GameStates"]
-script = ExtResource("5_0oanp")
+[node name="MapStart" type="Node" parent="GameStates"]
+script = ExtResource("5_78ssb")
+
+[node name="DisasterCountdown" type="Node" parent="GameStates"]
+script = ExtResource("6_k8xa5")
+
+[node name="Disaster" type="Node" parent="GameStates"]
+script = ExtResource("6_xatxq")
+
+[node name="MapEnd" type="Node" parent="GameStates"]
+script = ExtResource("8_4pkwd")
 
 [node name="Intermission" type="Node" parent="GameStates"]
+script = ExtResource("9_iy1xj")
 
 [node name="Ending" type="Node" parent="GameStates"]

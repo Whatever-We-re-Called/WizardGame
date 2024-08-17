@@ -10,21 +10,32 @@ const DISASTER_SEVERITY_COLORS = {
 	DisasterInfo.Severity.VERY_HIGH: Color.DARK_RED,
 }
 const DISASTER_SELECT_COLOR = Color.WHITE
-const DISASTER_UNKNOWN_COLOR = Color.WEB_GRAY
-const DISASTER_FINISHED_COLOR = Color(0.35, 0.35, 0.35)
+const DISASTER_GRAYED_COLOR = Color.WEB_GRAY
 const UNKNOWN_DISASTER_TEXTURE = preload("res://disasters/textures/icons/shitty_hidden_disaster_icon.png")
 
 
-func countdown_to_next_disaster(countdown: int, is_first: bool):
-	for i in range(countdown):
-		if is_first == true:
-			current_disaster_label.text = "First disaster starting in " + str(countdown) + "s"
-		else:
-			current_disaster_label.text = "Next disaster starting in " + str(countdown) + "s"
-		await get_tree().create_timer(1.0).timeout
-		countdown -= 1
+@rpc("any_peer", "call_local")
+func set_countdown_to_disaster_text(countdown: int, is_first: bool):
+	current_disaster_label.label_settings.font_color = Color.WHITE
+	if is_first == true:
+		current_disaster_label.text = "First disaster starting in " + str(countdown) + "s"
+	else:
+		current_disaster_label.text = "Next disaster starting in " + str(countdown) + "s"
 
 
+@rpc("any_peer", "call_local")
+func set_countdown_to_intermission_text(countdown: int):
+	current_disaster_label.label_settings.font_color = Color.WHITE
+	current_disaster_label.text = "Switching maps in " + str(countdown) + "s"
+
+
+@rpc("any_peer", "call_local")
+func set_current_disaster_text(disaster: DisasterInfo):
+	current_disaster_label.label_settings.font_color = DISASTER_SEVERITY_COLORS[disaster.severity]
+	current_disaster_label.text = "Current Disaster: " + disaster.display_name
+
+
+@rpc("any_peer", "call_local")
 func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_number: int, revealed: bool):
 	for child in disaster_icons.get_children():
 		child.queue_free()
@@ -40,7 +51,7 @@ func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_numb
 		
 		if index_disaster_number < current_disaster_number:
 			texture_rect.texture = disaster.icon_texture
-			texture_rect.self_modulate = DISASTER_FINISHED_COLOR
+			texture_rect.self_modulate = DISASTER_GRAYED_COLOR
 			texture_rect.custom_minimum_size = Vector2(48, 48)
 		elif index_disaster_number == current_disaster_number:
 			if revealed:
@@ -52,7 +63,7 @@ func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_numb
 			texture_rect.custom_minimum_size = Vector2(64, 64)
 		else:
 			texture_rect.texture = UNKNOWN_DISASTER_TEXTURE
-			texture_rect.self_modulate = DISASTER_UNKNOWN_COLOR
+			texture_rect.self_modulate = DISASTER_GRAYED_COLOR
 			texture_rect.custom_minimum_size = Vector2(48, 48)
 		
 		disaster_icons.add_child(texture_rect)
