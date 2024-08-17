@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_lk6cg")
 title = "Storm"
-type = 0
+enum_type = 0
 severity = 1
 script_file = ExtResource("2_wqrui")

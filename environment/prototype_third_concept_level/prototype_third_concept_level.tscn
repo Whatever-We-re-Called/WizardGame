@@ -135,3 +135,7 @@ texture = ExtResource("4_gvxui")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(0, 1007, 1920, 1009, 1920, 1080, 0, 1080)
+
+[node name="DisasterArea" type="Polygon2D" parent="."]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-11, 0, 1922, -2, 1925, 1083, -3, 1082)

@@ -34,6 +34,8 @@ func _ready():
 	for ability_scene in Abilities.loaded_ability_scenes.values():
 		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
 	create_ability_nodes.rpc_id(peer_id)
+	
+	received_debug_input.connect(_disaster_debug)
 
 
 func set_device(device_ids: Array):
@@ -98,6 +100,29 @@ func apply_central_impulse(force: Vector2):
 	velocity += force
 
 
-@rpc("any_peer", "call_local")
 func teleport(target_global_position: Vector2):
+	if SessionManager.is_valid_peer(self):
+		_teleport_rpc.rpc_id(get_peer_id(), target_global_position)
+	else:
+		_teleport_rpc(target_global_position)
+
+
+@rpc("any_peer", "call_local")
+func _teleport_rpc(target_global_position: Vector2):
 	global_position = target_global_position
+	
+	
+@rpc("any_peer", "call_local")
+func add_velocity(velocity: Vector2):
+	apply_central_impulse(velocity)
+
+
+func _disaster_debug(id: int):
+	if not multiplayer.is_server():
+		return
+	if id == 5:
+		DisasterManager.set_current_disaster(DisasterManager.DisasterEnum.STORM)
+		DisasterManager.current_disaster.start()
+	if id == 6:
+		DisasterManager.set_current_disaster(DisasterManager.DisasterEnum.EARTHQUAKE)
+		DisasterManager.current_disaster.start()
