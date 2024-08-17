@@ -78,3 +78,7 @@ zone_size = Vector2(200, 1440)
 [node name="KillZone3" parent="." instance=ExtResource("11_0ki5m")]
 position = Vector2(2080, 432)
 zone_size = Vector2(200, 1440)
+
+[node name="DisasterArea" type="Polygon2D" parent="."]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(4, -5, 1918, -3, 1924, 1083, -7, 1081)

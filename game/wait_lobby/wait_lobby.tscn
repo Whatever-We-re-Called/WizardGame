@@ -212,6 +212,10 @@ scale = Vector2(2, 2)
 [node name="FirstPrototypeFragilePart1" parent="." instance=ExtResource("10_sv10l")]
 position = Vector2(0, 524)
 
+[node name="DisasterArea" type="Polygon2D" parent="."]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-28, -31, 1937, -33, 1964, 1132, -47, 1135)
+
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
 [connection signal="pressed" from="CanvasLayer/SteamScreen/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DisasterResource" load_steps=3 format=3 uid="uid://bth2d6is5r7sp"]
+
+[ext_resource type="Script" path="res://disasters/disaster_resource.gd" id="1_lk6cg"]
+[ext_resource type="Script" path="res://disasters/storm/storm.gd" id="2_wqrui"]
+
+[resource]
+script = ExtResource("1_lk6cg")
+title = "Storm"
+enum_type = 0
+severity = 1
+script_file = ExtResource("2_wqrui")

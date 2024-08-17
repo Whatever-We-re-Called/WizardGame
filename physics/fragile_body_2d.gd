@@ -3,7 +3,7 @@ class_name FragileBody2D extends RigidBody2D
 
 enum EnvironmentLayer { FRONT, BASE, BACK }
 
-@export var health: int = 10
+@export var health: float = 10.0
 @export var environment_layer: EnvironmentLayer = EnvironmentLayer.BASE
 @export_range(0, 200) var number_of_break_points: int = 5
 @export var edge_threshold: float = 10.0
@@ -241,12 +241,16 @@ func _get_nearby_collisions(check_range: float, polygon: PackedVector2Array) -> 
 	return space_state.intersect_shape(query)
 
 
-func damage(damage_dealt: int) -> Array[ShardPiece]:
+func damage(damage_dealt: float) -> Array[ShardPiece]:
+	return damage_with_collision(damage_dealt)
+		
+		
+func damage_with_collision(damage_dealt: float, collision_polygon: CollisionPolygon2D = null) -> Array[ShardPiece]:
 	if health <= 0: return []
 	
 	health -= damage_dealt
 	
 	if health <= 0:
-		return break_apart(null)
+		return break_apart(collision_polygon)
 	else:
 		return []

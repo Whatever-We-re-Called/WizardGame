@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8wiqjx3f5bmm"]
+
+[ext_resource type="Texture2D" uid="uid://bcr04oo16eo74" path="res://disasters/storm/lightning.png" id="1_cc1o1"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Lightning" type="Sprite2D" parent="."]
+position = Vector2(1, -955)
+texture = ExtResource("1_cc1o1")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(-114, 37, 123, 39, 284, -1923, -249, -1923)

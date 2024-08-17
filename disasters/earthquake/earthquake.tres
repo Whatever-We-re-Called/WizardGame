@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DisasterResource" load_steps=3 format=3 uid="uid://b6hi1juxbg28i"]
+
+[ext_resource type="Script" path="res://disasters/disaster_resource.gd" id="1_0t5y3"]
+[ext_resource type="Script" path="res://disasters/earthquake/earthquake.gd" id="2_4j2w6"]
+
+[resource]
+script = ExtResource("1_0t5y3")
+title = "Earthquake"
+enum_type = 1
+severity = 2
+script_file = ExtResource("2_4j2w6")
