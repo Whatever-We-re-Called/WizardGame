@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="DisasterResource" load_steps=3 format=3 uid="uid://b6hi1juxbg28i"]
+[gd_resource type="Resource" script_class="DisasterResource" load_steps=4 format=3 uid="uid://b6hi1juxbg28i"]
 
 [ext_resource type="Script" path="res://disasters/disaster_resource.gd" id="1_0t5y3"]
+[ext_resource type="Texture2D" uid="uid://c1p00idnh05bj" path="res://disasters/earthquake/shitty_earthquake_icon.png" id="1_3dibo"]
 [ext_resource type="Script" path="res://disasters/earthquake/earthquake.gd" id="2_4j2w6"]
 
 [resource]
 script = ExtResource("1_0t5y3")
-title = "Earthquake"
+display_name = "Earthquake"
+icon_texture = ExtResource("1_3dibo")
 enum_type = 1
-severity = 2
+severity = 0
 script_file = ExtResource("2_4j2w6")

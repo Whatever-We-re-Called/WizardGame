@@ -3,14 +3,6 @@ extends Disaster
 const MAX_PUSH_FORCE = 750.0
 
 
-func on_start():
-	_run_until_time_ends(randf_range(15, 25))
-
-
-func _run_until_time_ends(time: float):
-	await get_tree().create_timer(time).timeout
-	stop()
-
 var frames: int = 0
 
 func _process(delta):

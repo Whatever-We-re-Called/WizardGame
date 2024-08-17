@@ -15,7 +15,7 @@ func teleport_players_to_random_spawn_points():
 	var spawn_locations = spawn_points.get_random_list_of_spawn_locations(players.size(), true)
 	for i in range(players.size()):
 		var player = players[i]
-		player.teleport.rpc_id(player.peer_id, spawn_locations[i])
+		player.teleport(spawn_locations[i])
 
 
 @rpc("any_peer", "call_local")

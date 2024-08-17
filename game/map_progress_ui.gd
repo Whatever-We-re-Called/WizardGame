@@ -4,14 +4,15 @@ extends CenterContainer
 @onready var disaster_icons: HBoxContainer = %DisasterIcons
 
 const DISASTER_SEVERITY_COLORS = {
-	DisasterInfo.Severity.LOW: Color.GREEN,
-	DisasterInfo.Severity.MEDIUM: Color.YELLOW,
-	DisasterInfo.Severity.HIGH: Color.RED,
-	DisasterInfo.Severity.VERY_HIGH: Color.DARK_RED,
+	DisasterManager.Severity.ONE: Color.GREEN,
+	DisasterManager.Severity.TWO: Color.YELLOW,
+	DisasterManager.Severity.THREE: Color.RED,
+	DisasterManager.Severity.FOUR: Color.DARK_RED,
+	DisasterManager.Severity.FIVE: Color.PURPLE
 }
 const DISASTER_SELECT_COLOR = Color.WHITE
 const DISASTER_GRAYED_COLOR = Color.WEB_GRAY
-const UNKNOWN_DISASTER_TEXTURE = preload("res://disasters/textures/icons/shitty_hidden_disaster_icon.png")
+const UNKNOWN_DISASTER_TEXTURE = preload("res://disasters/shitty_hidden_disaster_icon.png")
 
 
 @rpc("any_peer", "call_local")
@@ -30,13 +31,13 @@ func set_countdown_to_intermission_text(countdown: int):
 
 
 @rpc("any_peer", "call_local")
-func set_current_disaster_text(disaster: DisasterInfo):
+func set_current_disaster_text(disaster: DisasterResource):
 	current_disaster_label.label_settings.font_color = DISASTER_SEVERITY_COLORS[disaster.severity]
 	current_disaster_label.text = "Current Disaster: " + disaster.display_name
 
 
 @rpc("any_peer", "call_local")
-func update_disaster_icons(disasters: Array[DisasterInfo], current_disaster_number: int, revealed: bool):
+func update_disaster_icons(disasters: Array[DisasterResource], current_disaster_number: int, revealed: bool):
 	for child in disaster_icons.get_children():
 		child.queue_free()
 	

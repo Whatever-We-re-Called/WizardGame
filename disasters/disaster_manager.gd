@@ -73,7 +73,7 @@ enum DisasterEnum {
 }
 
 
-enum DisasterSeverity {
+enum Severity {
 	ONE,
 	TWO,
 	THREE,

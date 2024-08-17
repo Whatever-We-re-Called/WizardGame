@@ -23,5 +23,4 @@ func _update_zone_size():
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
-		print(body)
 		body.kill()

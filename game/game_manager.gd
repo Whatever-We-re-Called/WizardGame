@@ -150,7 +150,7 @@ func revive_dead_players():
 	var respawn_points = active_scene.spawn_points.get_random_list_of_spawn_locations(players.size(), true)
 	for i in range(dead_players.size()):
 		var dead_player = dead_players[i]
-		dead_player.teleport.rpc_id(dead_player.peer_id, respawn_points[i])
+		dead_player.teleport(respawn_points[i])
 	await get_tree().process_frame
 	for i in range(dead_players.size()):
 		var dead_player = dead_players[i]
@@ -162,7 +162,7 @@ func revive_dead_players():
 func teleport_player_to_random_spawn_point(peer_id: int):
 	var target_player = get_player_from_peer_id(peer_id)
 	var spawn_location = active_scene.spawn_points.get_random_spawn_location()
-	target_player.teleport.rpc_id(peer_id, spawn_location)
+	target_player.teleport(spawn_location)
 
 
 func _on_player_killed(peer_id: int):

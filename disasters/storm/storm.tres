@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="DisasterResource" load_steps=3 format=3 uid="uid://bth2d6is5r7sp"]
+[gd_resource type="Resource" script_class="DisasterResource" load_steps=4 format=3 uid="uid://bth2d6is5r7sp"]
 
+[ext_resource type="Texture2D" uid="uid://bfq81wl42s4mu" path="res://disasters/storm/shitty_storm_icon.png" id="1_j0cny"]
 [ext_resource type="Script" path="res://disasters/disaster_resource.gd" id="1_lk6cg"]
 [ext_resource type="Script" path="res://disasters/storm/storm.gd" id="2_wqrui"]
 
 [resource]
 script = ExtResource("1_lk6cg")
-title = "Storm"
+display_name = "Storm"
+icon_texture = ExtResource("1_j0cny")
 enum_type = 0
 severity = 1
 script_file = ExtResource("2_wqrui")

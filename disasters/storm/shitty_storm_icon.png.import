@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfq81wl42s4mu"
-path="res://.godot/imported/shitty_storm_icon.png-f2ddbf0be4fc190fc75cf83c833ec01f.ctex"
+path="res://.godot/imported/shitty_storm_icon.png-818124a2dfc19a9563658d80c9b25726.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://disasters/textures/icons/shitty_storm_icon.png"
-dest_files=["res://.godot/imported/shitty_storm_icon.png-f2ddbf0be4fc190fc75cf83c833ec01f.ctex"]
+source_file="res://disasters/storm/shitty_storm_icon.png"
+dest_files=["res://.godot/imported/shitty_storm_icon.png-818124a2dfc19a9563658d80c9b25726.ctex"]
 
 [params]
 

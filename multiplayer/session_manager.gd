@@ -56,9 +56,9 @@ func is_valid_peer(peer) -> bool:
 	if peer is int:
 		return multiplayer.get_peers().has(peer)
 	else:
-		if peer.name.is_valid_number():
-			var peer_id = int(peer.name)
-			return multiplayer.get_peers().has(int(peer.name)) or peer_id == 1
+		if peer.name.is_valid_int():
+			var peer_id = int(str(peer.name))
+			return multiplayer.get_peers().has(int(peer_id)) or peer_id == 1
 		else:
 			return multiplayer.get_peers().has(peer.get_multiplayer_authority()) or peer.get_multiplayer_authority() == 1
 		

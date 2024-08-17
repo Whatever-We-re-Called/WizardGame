@@ -42,7 +42,7 @@ func _init_scaling():
 
 func _init_multiplayer_handling():
 	var multiplayer_spawner = MultiplayerSpawner.new()
-	add_child(multiplayer_spawner)
+	add_child(multiplayer_spawner, true)
 	multiplayer_spawner.spawn_path = get_path()
 	multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
 	
@@ -215,13 +215,6 @@ func _is_polygon_a_valid_shard(polygon: PackedVector2Array, check_nearby_collisi
 				if collision.collider is FragileBody2D:
 					return true
 		return false
-	#elif PolygonUtil.get_smallest_center_delta(polygon) < MINIMUM_ALLOWED_CENTER_DELTA:
-		#if check_nearby_collisions == true:
-			#var nearby_collisions = _get_nearby_collisions(NEARBY_CHECK_RANGE, polygon)
-			#for collision in nearby_collisions:
-				#if collision.collider is FragileBody2D:
-					#return true
-		#return false
 	else:
 		return true
 
@@ -243,8 +236,8 @@ func _get_nearby_collisions(check_range: float, polygon: PackedVector2Array) -> 
 
 func damage(damage_dealt: float) -> Array[ShardPiece]:
 	return damage_with_collision(damage_dealt)
-		
-		
+
+
 func damage_with_collision(damage_dealt: float, collision_polygon: CollisionPolygon2D = null) -> Array[ShardPiece]:
 	if health <= 0: return []
 	

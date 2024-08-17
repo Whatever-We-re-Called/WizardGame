@@ -10,4 +10,4 @@ class_name GameSettings extends Resource
 @export var time_before_first_disaster: float
 @export var time_inbetween_disasters: float
 @export var time_after_last_disaster: float
-@export var disaster_pool: Array[DisasterInfo]
+@export var disaster_pool: Array[DisasterResource]

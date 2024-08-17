@@ -5,13 +5,8 @@ const LIGHTNING_IMPACT_RADIUS = 150
 
 var should_spawn_lightning = false
 
-var lightning_count = 0
-var target_lightning_count = 0
-
 
 func on_start():
-	lightning_count = 0
-	target_lightning_count = randi_range(10, 15)
 	_do_lightning_delay()
 
 
@@ -20,11 +15,7 @@ func _process(delta):
 		return
 		
 	if should_spawn_lightning:
-		if lightning_count >= target_lightning_count:
-			stop()
-		else:
-			spawn_lightning()
-			lightning_count += 1
+		spawn_lightning()
 		
 		
 func spawn_lightning():
@@ -159,5 +150,5 @@ func _get_push_force(body: PhysicsBody2D, center: Vector2) -> float:
 	
 	
 func _damage_player(player):
-	pass # TODO
+	player.kill()
 	

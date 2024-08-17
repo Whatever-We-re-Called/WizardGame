@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="GameSettings" load_steps=7 format=3 uid="uid://bosqyf6xpyw4r"]
 
-[ext_resource type="Script" path="res://disasters/resources/disaster_info.gd" id="1_c7r3i"]
+[ext_resource type="Script" path="res://disasters/disaster_resource.gd" id="1_n3v6n"]
 [ext_resource type="PackedScene" uid="uid://tjmncfnms2m0" path="res://maps/prototype_second_concept_level/prototype_second_concept_level.tscn" id="1_sl5e0"]
 [ext_resource type="Script" path="res://game/settings/game_settings.gd" id="1_vmk68"]
-[ext_resource type="Resource" uid="uid://odl3w5qmcgur" path="res://disasters/resources/earthquake_disaster_info.tres" id="2_1ktw6"]
 [ext_resource type="PackedScene" uid="uid://ddgmp4m45agmj" path="res://maps/prototype_third_concept_level/prototype_third_concept_level.tscn" id="2_06tdj"]
-[ext_resource type="Resource" uid="uid://b3rhxqxkcbodi" path="res://disasters/resources/storm_disaster_info.tres" id="3_htic3"]
+[ext_resource type="Resource" uid="uid://bth2d6is5r7sp" path="res://disasters/storm/storm.tres" id="2_yx8np"]
+[ext_resource type="Resource" uid="uid://b6hi1juxbg28i" path="res://disasters/earthquake/earthquake.tres" id="3_qb3uf"]
 
 [resource]
 script = ExtResource("1_vmk68")
@@ -16,4 +16,4 @@ disaster_duration = 5.0
 time_before_first_disaster = 5.0
 time_inbetween_disasters = 3.0
 time_after_last_disaster = 5.0
-disaster_pool = Array[ExtResource("1_c7r3i")]([ExtResource("2_1ktw6"), ExtResource("3_htic3"), ExtResource("3_htic3"), ExtResource("2_1ktw6"), ExtResource("3_htic3")])
+disaster_pool = Array[ExtResource("1_n3v6n")]([ExtResource("2_yx8np"), ExtResource("3_qb3uf"), ExtResource("2_yx8np"), ExtResource("2_yx8np"), ExtResource("3_qb3uf")])

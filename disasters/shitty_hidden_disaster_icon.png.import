@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1p00idnh05bj"
-path="res://.godot/imported/shitty_earthquake_icon.png-b037fe8f4e1b8c82e893ef9cc5adff2d.ctex"
+uid="uid://d00edmig1nogb"
+path="res://.godot/imported/shitty_hidden_disaster_icon.png-50523059e6d81e0ee9c612fbf83f4e08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://disasters/textures/icons/shitty_earthquake_icon.png"
-dest_files=["res://.godot/imported/shitty_earthquake_icon.png-b037fe8f4e1b8c82e893ef9cc5adff2d.ctex"]
+source_file="res://disasters/shitty_hidden_disaster_icon.png"
+dest_files=["res://.godot/imported/shitty_hidden_disaster_icon.png-50523059e6d81e0ee9c612fbf83f4e08.ctex"]
 
 [params]
 

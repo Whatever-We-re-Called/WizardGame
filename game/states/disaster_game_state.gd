@@ -6,6 +6,9 @@ var countdown: float
 func _enter():
 	print("Disaster started!")
 	# TODO Spawn disaster
+	var current_disaster = game_manager.game_settings.disaster_pool[game_manager.current_disaster_number - 1]
+	DisasterManager.set_current_disaster(current_disaster.enum_type)
+	DisasterManager.current_disaster.start()
 	
 	countdown = game_manager.game_settings.disaster_duration
 	game_manager.map_progress_ui.update_disaster_icons.rpc(game_manager.game_settings.disaster_pool, game_manager.current_disaster_number, true)
@@ -13,6 +16,7 @@ func _enter():
 
 
 func _exit():
+	DisasterManager.current_disaster.stop()
 	game_manager.current_disaster_number += 1
 
 
