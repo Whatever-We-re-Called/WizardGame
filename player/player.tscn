@@ -15,10 +15,16 @@ height = 128.0
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gpxhm"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 2
+properties/0/replication_mode = 1
 properties/1/path = NodePath("RichTextLabel:text")
 properties/1/spawn = true
 properties/1/replication_mode = 2
+properties/2/path = NodePath("PlayerCollisionShape2D:disabled")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("controller")]
 collision_layer = 16
@@ -27,7 +33,7 @@ floor_max_angle = 1.0472
 floor_snap_length = 16.0
 script = ExtResource("1_v4k2b")
 ability_1 = 1
-ability_2 = 5
+ability_2 = 2
 ability_3 = 4
 controller = NodePath("PlayerController")
 
@@ -98,7 +104,8 @@ unique_name_in_owner = true
 position = Vector2(10, 0)
 texture = ExtResource("2_tkvjb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 shape = SubResource("CapsuleShape2D_ehwds")
 
 [node name="CenterPoint" type="Node2D" parent="."]

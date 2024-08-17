@@ -5,12 +5,12 @@ var countdown: float
 
 
 func _enter():
+	game_manager.revive_dead_players.rpc_id(1)
+	
 	is_first_disaster = game_manager.current_disaster_number == 1
 	if is_first_disaster: countdown = game_manager.game_settings.time_before_first_disaster
 	else: countdown = game_manager.game_settings.time_inbetween_disasters
 	game_manager.map_progress_ui.update_disaster_icons.rpc(game_manager.game_settings.disaster_pool, game_manager.current_disaster_number, false)
-	
-	game_manager.revive_dead_players.rpc_id(1)
 
 func _update(delta):
 	if countdown <= 0.0:

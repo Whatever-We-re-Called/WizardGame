@@ -14,6 +14,7 @@ signal received_debug_input(int)
 @onready var ability_multiplayer_spawner: MultiplayerSpawner = %AbilityMultiplayerSpawner
 @onready var change_abilities_panel: PanelContainer = %ChangeAbilitiesPanel
 @onready var abilities = [ ability_1, ability_2, ability_3 ]
+@onready var player_collision_shape_2d: CollisionShape2D = %PlayerCollisionShape2D
 
 var peer_id: int
 var im: DeviceInputMap
@@ -23,7 +24,7 @@ var is_dead = false
 
 
 func _enter_tree():
-	var peer_id = name.to_int()
+	peer_id = name.to_int()
 	
 	im = DeviceInputMap.new(self, peer_id, [0, 2])
 	if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
@@ -35,14 +36,13 @@ func _ready():
 	change_abilities_panel.setup(self)
 	for ability_scene in Abilities.loaded_ability_scenes.values():
 		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
-	create_ability_nodes.rpc_id(peer_id)
 
 
 func set_device(device_ids: Array):
 	if im != null:
 		im.cleanup()
 		
-	var peer_id = name.to_int()
+	peer_id = name.to_int()
 	im = DeviceInputMap.new(self, peer_id, device_ids)
 
 
@@ -58,9 +58,8 @@ func _physics_process(delta):
 			controller.handle_post_physics(delta)
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func create_ability_nodes():
-	print(name)
 	for i in range(3):
 		var ability = abilities[i]
 		var ability_resource = Abilities.get_ability_resource(ability)
@@ -71,7 +70,7 @@ func create_ability_nodes():
 		ability_nodes.add_child(new_ability_scene, true)
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func clear_ability_nodes():
 	for child in ability_nodes.get_children():
 		child.queue_free()
@@ -103,23 +102,35 @@ func apply_central_impulse(force: Vector2):
 	velocity += force
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func teleport(target_global_position: Vector2, halt_velocity: bool = true):
 	if halt_velocity == true:
 		velocity = Vector2.ZERO
 	global_position = target_global_position
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func kill():
+	if not is_multiplayer_authority(): return
+	if is_dead: return
+	
+	print("Killed ", name, " ", global_position)
+	
 	visible = false
 	can_use_abilities = false
 	is_dead = true
+	player_collision_shape_2d.set_deferred("disabled", true)
 	killed.emit(peer_id)
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func revive():
+	if not is_multiplayer_authority(): return
+	if not is_dead: return
+	
+	print("Revived ", name, " ", global_position)
+	
 	visible = true
 	can_use_abilities = true
 	is_dead = false
+	player_collision_shape_2d.set_deferred("disabled", false)

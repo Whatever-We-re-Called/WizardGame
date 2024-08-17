@@ -55,6 +55,7 @@ func _add_player(data):
 		player.name = str(data.peer_id)
 		player.peer_id = data.peer_id
 		players_root.add_child(player, true)
+		player.create_ability_nodes.rpc_id(data.peer_id)
 		
 		if data.has("device_ids"):
 			player.set_device(data.device_ids)
@@ -76,7 +77,7 @@ func _setup_states():
 	transition_to_state.rpc_id(1, "waiting", true, true)
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func _handle_add_player_signals():
 	for player in players:
 		player.killed.connect(_on_player_killed)
@@ -102,7 +103,7 @@ func get_player_from_peer_id(peer_id: int) -> Player:
 	return null
 
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_exit: bool = false):
 	var new_state = game_states.get(new_state_name.to_lower())
 	if not new_state: return
@@ -116,7 +117,7 @@ func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_
 	current_state = new_state
 
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func load_random_map():
 	randomize()
 	var rng = RandomNumberGenerator.new()
@@ -125,7 +126,7 @@ func load_random_map():
 	change_to_scene.rpc_id(1, chosen_level.resource_path)
 
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func change_to_scene(new_scene_resource_path: String):
 	_prepare_for_next_scene.rpc(new_scene_resource_path)
 	
@@ -144,17 +145,20 @@ func _prepare_for_next_scene(new_scene_resource_path: String):
 		child.queue_free()
 
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func revive_dead_players():
 	var respawn_points = active_scene.spawn_points.get_random_list_of_spawn_locations(players.size(), true)
 	for i in range(dead_players.size()):
 		var dead_player = dead_players[i]
-		dead_player.revive.rpc_id(dead_player.peer_id)
 		dead_player.teleport.rpc_id(dead_player.peer_id, respawn_points[i])
+	await get_tree().process_frame
+	for i in range(dead_players.size()):
+		var dead_player = dead_players[i]
+		dead_player.revive.rpc_id(dead_player.peer_id)
 	dead_players.clear()
 
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func teleport_player_to_random_spawn_point(peer_id: int):
 	var target_player = get_player_from_peer_id(peer_id)
 	var spawn_location = active_scene.spawn_points.get_random_spawn_location()
@@ -165,8 +169,9 @@ func _on_player_killed(peer_id: int):
 	_kill_player.rpc_id(1, peer_id)
 
 
-@rpc("authority", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func _kill_player(peer_id: int):
+	print("killed ", peer_id)
 	var killed_player = get_player_from_peer_id(peer_id)
 	if not dead_players.has(killed_player):
 		dead_players.append(killed_player)
