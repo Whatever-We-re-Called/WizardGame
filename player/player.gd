@@ -36,7 +36,6 @@ func _ready():
 	change_abilities_panel.setup(self)
 	for ability_scene in Abilities.loaded_ability_scenes.values():
 		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
-	create_ability_nodes.rpc_id(peer_id)
 	
 	received_debug_input.connect(_disaster_debug)
 
