@@ -104,7 +104,6 @@ func get_player_from_peer_id(peer_id: int) -> Player:
 
 @rpc("authority", "call_local")
 func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_exit: bool = false):
-	pass
 	var new_state = game_states.get(new_state_name.to_lower())
 	if not new_state: return
 	
