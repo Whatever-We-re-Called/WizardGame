@@ -39,7 +39,7 @@ func _lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int)
 		return
 		
 	peer = SteamMultiplayerPeer.new()
-	var error = peer.create_client(Steam.getLobbyOwner(lobby_id), 0, [])
+	var error = peer.create_client(Steam.getLobbyOwner(lobby_id), 0)
 	if error != OK:
 		print("There was an error while connecting to a Steam lobby:")
 		var message
@@ -67,7 +67,7 @@ func _lobby_created(connect, lobby_id):
 		Steam.setLobbyJoinable(lobby_id, true)
 		
 		peer = SteamMultiplayerPeer.new()
-		var error = peer.create_host(0, [])
+		var error = peer.create_host(0)
 		if error != OK:
 			print("There was an error while creating a Steam Lobby:")
 			var message
