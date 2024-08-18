@@ -1,11 +1,12 @@
 extends Node
+class_name SteamImplementation
 
 
 ## Change this when we're on steam. Temporary testing ID
 const app_id = 480
 
 
-func _ready():
+func setup():
 	OS.set_environment("SteamAppId", str(app_id))
 	OS.set_environment("SteamGameId", str(app_id))
 	Steam.steamInitEx()
@@ -14,7 +15,7 @@ func _ready():
 	Steam.join_requested.connect(_handle_join_game)
 	
 	
-func _process(_delta):
+func process():
 	if Steam.isSteamRunning():
 		Steam.run_callbacks()
 	

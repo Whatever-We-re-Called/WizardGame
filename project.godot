@@ -19,10 +19,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 SessionManager="*res://multiplayer/session_manager.gd"
-SteamSetup="*res://multiplayer/steam/steam.gd"
 RigidBodyAutoScaler="*res://addons/rigidbody_auto_scaler/RigidBodyAutoScaler.gd"
 Abilities="*res://abilities/abilities.gd"
 DisasterManager="*res://disasters/disaster_manager.gd"
+SteamWrapper="*res://multiplayer/steam/steam_wrapper.gd"
 
 [display]
 
