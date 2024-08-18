@@ -122,7 +122,6 @@ func _handle_abilities():
 	
 	for i in range(3):
 		var ability_node = player.ability_nodes.get_child(i)
-		print(ability_node.name)
 		var ability_input_string = ability_input_strings[i]
 		if ability_node.get_script() != null:
 			ability_node._handle_input(player, ability_input_string)
