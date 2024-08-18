@@ -1,4 +1,4 @@
 extends Button
-class_name ScreenButton
+class_name MultiplayerScreenButton
 
 @export var screen: Node

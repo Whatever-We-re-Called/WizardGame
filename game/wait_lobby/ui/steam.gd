@@ -1,4 +1,4 @@
-extends ScreenButton
+extends MultiplayerScreenButton
 
 
 func _on_host_pressed():

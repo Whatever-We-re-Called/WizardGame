@@ -1,4 +1,4 @@
-extends ScreenButton
+extends MultiplayerScreenButton
 
 @onready var address = $"../../../IPScreen/VBoxContainer/Address"
 @onready var port = $"../../../IPScreen/VBoxContainer/Port"
