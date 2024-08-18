@@ -9,6 +9,11 @@ var peer: SteamMultiplayerPeer
 
 func _init(lobby_id = -1):
 	self.lobby_id = lobby_id
+	SessionManager.client_connected_to_server.connect(_on_connect)
+	
+	
+func _on_connect():
+	SessionManager.add_player({"steam_id": Steam.getSteamID(), "peer_id": peer.get_unique_id()})
 	
 
 func create_connection():

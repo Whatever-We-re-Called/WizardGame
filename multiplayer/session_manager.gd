@@ -21,7 +21,7 @@ signal server_closed
 var connection_strategy: MultiplayerConnectionStrategy
 var connected_clients = {}
 var connected: bool = false
-var debug = false
+var debug = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -103,7 +103,7 @@ func add_player(user: Dictionary):
 	_add_player.rpc_id(1, user)
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func _add_player(user: Dictionary):
 	if SessionManager.debug:
 		print("Adding player: ", user)
