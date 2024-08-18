@@ -28,6 +28,8 @@ func _place_remote_land_mine(executor_peer_id: int):
 
 @rpc("any_peer", "call_local")
 func _explode_remote_land_mine():
+	if current_remote_land_mine_scene == null: return
+	
 	var remote_land_mine_global_position = current_remote_land_mine_scene.global_position
 	current_remote_land_mine_scene.call_deferred("queue_free")
 	
