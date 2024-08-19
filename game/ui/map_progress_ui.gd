@@ -15,7 +15,7 @@ const DISASTER_GRAYED_COLOR = Color.WEB_GRAY
 const UNKNOWN_DISASTER_TEXTURE = preload("res://disasters/shitty_hidden_disaster_icon.png")
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func set_countdown_to_disaster_text(countdown: int, is_first: bool):
 	current_disaster_label.label_settings.font_color = Color.WHITE
 	if is_first == true:
@@ -24,19 +24,19 @@ func set_countdown_to_disaster_text(countdown: int, is_first: bool):
 		current_disaster_label.text = "Next disaster starting in " + str(countdown) + "s"
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func set_countdown_to_intermission_text(countdown: int):
 	current_disaster_label.label_settings.font_color = Color.WHITE
 	current_disaster_label.text = "Switching maps in " + str(countdown) + "s"
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func set_current_disaster_text(disaster: DisasterResource):
 	current_disaster_label.label_settings.font_color = DISASTER_SEVERITY_COLORS[disaster.severity]
 	current_disaster_label.text = "Current Disaster: " + disaster.display_name
 
 
-@rpc("any_peer", "call_local")
+@rpc("authority", "call_local")
 func update_disaster_icons(disasters: Array[DisasterResource], current_disaster_number: int, revealed: bool):
 	for child in disaster_icons.get_children():
 		child.queue_free()

@@ -8,6 +8,7 @@ func _enter():
 	# TODO Make randomized disaster list
 	
 	game_manager.map_progress_ui.visible = true
+	game_manager.player_score_ui.visible = true
 	
 	await get_tree().process_frame
 	game_manager.transition_to_state("disastercountdown")
