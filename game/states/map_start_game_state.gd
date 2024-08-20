@@ -11,4 +11,4 @@ func _enter():
 	game_manager.player_score_ui.visible = true
 	
 	await get_tree().process_frame
-	game_manager.transition_to_state("disastercountdown")
+	game_manager.transition_to_state("disasterstart")

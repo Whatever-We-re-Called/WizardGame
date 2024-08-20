@@ -111,9 +111,11 @@ func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_
 	if not new_state: return
 	
 	if current_state != null and skip_exit == false:
+		print("exit")
 		current_state._exit()
 	
 	if skip_enter == false:
+		print("enter")
 		new_state._enter()
 	
 	current_state = new_state
@@ -173,7 +175,6 @@ func _on_player_killed(peer_id: int):
 
 @rpc("any_peer", "call_local", "reliable")
 func _kill_player(peer_id: int):
-	print("killed ", peer_id)
 	var killed_player = get_player_from_peer_id(peer_id)
 	if not dead_players.has(killed_player):
 		dead_players.append(killed_player)
@@ -187,15 +188,13 @@ func increment_scores():
 				scores[player] += 1
 			else:
 				scores[player] = 1
-	
-	print(scores)
 
 
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
 			if multiplayer.is_server():
-				transition_to_state.rpc_id(1, "mapstart")
+				transition_to_state.rpc_id(1, "gamestart")
 		2:
 			if multiplayer.is_server():
-				transition_to_state.rpc_id(1, "waiting")
+				transition_to_state.rpc_id(1, "waitlobby")

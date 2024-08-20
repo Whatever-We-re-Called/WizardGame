@@ -12,6 +12,7 @@ func _enter():
 	else: countdown = game_manager.game_settings.time_inbetween_disasters
 	game_manager.map_progress_ui.update_disaster_icons(game_manager.game_settings.disaster_pool, game_manager.current_disaster_number, false)
 
+
 func _update(delta):
 	if countdown <= 0.0:
 		game_manager.transition_to_state("disaster")
