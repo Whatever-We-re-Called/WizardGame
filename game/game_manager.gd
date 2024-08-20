@@ -171,7 +171,7 @@ func _on_player_killed(peer_id: int):
 	_kill_player.rpc_id(1, peer_id)
 
 
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func _kill_player(peer_id: int):
 	print("killed ", peer_id)
 	var killed_player = get_player_from_peer_id(peer_id)
