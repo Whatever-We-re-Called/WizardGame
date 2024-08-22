@@ -1,5 +1,5 @@
 name: Export and Release
-on: [pull_request, push]
+on: [pull_request, push, workflow_dispatch]
 jobs:
   export_game:
     runs-on: ubuntu-latest
