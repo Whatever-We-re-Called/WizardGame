@@ -13,6 +13,10 @@ func _enter():
 	game_manager.map_progress_ui.set_current_disaster_text.rpc(game_manager.game_settings.disaster_pool[game_manager.current_disaster_number - 1])
 
 
+func _exit():
+	DisasterManager.current_disaster.stop()
+
+
 func _update(delta):
 	if countdown <= 0.0:
 		game_manager.transition_to_state("disasterend")

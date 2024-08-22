@@ -9,6 +9,7 @@ class_name GameManager extends Node
 @onready var map_progress_ui: CenterContainer = %MapProgressUI
 @onready var game_states_node: Node = %GameStates
 @onready var player_score_ui: CenterContainer = %PlayerScoreUI
+@onready var game_settings_ui: CenterContainer = %GameSettingsUI
 
 var current_state: GameState
 var game_states: Dictionary
@@ -191,8 +192,18 @@ func increment_scores():
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
-			if multiplayer.is_server():
+			if multiplayer.is_server() and not game_settings_ui.visible:
 				transition_to_state.rpc_id(1, "gamestart")
 		2:
-			if multiplayer.is_server():
+			if multiplayer.is_server() and not game_settings_ui.visible:
 				transition_to_state.rpc_id(1, "waitlobby")
+		5:
+			if multiplayer.is_server():
+				if game_settings_ui.visible:
+					game_settings = game_settings_ui.get_game_settings().duplicate()
+					game_settings_ui.visible = false
+					get_player_from_peer_id(1).can_use_abilities = true
+				else:
+					game_settings_ui.populate(game_settings)
+					game_settings_ui.visible = true
+					get_player_from_peer_id(1).can_use_abilities = false

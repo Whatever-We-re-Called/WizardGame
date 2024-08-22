@@ -141,10 +141,8 @@ func handle_debug_inputs():
 		else:
 			player.change_abilities_panel.visible = true
 			player.can_use_abilities = false
-	if Input.is_action_just_pressed(player.im.debug_5):
+	if Input.is_action_just_pressed(player.im.debug_tab):
 		player.received_debug_input.emit(5)
-	if Input.is_action_just_pressed(player.im.debug_6):
-		player.received_debug_input.emit(6)
 
 
 func _get_input_direction() -> Vector2:

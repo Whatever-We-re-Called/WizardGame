@@ -2,8 +2,6 @@ extends GameState
 
 
 func _enter():
-	print("disaster end enter")
-	DisasterManager.current_disaster.stop()
 	game_manager.current_disaster_number += 1
 	game_manager.increment_scores()
 	game_manager.player_score_ui.update(game_manager.players, game_manager.scores)

@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=23 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
 [ext_resource type="Script" path="res://game/ui/map_progress_ui.gd" id="3_q0doh"]
 [ext_resource type="Script" path="res://game/states/wait_lobby_game_state.gd" id="4_0m4h4"]
 [ext_resource type="Script" path="res://game/ui/player_score_ui.gd" id="4_rlrby"]
+[ext_resource type="Script" path="res://game/ui/game_settings_ui.gd" id="5_73nkb"]
 [ext_resource type="Script" path="res://game/states/map_start_game_state.gd" id="5_78ssb"]
 [ext_resource type="Script" path="res://game/states/disaster_start_game_state.gd" id="6_k8xa5"]
 [ext_resource type="Script" path="res://game/states/game_start_game_state.gd" id="6_too1t"]
@@ -29,6 +30,19 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_7fwbh"]
 font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_dy6bj"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_a8jh6"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_dfp14"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n36nu"]
+content_margin_left = 4.0
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_juohy")
@@ -135,6 +149,167 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 32
 columns = 2
+
+[node name="GameSettingsUI" type="CenterContainer" parent="GameUI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -133.0
+offset_top = -40.5
+offset_right = 133.0
+offset_bottom = 40.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_73nkb")
+
+[node name="PanelContainer" type="PanelContainer" parent="GameUI/GameSettingsUI"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="GameUI/GameSettingsUI/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Title" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Game Settings"
+label_settings = SubResource("LabelSettings_dy6bj")
+horizontal_alignment = 1
+
+[node name="GeneralLabel" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "General"
+label_settings = SubResource("LabelSettings_a8jh6")
+horizontal_alignment = 1
+
+[node name="GeneralSettings" type="GridContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 32
+columns = 2
+
+[node name="Label" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+layout_mode = 2
+text = "Survivals Goal"
+label_settings = SubResource("LabelSettings_dfp14")
+
+[node name="SurvivalGoalsLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
+text = "2"
+alignment = 1
+
+[node name="Maps" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Maps"
+label_settings = SubResource("LabelSettings_a8jh6")
+horizontal_alignment = 1
+
+[node name="MapsSettings" type="GridContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 32
+columns = 2
+
+[node name="Label" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/MapsSettings"]
+layout_mode = 2
+text = "Map Disaster Severity"
+label_settings = SubResource("LabelSettings_dfp14")
+
+[node name="MapDisasterSeverityLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/MapsSettings"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
+text = "2"
+alignment = 1
+
+[node name="Disasters" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Disasters"
+label_settings = SubResource("LabelSettings_a8jh6")
+horizontal_alignment = 1
+
+[node name="DisastersSettings" type="GridContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 32
+columns = 2
+
+[node name="Label" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+layout_mode = 2
+text = "Disaster Duration"
+label_settings = SubResource("LabelSettings_dfp14")
+
+[node name="DisasterDurationLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
+text = "2"
+alignment = 1
+
+[node name="Label2" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+layout_mode = 2
+text = "Time Before First Disaster"
+label_settings = SubResource("LabelSettings_dfp14")
+
+[node name="TimeBeforeFirstDisasterLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
+text = "2"
+alignment = 1
+
+[node name="Label3" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+layout_mode = 2
+text = "Time Inbetween Disasters"
+label_settings = SubResource("LabelSettings_dfp14")
+
+[node name="TimeInbetweenDisastersLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
+text = "2"
+alignment = 1
+
+[node name="Label4" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+layout_mode = 2
+text = "Time After Last Disaster"
+label_settings = SubResource("LabelSettings_dfp14")
+
+[node name="TimeAfterLastDisasterLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
+text = "2"
+alignment = 1
 
 [node name="GameStates" type="Node" parent="."]
 unique_name_in_owner = true

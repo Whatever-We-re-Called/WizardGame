@@ -128,10 +128,10 @@ func _spawn_lightning(position: Vector2, rotation_degrees: float, impact_rotatio
 		if shard is RigidBody2D:
 			_push_rigid_body(shard, position)
 	
-	await get_tree().create_timer(.5).timeout
+	await lightning.get_tree().create_timer(0.5).timeout
 	lightning.call_deferred("queue_free") 
 	
-	await get_tree().create_timer(1.0).timeout
+	await area.get_tree().create_timer(1.0).timeout
 	area.call_deferred("queue_free")
 	
 	

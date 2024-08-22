@@ -20,8 +20,7 @@ var debug_1 = DefaultMappings.new([_keyboard(KEY_1)], [_controller(JOY_BUTTON_DP
 var debug_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(JOY_BUTTON_DPAD_RIGHT)])
 var debug_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DPAD_DOWN)])
 var debug_4 = DefaultMappings.new([_keyboard(KEY_4)], [_controller(JOY_BUTTON_DPAD_LEFT)])
-var debug_5 = DefaultMappings.new([_keyboard(KEY_5)], [])
-var debug_6 = DefaultMappings.new([_keyboard(KEY_6)], [])
+var debug_tab = DefaultMappings.new([_keyboard(KEY_TAB)], [_controller(JOY_BUTTON_LEFT_SHOULDER)])
 
 
 func _init(player: Node, peer_id: int, device_ids: Array):
