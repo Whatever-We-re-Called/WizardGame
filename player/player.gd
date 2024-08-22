@@ -58,8 +58,15 @@ func _physics_process(delta):
 			controller.handle_post_physics(delta)
 
 
-@rpc("any_peer", "call_local", "reliable")
 func create_ability_nodes():
+	if SessionManager.is_valid_peer(self):
+		_create_ability_nodes_rpc.rpc_id(peer_id)
+	else:
+		_create_ability_nodes_rpc()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _create_ability_nodes_rpc():
 	for i in range(3):
 		var ability = abilities[i]
 		var ability_resource = Abilities.get_ability_resource(ability)
@@ -102,7 +109,6 @@ func apply_central_impulse(force: Vector2):
 	velocity += force
 
 
-@rpc("any_peer", "call_local", "reliable")
 func kill():
 	if not is_multiplayer_authority(): return
 	if is_dead: return
@@ -110,12 +116,20 @@ func kill():
 	visible = false
 	can_use_abilities = false
 	is_dead = true
+	velocity = Vector2.ZERO
 	player_collision_shape_2d.set_deferred("disabled", true)
 	killed.emit(peer_id)
 
 
-@rpc("any_peer", "call_local", "reliable")
 func revive():
+	if SessionManager.is_valid_peer(self):
+		_revive_rpc.rpc_id(peer_id)
+	else:
+		_revive_rpc()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _revive_rpc():
 	if not is_multiplayer_authority(): return
 	if not is_dead: return
 	

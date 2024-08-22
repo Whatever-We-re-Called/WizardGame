@@ -59,7 +59,7 @@ func _add_player(data):
 		player.name = str(data.peer_id)
 		player.peer_id = data.peer_id
 		players_root.add_child(player, true)
-		player.create_ability_nodes.rpc_id(data.peer_id)
+		player.create_ability_nodes()
 		
 		if data.has("device_ids"):
 			player.set_device(data.device_ids)
@@ -158,7 +158,7 @@ func revive_dead_players():
 	await get_tree().process_frame
 	for i in range(dead_players.size()):
 		var dead_player = dead_players[i]
-		dead_player.revive.rpc_id(dead_player.peer_id)
+		dead_player.revive()
 	dead_players.clear()
 
 

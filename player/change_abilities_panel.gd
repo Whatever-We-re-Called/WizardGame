@@ -39,4 +39,4 @@ func _update_player_abilities(new_abilities: Array[Abilities.Type]):
 		player.abilities[i] = new_abilities[i]
 	
 	player.clear_ability_nodes.rpc()
-	player.create_ability_nodes.rpc_id(player.peer_id)
+	player.create_ability_nodes()

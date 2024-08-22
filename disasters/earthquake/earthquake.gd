@@ -45,7 +45,7 @@ func _create_zone(position: Vector2):
 		if shard is RigidBody2D:
 			_push_rigid_body(shard, position)
 	
-	await get_tree().create_timer(0.25).timeout
+	await area.get_tree().create_timer(0.25).timeout
 	area.call_deferred("queue_free")
 	
 	
