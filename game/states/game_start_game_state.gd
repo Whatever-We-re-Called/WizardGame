@@ -2,7 +2,6 @@ extends GameState
 
 
 func _enter():
-	print("game start enter")
 	game_manager.scores = {}
 	game_manager.player_score_ui.update(game_manager.players, game_manager.scores)
 	

@@ -36,8 +36,6 @@ func _ready():
 	change_abilities_panel.setup(self)
 	for ability_scene in Abilities.loaded_ability_scenes.values():
 		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
-	
-	received_debug_input.connect(_disaster_debug)
 
 
 func set_device(device_ids: Array):
@@ -109,8 +107,6 @@ func kill():
 	if not is_multiplayer_authority(): return
 	if is_dead: return
 	
-	print("Killed ", name, " ", global_position)
-	
 	visible = false
 	can_use_abilities = false
 	is_dead = true
@@ -122,8 +118,6 @@ func kill():
 func revive():
 	if not is_multiplayer_authority(): return
 	if not is_dead: return
-	
-	print("Revived ", name, " ", global_position)
 	
 	visible = true
 	can_use_abilities = true
@@ -146,15 +140,3 @@ func _teleport_rpc(target_global_position: Vector2):
 @rpc("any_peer", "call_local")
 func add_velocity(velocity: Vector2):
 	apply_central_impulse(velocity)
-
-
-
-func _disaster_debug(id: int):
-	if not multiplayer.is_server():
-		return
-	if id == 5:
-		DisasterManager.set_current_disaster(DisasterManager.DisasterEnum.STORM)
-		DisasterManager.current_disaster.start()
-	if id == 6:
-		DisasterManager.set_current_disaster(DisasterManager.DisasterEnum.EARTHQUAKE)
-		DisasterManager.current_disaster.start()

@@ -7,6 +7,7 @@ var game_manager: GameManager
 func _ready():
 	DisasterManager.set_disaster_area($DisasterArea.polygon)
 
+
 @rpc("any_peer", "call_local")
 func teleport_players_to_random_spawn_points():
 	if not multiplayer.is_server(): return

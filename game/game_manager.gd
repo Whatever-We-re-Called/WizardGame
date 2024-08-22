@@ -111,11 +111,9 @@ func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_
 	if not new_state: return
 	
 	if current_state != null and skip_exit == false:
-		print("exit")
 		current_state._exit()
 	
 	if skip_enter == false:
-		print("enter")
 		new_state._enter()
 	
 	current_state = new_state

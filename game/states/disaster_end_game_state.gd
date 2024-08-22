@@ -17,10 +17,6 @@ func _enter():
 		game_manager.transition_to_state("disasterstart")
 
 
-func _is_last_disaster() -> bool:
-	return game_manager.current_disaster_number == game_manager.game_settings.disaster_pool.size()
-
-
 func _has_player_won() -> bool:
 	for player in game_manager.scores:
 		var score = game_manager.scores[player]
@@ -29,3 +25,7 @@ func _has_player_won() -> bool:
 			return true
 	
 	return false
+
+
+func _is_last_disaster() -> bool:
+	return game_manager.current_disaster_number == game_manager.game_settings.disaster_pool.size()
