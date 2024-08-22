@@ -13,6 +13,7 @@ class_name GameManager extends Node
 
 var current_state: GameState
 var game_states: Dictionary
+var current_map_disasters: Array[DisasterResource]
 var current_disaster_number: int = 1
 var dead_players: Array[Player]
 var scores: Dictionary
