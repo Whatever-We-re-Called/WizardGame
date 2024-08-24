@@ -12,8 +12,9 @@ enum EnvironmentLayer { FRONT, BASE, BACK }
 var shard_polygons: Array
 var total_area: float
 var minimum_shard_area: float
+var initial_scale: Vector2
 
-const MINIMUM_ALLOWED_AREA: float = 500.0
+const AREA_NEEDED_FOR_SHARD_CHUNK: float = 1500.0
 const MINIMUM_ALLOWED_CENTER_DELTA: float = 7.5
 const NEARBY_CHECK_RANGE: float = 4.0
 const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
@@ -40,6 +41,8 @@ func _enter_tree():
 
 #region Scaling and Multiplayer Inits
 func _init_scaling():
+	initial_scale = scale
+	
 	for child in get_children():
 		if child is SpritePolygon2D:
 			child.update_scaling(scale)
@@ -81,7 +84,6 @@ func _init_fragile_polygons():
 		if potential_shard_polygons.size() > 0:
 			var shard_polygon = potential_shard_polygons[0]
 			shard_polygons.append(shard_polygon)
-	print(shard_polygons)
 	
 	# Display debug if applicable.
 	if DISPLAY_DELAUNAY_DEBUG == true:
@@ -138,8 +140,8 @@ func _update_environment_layer_physics(node: Node, environment_layer: Environmen
 			node.z_index = -1
 
 
-func break_apart(incoming_collision_polygon: CollisionPolygon2D = null) -> Array[ShardPiece]:
-	var all_created_shards: Array[ShardPiece]
+func break_apart(incoming_collision_polygon: CollisionPolygon2D = null) -> Array[PhysicsBody2D]:
+	var all_created_shards: Array[PhysicsBody2D]
 	
 	var sprite_polygons_to_break: Array[SpritePolygon2D]
 	for child in get_children():
@@ -147,7 +149,7 @@ func break_apart(incoming_collision_polygon: CollisionPolygon2D = null) -> Array
 			sprite_polygons_to_break.append(child)
 	
 	for sprite_polygon in sprite_polygons_to_break:
-		var created_shards: Array[ShardPiece]
+		var created_shards: Array[PhysicsBody2D]
 		if incoming_collision_polygon == null:
 			created_shards = _break_apart_sprite(sprite_polygon, sprite_polygon.connected_collision_polygon_2d)
 		else:
@@ -157,7 +159,7 @@ func break_apart(incoming_collision_polygon: CollisionPolygon2D = null) -> Array
 	return all_created_shards
 
 
-func _break_apart_sprite(sprite_polygon: SpritePolygon2D, incoming_collision_polygon: CollisionPolygon2D) -> Array[ShardPiece]:
+func _break_apart_sprite(sprite_polygon: SpritePolygon2D, incoming_collision_polygon: CollisionPolygon2D) -> Array[PhysicsBody2D]:
 	# Create collision polygon.
 	var collision_polygon = sprite_polygon.connected_collision_polygon_2d
 	
@@ -184,14 +186,11 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
 
 
-func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2Array) -> Array[ShardPiece]:
-	var shards: Array[ShardPiece]
-	var texture = sprite_polygon.texture
-	var texture_offset = sprite_polygon.texture_offset
-	var texture_scale = sprite_polygon.texture_scale
+func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2Array) -> Array[PhysicsBody2D]:
+	var shards: Array[PhysicsBody2D]
 	
 	if PolygonUtil.get_area_of_polygon(overlap_polygon) < minimum_shard_area:
-		var shard = _init_shard_piece(overlap_polygon, texture, texture_offset, texture_scale, true)
+		var shard = _init_shard_piece(overlap_polygon, sprite_polygon)
 		shards.append(shard)
 	else:
 		for polygon in shard_polygons:
@@ -199,56 +198,92 @@ func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2
 			if potential_shard_polygons.size() > 0:
 				var center = global_position
 				var shard_polygon = potential_shard_polygons[0]
-				var should_disappear = not _is_polygon_a_valid_shard(shard_polygon, false)
-				var shard = _init_shard_piece(shard_polygon, texture, texture_offset, texture_scale, should_disappear)
+				var shard = _init_shard_piece(shard_polygon, sprite_polygon)
 				shards.append(shard)
 	
 	return shards
 
 
-func _init_shard_piece(shard_polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2, disappear: bool = false) -> ShardPiece:
+func _init_shard_piece(shard_polygon: PackedVector2Array, sprite_polygon: SpritePolygon2D) -> PhysicsBody2D:
 	if not multiplayer.is_server(): return null
 	
-	var shard = SHARD_PIECE.instantiate()
-	_update_environment_layer_physics(shard, environment_layer)
-	add_child(shard, true)
-	shard.init.rpc(shard_polygon, texture, texture_offset, texture_scale, disappear)
-	return shard
+	if PolygonUtil.get_area_of_polygon(shard_polygon) >= AREA_NEEDED_FOR_SHARD_CHUNK:
+		return _init_shard_chunk(shard_polygon, sprite_polygon)
+	else:
+		var shard_piece = SHARD_PIECE.instantiate()
+		_update_environment_layer_physics(shard_piece, environment_layer)
+		add_child(shard_piece, true)
+		shard_piece.init.rpc(shard_polygon, sprite_polygon.texture, sprite_polygon.texture_offset, sprite_polygon.texture_scale)
+		return shard_piece
 
 
-func _create_new_sprite_polygons(sprite_polygon: SpritePolygon2D, collision_polygon: CollisionPolygon2D, overlap_polygon: PackedVector2Array) -> Array[ShardPiece]:
-	var potential_new_shards: Array[ShardPiece]
+func _init_shard_chunk(shard_polygon: PackedVector2Array, sprite_polygon: SpritePolygon2D) -> PhysicsBody2D:
+	var shard_chunk = FragileBody2D.new()
+	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(shard_polygon, global_position)
+	shard_chunk.global_position = PolygonUtil.get_center_of_polygon(polygon_global)
+	shard_chunk.scale = initial_scale
+	shard_chunk.health = health
+	shard_chunk.environment_layer = environment_layer
+	shard_chunk.number_of_break_points = number_of_break_points
+	shard_chunk.edge_threshold = edge_threshold
+	shard_chunk.length_limit = length_limit
+	
+	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
+	var corrected_polygon = PolygonUtil.get_translated_polygon(shard_polygon, -position_delta)
+	
+	var new_sprite_polygon = SpritePolygon2D.new()
+	new_sprite_polygon.polygon = corrected_polygon
+	new_sprite_polygon.texture = sprite_polygon.texture
+	new_sprite_polygon.texture_offset = sprite_polygon.texture_offset + position_delta
+	new_sprite_polygon.texture_scale = sprite_polygon.texture_scale
+	new_sprite_polygon.update_scaling(Vector2.ONE / initial_scale)
+	shard_chunk.add_child(new_sprite_polygon, true)
+	
+	#var polygon_global = PolygonUtil.get_global_polygon_from_local_space(shard_polygon, global_position)
+	#var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
+	#shard_chunk.global_position = PolygonUtil.get_center_of_polygon(polygon_global)
+	#var corrected_polygon = PolygonUtil.get_translated_polygon(shard_polygon, -position_delta)
+	#sprite_polygon.polygon = corrected_polygon
+	#sprite_polygon.update_collision_polygon()
+	#
+	#shard_chunk.center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
+	#shard_chunk.center_of_mass = -PolygonUtil.get_center_of_polygon(corrected_polygon)
+	
+	get_parent().add_child(shard_chunk, true)
+	
+	#var global_shard_polygon = PolygonUtil.get_global_polygon_from_local_space(shard_polygon, global_position)
+	#shard_chunk.global_position = PolygonUtil.get_center_of_polygon(global_shard_polygon)
+	shard_chunk.freeze = false
+	
+	var temp = CollisionShape2D.new()
+	var temp_2 = CircleShape2D.new()
+	temp_2.radius = 20
+	temp.shape = temp_2
+	temp.debug_color = Color.AQUA
+	temp.disabled = true
+	shard_chunk.add_child(temp)
+	temp.position = shard_chunk.center_of_mass
+	
+	return shard_chunk
+
+
+func _create_new_sprite_polygons(sprite_polygon: SpritePolygon2D, collision_polygon: CollisionPolygon2D, overlap_polygon: PackedVector2Array) -> Array[PhysicsBody2D]:
+	var potential_new_shards: Array[PhysicsBody2D]
 	
 	var potential_non_overlap_polygons = Geometry2D.clip_polygons(collision_polygon.polygon, overlap_polygon)
 	for non_overlap_polygon in potential_non_overlap_polygons:
-		if _is_polygon_a_valid_shard(non_overlap_polygon):
-			non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
-			
-			var new_sprite_polygon = SpritePolygon2D.new()
-			new_sprite_polygon.polygon = non_overlap_polygon
-			new_sprite_polygon.texture = sprite_polygon.texture
-			new_sprite_polygon.texture_offset = sprite_polygon.texture_offset
-			new_sprite_polygon.texture_scale = sprite_polygon.texture_scale
-			add_child(new_sprite_polygon)
-		else:
-			var new_shard = _init_shard_piece(non_overlap_polygon, sprite_polygon.texture, sprite_polygon.texture_offset, sprite_polygon.texture_scale, true)
-			potential_new_shards.append(new_shard)
+		non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
+		
+		var new_sprite_polygon = SpritePolygon2D.new()
+		new_sprite_polygon.polygon = non_overlap_polygon
+		new_sprite_polygon.texture = sprite_polygon.texture
+		new_sprite_polygon.texture_offset = sprite_polygon.texture_offset
+		new_sprite_polygon.texture_scale = sprite_polygon.texture_scale
+		add_child(new_sprite_polygon)
 	
 	scale = Vector2.ONE
 	sprite_polygon.kill()
 	return potential_new_shards
-
-
-func _is_polygon_a_valid_shard(polygon: PackedVector2Array, check_nearby_collisions: bool = true) -> bool:
-	if PolygonUtil.get_area_of_polygon(polygon) < MINIMUM_ALLOWED_AREA:
-		if check_nearby_collisions == true:
-			var nearby_collisions = _get_nearby_collisions(NEARBY_CHECK_RANGE, polygon)
-			for collision in nearby_collisions:
-				if collision.collider is FragileBody2D:
-					return true
-		return false
-	else:
-		return true
 
 
 func _get_nearby_collisions(check_range: float, polygon: PackedVector2Array) -> Array[Dictionary]:
@@ -266,11 +301,11 @@ func _get_nearby_collisions(check_range: float, polygon: PackedVector2Array) -> 
 	return space_state.intersect_shape(query)
 
 
-func damage(damage_dealt: float) -> Array[ShardPiece]:
+func damage(damage_dealt: float) -> Array[PhysicsBody2D]:
 	return damage_with_collision(damage_dealt)
 
 
-func damage_with_collision(damage_dealt: float, collision_polygon: CollisionPolygon2D = null) -> Array[ShardPiece]:
+func damage_with_collision(damage_dealt: float, collision_polygon: CollisionPolygon2D = null) -> Array[PhysicsBody2D]:
 	if health <= 0: return []
 	
 	health -= damage_dealt

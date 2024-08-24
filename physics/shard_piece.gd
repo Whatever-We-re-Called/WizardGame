@@ -1,18 +1,20 @@
 # Shard logic modified from https://www.reddit.com/r/godot/comments/nimkqg/how_to_break_a_2d_sprite_in_a_cool_and_easy_way/.
 class_name ShardPiece extends RigidBody2D
 
+@onready var initial_global_position = global_position
+
 var sprite_polygon: SpritePolygon2D
-var disappear: bool
 var disappear_timer: Timer
+var elapsed_time: float = 0.0
 
 const DISAPPEAR_DELAY = 0.5
-const DISAPPEAR_DURATION = 1.0
+const DISAPPEAR_DURATION = 0.5
+const NEEDED_POSITION_DELTA = 25.0
 
 
 @rpc("any_peer", "call_local", "reliable")
-func init(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2, disappear: bool = false):
+func init(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2):
 	self.sprite_polygon = %SpritePolygon2D
-	self.disappear = disappear
 	
 	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(polygon, global_position)
 	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
@@ -36,9 +38,6 @@ func init(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vecto
 	if not multiplayer.is_server():
 		freeze_mode = FREEZE_MODE_KINEMATIC
 		freeze = true
-	
-	if disappear == true:
-		_disappear()
 
 
 func _disappear():
@@ -54,5 +53,24 @@ func _disappear():
 
 
 func _process(delta):
-	if disappear_timer != null:
+	elapsed_time += delta
+	if disappear_timer != null and not disappear_timer.is_stopped():
 		sprite_polygon.self_modulate.a = lerp(0.0, 1.0, disappear_timer.time_left / disappear_timer.wait_time)
+
+
+func _on_body_entered(body: Node) -> void:
+	if global_position.distance_to(initial_global_position) >= NEEDED_POSITION_DELTA:
+		_disappear_test()
+
+
+
+func _disappear_test():
+	if disappear_timer != null: return
+	if elapsed_time < DISAPPEAR_DELAY: return
+	
+	disappear_timer = Timer.new()
+	disappear_timer.one_shot = true
+	disappear_timer.wait_time = DISAPPEAR_DURATION
+	disappear_timer.timeout.connect(queue_free)
+	add_child(disappear_timer)
+	disappear_timer.start()

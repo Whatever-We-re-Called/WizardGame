@@ -114,7 +114,7 @@ func _spawn_lightning(position: Vector2, rotation_degrees: float, impact_rotatio
 	
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	var all_created_shards: Array[ShardPiece]
+	var all_created_shards: Array[PhysicsBody2D]
 	for overlapping_body in area.get_overlapping_bodies():
 		if overlapping_body is FragileBody2D:
 			var created_shards = overlapping_body.break_apart(collision_polygon)

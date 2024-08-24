@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://game/wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_oy4lr"]
 [ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_6ha4y"]
 [ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://maps/prototype_generic/green_box.tscn" id="9_fusdj"]
-[ext_resource type="PackedScene" uid="uid://bh583te3i166d" path="res://maps/prototype_first_concept_level/first_prototype_fragile_part_1.tscn" id="10_sv10l"]
 
 [node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_ajb20")
@@ -199,22 +198,14 @@ z_index = -9
 position = Vector2(960, 540)
 texture = ExtResource("8_6ha4y")
 
-[node name="GreenBox" parent="." instance=ExtResource("9_fusdj")]
-position = Vector2(752, 684)
-
-[node name="GreenBox2" parent="." instance=ExtResource("9_fusdj")]
-position = Vector2(752, 620)
-
 [node name="GreenBox5" parent="." instance=ExtResource("9_fusdj")]
-position = Vector2(1552, 724)
+position = Vector2(784, 696)
 scale = Vector2(2, 2)
-
-[node name="FirstPrototypeFragilePart1" parent="." instance=ExtResource("10_sv10l")]
-position = Vector2(0, 524)
 
 [node name="DisasterArea" type="Polygon2D" parent="."]
 color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-28, -31, 1937, -33, 1964, 1132, -47, 1135)
+polygon = PackedVector2Array(-28, -31, 784.616, -31.8271, 1937, -33, 1964, 1132, -47, 1135)
+metadata/_edit_lock_ = true
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]

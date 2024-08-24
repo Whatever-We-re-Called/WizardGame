@@ -20,9 +20,7 @@ func update_scaling(new_scale):
 	texture_scale = Vector2(1.0 / new_scale.x, 1.0 / new_scale.y)
 	texture_offset *= new_scale
 	
-	if connected_collision_polygon_2d == null:
-		update_collision_polygon()
-	else:
+	if connected_collision_polygon_2d != null:
 		connected_collision_polygon_2d.polygon = scaled_polygon
 
 
