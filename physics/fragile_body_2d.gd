@@ -1,20 +1,15 @@
 # Shard logic modified from https://www.reddit.com/r/godot/comments/nimkqg/how_to_break_a_2d_sprite_in_a_cool_and_easy_way/.
 class_name FragileBody2D extends RigidBody2D
 
-enum EnvironmentLayer { FRONT, BASE, BACK }
+@export var data: FragileBodyData
 
-@export var health: float = 10.0
-@export var environment_layer: EnvironmentLayer = EnvironmentLayer.BASE
-@export_range(0, 200) var number_of_break_points: int = 5
-@export var edge_threshold: float = 10.0
-@export var length_limit: float = 20
-
+var health: float
 var shard_polygons: Array
 var total_area: float
 var minimum_shard_area: float
 var initial_scale: Vector2
 
-const AREA_NEEDED_FOR_SHARD_CHUNK: float = 1500.0
+const AREA_NEEDED_FOR_SHARD_CHUNK: float = 375.0
 const MINIMUM_ALLOWED_CENTER_DELTA: float = 7.5
 const NEARBY_CHECK_RANGE: float = 4.0
 const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
@@ -23,14 +18,16 @@ const DISPLAY_DELAUNAY_DEBUG = false
 
 
 func _enter_tree():
+	health = data.max_health
+	
 	_init_scaling()
-	_update_environment_layer_physics(self, environment_layer)
+	_update_environment_layer_physics(self)
 	
 	for child in get_children():
 		if child is CollisionPolygon2D:
 			total_area = PolygonUtil.get_area_of_polygon(child.polygon)
 			break
-	minimum_shard_area = total_area / float(number_of_break_points)
+	minimum_shard_area = total_area / float(data.number_of_break_points)
 	
 	freeze = true
 	_init_multiplayer_handling()
@@ -98,12 +95,12 @@ func _get_delaunay_with_placed_points(delaunay: Delaunay, polygon: PackedVector2
 	var break_points_chosen = 0
 	var attempts = 0
 	const MAX_ATTEMPS = 10
-	while break_points_chosen < number_of_break_points:
+	while break_points_chosen < data.number_of_break_points:
 		var possible_point = rect.position + Vector2(randi_range(0, rect.size.x), randi_range(0, rect.size.y))
 		
 		var ignore_point = false
 		for point in delaunay.points:
-			if possible_point.distance_to(point) <= length_limit:
+			if possible_point.distance_to(point) <= data.length_limit:
 				ignore_point = true
 		if not ignore_point and not Geometry2D.is_point_in_polygon(possible_point, polygon):
 			ignore_point = true
@@ -121,22 +118,22 @@ func _get_delaunay_with_placed_points(delaunay: Delaunay, polygon: PackedVector2
 #endregion
 
 
-func _update_environment_layer_physics(node: Node, environment_layer: EnvironmentLayer):
+func _update_environment_layer_physics(node: Node):
 	node.set_collision_layer_value(1, false)
-	node.set_collision_layer_value(2, environment_layer == EnvironmentLayer.FRONT)
-	node.set_collision_layer_value(3, environment_layer == EnvironmentLayer.BASE)
-	node.set_collision_layer_value(4, environment_layer == EnvironmentLayer.BACK)
+	node.set_collision_layer_value(2, data.layer == FragileBodyData.EnvironmentLayer.FRONT)
+	node.set_collision_layer_value(3, data.layer == FragileBodyData.EnvironmentLayer.BASE)
+	node.set_collision_layer_value(4, data.layer == FragileBodyData.EnvironmentLayer.BACK)
 	node.set_collision_mask_value(1, true)
-	node.set_collision_mask_value(2, environment_layer != EnvironmentLayer.BACK)
-	node.set_collision_mask_value(3, true)
-	node.set_collision_mask_value(4, environment_layer != EnvironmentLayer.FRONT)
+	node.set_collision_mask_value(2, data.layer == FragileBodyData.EnvironmentLayer.FRONT)
+	node.set_collision_mask_value(3, data.layer == FragileBodyData.EnvironmentLayer.BASE)
+	node.set_collision_mask_value(4, data.layer == FragileBodyData.EnvironmentLayer.BACK)
 	
-	match environment_layer:
-		EnvironmentLayer.FRONT:
+	match data.layer:
+		FragileBodyData.EnvironmentLayer.FRONT:
 			node.z_index = 1
-		EnvironmentLayer.BASE:
+		FragileBodyData.EnvironmentLayer.BASE:
 			node.z_index = 0
-		EnvironmentLayer.BACK:
+		FragileBodyData.EnvironmentLayer.BACK:
 			node.z_index = -1
 
 
@@ -211,7 +208,7 @@ func _init_shard_piece(shard_polygon: PackedVector2Array, sprite_polygon: Sprite
 		return _init_shard_chunk(shard_polygon, sprite_polygon)
 	else:
 		var shard_piece = SHARD_PIECE.instantiate()
-		_update_environment_layer_physics(shard_piece, environment_layer)
+		_update_environment_layer_physics(shard_piece)
 		add_child(shard_piece, true)
 		shard_piece.init.rpc(shard_polygon, sprite_polygon.texture, sprite_polygon.texture_offset, sprite_polygon.texture_scale)
 		return shard_piece
@@ -222,11 +219,10 @@ func _init_shard_chunk(shard_polygon: PackedVector2Array, sprite_polygon: Sprite
 	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(shard_polygon, global_position)
 	shard_chunk.global_position = PolygonUtil.get_center_of_polygon(polygon_global)
 	shard_chunk.scale = initial_scale
-	shard_chunk.health = health
-	shard_chunk.environment_layer = environment_layer
-	shard_chunk.number_of_break_points = number_of_break_points
-	shard_chunk.edge_threshold = edge_threshold
-	shard_chunk.length_limit = length_limit
+	shard_chunk.data = data.duplicate()
+	var area_ratio = PolygonUtil.get_area_of_polygon(shard_polygon) / total_area
+	shard_chunk.data.max_health = floor(data.max_health * area_ratio)
+	shard_chunk.data.number_of_break_points = int(floor(data.number_of_break_points * area_ratio))
 	
 	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
 	var corrected_polygon = PolygonUtil.get_translated_polygon(shard_polygon, -position_delta)
@@ -239,20 +235,7 @@ func _init_shard_chunk(shard_polygon: PackedVector2Array, sprite_polygon: Sprite
 	new_sprite_polygon.update_scaling(Vector2.ONE / initial_scale)
 	shard_chunk.add_child(new_sprite_polygon, true)
 	
-	#var polygon_global = PolygonUtil.get_global_polygon_from_local_space(shard_polygon, global_position)
-	#var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
-	#shard_chunk.global_position = PolygonUtil.get_center_of_polygon(polygon_global)
-	#var corrected_polygon = PolygonUtil.get_translated_polygon(shard_polygon, -position_delta)
-	#sprite_polygon.polygon = corrected_polygon
-	#sprite_polygon.update_collision_polygon()
-	#
-	#shard_chunk.center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
-	#shard_chunk.center_of_mass = -PolygonUtil.get_center_of_polygon(corrected_polygon)
-	
 	get_parent().add_child(shard_chunk, true)
-	
-	#var global_shard_polygon = PolygonUtil.get_global_polygon_from_local_space(shard_polygon, global_position)
-	#shard_chunk.global_position = PolygonUtil.get_center_of_polygon(global_shard_polygon)
 	shard_chunk.freeze = false
 	
 	var temp = CollisionShape2D.new()

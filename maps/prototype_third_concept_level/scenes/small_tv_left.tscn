@@ -1,11 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvgf1qeu8pxrw"]
+[gd_scene load_steps=6 format=3 uid="uid://bvgf1qeu8pxrw"]
 
 [ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_g22yh"]
+[ext_resource type="Script" path="res://physics/fragile_body_data.gd" id="2_qm2fy"]
 [ext_resource type="Texture2D" uid="uid://lqwu70vdpnie" path="res://maps/prototype_third_concept_level/textures/small_tv_left.png" id="2_xm1p7"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_35kyp"]
 
+[sub_resource type="Resource" id="Resource_20wdf"]
+script = ExtResource("2_qm2fy")
+max_health = 10.0
+layer = 1
+number_of_break_points = 5
+edge_threshold = 10.0
+length_limit = 20.0
+
 [node name="SmallTVLeft" type="RigidBody2D"]
 script = ExtResource("1_g22yh")
+data = SubResource("Resource_20wdf")
 
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 texture = ExtResource("2_xm1p7")

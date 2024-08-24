@@ -38,11 +38,11 @@ func init(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vecto
 	if not multiplayer.is_server():
 		freeze_mode = FREEZE_MODE_KINEMATIC
 		freeze = true
+	
+	_disappear()
 
 
 func _disappear():
-	await get_tree().create_timer(DISAPPEAR_DELAY).timeout
-	await body_entered
 	
 	disappear_timer = Timer.new()
 	disappear_timer.one_shot = true
@@ -58,19 +58,19 @@ func _process(delta):
 		sprite_polygon.self_modulate.a = lerp(0.0, 1.0, disappear_timer.time_left / disappear_timer.wait_time)
 
 
-func _on_body_entered(body: Node) -> void:
-	if global_position.distance_to(initial_global_position) >= NEEDED_POSITION_DELTA:
-		_disappear_test()
-
-
-
-func _disappear_test():
-	if disappear_timer != null: return
-	if elapsed_time < DISAPPEAR_DELAY: return
-	
-	disappear_timer = Timer.new()
-	disappear_timer.one_shot = true
-	disappear_timer.wait_time = DISAPPEAR_DURATION
-	disappear_timer.timeout.connect(queue_free)
-	add_child(disappear_timer)
-	disappear_timer.start()
+#func _on_body_entered(body: Node) -> void:
+	#if global_position.distance_to(initial_global_position) >= NEEDED_POSITION_DELTA:
+		#_disappear_test()
+#
+#
+#
+#func _disappear_test():
+	#if disappear_timer != null: return
+	#if elapsed_time < DISAPPEAR_DELAY: return
+	#
+	#disappear_timer = Timer.new()
+	#disappear_timer.one_shot = true
+	#disappear_timer.wait_time = DISAPPEAR_DURATION
+	#disappear_timer.timeout.connect(queue_free)
+	#add_child(disappear_timer)
+	#disappear_timer.start()

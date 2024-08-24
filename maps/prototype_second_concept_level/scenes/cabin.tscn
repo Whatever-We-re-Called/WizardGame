@@ -1,12 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://6ghlx0yjaura"]
+[gd_scene load_steps=6 format=3 uid="uid://6ghlx0yjaura"]
 
 [ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_1jcu6"]
+[ext_resource type="Script" path="res://physics/fragile_body_data.gd" id="2_65p5f"]
 [ext_resource type="Texture2D" uid="uid://inynjvfgstah" path="res://maps/prototype_second_concept_level/textures/cabin.png" id="2_tn0eq"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_we0ls"]
 
+[sub_resource type="Resource" id="Resource_r6hrn"]
+script = ExtResource("2_65p5f")
+max_health = 10.0
+layer = 2
+number_of_break_points = 5
+edge_threshold = 10.0
+length_limit = 20.0
+
 [node name="Cabin" type="RigidBody2D"]
 script = ExtResource("1_1jcu6")
-environment_layer = 2
+data = SubResource("Resource_r6hrn")
 
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 texture = ExtResource("2_tn0eq")

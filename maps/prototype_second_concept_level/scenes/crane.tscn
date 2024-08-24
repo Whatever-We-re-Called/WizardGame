@@ -1,12 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://dctvxxi12kxdr"]
+[gd_scene load_steps=6 format=3 uid="uid://dctvxxi12kxdr"]
 
 [ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_v26mf"]
+[ext_resource type="Script" path="res://physics/fragile_body_data.gd" id="2_7ptt4"]
 [ext_resource type="Texture2D" uid="uid://daxggp6xmes30" path="res://maps/prototype_second_concept_level/textures/crane.png" id="2_r8i8p"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_e56l0"]
 
+[sub_resource type="Resource" id="Resource_nkw0h"]
+script = ExtResource("2_7ptt4")
+max_health = 10.0
+layer = 2
+number_of_break_points = 5
+edge_threshold = 10.0
+length_limit = 20.0
+
 [node name="Crane" type="RigidBody2D"]
 script = ExtResource("1_v26mf")
-environment_layer = 2
+data = SubResource("Resource_nkw0h")
 
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 position = Vector2(-1, 0)

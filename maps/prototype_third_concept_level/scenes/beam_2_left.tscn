@@ -1,12 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bldv7ik3iwc4o"]
+[gd_scene load_steps=6 format=3 uid="uid://bldv7ik3iwc4o"]
 
 [ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_xi4fm"]
 [ext_resource type="Texture2D" uid="uid://c7ai3rd4dshgp" path="res://maps/prototype_third_concept_level/textures/beam_2_left.png" id="2_uyjbf"]
+[ext_resource type="Script" path="res://physics/fragile_body_data.gd" id="2_vjv1o"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_60l2k"]
+
+[sub_resource type="Resource" id="Resource_ulqwf"]
+script = ExtResource("2_vjv1o")
+max_health = 10.0
+layer = 2
+number_of_break_points = 5
+edge_threshold = 10.0
+length_limit = 20.0
 
 [node name="Beam2Left" type="RigidBody2D"]
 script = ExtResource("1_xi4fm")
-environment_layer = 2
+data = SubResource("Resource_ulqwf")
 
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 texture = ExtResource("2_uyjbf")

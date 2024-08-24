@@ -20,6 +20,5 @@ unique_name_in_owner = true
 script = ExtResource("2_8fnpj")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.5
 replication_config = SubResource("SceneReplicationConfig_14boi")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,11 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://kn82370111w5"]
+[gd_scene load_steps=6 format=3 uid="uid://kn82370111w5"]
 
 [ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_uen1g"]
 [ext_resource type="Texture2D" uid="uid://4os2nexso2v0" path="res://maps/prototype_third_concept_level/textures/mid_platform.png" id="2_blmg3"]
+[ext_resource type="Script" path="res://physics/fragile_body_data.gd" id="2_e6n8y"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_8h5lk"]
+
+[sub_resource type="Resource" id="Resource_ymlpu"]
+script = ExtResource("2_e6n8y")
+max_health = 10.0
+layer = 1
+number_of_break_points = 5
+edge_threshold = 10.0
+length_limit = 20.0
 
 [node name="MidPlatform" type="RigidBody2D"]
 script = ExtResource("1_uen1g")
+data = SubResource("Resource_ymlpu")
 
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 texture = ExtResource("2_blmg3")

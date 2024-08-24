@@ -137,6 +137,11 @@ reload_scene={
 2d_physics/layer_4="environment_layer_back"
 2d_physics/layer_5="player"
 
+[physics]
+
+2d/run_on_separate_thread=true
+common/physics_jitter_fix=0.0
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
