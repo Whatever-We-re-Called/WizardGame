@@ -9,6 +9,7 @@ enum EnvironmentLayer { FRONT, BASE, BACK }
 @export var edge_threshold: float = 10.0
 @export var length_limit: float = 20
 
+var sites: Array
 var total_area: float
 var minimum_shard_area: float
 
@@ -16,6 +17,8 @@ const MINIMUM_ALLOWED_AREA: float = 500.0
 const MINIMUM_ALLOWED_CENTER_DELTA: float = 7.5
 const NEARBY_CHECK_RANGE: float = 4.0
 const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
+
+const DISPLAY_DELAUNAY_DEBUG = true
 
 
 func _enter_tree():
@@ -30,8 +33,12 @@ func _enter_tree():
 	
 	freeze = true
 	_init_multiplayer_handling()
+	
+	if multiplayer.is_server():
+		_init_fragile_polygons()
 
 
+#region Scaling and Multiplayer Inits
 func _init_scaling():
 	for child in get_children():
 		if child is SpritePolygon2D:
@@ -45,8 +52,61 @@ func _init_multiplayer_handling():
 	add_child(multiplayer_spawner, true)
 	multiplayer_spawner.spawn_path = get_path()
 	multiplayer_spawner.add_spawnable_scene(SHARD_PIECE.resource_path)
+#endregion
+
+
+#region Fragile Polygons Init
+func _init_fragile_polygons():
+	# Get Body's Polygon
+	var body_polygon = null
+	for child in get_children():
+		if child is SpritePolygon2D:
+			body_polygon = child.polygon
+	if body_polygon == null:
+		push_error("No SpritePolygon2D found in FragileBody2D's children.")
+		return
 	
-	pass
+	# Create Delaunay
+	var rect = PolygonUtil.get_rect_from_polygon(body_polygon)
+	var delaunay = Delaunay.new(rect)
+	delaunay = _get_delaunay_with_placed_points(delaunay, body_polygon, rect)
+	
+	# Create sites.
+	var triangles = delaunay.triangulate()
+	var sites = delaunay.make_voronoi(triangles)
+	
+	if DISPLAY_DELAUNAY_DEBUG == true:
+		_display_delaunay_debug(delaunay)
+
+
+func _get_delaunay_with_placed_points(delaunay: Delaunay, polygon: PackedVector2Array, rect: Rect2) -> Delaunay:
+	for point in polygon:
+		delaunay.add_point(point)
+	
+	var break_points_chosen = 0
+	var attempts = 0
+	const MAX_ATTEMPS = 10
+	while break_points_chosen < number_of_break_points:
+		var possible_point = rect.position + Vector2(randi_range(0, rect.size.x), randi_range(0, rect.size.y))
+		
+		var ignore_point = false
+		for point in delaunay.points:
+			if possible_point.distance_to(point) <= length_limit:
+				ignore_point = true
+		if not ignore_point and not Geometry2D.is_point_in_polygon(possible_point, polygon):
+			ignore_point = true
+		
+		if not ignore_point:
+			delaunay.add_point(possible_point)
+			break_points_chosen += 1
+		
+		attempts += 1
+		if attempts >= MAX_ATTEMPS:
+			break_points_chosen += 1
+			continue
+	
+	return delaunay
+#endregion
 
 
 func _update_environment_layer_physics(node: Node, environment_layer: EnvironmentLayer):
@@ -94,15 +154,6 @@ func _break_apart_sprite(sprite_polygon: SpritePolygon2D, incoming_collision_pol
 	# Create overlap polygon.
 	var overlap_polygon = _get_overlap_polygon(collision_polygon, incoming_collision_polygon)
 	
-	# Create Delaunay.
-	var overlap_rect = PolygonUtil.get_rect_from_polygon(overlap_polygon)
-	var delaunay = Delaunay.new(overlap_rect)
-	delaunay = _get_delaunay_with_placed_points(delaunay, overlap_rect, overlap_polygon)
-	
-	# Create sites.
-	var triangles = delaunay.triangulate()
-	var sites = delaunay.make_voronoi(triangles)
-	
 	# Init shard pieces.
 	var shards = _get_shards(sprite_polygon, overlap_polygon, sites)
 	
@@ -121,35 +172,6 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 	var overlap_polygons = Geometry2D.intersect_polygons(global_collision_polygon, global_incoming_collision_polygon)
 	var overlap_polygon = overlap_polygons[0] if overlap_polygons.size() > 0 else []
 	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
-
-
-func _get_delaunay_with_placed_points(delaunay: Delaunay, overlap_rect: Rect2, overlap_polygon: PackedVector2Array) -> Delaunay:
-	for point in overlap_polygon:
-		delaunay.add_point(point)
-	
-	var break_points_chosen = 0
-	var attempts = 0
-	const MAX_ATTEMPS = 10
-	while break_points_chosen < number_of_break_points:
-		var possible_point = overlap_rect.position + Vector2(randi_range(0, overlap_rect.size.x), randi_range(0, overlap_rect.size.y))
-		
-		var ignore_point = false
-		for point in delaunay.points:
-			if possible_point.distance_to(point) <= length_limit:
-				ignore_point = true
-		if not ignore_point and not Geometry2D.is_point_in_polygon(possible_point, overlap_polygon):
-			ignore_point = true
-		
-		if not ignore_point:
-			delaunay.add_point(possible_point)
-			break_points_chosen += 1
-		
-		attempts += 1
-		if attempts >= MAX_ATTEMPS:
-			break_points_chosen += 1
-			continue
-	
-	return delaunay
 
 
 func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2Array, sites: Array) -> Array[ShardPiece]:
@@ -247,3 +269,57 @@ func damage_with_collision(damage_dealt: float, collision_polygon: CollisionPoly
 		return break_apart(collision_polygon)
 	else:
 		return []
+
+
+#region Delaunay Debug Display
+func _display_delaunay_debug(delaunay: Delaunay):
+	var triangles = delaunay.triangulate()
+	for triangle in triangles:
+		if !delaunay.is_border_triangle(triangle):
+			_display_delaunay_triangle(triangle)
+		
+	var sites = delaunay.make_voronoi(triangles)
+	for site in sites:
+		_display_delaunay_site(site)
+		
+		if site.neighbours.size() != site.source_triangles.size():
+			continue # sites on edges will have incomplete neightbours information
+		for nb in site.neighbours:
+			_display_delaunay_site_neighbour(nb)
+
+
+func _display_delaunay_triangle(triangle: Delaunay.Triangle):
+	var line = Line2D.new()
+	var p = PackedVector2Array()
+	p.append(triangle.a)
+	p.append(triangle.b)
+	p.append(triangle.c)
+	p.append(triangle.a)
+	line.points = p
+	line.width = 1
+	line.antialiased
+	add_child(line)
+
+
+func _display_delaunay_site(site: Delaunay.VoronoiSite):
+	var polygon = Polygon2D.new()
+	var p = site.polygon
+	p.append(p[0])
+	polygon.polygon = p
+	polygon.color = Color(randf_range(0,1),randf_range(0,1),randf_range(0,1),0.5)
+	polygon.z_index = -1
+	add_child(polygon)
+
+func _display_delaunay_site_neighbour(edge: Delaunay.VoronoiEdge):
+	var line = Line2D.new()
+	var points: PackedVector2Array
+	var l = 6
+	var s = lerp(edge.a, edge.b, 0.6)
+	var dir = edge.a.direction_to(edge.b).orthogonal()
+	points.append(s + dir * l)
+	points.append(s - dir * l)
+	line.points = points
+	line.width = 1
+	line.default_color = Color.CYAN
+	add_child(line)
+#endregion
