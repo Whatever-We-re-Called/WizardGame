@@ -45,15 +45,21 @@ static func get_local_polygon_from_global_space(polygon: PackedVector2Array, par
 	return result
 
 
-static func create_debug_collision_polygon(polygon: PackedVector2Array, parent: Node2D, modulate_color: Color = Color.WHITE, duration: float = 1.0):
-	var debug_polygon = CollisionPolygon2D.new()
-	debug_polygon.polygon = polygon
-	debug_polygon.self_modulate = modulate_color
-	parent.add_child(debug_polygon)
-	await parent.get_tree().create_timer(duration).timeout
+static func create_debug_collision_polygon(polygon: PackedVector2Array, parent: Node2D, color: Color = Color.WHITE, duration: float = 0):
+	var debug_line = Line2D.new()
+	for point in polygon:
+		debug_line.add_point(point)
+	debug_line.default_color = color
+	debug_line.width = 1
+	debug_line.z_index = 1000
+	debug_line.antialiased
+	parent.add_child(debug_line)
 	
-	if debug_polygon != null:
-		debug_polygon.queue_free()
+	if duration > 0.0:
+		await parent.get_tree().create_timer(duration).timeout
+		
+		if debug_line != null:
+			debug_line.queue_free()
 
 
 static func get_area_of_polygon(polygon: PackedVector2Array) -> float:

@@ -9,7 +9,7 @@ enum EnvironmentLayer { FRONT, BASE, BACK }
 @export var edge_threshold: float = 10.0
 @export var length_limit: float = 20
 
-var sites: Array
+var shard_polygons: Array
 var total_area: float
 var minimum_shard_area: float
 
@@ -18,7 +18,7 @@ const MINIMUM_ALLOWED_CENTER_DELTA: float = 7.5
 const NEARBY_CHECK_RANGE: float = 4.0
 const SHARD_PIECE = preload("res://physics/shard_piece.tscn")
 
-const DISPLAY_DELAUNAY_DEBUG = true
+const DISPLAY_DELAUNAY_DEBUG = false
 
 
 func _enter_tree():
@@ -71,12 +71,22 @@ func _init_fragile_polygons():
 	var delaunay = Delaunay.new(rect)
 	delaunay = _get_delaunay_with_placed_points(delaunay, body_polygon, rect)
 	
-	# Create sites.
+	# Create Sites
 	var triangles = delaunay.triangulate()
 	var sites = delaunay.make_voronoi(triangles)
 	
+	# Create Shard Polygons
+	for site in sites:
+		var potential_shard_polygons = Geometry2D.intersect_polygons(body_polygon, site.polygon)
+		if potential_shard_polygons.size() > 0:
+			var shard_polygon = potential_shard_polygons[0]
+			shard_polygons.append(shard_polygon)
+	print(shard_polygons)
+	
+	# Display debug if applicable.
 	if DISPLAY_DELAUNAY_DEBUG == true:
-		_display_delaunay_debug(delaunay)
+		for shard_polygon in shard_polygons:
+			PolygonUtil.create_debug_collision_polygon(shard_polygon, self, Color.WHITE)
 
 
 func _get_delaunay_with_placed_points(delaunay: Delaunay, polygon: PackedVector2Array, rect: Rect2) -> Delaunay:
@@ -155,7 +165,7 @@ func _break_apart_sprite(sprite_polygon: SpritePolygon2D, incoming_collision_pol
 	var overlap_polygon = _get_overlap_polygon(collision_polygon, incoming_collision_polygon)
 	
 	# Init shard pieces.
-	var shards = _get_shards(sprite_polygon, overlap_polygon, sites)
+	var shards = _get_shards(sprite_polygon, overlap_polygon)
 	
 	# Create new sprite polygons.
 	var possible_new_shards = _create_new_sprite_polygons(sprite_polygon, collision_polygon, overlap_polygon)
@@ -174,7 +184,7 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
 
 
-func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2Array, sites: Array) -> Array[ShardPiece]:
+func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2Array) -> Array[ShardPiece]:
 	var shards: Array[ShardPiece]
 	var texture = sprite_polygon.texture
 	var texture_offset = sprite_polygon.texture_offset
@@ -184,10 +194,10 @@ func _get_shards(sprite_polygon: SpritePolygon2D, overlap_polygon: PackedVector2
 		var shard = _init_shard_piece(overlap_polygon, texture, texture_offset, texture_scale, true)
 		shards.append(shard)
 	else:
-		for site in sites:
-			var center = global_position
-			var potential_shard_polygons = Geometry2D.intersect_polygons(overlap_polygon, site.polygon)
+		for polygon in shard_polygons:
+			var potential_shard_polygons = Geometry2D.intersect_polygons(overlap_polygon, polygon)
 			if potential_shard_polygons.size() > 0:
+				var center = global_position
 				var shard_polygon = potential_shard_polygons[0]
 				var should_disappear = not _is_polygon_a_valid_shard(shard_polygon, false)
 				var shard = _init_shard_piece(shard_polygon, texture, texture_offset, texture_scale, should_disappear)
@@ -269,57 +279,3 @@ func damage_with_collision(damage_dealt: float, collision_polygon: CollisionPoly
 		return break_apart(collision_polygon)
 	else:
 		return []
-
-
-#region Delaunay Debug Display
-func _display_delaunay_debug(delaunay: Delaunay):
-	var triangles = delaunay.triangulate()
-	for triangle in triangles:
-		if !delaunay.is_border_triangle(triangle):
-			_display_delaunay_triangle(triangle)
-		
-	var sites = delaunay.make_voronoi(triangles)
-	for site in sites:
-		_display_delaunay_site(site)
-		
-		if site.neighbours.size() != site.source_triangles.size():
-			continue # sites on edges will have incomplete neightbours information
-		for nb in site.neighbours:
-			_display_delaunay_site_neighbour(nb)
-
-
-func _display_delaunay_triangle(triangle: Delaunay.Triangle):
-	var line = Line2D.new()
-	var p = PackedVector2Array()
-	p.append(triangle.a)
-	p.append(triangle.b)
-	p.append(triangle.c)
-	p.append(triangle.a)
-	line.points = p
-	line.width = 1
-	line.antialiased
-	add_child(line)
-
-
-func _display_delaunay_site(site: Delaunay.VoronoiSite):
-	var polygon = Polygon2D.new()
-	var p = site.polygon
-	p.append(p[0])
-	polygon.polygon = p
-	polygon.color = Color(randf_range(0,1),randf_range(0,1),randf_range(0,1),0.5)
-	polygon.z_index = -1
-	add_child(polygon)
-
-func _display_delaunay_site_neighbour(edge: Delaunay.VoronoiEdge):
-	var line = Line2D.new()
-	var points: PackedVector2Array
-	var l = 6
-	var s = lerp(edge.a, edge.b, 0.6)
-	var dir = edge.a.direction_to(edge.b).orthogonal()
-	points.append(s + dir * l)
-	points.append(s - dir * l)
-	line.points = points
-	line.width = 1
-	line.default_color = Color.CYAN
-	add_child(line)
-#endregion
