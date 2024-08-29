@@ -49,7 +49,7 @@ func _explode_remote_land_mine():
 	
 	await get_tree().physics_frame
 	await get_tree().physics_frame
-	var all_created_shards: Array[ShardPiece]
+	var all_created_shards: Array[ShardPieceOld]
 	for overlapping_body in area.get_overlapping_bodies():
 		var direction = (overlapping_body.global_position - remote_land_mine_global_position).normalized()
 		if overlapping_body is FragileBody2D:

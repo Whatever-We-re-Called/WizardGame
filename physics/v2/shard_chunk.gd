@@ -1,0 +1,1 @@
+class_name ShardChunk extends BreakableBody2D

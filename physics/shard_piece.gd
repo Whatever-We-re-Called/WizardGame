@@ -1,5 +1,5 @@
 # Shard logic modified from https://www.reddit.com/r/godot/comments/nimkqg/how_to_break_a_2d_sprite_in_a_cool_and_easy_way/.
-class_name ShardPiece extends RigidBody2D
+class_name ShardPieceOld extends RigidBody2D
 
 @onready var initial_global_position = global_position
 

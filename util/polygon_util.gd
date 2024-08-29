@@ -69,7 +69,7 @@ static func get_area_of_polygon(polygon: PackedVector2Array) -> float:
 		result_a += polygon[i].x * polygon[(i + 1) % polygon.size()].y
 		result_b += polygon[(i + 1) % polygon.size()].x * polygon[i].y
 	
-	return (result_a - result_b) / 2.0
+	return abs((result_a - result_b) / 2.0)
 
 
 static func get_rect_from_polygon(polygon: PackedVector2Array) -> Rect2:

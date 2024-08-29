@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=12 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://game/wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_oy4lr"]
 [ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_6ha4y"]
 [ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://maps/prototype_generic/green_box.tscn" id="9_fusdj"]
+[ext_resource type="PackedScene" uid="uid://cfwy7nscbfyvh" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
 
 [node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_ajb20")
@@ -206,6 +207,9 @@ scale = Vector2(2, 2)
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(-28, -31, 784.616, -31.8271, 1937, -33, 1964, 1132, -47, 1135)
 metadata/_edit_lock_ = true
+
+[node name="RedBox" parent="." instance=ExtResource("11_wv8q6")]
+position = Vector2(1408, 648)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]

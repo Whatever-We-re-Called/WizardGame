@@ -9,7 +9,7 @@ var total_area: float
 var minimum_shard_area: float
 var initial_scale: Vector2
 
-const AREA_NEEDED_FOR_SHARD_CHUNK: float = 375.0
+const AREA_NEEDED_FOR_SHARD_CHUNK: float = 500.0
 const MINIMUM_ALLOWED_CENTER_DELTA: float = 7.5
 const NEARBY_CHECK_RANGE: float = 4.0
 const SHARD_PIECE = preload("res://physics/shard_piece.tscn")

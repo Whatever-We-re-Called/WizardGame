@@ -1,0 +1,1 @@
+class_name ShardPiece extends BreakableBody2D
