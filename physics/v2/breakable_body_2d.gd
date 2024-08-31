@@ -1,4 +1,4 @@
-class_name BreakableBody2D extends CharacterBody2D
+class_name BreakableBody2D extends RigidBody2D
 
 @export var data: BreakableData
 
@@ -141,7 +141,12 @@ func _init_shard_chunk(intersect_polygon: PackedVector2Array, shard_polygon: Sha
 	shard_chunk.add_child(ShardPolygon.new(), true)
 	add_child(shard_chunk, true)
 	
+	var primary_shard_polygon = _get_primary_shard_polygon()
+	primary_shard_polygon.queue_free()
+	primary_shard_polygon.collision_polygon.queue_free()
+	
 	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon, shard_polygon.texture, shard_polygon.texture_offset, shard_polygon.texture_scale)
+	
 
 
 @rpc("any_peer", "call_local", "reliable")
