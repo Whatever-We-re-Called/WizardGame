@@ -100,15 +100,9 @@ func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygo
 	var overlap_polygon = _get_overlap_polygon(shard_polygon.collision_polygon, incoming_collision_polygon)
 	
 	_create_new_shards(shard_polygon, overlap_polygon)
+	_create_non_overlap_shard_polygons(shard_polygon, shard_polygon.collision_polygon, overlap_polygon)
 	
 	queue_redraw()
-	
-	## Create new sprite polygons.
-	#var possible_new_shards = _create_new_sprite_polygons(sprite_polygon, collision_polygon, overlap_polygon)
-	#shards.append_array(possible_new_shards)
-	#
-	#queue_redraw()
-	#return shards
 
 
 func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collision_polygon: CollisionPolygon2D) -> PackedVector2Array:
@@ -130,6 +124,22 @@ func _create_new_shards(shard_polygon: ShardPolygon, overlap_polygon: PackedVect
 			if potential_fragment_polygons.size() > 0:
 				var intersect_polygon = potential_fragment_polygons[0]
 				_init_shard_chunk(intersect_polygon, shard_polygon)
+
+
+func _create_non_overlap_shard_polygons(shard_polygon: ShardPolygon, collision_polygon: CollisionPolygon2D, overlap_polygon: PackedVector2Array):
+	var potential_non_overlap_polygons = Geometry2D.clip_polygons(collision_polygon.polygon, overlap_polygon)
+	for non_overlap_polygon in potential_non_overlap_polygons:
+		non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
+		
+		var new_shard_polygon = ShardPolygon.new()
+		new_shard_polygon.polygon = non_overlap_polygon
+		new_shard_polygon.texture = shard_polygon.texture
+		new_shard_polygon.texture_offset = shard_polygon.texture_offset
+		new_shard_polygon.texture_scale = shard_polygon.texture_scale
+		add_child(new_shard_polygon, true)
+	
+	scale = Vector2.ONE
+	shard_polygon.destroy()
 #endregion
 
 

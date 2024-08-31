@@ -44,3 +44,8 @@ func _generate_first_pass_polygon():
 	var polygons = bitmap.opaque_to_polygons(Rect2(Vector2(0, 0), bitmap.get_size()), 10.0)
 	if polygons.size() > 0:
 		polygon = PolygonUtil.get_translated_polygon(polygons[0], -texture.get_size() / 2.0)
+
+
+func destroy():
+	queue_free()
+	collision_polygon.queue_free()
