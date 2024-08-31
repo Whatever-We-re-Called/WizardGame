@@ -16,28 +16,29 @@ func update_physics_layer():
 
 #region Create fragment polygons.
 func create_shard_polygons():
-	var primary_polygon = _get_primary_polygon()
-	if primary_polygon.size() == 0:
-		push_error("Could not create a valid primary polygon for BreakableBody2D.")
+	var primary_shard_polygon = _get_primary_shard_polygon()
+	if primary_shard_polygon == null:
 		return
 	
-	var sites = _get_voronoi_sites(primary_polygon)
+	var sites = _get_voronoi_sites(primary_shard_polygon.polygon)
 	for site in sites:
-		var potential_fragment_polygons = Geometry2D.intersect_polygons(primary_polygon, site.polygon)
+		var potential_fragment_polygons = Geometry2D.intersect_polygons(primary_shard_polygon.polygon, site.polygon)
 		if potential_fragment_polygons.size() > 0:
 			var fragment_polygon = potential_fragment_polygons[0]
 			fragment_polygons.append(fragment_polygon)
 	
-	if DISPLAY_VORONOI_DEBUG == true:
+	if DISPLAY_VORONOI_DEBUG == true and get_tree().debug_collisions_hint == true:
 		for fragment_polygon in fragment_polygons:
 			PolygonUtil.create_debug_collision_polygon(fragment_polygon, self, Color.WHITE)
 
 
-func _get_primary_polygon() -> PackedVector2Array:
+func _get_primary_shard_polygon() -> ShardPolygon:
 	for child in get_children():
 		if child is ShardPolygon:
-			return child.polygon
-	return []
+			return child
+	
+	push_error("Could not create a valid primary polygon for BreakableBody2D.")
+	return null
 
 
 func _get_voronoi_sites(primary_polygon: PackedVector2Array) -> Array:
@@ -64,7 +65,7 @@ func _get_delaunay_with_placed_points(delaunay: Delaunay, primary_polygon: Packe
 		else:
 			failed_attempts += 1
 			if failed_attempts > MAX_FAILED_BREAK_POINT_ATTEMPTS:
-				continue
+				break
 	
 	return delaunay
 
@@ -100,6 +101,8 @@ func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygo
 	
 	_create_new_shards(shard_polygon, overlap_polygon)
 	
+	queue_redraw()
+	
 	## Create new sprite polygons.
 	#var possible_new_shards = _create_new_sprite_polygons(sprite_polygon, collision_polygon, overlap_polygon)
 	#shards.append_array(possible_new_shards)
@@ -133,21 +136,25 @@ func _create_new_shards(shard_polygon: ShardPolygon, overlap_polygon: PackedVect
 #region Initialize bodies, chunks, and pieces.
 func _init_shard_chunk(intersect_polygon: PackedVector2Array, shard_polygon: ShardPolygon):
 	var shard_chunk = ShardChunk.new()
+	shard_chunk.name = "ShardChunk"
+	shard_chunk.data = data.duplicate()
+	shard_chunk.add_child(ShardPolygon.new(), true)
 	add_child(shard_chunk, true)
-	shard_chunk._init_self_rpc.rpc(intersect_polygon, shard_polygon.texture, shard_polygon.texture_offset, shard_polygon.texture_scale)
+	
+	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon, shard_polygon.texture, shard_polygon.texture_offset, shard_polygon.texture_scale)
 
 
 @rpc("any_peer", "call_local", "reliable")
-func _init_self_rpc(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2):
+func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2):
 	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(polygon, global_position)
 	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
 	global_position += position_delta
 	var corrected_polygon = PolygonUtil.get_translated_polygon(polygon, -position_delta)
 	
-	var shard_polygon = ShardPolygon.new()
+	var shard_polygon = _get_primary_shard_polygon()
 	shard_polygon.polygon = corrected_polygon
 	shard_polygon.texture = texture
 	shard_polygon.texture_offset = texture_offset + position_delta
 	shard_polygon.texture_scale = texture_scale
-	add_child(shard_polygon)
+	shard_polygon.update_collision_polygon()
 #endregion

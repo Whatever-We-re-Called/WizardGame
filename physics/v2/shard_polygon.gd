@@ -9,14 +9,14 @@ var collision_polygon: CollisionPolygon2D
 
 
 func _ready() -> void:
-	_update_collision_polygon()
+	update_collision_polygon()
 
 
 func _draw():
 	texture_offset = texture.get_size() / 2.0
 
 
-func _update_collision_polygon():
+func update_collision_polygon():
 	if collision_polygon == null:
 		_create_collision_polygon()
 	

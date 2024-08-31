@@ -48,13 +48,16 @@ func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id
 	await get_tree().physics_frame
 	var all_created_shards: Array[PhysicsBody2D]
 	for overlapping_body in area.get_overlapping_bodies():
-		if overlapping_body is FragileBody2D:
-			var created_shards = overlapping_body.break_apart(collision_polygon)
-			all_created_shards.append_array(created_shards)
-		elif overlapping_body is RigidBody2D:
-			_push_rigid_body(overlapping_body, executor_player, direction)
-		elif overlapping_body is Player and overlapping_body != executor_player:
-			_push_player(overlapping_body, executor_player, direction)
+		if overlapping_body is ShardBody:
+			overlapping_body.break_apart_from_collision(collision_polygon, Vector2.ZERO)
+		else:
+			if overlapping_body is FragileBody2D:
+				var created_shards = overlapping_body.break_apart(collision_polygon)
+				all_created_shards.append_array(created_shards)
+			elif overlapping_body is RigidBody2D:
+				_push_rigid_body(overlapping_body, executor_player, direction)
+			elif overlapping_body is Player and overlapping_body != executor_player:
+				_push_player(overlapping_body, executor_player, direction)
 	
 	for shard in all_created_shards:
 		if shard is RigidBody2D:
