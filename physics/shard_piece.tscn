@@ -2,14 +2,7 @@
 
 [ext_resource type="Script" path="res://physics/shard_piece.gd" id="1_h7m1w"]
 [ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="2_8fnpj"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_14boi"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 2
+[ext_resource type="Script" path="res://addons/godot_steam_sync/Network/RadomeSteamSync/SyncNode/RigidBodySync2D.gd" id="3_mgpdp"]
 
 [node name="ShardPiece" type="RigidBody2D"]
 sleeping = true
@@ -19,7 +12,8 @@ script = ExtResource("1_h7m1w")
 unique_name_in_owner = true
 script = ExtResource("2_8fnpj")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_14boi")
+[node name="RigidBodySync2D" type="Node" parent="."]
+script = ExtResource("3_mgpdp")
+Angular_Velocity = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

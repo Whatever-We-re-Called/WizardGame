@@ -23,6 +23,10 @@ RigidBodyAutoScaler="*res://addons/rigidbody_auto_scaler/RigidBodyAutoScaler.gd"
 Abilities="*res://abilities/abilities.gd"
 DisasterManager="*res://disasters/disaster_manager.gd"
 SteamWrapper="*res://multiplayer/steam/steam_wrapper.gd"
+NetworkManager="*res://addons/godot_steam_sync/Network/RadomeSteamSync/NetworkManager.gd"
+P2P="*res://addons/godot_steam_sync/Network/RadomeSteamSync/P2P.gd"
+Command="*res://addons/godot_steam_sync/Network/RadomeSteamSync/SyncNode/CommandSync.gd"
+SceneManager="*res://addons/godot_steam_sync/SceneChanger/SceneManager.gd"
 
 [display]
 
@@ -34,7 +38,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg", "res://addons/rigidbody_auto_scaler/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg", "res://addons/godot_steam_sync/plugin.cfg", "res://addons/rigidbody_auto_scaler/plugin.cfg")
 
 [global_group]
 
