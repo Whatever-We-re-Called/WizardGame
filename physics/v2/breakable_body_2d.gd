@@ -9,13 +9,35 @@ const EDGE_THRESHOLD: float = 10.0
 const BREAK_POINT_DISTANCE_MINIMUM: float = 20.0
 const MAX_FAILED_BREAK_POINT_ATTEMPTS: int = 100
 
+# Note about frequent use of preload(). 
+# If done as a constant, "circular dependency" occurs, which results in class
+# definitions entering the tree without proper references hooked up.
+# https://en.wikipedia.org/wiki/Circular_dependency
+# https://www.reddit.com/r/godot/comments/1643fgi/circular_dependency_issues/
 
-func update_physics_layer():
+
+func _enter_tree() -> void:
+	_init_multiplayer_handling()
+	#_update_physics_layer()
+
+
+func _init_multiplayer_handling():
+	var multiplayer_spawner = MultiplayerSpawner.new()
+	add_child(multiplayer_spawner, true)
+	multiplayer_spawner.spawn_path = get_path()
+	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
+
+
+func _update_physics_layer():
 	PhysicsUtil.place_onto_environment_layer(self, data.layer, true)
 
 
 #region Create fragment polygons.
-func create_shard_polygons():
+func create_fragment_polygons():
+	if not multiplayer.is_server(): return
+	
 	var primary_shard_polygon = _get_primary_shard_polygon()
 	if primary_shard_polygon == null:
 		return
@@ -145,18 +167,13 @@ func _create_non_overlap_shard_polygons(shard_polygon: ShardPolygon, collision_p
 
 #region Initialize bodies, chunks, and pieces.
 func _init_shard_chunk(intersect_polygon: PackedVector2Array, shard_polygon: ShardPolygon):
-	var shard_chunk = ShardChunk.new()
-	shard_chunk.name = "ShardChunk"
+	var shard_chunk = preload("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
 	shard_chunk.data = data.duplicate()
-	shard_chunk.add_child(ShardPolygon.new(), true)
 	add_child(shard_chunk, true)
-	
-	var primary_shard_polygon = _get_primary_shard_polygon()
-	primary_shard_polygon.queue_free()
-	primary_shard_polygon.collision_polygon.queue_free()
 	
 	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon, shard_polygon.texture, shard_polygon.texture_offset, shard_polygon.texture_scale)
 	
+	shard_chunk._on_creation()
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -166,10 +183,18 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, texture: Texture2
 	global_position += position_delta
 	var corrected_polygon = PolygonUtil.get_translated_polygon(polygon, -position_delta)
 	
-	var shard_polygon = _get_primary_shard_polygon()
+	var shard_polygon = %ShardPolygon
 	shard_polygon.polygon = corrected_polygon
 	shard_polygon.texture_offset = texture_offset + position_delta
 	shard_polygon.texture = texture
 	shard_polygon.texture_scale = texture_scale
 	shard_polygon.update_collision_polygon()
+	
+	center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
+	center_of_mass = PolygonUtil.get_center_of_polygon(corrected_polygon)
 #endregion
+
+
+func _on_creation() -> void:
+	# Intended to be overridden in shard scripts.
+	pass

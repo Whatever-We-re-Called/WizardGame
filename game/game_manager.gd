@@ -65,7 +65,7 @@ func _add_player(data):
 			player.set_device(data.device_ids)
 		
 		teleport_player_to_random_spawn_point.rpc_id(1, data.peer_id)
-		_handle_add_player_signals.rpc()
+		_handle_add_player_signals.rpc(data.peer_id)
 
 
 func _setup_server():
@@ -82,10 +82,10 @@ func _setup_states():
 
 
 @rpc("authority", "call_local", "reliable")
-func _handle_add_player_signals():
-	for player in players:
-		player.killed.connect(_on_player_killed)
-		player.received_debug_input.connect(_on_player_received_debug_input)
+func _handle_add_player_signals(target_peer_id: int):
+	var target_player = get_player_from_peer_id(target_peer_id)
+	target_player.killed.connect(_on_player_killed)
+	target_player.received_debug_input.connect(_on_player_received_debug_input)
 
 
 func _remove_player(id):

@@ -1,6 +1,5 @@
 class_name ShardChunk extends BreakableBody2D
 
 
-func _ready() -> void:
-	update_physics_layer()
-	create_shard_polygons()
+func _on_creation() -> void:
+	create_fragment_polygons()

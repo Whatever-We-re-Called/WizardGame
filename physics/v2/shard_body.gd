@@ -2,6 +2,9 @@ class_name ShardBody extends BreakableBody2D
 
 
 func _ready() -> void:
+	_on_creation()
+
+
+func _on_creation() -> void:
 	freeze = true
-	update_physics_layer()
-	create_shard_polygons()
+	create_fragment_polygons()
