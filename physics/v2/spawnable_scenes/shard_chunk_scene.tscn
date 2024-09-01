@@ -2,21 +2,15 @@
 
 [ext_resource type="Script" path="res://physics/v2/shard_chunk.gd" id="1_8go2s"]
 [ext_resource type="Script" path="res://physics/v2/shard_polygon.gd" id="2_eb204"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lteax"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 2
+[ext_resource type="Script" path="res://addons/godot_steam_sync/Network/RadomeSteamSync/SyncNode/RigidBodySync2D.gd" id="3_l5256"]
 
 [node name="ShardChunk" type="RigidBody2D"]
 script = ExtResource("1_8go2s")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_lteax")
-
 [node name="ShardPolygon" type="Polygon2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_eb204")
+
+[node name="RigidBodySync2D" type="Node" parent="."]
+script = ExtResource("3_l5256")
+Angular_Velocity = true
