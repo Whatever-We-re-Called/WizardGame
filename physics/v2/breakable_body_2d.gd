@@ -168,8 +168,8 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, texture: Texture2
 	
 	var shard_polygon = _get_primary_shard_polygon()
 	shard_polygon.polygon = corrected_polygon
-	shard_polygon.texture = texture
 	shard_polygon.texture_offset = texture_offset + position_delta
+	shard_polygon.texture = texture
 	shard_polygon.texture_scale = texture_scale
 	shard_polygon.update_collision_polygon()
 #endregion

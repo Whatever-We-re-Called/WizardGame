@@ -9,7 +9,7 @@
 script = ExtResource("2_c1s4j")
 max_health = 10.0
 layer = 1
-number_of_break_points = 5
+number_of_break_points = 3
 
 [node name="RedBox" type="RigidBody2D"]
 script = ExtResource("1_wvh2w")
@@ -18,5 +18,5 @@ data = SubResource("Resource_3hste")
 [node name="ShardPolygon" type="Polygon2D" parent="."]
 texture = ExtResource("2_5gm8w")
 texture_offset = Vector2(32, 32)
-polygon = PackedVector2Array(-32, 32, 32, 32, 32, -32, -32, -32)
+polygon = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
 script = ExtResource("4_iuioc")

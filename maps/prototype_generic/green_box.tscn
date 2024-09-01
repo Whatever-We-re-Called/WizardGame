@@ -20,5 +20,5 @@ data = SubResource("Resource_1gi2a")
 [node name="SpritePolygon2D" type="Polygon2D" parent="."]
 texture = ExtResource("2_mm0md")
 texture_offset = Vector2(32, 32)
-polygon = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+polygon = PackedVector2Array(-32, 32, 32, 32, 32, -32, -32, -32)
 script = ExtResource("2_3k1xv")

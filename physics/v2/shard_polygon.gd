@@ -9,11 +9,15 @@ var collision_polygon: CollisionPolygon2D
 
 
 func _ready() -> void:
-	update_collision_polygon()
+	item_rect_changed.connect(_on_item_rect_changed)
+	
+	if not Engine.is_editor_hint():
+		update_collision_polygon()
 
 
-func _draw():
-	texture_offset = texture.get_size() / 2.0
+func _on_item_rect_changed():
+	if Engine.is_editor_hint():
+		texture_offset = texture.get_size() / 2.0
 
 
 func update_collision_polygon():
