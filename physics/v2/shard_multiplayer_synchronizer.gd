@@ -16,12 +16,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _execute_sync():
-	if _has_physics_changed():
-		PhysicsManager.append_shard_sync_data(get_parent())
-		last_position = get_parent().position
-		last_rotation = get_parent().rotation
-		last_linear_velocity = get_parent().linear_velocity
-		last_angular_velocity = get_parent().angular_velocity
+	PhysicsManager.append_shard_sync_data(get_parent())
+	last_position = get_parent().position
+	last_rotation = get_parent().rotation
+	last_linear_velocity = get_parent().linear_velocity
+	last_angular_velocity = get_parent().angular_velocity
 
 
 func _has_physics_changed() -> bool:
