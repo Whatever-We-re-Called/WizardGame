@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfwy7nscbfyvh"]
+[gd_scene load_steps=6 format=3 uid="uid://c6203oy4p7wc7"]
 
 [ext_resource type="Script" path="res://physics/v2/shard_body.gd" id="1_wvh2w"]
 [ext_resource type="Texture2D" uid="uid://ceglde4vmuop2" path="res://maps/prototype_generic/blockRed_puzzle.png" id="2_5gm8w"]

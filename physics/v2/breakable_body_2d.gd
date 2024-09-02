@@ -3,6 +3,7 @@ class_name BreakableBody2D extends RigidBody2D
 @export var data: BreakableData
 
 var fragment_polygons: Array[PackedVector2Array]
+var id: int
 
 const DISPLAY_VORONOI_DEBUG: bool = true
 const EDGE_THRESHOLD: float = 10.0
@@ -22,12 +23,24 @@ func _enter_tree() -> void:
 
 
 func _init_multiplayer_handling():
+	set_multiplayer_authority(1)
+	
+	if is_multiplayer_authority():
+		var new_id = PhysicsManager.get_new_shard_id()
+		apply_new_id.rpc(new_id)
+		PhysicsManager.append_active_shard(self)
+	
 	var multiplayer_spawner = MultiplayerSpawner.new()
 	add_child(multiplayer_spawner, true)
 	multiplayer_spawner.spawn_path = get_path()
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
+
+
+@rpc("authority", "call_local", "reliable")
+func apply_new_id(new_id: int):
+	self.id = new_id
 
 
 func _update_physics_layer():
@@ -198,3 +211,20 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, texture: Texture2
 func _on_creation() -> void:
 	# Intended to be overridden in shard scripts.
 	pass
+
+
+@export var replicated_position: Vector2
+@export var replicated_rotation: float
+@export var replicated_linear_velocity: Vector2
+@export var replicated_angular_velocity: float
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
+	if is_multiplayer_authority():
+		replicated_position = position
+		replicated_rotation = rotation
+		replicated_linear_velocity = linear_velocity
+		replicated_angular_velocity = angular_velocity
+	else:
+		position = replicated_position
+		rotation = replicated_rotation
+		linear_velocity = replicated_linear_velocity
+		angular_velocity = replicated_angular_velocity

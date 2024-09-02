@@ -28,6 +28,7 @@ NetworkManager="*res://addons/godot_steam_sync/Network/RadomeSteamSync/NetworkMa
 P2P="*res://addons/godot_steam_sync/Network/RadomeSteamSync/P2P.gd"
 Command="*res://addons/godot_steam_sync/Network/RadomeSteamSync/SyncNode/CommandSync.gd"
 SceneManager="*res://addons/godot_steam_sync/SceneChanger/SceneManager.gd"
+PhysicsManager="*res://physics/v2/manager/physics_manager.tscn"
 
 [display]
 
