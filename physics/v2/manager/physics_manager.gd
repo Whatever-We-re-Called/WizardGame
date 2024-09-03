@@ -18,6 +18,9 @@ func _handle_shard_position_sync():
 @rpc("authority", "call_local", "unreliable")
 func _handle_shard_position_sync_rpc(compressed_data: PackedByteArray):
 	var data = MultiplayerUtil.get_decompressed_data(compressed_data)
+	if data.size() > 0:
+		print("Compressed: ", compressed_data)
+		print("Data: ", data)
 	for entry in data:
 		var shard = get_tree().root.get_node(active_shards[entry[0]])
 		if shard != null:
@@ -30,10 +33,11 @@ func _handle_shard_position_sync_rpc(compressed_data: PackedByteArray):
 func append_shard_sync_data(shard: BreakableBody2D):
 	shard_sync_data.append([
 		shard.id,
-		shard.position,
-		shard.rotation,
-		shard.linear_velocity,
-		shard.angular_velocity
+		
+		Vector2(snapped(shard.position.x, 0.01), snapped(shard.position.y, 0.01)),
+		snapped(shard.rotation, 0.01),
+		Vector2(snapped(shard.linear_velocity.x, 0.01), snapped(shard.linear_velocity.y, 0.01)),
+		snapped(shard.angular_velocity, 0.01)
 	])
 
 
