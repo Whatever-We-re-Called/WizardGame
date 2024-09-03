@@ -10,13 +10,12 @@ func _physics_process(delta: float):
 
 
 func _handle_shard_position_sync():
-	print(shard_sync_data)
 	var compressed_data = MultiplayerUtil.get_compressed_data(shard_sync_data)
 	_handle_shard_position_sync_rpc.rpc(compressed_data)
 	shard_sync_data.clear()
 
 
-@rpc("authority", "call_local", "unreliable", 2)
+@rpc("authority", "call_local", "unreliable")
 func _handle_shard_position_sync_rpc(compressed_data: PackedByteArray):
 	var data = MultiplayerUtil.get_decompressed_data(compressed_data)
 	for entry in data:

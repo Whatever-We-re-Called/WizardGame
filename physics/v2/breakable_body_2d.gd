@@ -224,6 +224,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		replicated_linear_velocity = linear_velocity
 		replicated_angular_velocity = angular_velocity
 	else:
+		freeze_mode = FREEZE_MODE_KINEMATIC
+		freeze = true
 		position = replicated_position
 		rotation = replicated_rotation
 		linear_velocity = replicated_linear_velocity
