@@ -4,6 +4,9 @@ class_name BreakableBody2D extends RigidBody2D
 
 var fragment_polygons: Array[PackedVector2Array]
 var id: int
+var texture: Texture2D
+var texture_offset: Vector2
+var texture_scale: Vector2
 
 const DISPLAY_VORONOI_DEBUG: bool = true
 const EDGE_THRESHOLD: float = 10.0
@@ -27,7 +30,7 @@ func _init_multiplayer_handling():
 	
 	if is_multiplayer_authority():
 		var new_id = PhysicsManager.get_new_shard_id()
-		apply_new_id.rpc(new_id)
+		_apply_new_id.rpc(new_id)
 		PhysicsManager.append_active_shard(self)
 	
 	var multiplayer_spawner = MultiplayerSpawner.new()
@@ -39,7 +42,7 @@ func _init_multiplayer_handling():
 
 
 @rpc("authority", "call_local", "reliable")
-func apply_new_id(new_id: int):
+func _apply_new_id(new_id: int):
 	self.id = new_id
 
 
@@ -49,22 +52,26 @@ func _update_physics_layer():
 
 #region Create fragment polygons.
 func create_fragment_polygons():
-	if not multiplayer.is_server(): return
-	
 	var primary_shard_polygon = _get_primary_shard_polygon()
 	if primary_shard_polygon == null:
 		return
 	
-	var sites = _get_voronoi_sites(primary_shard_polygon.polygon)
-	for site in sites:
-		var potential_fragment_polygons = Geometry2D.intersect_polygons(primary_shard_polygon.polygon, site.polygon)
-		if potential_fragment_polygons.size() > 0:
-			var fragment_polygon = potential_fragment_polygons[0]
-			fragment_polygons.append(fragment_polygon)
+	texture = primary_shard_polygon.texture
+	print(texture)
+	texture_offset = primary_shard_polygon.texture_offset
+	texture_scale = primary_shard_polygon.texture_scale
 	
-	if DISPLAY_VORONOI_DEBUG == true and get_tree().debug_collisions_hint == true:
-		for fragment_polygon in fragment_polygons:
-			PolygonUtil.create_debug_collision_polygon(fragment_polygon, self, Color.WHITE)
+	if multiplayer.is_server():
+		var sites = _get_voronoi_sites(primary_shard_polygon.polygon)
+		for site in sites:
+			var potential_fragment_polygons = Geometry2D.intersect_polygons(primary_shard_polygon.polygon, site.polygon)
+			if potential_fragment_polygons.size() > 0:
+				var fragment_polygon = potential_fragment_polygons[0]
+				fragment_polygons.append(fragment_polygon)
+		
+		if DISPLAY_VORONOI_DEBUG == true and get_tree().debug_collisions_hint == true:
+			for fragment_polygon in fragment_polygons:
+				PolygonUtil.create_debug_collision_polygon(fragment_polygon, self, Color.WHITE)
 
 
 func _get_primary_shard_polygon() -> ShardPolygon:
@@ -117,7 +124,7 @@ func _is_valid_break_point(possible_point: Vector2, delaunay: Delaunay, primary_
 #endregion
 
 
-#region Breake apart bodies and chunks.
+#region Break apart bodies and chunks.
 func break_apart_from_collision(incoming_collision_polygon: CollisionPolygon2D, applied_impulse: Vector2):
 	var shard_polygons_to_break: Array[ShardPolygon]
 	for child in get_children():
@@ -184,23 +191,25 @@ func _init_shard_chunk(intersect_polygon: PackedVector2Array, shard_polygon: Sha
 	shard_chunk.data = data.duplicate()
 	add_child(shard_chunk, true)
 	
-	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon, shard_polygon.texture, shard_polygon.texture_offset, shard_polygon.texture_scale)
+	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon)
 	
 	shard_chunk._on_creation()
 
 
-@rpc("any_peer", "call_local", "reliable")
-func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, texture: Texture2D, texture_offset: Vector2, texture_scale: Vector2):
+@rpc("authority", "call_local", "reliable")
+func _init_self_shard_polygon_rpc(polygon: PackedVector2Array):
 	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(polygon, global_position)
 	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
 	global_position += position_delta
 	var corrected_polygon = PolygonUtil.get_translated_polygon(polygon, -position_delta)
 	
+	var parent_shard_polygon = get_parent()._get_primary_shard_polygon()
 	var shard_polygon = %ShardPolygon
+	print(shard_polygon)
 	shard_polygon.polygon = corrected_polygon
-	shard_polygon.texture_offset = texture_offset + position_delta
-	shard_polygon.texture = texture
-	shard_polygon.texture_scale = texture_scale
+	shard_polygon.texture = get_parent().texture
+	shard_polygon.texture_offset = get_parent().texture_offset + position_delta
+	shard_polygon.texture_scale = get_parent().texture_scale
 	shard_polygon.update_collision_polygon()
 	
 	center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM

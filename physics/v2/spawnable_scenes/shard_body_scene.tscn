@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bugu4arcqdu63"]
+[gd_scene load_steps=4 format=3 uid="uid://5m34qe8776ek"]
 
 [ext_resource type="Script" path="res://physics/v2/shard_body.gd" id="1_ptotw"]
 [ext_resource type="Script" path="res://physics/v2/shard_polygon.gd" id="2_0flwy"]
