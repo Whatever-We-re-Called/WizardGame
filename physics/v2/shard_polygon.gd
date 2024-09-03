@@ -34,12 +34,6 @@ func _create_collision_polygon():
 	get_parent().call_deferred("add_child", collision_polygon)
 
 
-func _delete_collision_polygon():
-	if collision_polygon != null:
-		collision_polygon.queue_free()
-		collision_polygon = null
-
-
 func _generate_first_pass_polygon():
 	var image = texture.get_image()
 	var bitmap = BitMap.new()
@@ -51,5 +45,5 @@ func _generate_first_pass_polygon():
 
 
 func destroy():
-	queue_free()
-	collision_polygon.queue_free()
+	call_deferred("queue_free")
+	collision_polygon.call_deferred("queue_free")

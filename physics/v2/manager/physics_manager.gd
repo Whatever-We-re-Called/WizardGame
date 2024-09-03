@@ -30,7 +30,6 @@ func _handle_shard_position_sync_rpc(compressed_data: PackedByteArray):
 func append_shard_sync_data(shard: BreakableBody2D):
 	shard_sync_data.append([
 		shard.id,
-		
 		Vector2(snapped(shard.position.x, 0.01), snapped(shard.position.y, 0.01)),
 		snapped(shard.rotation, 0.01),
 		Vector2(snapped(shard.linear_velocity.x, 0.01), snapped(shard.linear_velocity.y, 0.01)),
@@ -50,7 +49,7 @@ func append_active_shard_rpc(id: int, shard_path: String):
 func get_new_shard_id() -> int:
 	var chosen_id = 0
 	var rng = RandomNumberGenerator.new()
-	while chosen_id == 0 and active_shards.has(chosen_id):
+	while chosen_id == 0 or active_shards.has(chosen_id):
 		chosen_id = rng.randi_range(1, 65535)
 	
 	return chosen_id
