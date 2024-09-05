@@ -23,7 +23,7 @@ func _create_zone(position: Vector2):
 	impact_zone = PolygonUtil.get_global_polygon_from_local_space(impact_zone, position)
 	
 	var area = Area2D.new()
-	PhysicsUtil.set_environment_mask_to_all(area)
+	PhysicsManager.set_environment_mask_to_all(area)
 	area.set_collision_mask_value(5, true)
 	var collision_polygon = CollisionPolygon2D.new()
 	collision_polygon.polygon = impact_zone

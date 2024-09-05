@@ -1,5 +1,7 @@
 class_name BreakableBody2D extends RigidBody2D
 
+enum EnvironmentLayer { FRONT, BASE, BACK, ALL }
+
 @export var data: BreakableData
 
 var fragment_polygons: Array[PackedVector2Array]
@@ -22,7 +24,7 @@ const MAX_FAILED_BREAK_POINT_ATTEMPTS: int = 100
 
 func _enter_tree() -> void:
 	_init_multiplayer_handling()
-	#_update_physics_layer()
+	_update_physics_layer()
 
 
 func _init_multiplayer_handling():
@@ -41,7 +43,7 @@ func _init_multiplayer_handling():
 
 
 func _update_physics_layer():
-	PhysicsUtil.place_onto_environment_layer(self, data.layer, true)
+	PhysicsManager.place_onto_environment_layer(self, data.layer, true)
 
 
 #region Create fragment polygons.
@@ -156,6 +158,12 @@ func _create_new_shards(overlap_polygon: PackedVector2Array):
 	if not multiplayer.is_server(): return
 	
 	if self is ShardBody:
+		for fragment_polygon in fragment_polygons:
+			var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
+			if potential_fragment_polygons.size() > 0:
+				var intersect_polygon = potential_fragment_polygons[0]
+				_init_shard_chunk(intersect_polygon)
+	elif self is ShardChunk:
 		for fragment_polygon in fragment_polygons:
 			var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
 			if potential_fragment_polygons.size() > 0:

@@ -1,6 +1,6 @@
 extends AbilityExecution
 
-const MAX_PUSH_FORCE = 750.0
+const PUSH_FORCE = 750.0
 
 
 func _handle_input(player: Player, button_input: String):
@@ -30,8 +30,17 @@ func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
 func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id: int, direction: Vector2):
 	var executor_player = get_executor_player()
 	
+	BreakablePhysicsUtil.CollisionBuilder.new()\
+		.collision_polygon(calculated_polygon)\
+		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
+		.applied_body_impulse(_push_body.bindv([executor_player, direction]))\
+		.applied_player_impulse(_push_player.bindv([executor_player, direction]))\
+		.excluded_players([executor_player])\
+		.cleanup_time(1.0)\
+		.execute()
+	
 	var area = Area2D.new()
-	PhysicsUtil.set_environment_mask_to_all(area)
+	PhysicsManager.set_environment_mask_to_all(area)
 	area.set_collision_mask_value(5, true)
 	var collision_polygon = CollisionPolygon2D.new()
 	collision_polygon.polygon = calculated_polygon
@@ -67,7 +76,7 @@ func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id
 	area.call_deferred("queue_free")
 
 
-func _push_rigid_body(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2):
+func _push_body(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2):
 	var push_force = _get_push_force(rigid_body, executor_player)
 	rigid_body.apply_central_impulse(direction * push_force)
 

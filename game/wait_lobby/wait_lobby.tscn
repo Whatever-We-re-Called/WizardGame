@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://game/wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://game/wait_lobby/ui/screen_button.gd" id="6_m5bdq"]
 [ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_oy4lr"]
 [ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_6ha4y"]
-[ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://maps/prototype_generic/green_box.tscn" id="9_fusdj"]
 [ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
 
 [node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
@@ -193,65 +192,21 @@ polygon = PackedVector2Array(960, 120, 970, -562, 665, -558, 753, -375, 804, -25
 z_index = -10
 position = Vector2(960, 540)
 texture = ExtResource("7_oy4lr")
+metadata/_edit_lock_ = true
 
 [node name="ForegroundBackground" type="Sprite2D" parent="."]
 z_index = -9
 position = Vector2(960, 540)
 texture = ExtResource("8_6ha4y")
 
-[node name="GreenBox5" parent="." instance=ExtResource("9_fusdj")]
-position = Vector2(1168, 640)
-scale = Vector2(2, 2)
-
 [node name="DisasterArea" type="Polygon2D" parent="."]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(-28, -31, 784.616, -31.8271, 1937, -33, 1964, 1132, -47, 1135)
 metadata/_edit_lock_ = true
 
-[node name="RedBox" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(736, 672)
-
-[node name="RedBox2" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(736, 608)
-
-[node name="RedBox3" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(736, 544)
-
-[node name="RedBox4" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(576, 520)
-
-[node name="RedBox5" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(576, 456)
-
-[node name="RedBox6" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(576, 392)
-
-[node name="RedBox7" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(672, 616)
-
-[node name="RedBox8" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(672, 552)
-
-[node name="RedBox9" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(672, 488)
-
 [node name="RedBox10" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(808, 736)
-
-[node name="RedBox11" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(808, 672)
-
-[node name="RedBox12" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(808, 608)
-
-[node name="RedBox13" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(592, 752)
-
-[node name="RedBox14" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(592, 688)
-
-[node name="RedBox15" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(592, 624)
+position = Vector2(776, 696)
+data = null
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
