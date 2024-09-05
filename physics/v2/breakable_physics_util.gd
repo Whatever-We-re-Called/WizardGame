@@ -30,7 +30,7 @@ static func place_onto_environment_layer(node: Node, layer: BreakableBody2D.Envi
 # variables and functions can not share the same name, so some
 # variables are named a bit weirdly, in order to prioritize function
 # names.
-class CollisionBuilder:
+class ImpulseBuilder:
 	var _collision_polygon: PackedVector2Array = []
 	var _affected_environment_layers: Array[BreakableBody2D.EnvironmentLayer] = []
 	var _excluded_players: Array[Player] = []
@@ -40,37 +40,37 @@ class CollisionBuilder:
 	var _cleanup_time: float = 1.0
 	
 	
-	func collision_polygon(value: PackedVector2Array) -> CollisionBuilder:
+	func collision_polygon(value: PackedVector2Array) -> ImpulseBuilder:
 		self._collision_polygon = value
 		return self
 	
 	
-	func affected_environment_layers(value: Array[BreakableBody2D.EnvironmentLayer]) -> CollisionBuilder:
+	func affected_environment_layers(value: Array[BreakableBody2D.EnvironmentLayer]) -> ImpulseBuilder:
 		self._affected_environment_layers = value
 		return self
 	
 	
-	func excluded_players(value: Array[Player]) -> CollisionBuilder:
+	func excluded_players(value: Array[Player]) -> ImpulseBuilder:
 		self._excluded_players = value
 		return self
 	
 	
-	func applied_impulse(value: Callable) -> CollisionBuilder:
+	func applied_impulse(value: Callable) -> ImpulseBuilder:
 		self._applied_impulse = value
 		return self
 	
 	
-	func applied_body_impulse(value: Callable) -> CollisionBuilder:
+	func applied_body_impulse(value: Callable) -> ImpulseBuilder:
 		self._applied_body_impulse = value
 		return self
 	
 	
-	func applied_player_impulse(value: Callable) -> CollisionBuilder:
+	func applied_player_impulse(value: Callable) -> ImpulseBuilder:
 		self._applied_player_impulse = value
 		return self
 	
 	
-	func cleanup_time(value: float) -> CollisionBuilder:
+	func cleanup_time(value: float) -> ImpulseBuilder:
 		self._cleanup_time = value
 		return self
 	
