@@ -36,7 +36,7 @@ func _explode_remote_land_mine():
 	var executor_player = get_executor_player()
 	
 	var area = Area2D.new()
-	BreakablePhysics.set_environment_mask_to_all(area)
+	BreakablePhysicsUtil.set_environment_mask_to_all(area)
 	area.set_collision_mask_value(5, true)
 	area.global_position = current_remote_land_mine_scene.global_position
 	var collision_polygon = CollisionPolygon2D.new()

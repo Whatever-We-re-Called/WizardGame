@@ -62,7 +62,7 @@ func _create_test_overlap_area(pos):
 	polygon = PolygonUtil.get_global_polygon_from_local_space(polygon, pos)
 			
 	var area = Area2D.new()
-	BreakablePhysics.set_environment_mask_to_all(area)
+	BreakablePhysicsUtil.set_environment_mask_to_all(area)
 	area.set_collision_mask_value(5, true)
 	var collision_polygon = CollisionPolygon2D.new()
 	collision_polygon.polygon = polygon
@@ -99,7 +99,7 @@ func _spawn_lightning(position: Vector2, rotation_degrees: float, impact_rotatio
 	impact_zone = PolygonUtil.get_global_polygon_from_local_space(impact_zone, position)
 	
 	var area = Area2D.new()
-	BreakablePhysics.set_environment_mask_to_all(area)
+	BreakablePhysicsUtil.set_environment_mask_to_all(area)
 	area.set_collision_mask_value(5, true)
 	var collision_polygon = CollisionPolygon2D.new()
 	collision_polygon.polygon = impact_zone

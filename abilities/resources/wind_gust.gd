@@ -1,6 +1,6 @@
 extends AbilityExecution
 
-const PUSH_FORCE = 750.0
+const MAX_PUSH_FORCE = 750.0
 
 
 func _handle_input(player: Player, button_input: String):
@@ -23,14 +23,7 @@ func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
 	var rotated_polygon = PolygonUtil.get_rotated_polygon(original_polygon, -direction.angle_to(Vector2.RIGHT))
 	var calculated_polygon = PolygonUtil.get_global_polygon_from_local_space(rotated_polygon, executor_player.get_center_global_position())
 	
-	_execute_wind_gust.rpc(calculated_polygon, executor_peer_id, direction)
-
-
-@rpc("any_peer", "call_local")
-func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id: int, direction: Vector2):
-	var executor_player = get_executor_player()
-	
-	BreakablePhysicsUtil.ImpulseBuilder.new()\
+	PhysicsManager.ImpulseBuilder.new()\
 		.collision_polygon(calculated_polygon)\
 		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
 		.applied_body_impulse(_push_body.bindv([executor_player, direction]))\
@@ -38,42 +31,6 @@ func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id
 		.excluded_players([executor_player])\
 		.cleanup_time(1.0)\
 		.execute()
-	
-	var area = Area2D.new()
-	PhysicsManager.set_environment_mask_to_all(area)
-	area.set_collision_mask_value(5, true)
-	var collision_polygon = CollisionPolygon2D.new()
-	collision_polygon.polygon = calculated_polygon
-	area.add_child(collision_polygon)
-	var sprite = Sprite2D.new()
-	sprite.global_position = executor_player.global_position
-	sprite.rotation = -direction.angle_to(Vector2.RIGHT)
-	sprite.texture = preload("res://abilities/textures/shitty_wind_gust_texture.png")
-	sprite.offset = Vector2(250, 0)
-	area.add_child(sprite)
-	add_child(area)
-	
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	var all_created_shards: Array[PhysicsBody2D]
-	for overlapping_body in area.get_overlapping_bodies():
-		if overlapping_body is BreakableBody2D:
-			overlapping_body.break_apart_from_collision(collision_polygon, Vector2.ZERO)
-		else:
-			if overlapping_body is FragileBody2D:
-				var created_shards = overlapping_body.break_apart(collision_polygon)
-				all_created_shards.append_array(created_shards)
-			elif overlapping_body is RigidBody2D:
-				_push_rigid_body(overlapping_body, executor_player, direction)
-			elif overlapping_body is Player and overlapping_body != executor_player:
-				_push_player(overlapping_body, executor_player, direction)
-	
-	for shard in all_created_shards:
-		if shard is RigidBody2D:
-			_push_rigid_body(shard, executor_player, direction)
-	
-	await get_tree().create_timer(1.0).timeout
-	area.call_deferred("queue_free")
 
 
 func _push_body(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2):

@@ -19,10 +19,11 @@ func _init_channels():
 		_add_channel()
 
 
-func get_channel() -> Area2D:
+func get_channel(collision_polygon: PackedVector2Array) -> Area2D:
 	for child in get_children():
-		if child is Area2D and not free_channels.has(child):
+		if child is Area2D and free_channels.has(child):
 			free_channels.erase(child)
+			(child.get_child(0) as CollisionPolygon2D).polygon = collision_polygon
 			return child
 	
 	push_error("Could not find a free physics collision channel to give you. ",\

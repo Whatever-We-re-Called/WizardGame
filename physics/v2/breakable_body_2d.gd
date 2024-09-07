@@ -43,7 +43,8 @@ func _init_multiplayer_handling():
 
 
 func _update_physics_layer():
-	PhysicsManager.place_onto_environment_layer(self, data.layer, true)
+	print(name, " ", data)
+	BreakablePhysicsUtil.place_onto_environment_layer(self, data.layer, true)
 
 
 #region Create fragment polygons.
