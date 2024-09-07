@@ -30,7 +30,7 @@ func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
 func _execute_wind_gust(calculated_polygon: PackedVector2Array, executor_peer_id: int, direction: Vector2):
 	var executor_player = get_executor_player()
 	
-	BreakablePhysicsUtil.CollisionBuilder.new()\
+	BreakablePhysicsUtil.ImpulseBuilder.new()\
 		.collision_polygon(calculated_polygon)\
 		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
 		.applied_body_impulse(_push_body.bindv([executor_player, direction]))\
