@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwjsumiu152gb"]
+[gd_scene load_steps=3 format=3 uid="uid://bwjsumiu152gb"]
 
 [ext_resource type="Script" path="res://physics/v2/manager/physics_manager.gd" id="1_bf8xx"]
+[ext_resource type="Script" path="res://physics/v2/manager/physics_collision_channels.gd" id="2_kgyxf"]
 
 [node name="PhysicsManager" type="Node"]
 script = ExtResource("1_bf8xx")
+
+[node name="PhysicsCollisionChannels" type="Node" parent="."]
+script = ExtResource("2_kgyxf")

@@ -63,9 +63,9 @@ class ImpulseBuilder:
 	## Sets the applied impulse for both detected bodies and players.[br]
 	## [br]
 	## The used [Callable] [b]must[/b] meet two conditions:[br]
-	## - The first parameter must be of type [PhysicsBody2D].[br]
+	## - The function's first parameter must be of type [PhysicsBody2D].[br]
 	## - When inserted as this function's paramater, use [method Callable.bindv]
-	## to give context to the Callable's 2nd+ paramater.[br]
+	## to give context to the Callable's 2nd+ paramater, if applicable.[br]
 	## [br]
 	## For example, when the [Callable] you wish to use has the function declaration
 	## of 
@@ -82,9 +82,9 @@ class ImpulseBuilder:
 	## Sets the applied impulse for detected bodies.[br]
 	## [br]
 	## The used [Callable] [b]must[/b] meet two conditions:[br]
-	## - The first parameter must be of type [PhysicsBody2D].[br]
+	## - The function's first parameter must be of type [PhysicsBody2D].[br]
 	## - When inserted as this function's paramater, use [method Callable.bindv]
-	## to give context to the Callable's 2nd+ paramater.[br]
+	## to give context to the Callable's 2nd+ paramater, if applicable.[br]
 	## [br]
 	## For example, when the [Callable] you wish to use has the function declaration
 	## of 
@@ -101,9 +101,9 @@ class ImpulseBuilder:
 	## Sets the applied impulse for detected players.[br]
 	## [br]
 	## The used [Callable] [b]must[/b] meet two conditions:[br]
-	## - The first parameter must be of type [PhysicsBody2D].[br]
+	## - The function's first parameter must be of type [PhysicsBody2D].[br]
 	## - When inserted as this function's paramater, use [method Callable.bindv]
-	## to give context to the Callable's 2nd+ paramater.[br]
+	## to give context to the Callable's 2nd+ paramater, if applicable.[br]
 	## [br]
 	## For example, when the [Callable] you wish to use has the function declaration
 	## of 
