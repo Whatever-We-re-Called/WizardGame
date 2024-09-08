@@ -1,6 +1,6 @@
 extends Node
 
-@onready var physics_collision_channels: Node = $PhysicsCollisionChannels
+@onready var collision_channel_manager: Node = $CollisionChannelManager
 
 var active_shards: Dictionary
 var shard_sync_data: Array
@@ -57,12 +57,14 @@ func get_new_shard_id() -> int:
 	return chosen_id
 
 
-func get_collision_channel(collision_polygon: PackedVector2Array) -> Area2D:
-	return physics_collision_channels.get_channel(collision_polygon)
+func get_collision_channel(collision_polygon: PackedVector2Array) -> CollisionChannel:
+	var collision_channel = collision_channel_manager.get_channel()
+	await collision_channel.update_polygon(collision_polygon)
+	return collision_channel
 
 
-func release_collision_channel(area: Area2D):
-	physics_collision_channels.release_channel(area)
+func release_collision_channel(collision_channel: CollisionChannel):
+	collision_channel_manager.release_channel(collision_channel)
 
 
 ## Handy utility class for easily and cleanly building impulse events with
@@ -181,11 +183,73 @@ class ImpulseBuilder extends Node:
 	## corresponding [ImpulseBuilder].
 	func execute():
 		if not PhysicsManager.multiplayer.is_server():
-			push_warning("You are executing an Impul`seBuilder on a non-server ",\
+			push_warning("You are executing an ImpulseBuilder on a non-server ",\
 				"client. This is not intended, so be careful!")
 		
 		
-		var collision_channel = PhysicsManager.get_collision_channel(_collision_polygon)
-		BreakablePhysicsUtil.set_environment_mask_to_all(collision_channel)
-		await Engine.get_main_loop().physics_frame
+		var collision_channel = await CollisionChannelBuilder.new()\
+			.collision_polygon(_collision_polygon)\
+			.collision_mask_values([1, 2, 3, 4])\
+			.receive()
+		
 		print(collision_channel.get_overlapping_bodies())
+		
+		
+		
+		#PhysicsManager.free_collision_channel(collision_channel)
+	
+	
+	func _test(body: Node2D):
+		print(body)
+
+
+class CollisionChannelBuilder:
+	var _collision_polygon: PackedVector2Array = []
+	var _collision_layer_values: Array[int] = []
+	var _collision_mask_values: Array[int] = []
+	
+	
+	## Sets the polygon used for the collision channel.[br]
+	## [br]
+	## By default, a polygon with no defined points is used.
+	func collision_polygon(value: PackedVector2Array) -> CollisionChannelBuilder:
+		self._collision_polygon = value
+		return self
+	
+	
+	## Sets the collision layer values used by the collision channel.[br]
+	## [br]
+	## By default, no collision layer values are defined.
+	func collision_layer_values(value: Array[int]) -> CollisionChannelBuilder:
+		self._collision_layer_values = value
+		return self
+	
+	
+	## Sets the collision mask values used by the collision channel.[br]
+	## [br]
+	## By default, no collision mask values are defined.
+	func collision_mask_values(value: Array[int]) -> CollisionChannelBuilder:
+		self._collision_mask_values = value
+		return self
+	
+	
+	## Claims a collision channel in [CollisionChannelManager] and gives you it
+	## configured with all data defined by the builder. Currently, this does
+	## take 1 physics frame to complete, so you must [code]await[/code] and allow
+	## the collision channel to properly finish configuring itself.
+	func receive() -> CollisionChannel:
+		var collision_channel = PhysicsManager.collision_channel_manager.get_channel()
+		_update_collision_values(collision_channel)
+		await collision_channel.update_polygon(_collision_polygon)
+		
+		return collision_channel
+	
+	
+	func _update_collision_values(collision_channel: CollisionChannel):
+		collision_channel.set_collision_layer_value(1, false)
+		for value in _collision_layer_values:
+			collision_channel.set_collision_layer_value(value, true)
+		
+		collision_channel.set_collision_mask_value(1, false)
+		for value in _collision_mask_values:
+			collision_channel.set_collision_mask_value(value, true)
