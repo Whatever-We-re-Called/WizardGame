@@ -215,7 +215,6 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array):
 	center_of_mass = PolygonUtil.get_center_of_polygon(corrected_polygon)
 #endregion
 
-
 func _on_creation() -> void:
 	# Intended to be overridden in shard scripts.
 	pass

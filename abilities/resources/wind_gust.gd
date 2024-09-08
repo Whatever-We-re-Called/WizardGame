@@ -33,15 +33,14 @@ func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
 		.execute()
 
 
-func _push_body(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2):
+func _push_body(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2) -> Vector2:
 	var push_force = _get_push_force(rigid_body, executor_player)
-	rigid_body.apply_central_impulse(direction * push_force)
+	return direction * push_force
 
 
-func _push_player(player: Player, executor_player: Player, direction: Vector2):
+func _push_player(player: Player, executor_player: Player, direction: Vector2) -> Vector2:
 	var push_force = _get_push_force(player, executor_player) *  3.0
-	player.velocity = Vector2.ZERO
-	player.apply_central_impulse(direction * push_force)
+	return direction * push_force
 
 
 func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:

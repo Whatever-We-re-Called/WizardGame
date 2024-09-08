@@ -186,21 +186,67 @@ class ImpulseBuilder extends Node:
 			push_warning("You are executing an ImpulseBuilder on a non-server ",\
 				"client. This is not intended, so be careful!")
 		
-		
 		var collision_channel = await CollisionChannelBuilder.new()\
 			.collision_polygon(_collision_polygon)\
-			.collision_mask_values([1, 2, 3, 4])\
-			.receive()
+			.collision_mask_values(_get_affected_environment_layers_as_mask_values())\
+			.claim()
 		
-		print(collision_channel.get_overlapping_bodies())
+		for overlapping_body in collision_channel.get_overlapping_bodies():
+			if overlapping_body is Player:
+				_try_to_push_player(overlapping_body, collision_channel)
+			elif overlapping_body is RigidBody2D:
+				_try_to_push_body(overlapping_body, collision_channel)
 		
-		
-		
-		#PhysicsManager.free_collision_channel(collision_channel)
+		await PhysicsManager.get_tree().create_timer(_cleanup_time).timeout
+		PhysicsManager.release_collision_channel(collision_channel)
 	
 	
-	func _test(body: Node2D):
-		print(body)
+	func _get_affected_environment_layers_as_mask_values() -> Array[int]:
+		var result: Array[int]
+		result.append(1)
+		for environment_layer in _affected_environment_layers:
+			match environment_layer:
+				BreakableBody2D.EnvironmentLayer.FRONT:
+					result.append(2)
+				BreakableBody2D.EnvironmentLayer.BASE:
+					result.append(3)
+				BreakableBody2D.EnvironmentLayer.BACK:
+					result.append(4)
+				BreakableBody2D.EnvironmentLayer.ALL:
+					result.append_array([2, 3, 4])
+		
+		return result
+	
+	
+	func _try_to_push_player(body: PhysicsBody2D, collision_channel: CollisionChannel):
+		if _excluded_players.has(body): return
+		
+		var impulse: Vector2
+		if _applied_player_impulse.is_valid():
+			impulse = _applied_player_impulse.call(body)
+		elif _applied_impulse.is_valid():
+			impulse = _applied_impulse.call(body)
+		
+		body.velocity = Vector2.ZERO
+		body.apply_central_impulse(impulse)
+	
+	
+	func _try_to_push_body(body: PhysicsBody2D, collision_channel: CollisionChannel):
+		if _excluded_bodies.has(body): return
+		
+		var impulse: Vector2
+		if _applied_body_impulse.is_valid():
+			impulse = _applied_body_impulse.call(body)
+		elif _applied_impulse.is_valid():
+			impulse = _applied_impulse.call(body)
+		
+		if body is BreakableBody2D:
+			body.break_apart_from_collision(
+				collision_channel.collision_polygon,
+				impulse
+			)
+		elif body is RigidBody2D:
+			body.apply_central_impulse(impulse)
 
 
 class CollisionChannelBuilder:
@@ -237,7 +283,7 @@ class CollisionChannelBuilder:
 	## configured with all data defined by the builder. Currently, this does
 	## take 1 physics frame to complete, so you must [code]await[/code] and allow
 	## the collision channel to properly finish configuring itself.
-	func receive() -> CollisionChannel:
+	func claim() -> CollisionChannel:
 		var collision_channel = PhysicsManager.collision_channel_manager.get_channel()
 		_update_collision_values(collision_channel)
 		await collision_channel.update_polygon(_collision_polygon)
