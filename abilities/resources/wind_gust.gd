@@ -26,19 +26,18 @@ func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
 	PhysicsManager.ImpulseBuilder.new()\
 		.collision_polygon(calculated_polygon)\
 		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
-		.applied_body_impulse(_push_body.bindv([executor_player, direction]))\
-		.applied_player_impulse(_push_player.bindv([executor_player, direction]))\
+		.applied_body_impulse(_get_body_push_force.bindv([executor_player, direction]))\
+		.applied_player_impulse(_get_player_push_force.bindv([executor_player, direction]))\
 		.excluded_players([executor_player])\
-		.cleanup_time(1.0)\
 		.execute()
 
 
-func _push_body(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2) -> Vector2:
+func _get_body_push_force(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2) -> Vector2:
 	var push_force = _get_push_force(rigid_body, executor_player)
 	return direction * push_force
 
 
-func _push_player(player: Player, executor_player: Player, direction: Vector2) -> Vector2:
+func _get_player_push_force(player: Player, executor_player: Player, direction: Vector2) -> Vector2:
 	var push_force = _get_push_force(player, executor_player) *  3.0
 	return direction * push_force
 

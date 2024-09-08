@@ -134,10 +134,10 @@ func break_apart_from_collision(incoming_collision_polygon: CollisionPolygon2D, 
 			_break_apart_polygon(shard_polygon, incoming_collision_polygon, applied_impulse)
 
 
-func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygon: CollisionPolygon2D, impulse: Vector2):
+func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygon: CollisionPolygon2D, applied_impulse: Vector2):
 	var overlap_polygon = _get_overlap_polygon(shard_polygon.collision_polygon, incoming_collision_polygon)
 	
-	_create_new_shards(overlap_polygon)
+	_create_new_shards(overlap_polygon, applied_impulse)
 	_create_non_overlap_shard_polygons(shard_polygon.collision_polygon, overlap_polygon)
 	
 	scale = Vector2.ONE
@@ -155,7 +155,7 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
 
 
-func _create_new_shards(overlap_polygon: PackedVector2Array):
+func _create_new_shards(overlap_polygon: PackedVector2Array, applied_impulse: Vector2):
 	if not multiplayer.is_server(): return
 	
 	if self is ShardBody:
@@ -163,13 +163,13 @@ func _create_new_shards(overlap_polygon: PackedVector2Array):
 			var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
 			if potential_fragment_polygons.size() > 0:
 				var intersect_polygon = potential_fragment_polygons[0]
-				_init_shard_chunk(intersect_polygon)
+				_init_shard_chunk(intersect_polygon, applied_impulse)
 	elif self is ShardChunk:
 		for fragment_polygon in fragment_polygons:
 			var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
 			if potential_fragment_polygons.size() > 0:
 				var intersect_polygon = potential_fragment_polygons[0]
-				_init_shard_chunk(intersect_polygon)
+				_init_shard_chunk(intersect_polygon, applied_impulse)
 
 
 func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, overlap_polygon: PackedVector2Array):
@@ -187,7 +187,7 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, o
 
 
 #region Initialize bodies, chunks, and pieces.
-func _init_shard_chunk(intersect_polygon: PackedVector2Array):
+func _init_shard_chunk(intersect_polygon: PackedVector2Array, applied_impulse: Vector2):
 	var shard_chunk = preload("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
 	shard_chunk.data = data.duplicate()
 	add_child(shard_chunk, true)
@@ -195,6 +195,7 @@ func _init_shard_chunk(intersect_polygon: PackedVector2Array):
 	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon)
 	
 	shard_chunk._on_creation()
+	shard_chunk.apply_central_impulse(applied_impulse)
 
 
 @rpc("authority", "call_local", "reliable")
