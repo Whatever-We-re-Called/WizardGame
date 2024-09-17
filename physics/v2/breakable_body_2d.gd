@@ -30,16 +30,12 @@ func _enter_tree() -> void:
 func _init_multiplayer_handling():
 	set_multiplayer_authority(1)
 	
-	if is_multiplayer_authority():
-		id = PhysicsManager.get_new_shard_id()
-		PhysicsManager.append_active_shard(self)
-	
-		var multiplayer_spawner = MultiplayerSpawner.new()
-		add_child(multiplayer_spawner, true)
-		multiplayer_spawner.spawn_path = get_path()
-		multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
-		multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
-		multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
+	var multiplayer_spawner = MultiplayerSpawner.new()
+	add_child(multiplayer_spawner, true)
+	multiplayer_spawner.spawn_path = get_path()
+	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
 
 
 func _update_physics_layer():
