@@ -45,5 +45,10 @@ func _generate_first_pass_polygon():
 
 
 func destroy():
+	destroy_rpc.rpc()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func destroy_rpc():
 	call_deferred("queue_free")
 	collision_polygon.call_deferred("queue_free")
