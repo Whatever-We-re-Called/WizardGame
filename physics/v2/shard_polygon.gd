@@ -44,6 +44,18 @@ func _generate_first_pass_polygon():
 		polygon = PolygonUtil.get_translated_polygon(polygons[0], -texture.get_size() / 2.0)
 
 
+@rpc("any_peer", "call_local", "reliable")
+func init_non_overlap_shard_polygon_rpc(non_overlap_polygon: PackedVector2Array):
+	var body = get_parent()
+	if not body is RigidBody2D: return
+	
+	polygon = non_overlap_polygon
+	texture = body.texture
+	texture_offset = body.texture_offset
+	texture_scale = body.texture_scale
+	update_collision_polygon()
+
+
 func destroy():
 	destroy_rpc.rpc()
 

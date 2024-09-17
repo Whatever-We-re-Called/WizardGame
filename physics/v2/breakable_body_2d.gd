@@ -36,6 +36,7 @@ func _init_multiplayer_handling():
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_polygon_scene.tscn")
 
 
 func _update_physics_layer():
@@ -175,12 +176,9 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, o
 	for non_overlap_polygon in potential_non_overlap_polygons:
 		non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
 		
-		var new_shard_polygon = ShardPolygon.new()
-		new_shard_polygon.polygon = non_overlap_polygon
-		new_shard_polygon.texture = texture
-		new_shard_polygon.texture_offset = texture_offset
-		new_shard_polygon.texture_scale = texture_scale
+		var new_shard_polygon = preload("res://physics/v2/spawnable_scenes/shard_polygon_scene.tscn").instantiate()
 		add_child(new_shard_polygon, true)
+		new_shard_polygon.init_non_overlap_shard_polygon_rpc.rpc(non_overlap_polygon)
 #endregion
 
 
