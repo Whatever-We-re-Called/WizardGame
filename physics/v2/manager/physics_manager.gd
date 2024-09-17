@@ -100,6 +100,7 @@ class ImpulseBuilder extends Node:
 	## Sets the applied impulse for both detected bodies and players.[br]
 	## [br]
 	## The used [Callable] [b]must[/b] meet two conditions:[br]
+	## - The function's return type must be [Vector2]; the impulse force.[br]
 	## - The function's first parameter must be of type or of a type extended 
 	## from [PhysicsBody2D].[br]
 	## - When inserted as this function's paramater, use [method Callable.bindv]
@@ -120,6 +121,7 @@ class ImpulseBuilder extends Node:
 	## Sets the applied impulse for detected bodies.[br]
 	## [br]
 	## The used [Callable] [b]must[/b] meet two conditions:[br]
+	## - The function's return type must be [Vector2]; the impulse force.[br]
 	## - The function's first parameter must be of type or of a type extended 
 	## from [PhysicsBody2D].[br]
 	## - When inserted as this function's paramater, use [method Callable.bindv]
@@ -140,6 +142,7 @@ class ImpulseBuilder extends Node:
 	## Sets the applied impulse for detected players.[br]
 	## [br]
 	## The used [Callable] [b]must[/b] meet two conditions:[br]
+	## - The function's return type must be [Vector2]; the impulse force.[br]
 	## - The function's first parameter must be of type or of a type extended 
 	## from [PhysicsBody2D].[br]
 	## - When inserted as this function's paramater, use [method Callable.bindv]
@@ -290,6 +293,7 @@ class CollisionChannelBuilder:
 		var collision_channel = PhysicsManager.collision_channel_manager.get_channel()
 		_update_collision_values(collision_channel)
 		await collision_channel.update_polygon(_collision_polygon)
+		await Engine.get_main_loop().physics_frame
 		
 		return collision_channel
 	

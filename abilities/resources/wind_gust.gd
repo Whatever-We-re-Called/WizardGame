@@ -6,12 +6,12 @@ const MAX_PUSH_FORCE = 750.0
 func _handle_input(player: Player, button_input: String):
 	if Input.is_action_just_pressed(button_input) and not is_on_cooldown():
 		var direction = player.get_pointer_direction()
-		_calculate_wind_gust.rpc_id(1, player.get_peer_id(), direction)
+		_calculate_wind_gust.rpc_id(1, direction)
 		start_cooldown()
 
 
 @rpc("any_peer", "call_local")
-func _calculate_wind_gust(executor_peer_id: int, direction: Vector2):
+func _calculate_wind_gust(direction: Vector2):
 	var executor_player = get_executor_player()
 	
 	var original_polygon: PackedVector2Array = [

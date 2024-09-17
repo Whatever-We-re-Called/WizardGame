@@ -34,15 +34,17 @@ func _init_multiplayer_handling():
 		id = PhysicsManager.get_new_shard_id()
 		PhysicsManager.append_active_shard(self)
 	
-	var multiplayer_spawner = MultiplayerSpawner.new()
-	add_child(multiplayer_spawner, true)
-	multiplayer_spawner.spawn_path = get_path()
-	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
-	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
-	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
+		var multiplayer_spawner = MultiplayerSpawner.new()
+		add_child(multiplayer_spawner, true)
+		multiplayer_spawner.spawn_path = get_path()
+		multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
+		multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
+		multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
 
 
 func _update_physics_layer():
+	if data == null: return
+	
 	print(name, " ", data)
 	BreakablePhysicsUtil.place_onto_environment_layer(self, data.layer, true)
 
@@ -189,17 +191,16 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, o
 #region Initialize bodies, chunks, and pieces.
 func _init_shard_chunk(intersect_polygon: PackedVector2Array, applied_impulse: Vector2):
 	var shard_chunk = preload("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
-	shard_chunk.data = data.duplicate()
 	add_child(shard_chunk, true)
 	
-	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon)
+	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon, data.get_as_dictionary())
 	
 	shard_chunk._on_creation()
 	shard_chunk.apply_central_impulse(applied_impulse)
 
 
 @rpc("authority", "call_local", "reliable")
-func _init_self_shard_polygon_rpc(polygon: PackedVector2Array):
+func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: Dictionary):
 	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(polygon, global_position)
 	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
 	global_position += position_delta
@@ -211,6 +212,9 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array):
 	shard_polygon.texture_offset = get_parent().texture_offset + position_delta
 	shard_polygon.texture_scale = get_parent().texture_scale
 	shard_polygon.update_collision_polygon()
+	
+	data = BreakableData.get_from_dictionary(data_dictionary)
+	_update_physics_layer()
 	
 	center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = PolygonUtil.get_center_of_polygon(corrected_polygon)
