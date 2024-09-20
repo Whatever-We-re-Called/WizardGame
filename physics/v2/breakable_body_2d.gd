@@ -159,7 +159,6 @@ func _create_new_shards(overlap_polygon: PackedVector2Array, applied_impulse: Ve
 	if not multiplayer.is_server(): return
 	
 	var is_creating_pieces = PolygonUtil.get_area_of_polygon(overlap_polygon) < MINIMUM_CHUNK_AREA
-	print(PolygonUtil.get_area_of_polygon(overlap_polygon), " ", is_creating_pieces)
 	
 	for fragment_polygon in fragment_polygons:
 		var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
@@ -229,20 +228,3 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: 
 func _on_creation() -> void:
 	# Intended to be overridden in shard scripts.
 	pass
-
-
-@export var replicated_position: Vector2
-@export var replicated_rotation: float
-@export var replicated_linear_velocity: Vector2
-@export var replicated_angular_velocity: float
-func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	if is_multiplayer_authority():
-		replicated_position = position
-		replicated_rotation = rotation
-		replicated_linear_velocity = linear_velocity
-		replicated_angular_velocity = angular_velocity
-	else:
-		position = replicated_position
-		rotation = replicated_rotation
-		linear_velocity = replicated_linear_velocity
-		angular_velocity = replicated_angular_velocity

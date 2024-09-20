@@ -38,8 +38,8 @@ static func get_local_polygon_from_global_space(polygon: PackedVector2Array, par
 	var result: PackedVector2Array
 	
 	for point in polygon:
-		var new_x = point.x - parent_node.position.x
-		var new_y = point.y - parent_node.position.y
+		var new_x = point.x - parent_node.global_position.x
+		var new_y = point.y - parent_node.global_position.y
 		result.append(Vector2(new_x, new_y))
 	
 	return result
