@@ -14,7 +14,7 @@ const DISPLAY_VORONOI_DEBUG: bool = true
 const EDGE_THRESHOLD: float = 10.0
 const BREAK_POINT_DISTANCE_MINIMUM: float = 20.0
 const MAX_FAILED_BREAK_POINT_ATTEMPTS: int = 100
-const MINIMUM_CHUNK_AREA = 3000
+const MINIMUM_CHUNK_AREA = 2000
 const MINIMUM_NON_OVERLAP_AREA = 200
 
 # Note about frequent use of preload(). 

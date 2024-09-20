@@ -3,7 +3,8 @@ class_name ShardPolygon extends Polygon2D
 
 @export var generate_first_pass_polygon: bool:
 	set(value):
-		_generate_first_pass_polygon()
+		if value == true:
+			_generate_first_pass_polygon()
 
 var collision_polygon: CollisionPolygon2D
 

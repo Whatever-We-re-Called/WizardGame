@@ -9,7 +9,7 @@
 script = ExtResource("2_drsax")
 max_health = 10.0
 layer = 1
-number_of_break_points = 5
+number_of_break_points = 2
 
 [node name="RedBox" type="RigidBody2D"]
 script = ExtResource("1_wvh2w")

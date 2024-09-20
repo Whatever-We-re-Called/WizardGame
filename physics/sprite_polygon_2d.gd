@@ -3,8 +3,7 @@ class_name SpritePolygon2D extends Polygon2D
 
 @export var generate_polygon_rect: bool:
 	set(value):
-		if value == true:
-			_generate_polygon_rect()
+		_generate_polygon_rect()
 
 var connected_collision_polygon_2d: CollisionPolygon2D
 
