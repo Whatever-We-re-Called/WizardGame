@@ -15,6 +15,7 @@ const EDGE_THRESHOLD: float = 10.0
 const BREAK_POINT_DISTANCE_MINIMUM: float = 20.0
 const MAX_FAILED_BREAK_POINT_ATTEMPTS: int = 100
 const MINIMUM_CHUNK_AREA = 3000
+const MINIMUM_NON_OVERLAP_AREA = 200
 
 # Note about frequent use of preload(). 
 # If done as a constant, "circular dependency" occurs, which results in class
@@ -176,9 +177,10 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, o
 	for non_overlap_polygon in potential_non_overlap_polygons:
 		non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
 		
-		var new_shard_polygon = preload("res://physics/v2/spawnable_scenes/shard_polygon_scene.tscn").instantiate()
-		add_child(new_shard_polygon, true)
-		new_shard_polygon.init_non_overlap_shard_polygon_rpc.rpc(non_overlap_polygon)
+		if PolygonUtil.get_area_of_polygon(non_overlap_polygon) > MINIMUM_NON_OVERLAP_AREA:
+			var new_shard_polygon = preload("res://physics/v2/spawnable_scenes/shard_polygon_scene.tscn").instantiate()
+			add_child(new_shard_polygon, true)
+			new_shard_polygon.init_non_overlap_shard_polygon_rpc.rpc(non_overlap_polygon)
 #endregion
 
 

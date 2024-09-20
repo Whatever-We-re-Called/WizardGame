@@ -7,6 +7,7 @@ func _handle_input(player: Player, button_input: String):
 	if Input.is_action_just_pressed(button_input) and not is_on_cooldown():
 		var direction = player.get_pointer_direction()
 		_calculate_wind_gust.rpc_id(1, direction)
+		_display_wind_gust_texture.rpc(direction)
 		start_cooldown()
 
 
@@ -48,3 +49,16 @@ func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:
 	distance_ratio = clamp(distance_ratio, 0.0, 1.0)
 	var power_ratio = EasingFunctions.ease_out_circ(0.0, 1.0, distance_ratio)
 	return MAX_PUSH_FORCE * power_ratio
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _display_wind_gust_texture(direction: Vector2):
+	var sprite = Sprite2D.new()
+	sprite.global_position = get_executor_player().global_position
+	sprite.rotation = -direction.angle_to(Vector2.RIGHT)
+	sprite.texture = preload("res://abilities/textures/shitty_wind_gust_texture.png")
+	sprite.offset = Vector2(250, 0)
+	add_child(sprite)
+	
+	await get_tree().create_timer(1.0).timeout
+	sprite.call_deferred("queue_free")
