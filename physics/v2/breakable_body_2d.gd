@@ -14,6 +14,7 @@ const DISPLAY_VORONOI_DEBUG: bool = true
 const EDGE_THRESHOLD: float = 10.0
 const BREAK_POINT_DISTANCE_MINIMUM: float = 20.0
 const MAX_FAILED_BREAK_POINT_ATTEMPTS: int = 100
+const MINIMUM_CHUNK_AREA = 3000
 
 # Note about frequent use of preload(). 
 # If done as a constant, "circular dependency" occurs, which results in class
@@ -156,17 +157,17 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 func _create_new_shards(overlap_polygon: PackedVector2Array, applied_impulse: Vector2):
 	if not multiplayer.is_server(): return
 	
-	if self is ShardBody:
-		for fragment_polygon in fragment_polygons:
-			var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
-			if potential_fragment_polygons.size() > 0:
-				var intersect_polygon = potential_fragment_polygons[0]
-				_init_shard_chunk(intersect_polygon, applied_impulse)
-	elif self is ShardChunk:
-		for fragment_polygon in fragment_polygons:
-			var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
-			if potential_fragment_polygons.size() > 0:
-				var intersect_polygon = potential_fragment_polygons[0]
+	var is_creating_pieces = PolygonUtil.get_area_of_polygon(overlap_polygon) < MINIMUM_CHUNK_AREA
+	print(PolygonUtil.get_area_of_polygon(overlap_polygon), " ", is_creating_pieces)
+	
+	for fragment_polygon in fragment_polygons:
+		var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
+		if potential_fragment_polygons.size() > 0:
+			var intersect_polygon = potential_fragment_polygons[0]
+			
+			if is_creating_pieces:
+				_init_shard_piece(intersect_polygon, applied_impulse)
+			else:
 				_init_shard_chunk(intersect_polygon, applied_impulse)
 
 
@@ -190,6 +191,16 @@ func _init_shard_chunk(intersect_polygon: PackedVector2Array, applied_impulse: V
 	
 	shard_chunk._on_creation()
 	shard_chunk.apply_central_impulse(applied_impulse)
+
+
+func _init_shard_piece(intersect_polygon: PackedVector2Array, applied_impulse: Vector2):
+	var shard_piece = preload("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn").instantiate()
+	add_child(shard_piece, true)
+	
+	shard_piece._init_self_shard_polygon_rpc.rpc(intersect_polygon, data.get_as_dictionary())
+	
+	shard_piece._on_creation()
+	shard_piece.apply_central_impulse(applied_impulse)
 
 
 @rpc("authority", "call_local", "reliable")
