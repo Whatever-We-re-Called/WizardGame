@@ -225,6 +225,10 @@ position = Vector2(960, 576)
 [node name="RedBox6" parent="." instance=ExtResource("11_wv8q6")]
 position = Vector2(1024, 576)
 
+[node name="RedBox7" parent="." instance=ExtResource("11_wv8q6")]
+position = Vector2(1264, 632)
+scale = Vector2(2, 2)
+
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
 [connection signal="pressed" from="CanvasLayer/SteamScreen/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]

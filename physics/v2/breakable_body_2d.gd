@@ -26,6 +26,7 @@ const MINIMUM_NON_OVERLAP_AREA = 200
 
 func _enter_tree() -> void:
 	_init_multiplayer_handling()
+	_init_scaling()
 	_update_physics_layer()
 
 
@@ -39,6 +40,14 @@ func _init_multiplayer_handling():
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
 	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_polygon_scene.tscn")
+
+
+func _init_scaling():
+	for child in get_children():
+		if child is ShardPolygon:
+			child.update_scaling(scale)
+	
+	scale = Vector2.ONE
 
 
 func _update_physics_layer():

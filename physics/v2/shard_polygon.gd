@@ -65,3 +65,13 @@ func destroy():
 func destroy_rpc():
 	call_deferred("queue_free")
 	collision_polygon.call_deferred("queue_free")
+
+
+func update_scaling(new_scale: Vector2):
+	var scaled_polygon = PolygonUtil.get_scaled_polygon(polygon, new_scale)
+	
+	polygon = scaled_polygon
+	texture_scale = Vector2(1.0 / new_scale.x, 1.0 / new_scale.y)
+	texture_offset *= new_scale
+	
+	update_collision_polygon()
