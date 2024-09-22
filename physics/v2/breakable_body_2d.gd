@@ -130,7 +130,7 @@ func _is_valid_break_point(possible_point: Vector2, delaunay: Delaunay, primary_
 
 
 #region Break apart bodies and chunks.
-func break_apart_from_collision(incoming_collision_polygon: CollisionPolygon2D, applied_impulse: Vector2):
+func break_apart_from_collision(incoming_collision_polygon: CollisionPolygon2D, impulse_callable: Callable):
 	var shard_polygons_to_break: Array[ShardPolygon]
 	for child in get_children():
 		if child is ShardPolygon:
@@ -138,15 +138,15 @@ func break_apart_from_collision(incoming_collision_polygon: CollisionPolygon2D, 
 	
 	for shard_polygon in shard_polygons_to_break:
 		if incoming_collision_polygon == null:
-			_break_apart_polygon(shard_polygon, shard_polygon.collision_polygon, applied_impulse)
+			_break_apart_polygon(shard_polygon, shard_polygon.collision_polygon, impulse_callable)
 		else:
-			_break_apart_polygon(shard_polygon, incoming_collision_polygon, applied_impulse)
+			_break_apart_polygon(shard_polygon, incoming_collision_polygon, impulse_callable)
 
 
-func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygon: CollisionPolygon2D, applied_impulse: Vector2):
+func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygon: CollisionPolygon2D, impulse_callable: Callable):
 	var overlap_polygon = _get_overlap_polygon(shard_polygon.collision_polygon, incoming_collision_polygon)
 	
-	_create_new_shards(overlap_polygon, applied_impulse)
+	_create_new_shards(overlap_polygon, impulse_callable)
 	_create_non_overlap_shard_polygons(shard_polygon.collision_polygon, overlap_polygon)
 	
 	scale = Vector2.ONE
@@ -164,7 +164,7 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
 
 
-func _create_new_shards(overlap_polygon: PackedVector2Array, applied_impulse: Vector2):
+func _create_new_shards(overlap_polygon: PackedVector2Array, impulse_callable: Callable):
 	if not multiplayer.is_server(): return
 	
 	var is_creating_pieces = PolygonUtil.get_area_of_polygon(overlap_polygon) < MINIMUM_CHUNK_AREA
@@ -175,9 +175,9 @@ func _create_new_shards(overlap_polygon: PackedVector2Array, applied_impulse: Ve
 			var intersect_polygon = potential_fragment_polygons[0]
 			
 			if is_creating_pieces:
-				_init_shard_piece(intersect_polygon, applied_impulse)
+				_init_shard_piece(intersect_polygon, impulse_callable)
 			else:
-				_init_shard_chunk(intersect_polygon, applied_impulse)
+				_init_shard_chunk(intersect_polygon, impulse_callable)
 
 
 func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, overlap_polygon: PackedVector2Array):
@@ -193,24 +193,24 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, o
 
 
 #region Initialize bodies, chunks, and pieces.
-func _init_shard_chunk(intersect_polygon: PackedVector2Array, applied_impulse: Vector2):
+func _init_shard_chunk(intersect_polygon: PackedVector2Array, impulse_callable: Callable):
 	var shard_chunk = preload("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
-	add_child(shard_chunk, true)
-	
-	shard_chunk._init_self_shard_polygon_rpc.rpc(intersect_polygon, data.get_as_dictionary())
-	
-	shard_chunk._on_creation()
-	shard_chunk.apply_central_impulse(applied_impulse)
+	_init_shard(shard_chunk, intersect_polygon, impulse_callable)
 
 
-func _init_shard_piece(intersect_polygon: PackedVector2Array, applied_impulse: Vector2):
+func _init_shard_piece(intersect_polygon: PackedVector2Array, impulse_callable: Callable):
 	var shard_piece = preload("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn").instantiate()
-	add_child(shard_piece, true)
+	_init_shard(shard_piece, intersect_polygon, impulse_callable)
+
+
+func _init_shard(new_shard: BreakableBody2D, intersect_polygon: PackedVector2Array, impulse_callable: Callable):
+	add_child(new_shard, true)
 	
-	shard_piece._init_self_shard_polygon_rpc.rpc(intersect_polygon, data.get_as_dictionary())
+	new_shard._init_self_shard_polygon_rpc.rpc(intersect_polygon, data.get_as_dictionary())
+	new_shard._on_creation()
 	
-	shard_piece._on_creation()
-	shard_piece.apply_central_impulse(applied_impulse)
+	var applied_impulse = impulse_callable.call(new_shard)
+	new_shard.apply_central_impulse(applied_impulse)
 
 
 @rpc("authority", "call_local", "reliable")

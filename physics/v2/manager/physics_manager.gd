@@ -186,18 +186,24 @@ class ImpulseBuilder extends Node:
 	func _try_to_push_body(body: PhysicsBody2D, collision_channel: CollisionChannel):
 		if _excluded_bodies.has(body): return
 		
-		var impulse: Vector2
-		if _applied_body_impulse.is_valid():
-			impulse = _applied_body_impulse.call(body)
-		elif _applied_impulse.is_valid():
-			impulse = _applied_impulse.call(body)
-		
 		if body is BreakableBody2D:
+			var impulse_callable: Callable
+			if _applied_body_impulse.is_valid():
+				impulse_callable = _applied_body_impulse
+			elif _applied_impulse.is_valid():
+				impulse_callable = _applied_impulse
+				
 			body.break_apart_from_collision(
 				collision_channel.collision_polygon,
-				impulse
+				impulse_callable
 			)
 		elif body is RigidBody2D:
+			var impulse: Vector2
+			if _applied_body_impulse.is_valid():
+				impulse = _applied_body_impulse.call(body)
+			elif _applied_impulse.is_valid():
+				impulse = _applied_impulse.call(body)
+			
 			body.apply_central_impulse(impulse)
 
 

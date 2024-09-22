@@ -1,24 +1,21 @@
 [gd_scene load_steps=6 format=3 uid="uid://dctvxxi12kxdr"]
 
-[ext_resource type="Script" path="res://physics/fragile_body_2d.gd" id="1_v26mf"]
-[ext_resource type="Script" path="res://physics/fragile_body_data.gd" id="2_7ptt4"]
+[ext_resource type="Script" path="res://physics/v2/shard_body.gd" id="1_0qs7l"]
+[ext_resource type="Script" path="res://physics/v2/breakable_data.gd" id="2_7sxbm"]
 [ext_resource type="Texture2D" uid="uid://daxggp6xmes30" path="res://maps/prototype_second_concept_level/textures/crane.png" id="2_r8i8p"]
-[ext_resource type="Script" path="res://physics/sprite_polygon_2d.gd" id="3_e56l0"]
+[ext_resource type="Script" path="res://physics/v2/shard_polygon.gd" id="5_a52q0"]
 
-[sub_resource type="Resource" id="Resource_nkw0h"]
-script = ExtResource("2_7ptt4")
+[sub_resource type="Resource" id="Resource_huhbo"]
+script = ExtResource("2_7sxbm")
 max_health = 10.0
 layer = 2
-number_of_break_points = 5
-edge_threshold = 10.0
-length_limit = 20.0
+number_of_break_points = 3
 
 [node name="Crane" type="RigidBody2D"]
-script = ExtResource("1_v26mf")
-data = SubResource("Resource_nkw0h")
+script = ExtResource("1_0qs7l")
+data = SubResource("Resource_huhbo")
 
-[node name="SpritePolygon2D" type="Polygon2D" parent="."]
-position = Vector2(-1, 0)
+[node name="ShardPolygon" type="Polygon2D" parent="."]
 texture = ExtResource("2_r8i8p")
 polygon = PackedVector2Array(596, 927, 640, 847, 630, 829, 664, 822, 672, 827, 762, 808, 881, 787, 906, 779, 921, 802, 910, 813, 905, 819, 901, 955, 905, 1034, 900, 1042, 896, 1034, 893, 1033, 887, 997, 889, 824, 723, 920, 723, 939, 717, 941, 711, 943, 696, 943, 688, 946, 670, 946, 657, 950, 640, 947, 631, 939, 631, 937, 628, 937, 627, 935, 623.649, 927.806, 624, 924, 628, 922, 638, 895, 643, 891, 669, 889, 649, 861, 609, 932, 606, 931, 601, 939, 597, 939)
-script = ExtResource("3_e56l0")
+script = ExtResource("5_a52q0")
