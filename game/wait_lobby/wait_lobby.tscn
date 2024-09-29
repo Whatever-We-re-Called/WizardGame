@@ -205,25 +205,25 @@ polygon = PackedVector2Array(-28, -31, 784.616, -31.8271, 1937, -33, 1964, 1132,
 metadata/_edit_lock_ = true
 
 [node name="RedBox10" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(768, 704)
+position = Vector2(656, 688)
 
 [node name="RedBox" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(768, 640)
+position = Vector2(904, 512)
 
 [node name="RedBox2" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(768, 576)
+position = Vector2(904, 448)
 
 [node name="RedBox3" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(832, 576)
+position = Vector2(968, 448)
 
 [node name="RedBox4" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(896, 576)
+position = Vector2(1032, 448)
 
 [node name="RedBox5" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(960, 576)
+position = Vector2(1096, 448)
 
 [node name="RedBox6" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(1024, 576)
+position = Vector2(1160, 448)
 
 [node name="RedBox7" parent="." instance=ExtResource("11_wv8q6")]
 position = Vector2(1264, 632)

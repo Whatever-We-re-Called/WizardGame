@@ -144,10 +144,11 @@ func break_apart_from_collision(incoming_collision_polygon: CollisionPolygon2D, 
 
 
 func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygon: CollisionPolygon2D, impulse_callable: Callable):
-	var overlap_polygon = _get_overlap_polygon(shard_polygon.collision_polygon, incoming_collision_polygon)
+	var overlap_polygons = _get_overlap_polygon(shard_polygon.collision_polygon, incoming_collision_polygon)
+	for overlap_polygon in overlap_polygons:
+		_create_new_shards(overlap_polygon, impulse_callable)
 	
-	_create_new_shards(overlap_polygon, impulse_callable)
-	_create_non_overlap_shard_polygons(shard_polygon.collision_polygon, overlap_polygon)
+	_create_non_overlap_shard_polygons(shard_polygon.collision_polygon, incoming_collision_polygon)
 	
 	scale = Vector2.ONE
 	shard_polygon.destroy()
@@ -155,13 +156,16 @@ func _break_apart_polygon(shard_polygon: ShardPolygon, incoming_collision_polygo
 	queue_redraw()
 
 
-func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collision_polygon: CollisionPolygon2D) -> PackedVector2Array:
+func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collision_polygon: CollisionPolygon2D) -> Array[PackedVector2Array]:
 	var global_collision_polygon = PolygonUtil.get_global_collision_polygon_polygon_from_local(collision_polygon)
 	var global_incoming_collision_polygon = PolygonUtil.get_global_collision_polygon_polygon_from_local(incoming_collision_polygon)
 	
 	var overlap_polygons = Geometry2D.intersect_polygons(global_collision_polygon, global_incoming_collision_polygon)
-	var overlap_polygon = overlap_polygons[0] if overlap_polygons.size() > 0 else []
-	return PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self)
+	
+	var result: Array[PackedVector2Array]
+	for overlap_polygon in overlap_polygons:
+		result.append(PolygonUtil.get_local_polygon_from_global_space(overlap_polygon, self))
+	return result
 
 
 func _create_new_shards(overlap_polygon: PackedVector2Array, impulse_callable: Callable):
@@ -180,9 +184,16 @@ func _create_new_shards(overlap_polygon: PackedVector2Array, impulse_callable: C
 				_init_shard_chunk(intersect_polygon, impulse_callable)
 
 
-func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, overlap_polygon: PackedVector2Array):
-	var potential_non_overlap_polygons = Geometry2D.clip_polygons(collision_polygon.polygon, overlap_polygon)
-	for non_overlap_polygon in potential_non_overlap_polygons:
+func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, incoming_collision_polygon: CollisionPolygon2D):
+	var global_collision_polygon = PolygonUtil.get_global_collision_polygon_polygon_from_local(collision_polygon)
+	var global_incoming_collision_polygon = PolygonUtil.get_global_collision_polygon_polygon_from_local(incoming_collision_polygon)
+	var potential_non_overlap_polygons = Geometry2D.clip_polygons(global_collision_polygon, global_incoming_collision_polygon)
+	
+	var non_overlap_polygons: Array[PackedVector2Array]
+	for potential_non_overlap_polygon in potential_non_overlap_polygons:
+		non_overlap_polygons.append(PolygonUtil.get_local_polygon_from_global_space(potential_non_overlap_polygon, self))
+	
+	for non_overlap_polygon in non_overlap_polygons:
 		non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
 		
 		if PolygonUtil.get_area_of_polygon(non_overlap_polygon) > MINIMUM_NON_OVERLAP_AREA:

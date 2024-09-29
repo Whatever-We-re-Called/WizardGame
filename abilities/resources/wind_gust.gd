@@ -45,7 +45,6 @@ func _get_player_push_force(player: Player, executor_player: Player, direction: 
 
 func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:
 	var distance = executor_player.global_position.distance_to(body.global_position)
-	print(distance)
 	var distance_ratio = 1.0 - (distance / 500.0)
 	distance_ratio = clamp(distance_ratio, 0.0, 1.0)
 	var power_ratio = EasingFunctions.ease_out_circ(0.0, 1.0, distance_ratio)
