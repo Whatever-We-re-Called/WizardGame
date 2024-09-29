@@ -21,6 +21,8 @@ class ImpulseBuilder extends Node:
 	var _applied_impulse: Callable
 	var _applied_body_impulse: Callable
 	var _applied_player_impulse: Callable
+	var _applied_damage_value: int = 0
+	var _applied_damage_impulse: Callable
 	var _excluded_bodies: Array[PhysicsBody2D] = []
 	var _excluded_players: Array[Player] = []
 	var _cleanup_time: float = 1.0
@@ -106,6 +108,30 @@ class ImpulseBuilder extends Node:
 		return self
 	
 	
+	## Sets how much damage the impulse does to BreakableBody2Ds.
+	## and the impulse that is applied if the body is broken.[br]
+	## [br]
+	## The used [Callable] [b]must[/b] meet two conditions:[br]
+	## - The function's return type must be [Vector2]; the impulse force.[br]
+	## - The function's first parameter must be of type or of a type extended 
+	## from [PhysicsBody2D].[br]
+	## - When inserted as this function's paramater, use [method Callable.bindv]
+	## to give context to the Callable's 2nd+ paramater, if applicable.[br]
+	## [br]
+	## For example, when the [Callable] you wish to use has the function declaration
+	## of 
+	## [code]_push(physics_body: PhysicsBody2D, executor_player: Player, direction: Vector2)[/code],
+	## you should use this function as so: 
+	## [code]applied_body_impulse(_push.bindv([executor_player, direction]))[/code][br]
+	## [br]
+	## By default, no damage or damage impulse is applied, causing bodies
+	## to instantly destroy.
+	func inflicted_damage(damage_value: int, damage_impulse: Callable) -> ImpulseBuilder:
+		self._applied_damage_value = damage_value
+		self._applied_damage_impulse = damage_impulse
+		return self
+	
+	
 	## Sets what bodies to exclude from the impulse's collision detection.[br]
 	## [br]
 	## By default, no body exclusions are defined.
@@ -147,7 +173,10 @@ class ImpulseBuilder extends Node:
 			if overlapping_body is Player:
 				_try_to_push_player(overlapping_body, collision_channel)
 			elif overlapping_body is RigidBody2D:
-				_try_to_push_body(overlapping_body, collision_channel)
+				if _applied_damage_value > 0:
+					_damage_body(overlapping_body, collision_channel)
+				else:
+					_try_to_push_body(overlapping_body, collision_channel)
 		
 		await PhysicsManager.get_tree().create_timer(_cleanup_time).timeout
 		PhysicsManager.release_collision_channel(collision_channel)
@@ -181,6 +210,14 @@ class ImpulseBuilder extends Node:
 		
 		body.velocity = Vector2.ZERO
 		body.apply_central_impulse(impulse)
+	
+	
+	func _damage_body(body: PhysicsBody2D, collision_channel: CollisionChannel):
+		body.damage_with_collision(
+			_applied_damage_value,
+			_applied_damage_impulse,
+			collision_channel
+		)
 	
 	
 	func _try_to_push_body(body: PhysicsBody2D, collision_channel: CollisionChannel):

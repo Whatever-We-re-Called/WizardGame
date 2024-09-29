@@ -4,6 +4,7 @@ enum EnvironmentLayer { FRONT, BASE, BACK, ALL }
 
 @export var data: BreakableData
 
+var health: float
 var fragment_polygons: Array[PackedVector2Array]
 var id: int
 var texture: Texture2D
@@ -26,10 +27,15 @@ const MINIMUM_NON_OVERLAP_AREA = 200
 
 
 func _enter_tree() -> void:
+	_init_health()
 	_init_multiplayer_handling()
 	_init_scaling()
 	_update_physics_layer()
 	_init_area_handling()
+
+
+func _init_health():
+	health = data.max_health
 
 
 func _init_multiplayer_handling():
@@ -254,6 +260,30 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: 
 	center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = PolygonUtil.get_center_of_polygon(corrected_polygon)
 #endregion
+
+
+#region Damage handling
+func damage(damage_dealt: float, impulse_callable: Callable) -> Array[PhysicsBody2D]:
+	return damage_with_collision(damage_dealt, impulse_callable)
+
+
+func damage_with_collision(damage_dealt: float, impulse_callable: Callable, collision_polygon: CollisionPolygon2D = null):
+	if health <= 0: 
+		return
+	else:
+		health -= damage_dealt
+		
+		if health <= 0:
+			var incoming_collision_polygon: CollisionPolygon2D
+			if collision_polygon == null:
+				incoming_collision_polygon = CollisionPolygon2D.new()
+				incoming_collision_polygon.polygon = _get_primary_shard_polygon().polygon
+			else:
+				incoming_collision_polygon = collision_polygon
+			 
+			break_apart_from_collision(incoming_collision_polygon, impulse_callable)
+#endregion
+
 
 func _on_creation() -> void:
 	# Intended to be overridden in shard scripts.
