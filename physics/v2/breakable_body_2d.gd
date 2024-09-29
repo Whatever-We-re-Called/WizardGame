@@ -9,6 +9,7 @@ var id: int
 var texture: Texture2D
 var texture_offset: Vector2
 var texture_scale: Vector2
+var total_area: float
 
 const DISPLAY_VORONOI_DEBUG: bool = true
 const EDGE_THRESHOLD: float = 10.0
@@ -28,6 +29,7 @@ func _enter_tree() -> void:
 	_init_multiplayer_handling()
 	_init_scaling()
 	_update_physics_layer()
+	_init_area_handling()
 
 
 func _init_multiplayer_handling():
@@ -54,6 +56,10 @@ func _update_physics_layer():
 	if data == null: return
 	
 	BreakablePhysicsUtil.place_onto_environment_layer(self, data.layer, true)
+
+
+func _init_area_handling():
+	total_area = PolygonUtil.get_area_of_polygon(_get_primary_shard_polygon().polygon)
 
 
 #region Create fragment polygons.
@@ -103,6 +109,7 @@ func _get_delaunay_with_placed_points(delaunay: Delaunay, primary_polygon: Packe
 	
 	var break_points_placed = 0
 	var failed_attempts = 0
+	print(data.number_of_break_points)
 	while break_points_placed < data.number_of_break_points:
 		var possible_point = rect.position + Vector2(randi_range(0, rect.size.x), randi_range(0, rect.size.y))
 		
@@ -217,7 +224,8 @@ func _init_shard_piece(intersect_polygon: PackedVector2Array, impulse_callable: 
 func _init_shard(new_shard: BreakableBody2D, intersect_polygon: PackedVector2Array, impulse_callable: Callable):
 	add_child(new_shard, true)
 	
-	new_shard._init_self_shard_polygon_rpc.rpc(intersect_polygon, data.get_as_dictionary())
+	var area_ratio = PolygonUtil.get_area_of_polygon(intersect_polygon) / total_area
+	new_shard._init_self_shard_polygon_rpc.rpc(intersect_polygon, data.get_as_dictionary(), area_ratio)
 	new_shard._on_creation()
 	
 	var applied_impulse = impulse_callable.call(new_shard)
@@ -225,7 +233,7 @@ func _init_shard(new_shard: BreakableBody2D, intersect_polygon: PackedVector2Arr
 
 
 @rpc("authority", "call_local", "reliable")
-func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: Dictionary):
+func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: Dictionary, area_ratio: float):
 	var polygon_global = PolygonUtil.get_global_polygon_from_local_space(polygon, global_position)
 	var position_delta = PolygonUtil.get_center_of_polygon(polygon_global) - global_position
 	global_position += position_delta
@@ -239,7 +247,9 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: 
 	shard_polygon.update_collision_polygon()
 	
 	data = BreakableData.get_from_dictionary(data_dictionary)
+	data.number_of_break_points = int(data.number_of_break_points * area_ratio)
 	_update_physics_layer()
+	_init_area_handling()
 	
 	center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = PolygonUtil.get_center_of_polygon(corrected_polygon)
