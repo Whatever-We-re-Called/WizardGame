@@ -34,7 +34,10 @@ func _enter_tree() -> void:
 	_init_area_handling()
 
 
+
 func _init_health():
+	if data == null: return
+	
 	health = data.max_health
 
 
@@ -66,6 +69,12 @@ func _update_physics_layer():
 
 func _init_area_handling():
 	total_area = PolygonUtil.get_area_of_polygon(_get_primary_shard_polygon().polygon)
+
+ 
+func _handle_data_update():
+	_init_health()
+	_update_physics_layer()
+	_init_area_handling()
 
 
 #region Create fragment polygons.
@@ -254,8 +263,7 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: 
 	
 	data = BreakableData.get_from_dictionary(data_dictionary)
 	data.number_of_break_points = int(data.number_of_break_points * area_ratio)
-	_update_physics_layer()
-	_init_area_handling()
+	_handle_data_update()
 	
 	center_of_mass_mode = RigidBody2D.CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = PolygonUtil.get_center_of_polygon(corrected_polygon)
@@ -267,21 +275,32 @@ func damage(damage_dealt: float, impulse_callable: Callable) -> Array[PhysicsBod
 	return damage_with_collision(damage_dealt, impulse_callable)
 
 
+# TODO Re-approach how this is handled. I don't think this has good game feel.
 func damage_with_collision(damage_dealt: float, impulse_callable: Callable, collision_polygon: CollisionPolygon2D = null):
-	if health <= 0: 
-		return
+	if health <= 0:
+		break_apart_from_collision(
+			_get_incoming_collision_polygon_for_damage(collision_polygon),
+			impulse_callable
+		)
 	else:
 		health -= damage_dealt
 		
 		if health <= 0:
-			var incoming_collision_polygon: CollisionPolygon2D
-			if collision_polygon == null:
-				incoming_collision_polygon = CollisionPolygon2D.new()
-				incoming_collision_polygon.polygon = _get_primary_shard_polygon().polygon
-			else:
-				incoming_collision_polygon = collision_polygon
-			 
-			break_apart_from_collision(incoming_collision_polygon, impulse_callable)
+			break_apart_from_collision(
+				_get_incoming_collision_polygon_for_damage(collision_polygon),
+				impulse_callable
+			)
+
+
+func _get_incoming_collision_polygon_for_damage(collision_polygon: CollisionPolygon2D = null) -> CollisionPolygon2D:
+	var incoming_collision_polygon: CollisionPolygon2D
+	if collision_polygon == null:
+		incoming_collision_polygon = CollisionPolygon2D.new()
+		incoming_collision_polygon.polygon = _get_primary_shard_polygon().polygon
+	else:
+		incoming_collision_polygon = collision_polygon
+	
+	return incoming_collision_polygon
 #endregion
 
 

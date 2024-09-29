@@ -126,7 +126,7 @@ class ImpulseBuilder extends Node:
 	## [br]
 	## By default, no damage or damage impulse is applied, causing bodies
 	## to instantly destroy.
-	func inflicted_damage(damage_value: int, damage_impulse: Callable) -> ImpulseBuilder:
+	func applied_damage(damage_value: int, damage_impulse: Callable) -> ImpulseBuilder:
 		self._applied_damage_value = damage_value
 		self._applied_damage_impulse = damage_impulse
 		return self
@@ -173,7 +173,7 @@ class ImpulseBuilder extends Node:
 			if overlapping_body is Player:
 				_try_to_push_player(overlapping_body, collision_channel)
 			elif overlapping_body is RigidBody2D:
-				if _applied_damage_value > 0:
+				if _applied_damage_value > 0 and overlapping_body is BreakableBody2D:
 					_damage_body(overlapping_body, collision_channel)
 				else:
 					_try_to_push_body(overlapping_body, collision_channel)
@@ -216,7 +216,7 @@ class ImpulseBuilder extends Node:
 		body.damage_with_collision(
 			_applied_damage_value,
 			_applied_damage_impulse,
-			collision_channel
+			collision_channel.collision_polygon
 		)
 	
 	
