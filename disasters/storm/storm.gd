@@ -44,7 +44,8 @@ func spawn_lightning():
 	if location == Vector2.ZERO:
 		_get_random_player_pos()
 	
-	_spawn_lightning.rpc(location, randi_range(-30, 30), randi_range(-45, 45))
+	_spawn_lightning_texture.rpc(location, randi_range(-30, 30), randi_range(-45, 45))
+	_spawn_lightning.rpc_id(1, location, randi_range(-30, 30), randi_range(-45, 45))
 	_do_lightning_delay()
 	
 	
@@ -93,52 +94,34 @@ func _get_lightning_delay() -> float:
 
 
 @rpc("any_peer", "call_local")
+func _spawn_lightning_texture(position: Vector2, rotation_degrees: float, impact_rotation_degrees: float):
+	var lightning = preload("res://disasters/storm/lightning.tscn").instantiate()
+	lightning.position = position
+	lightning.rotation = deg_to_rad(rotation_degrees)
+	DisasterManager.disaster_nodes.add_child(lightning)
+	
+	await lightning.get_tree().create_timer(0.5).timeout
+	lightning.call_deferred("queue_free") 
+
+
+@rpc("any_peer", "call_local")
 func _spawn_lightning(position: Vector2, rotation_degrees: float, impact_rotation_degrees: float):
 	var impact_zone = create_regular_polygon(10, LIGHTNING_IMPACT_RADIUS)
 	impact_zone = PolygonUtil.get_rotated_polygon(impact_zone, deg_to_rad(impact_rotation_degrees))
 	impact_zone = PolygonUtil.get_global_polygon_from_local_space(impact_zone, position)
 	
-	var area = Area2D.new()
-	BreakablePhysicsUtil.set_environment_mask_to_all(area)
-	area.set_collision_mask_value(5, true)
-	var collision_polygon = CollisionPolygon2D.new()
-	collision_polygon.polygon = impact_zone
-	area.add_child(collision_polygon)
-	
-	var lightning = preload("res://disasters/storm/lightning.tscn").instantiate()
-	lightning.position = position
-	lightning.rotation = deg_to_rad(rotation_degrees)
-	
-	DisasterManager.disaster_nodes.add_child(area)
-	DisasterManager.disaster_nodes.add_child(lightning)
-	
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	var all_created_shards: Array[PhysicsBody2D]
-	for overlapping_body in area.get_overlapping_bodies():
-		if overlapping_body is FragileBody2D:
-			var created_shards = overlapping_body.break_apart(collision_polygon)
-			all_created_shards.append_array(created_shards)
-		elif overlapping_body is RigidBody2D:
-			_push_rigid_body(overlapping_body, position)
-		elif overlapping_body is Player:
-			_damage_player(overlapping_body)
-	
-	for shard in all_created_shards:
-		if shard is RigidBody2D:
-			_push_rigid_body(shard, position)
-	
-	await lightning.get_tree().create_timer(0.5).timeout
-	lightning.call_deferred("queue_free") 
-	
-	await area.get_tree().create_timer(1.0).timeout
-	area.call_deferred("queue_free")
-	
-	
-func _push_rigid_body(rigid_body: RigidBody2D, center: Vector2):
+	PhysicsManager.ImpulseBuilder.new()\
+		.collision_polygon(impact_zone)\
+		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
+		.kills_players(true)\
+		.applied_body_impulse(_push_rigid_body.bindv([position]))\
+		.execute()
+
+
+func _push_rigid_body(rigid_body: RigidBody2D, center: Vector2) -> Vector2:
 	var push_force = _get_push_force(rigid_body, center)
 	var direction = (rigid_body.global_position - (center + Vector2(0, 500))).normalized()
-	rigid_body.apply_central_impulse(direction * push_force)
+	return direction * push_force
 	
 
 func _get_push_force(body: PhysicsBody2D, center: Vector2) -> float:
@@ -147,8 +130,4 @@ func _get_push_force(body: PhysicsBody2D, center: Vector2) -> float:
 	distance_ratio = clamp(distance_ratio, 0.0, 1.0)
 	var power_ratio = EasingFunctions.ease_out_circ(0.0, 1.0, distance_ratio)
 	return MAX_PUSH_FORCE * power_ratio
-	
-	
-func _damage_player(player):
-	player.kill()
 	

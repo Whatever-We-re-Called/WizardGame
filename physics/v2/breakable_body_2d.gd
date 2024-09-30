@@ -124,7 +124,6 @@ func _get_delaunay_with_placed_points(delaunay: Delaunay, primary_polygon: Packe
 	
 	var break_points_placed = 0
 	var failed_attempts = 0
-	print(data.number_of_break_points)
 	while break_points_placed < data.number_of_break_points:
 		var possible_point = rect.position + Vector2(randi_range(0, rect.size.x), randi_range(0, rect.size.y))
 		

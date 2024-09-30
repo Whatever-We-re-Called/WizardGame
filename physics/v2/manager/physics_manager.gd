@@ -18,6 +18,7 @@ func release_collision_channel(collision_channel: CollisionChannel):
 class ImpulseBuilder extends Node:
 	var _collision_polygon: PackedVector2Array = []
 	var _affected_environment_layers: Array[BreakableBody2D.EnvironmentLayer] = []
+	var _kills_players: bool = false
 	var _applied_impulse: Callable
 	var _applied_body_impulse: Callable
 	var _applied_player_impulse: Callable
@@ -42,6 +43,15 @@ class ImpulseBuilder extends Node:
 	## By default, no environment layers are checked.
 	func affected_environment_layers(value: Array[BreakableBody2D.EnvironmentLayer]) -> ImpulseBuilder:
 		self._affected_environment_layers = value
+		return self
+	
+	
+	## Sets whether or not the collision kills any non-excluded players
+	## inside of it.[br]
+	## [br]
+	## By default, the collision does not kill any players.
+	func kills_players(value: bool) -> ImpulseBuilder:
+		self._kills_players = value
 		return self
 	
 	
@@ -166,12 +176,20 @@ class ImpulseBuilder extends Node:
 		
 		var collision_channel = await CollisionChannelBuilder.new()\
 			.collision_polygon(_collision_polygon)\
-			.collision_mask_values(_get_affected_environment_layers_as_mask_values())\
+			.collision_mask_values(_get_affected_layers_as_mask_values())\
 			.claim()
 		
 		for overlapping_body in collision_channel.get_overlapping_bodies():
+			print(overlapping_body)
 			if overlapping_body is Player:
-				_try_to_push_player(overlapping_body, collision_channel)
+				print("A")
+				if _kills_players == true:
+					print("B")
+					if not _excluded_players.has(overlapping_body):
+						overlapping_body.kill()
+						print("kill")
+				else:
+					_try_to_push_player(overlapping_body, collision_channel)
 			elif overlapping_body is RigidBody2D:
 				if _applied_damage_value > 0 and overlapping_body is BreakableBody2D:
 					_damage_body(overlapping_body, collision_channel)
@@ -182,8 +200,10 @@ class ImpulseBuilder extends Node:
 		PhysicsManager.release_collision_channel(collision_channel)
 	
 	
-	func _get_affected_environment_layers_as_mask_values() -> Array[int]:
+	func _get_affected_layers_as_mask_values() -> Array[int]:
 		var result: Array[int]
+		
+		# Environment layers
 		result.append(1)
 		for environment_layer in _affected_environment_layers:
 			match environment_layer:
@@ -195,6 +215,9 @@ class ImpulseBuilder extends Node:
 					result.append(4)
 				BreakableBody2D.EnvironmentLayer.ALL:
 					result.append_array([2, 3, 4])
+		
+		# Player layer
+		result.append(5)
 		
 		return result
 	
