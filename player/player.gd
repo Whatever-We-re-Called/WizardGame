@@ -110,6 +110,14 @@ func apply_central_impulse(force: Vector2):
 
 
 func kill():
+	if SessionManager.is_valid_peer(self):
+		_kill_rpc.rpc_id(peer_id)
+	else:
+		_kill_rpc()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _kill_rpc():
 	if not is_multiplayer_authority(): return
 	if is_dead: return
 	
@@ -149,8 +157,15 @@ func teleport(target_global_position: Vector2):
 @rpc("any_peer", "call_local")
 func _teleport_rpc(target_global_position: Vector2):
 	global_position = target_global_position
-	
-	
-@rpc("any_peer", "call_local")
+
+
 func add_velocity(velocity: Vector2):
+	if SessionManager.is_valid_peer(self):
+		_add_velocity_rpc.rpc_id(get_peer_id(), velocity)
+	else:
+		_add_velocity_rpc(velocity)
+
+
+@rpc("any_peer", "call_local")
+func _add_velocity_rpc(velocity: Vector2):
 	apply_central_impulse(velocity)

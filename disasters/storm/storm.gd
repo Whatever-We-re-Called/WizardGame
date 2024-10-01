@@ -113,8 +113,8 @@ func _spawn_lightning(position: Vector2, rotation_degrees: float, impact_rotatio
 	PhysicsManager.ImpulseBuilder.new()\
 		.collision_polygon(impact_zone)\
 		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
-		.kills_players(true)\
 		.applied_body_impulse(_push_rigid_body.bindv([position]))\
+		.kills_players(true)\
 		.execute()
 
 

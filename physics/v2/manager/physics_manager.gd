@@ -18,14 +18,15 @@ func release_collision_channel(collision_channel: CollisionChannel):
 class ImpulseBuilder extends Node:
 	var _collision_polygon: PackedVector2Array = []
 	var _affected_environment_layers: Array[BreakableBody2D.EnvironmentLayer] = []
-	var _kills_players: bool = false
 	var _applied_impulse: Callable
 	var _applied_body_impulse: Callable
 	var _applied_player_impulse: Callable
+	var _excluded_bodies_from_impulse: Array[PhysicsBody2D] = []
+	var _excluded_players_from_impulse: Array[Player] = []
 	var _applied_damage_value: int = 0
 	var _applied_damage_impulse: Callable
-	var _excluded_bodies: Array[PhysicsBody2D] = []
-	var _excluded_players: Array[Player] = []
+	var _excluded_players_from_damage: Array[Player]
+	var _kills_players: bool = false
 	var _cleanup_time: float = 1.0
 	
 	
@@ -43,15 +44,6 @@ class ImpulseBuilder extends Node:
 	## By default, no environment layers are checked.
 	func affected_environment_layers(value: Array[BreakableBody2D.EnvironmentLayer]) -> ImpulseBuilder:
 		self._affected_environment_layers = value
-		return self
-	
-	
-	## Sets whether or not the collision kills any non-excluded players
-	## inside of it.[br]
-	## [br]
-	## By default, the collision does not kill any players.
-	func kills_players(value: bool) -> ImpulseBuilder:
-		self._kills_players = value
 		return self
 	
 	
@@ -118,6 +110,22 @@ class ImpulseBuilder extends Node:
 		return self
 	
 	
+	## Sets what bodies to exclude from the impulse's collision detection.[br]
+	## [br]
+	## By default, no body exclusions are defined.
+	func excluded_bodies_from_impulse(value: Array[PhysicsBody2D]) -> ImpulseBuilder:
+		self._excluded_bodies_from_impulse = value
+		return self
+	
+	
+	## Sets what players to exclude from the impulse's collision detection.[br]
+	## [br]
+	## By default, no player exclusions are defined.
+	func excluded_players_from_impulse(value: Array[Player]) -> ImpulseBuilder:
+		self._excluded_players_from_impulse = value
+		return self
+	
+	
 	## Sets how much damage the impulse does to BreakableBody2Ds.
 	## and the impulse that is applied if the body is broken.[br]
 	## [br]
@@ -142,19 +150,20 @@ class ImpulseBuilder extends Node:
 		return self
 	
 	
-	## Sets what bodies to exclude from the impulse's collision detection.[br]
+	## Sets what players to exclude from the damage dealt by the collision.[br]
 	## [br]
-	## By default, no body exclusions are defined.
-	func excluded_bodies(value: Array[PhysicsBody2D]) -> ImpulseBuilder:
-		self._excluded_bodies = value
+	## By default, no player exclusions are defined.
+	func excluded_players_from_damage(value: Array[Player]) -> ImpulseBuilder:
+		self._excluded_players_from_damage = value
 		return self
 	
 	
-	## Sets what players to exclude from the impulse's collision detection.[br]
+	## Sets whether or not the collision kills any non-excluded players
+	## inside of it.[br]
 	## [br]
-	## By default, no player exclusions are defined.
-	func excluded_players(value: Array[Player]) -> ImpulseBuilder:
-		self._excluded_players = value
+	## By default, the collision does not kill any players.
+	func kills_players(value: bool) -> ImpulseBuilder:
+		self._kills_players = value
 		return self
 	
 	
@@ -182,12 +191,9 @@ class ImpulseBuilder extends Node:
 		for overlapping_body in collision_channel.get_overlapping_bodies():
 			print(overlapping_body)
 			if overlapping_body is Player:
-				print("A")
 				if _kills_players == true:
-					print("B")
-					if not _excluded_players.has(overlapping_body):
+					if not _excluded_players_from_damage.has(overlapping_body):
 						overlapping_body.kill()
-						print("kill")
 				else:
 					_try_to_push_player(overlapping_body, collision_channel)
 			elif overlapping_body is RigidBody2D:
@@ -223,7 +229,7 @@ class ImpulseBuilder extends Node:
 	
 	
 	func _try_to_push_player(body: PhysicsBody2D, collision_channel: CollisionChannel):
-		if _excluded_players.has(body): return
+		if _excluded_players_from_impulse.has(body): return
 		
 		var impulse: Vector2
 		if _applied_player_impulse.is_valid():
@@ -232,7 +238,7 @@ class ImpulseBuilder extends Node:
 			impulse = _applied_impulse.call(body)
 		
 		body.velocity = Vector2.ZERO
-		body.apply_central_impulse(impulse)
+		body.add_velocity(impulse)
 	
 	
 	func _damage_body(body: PhysicsBody2D, collision_channel: CollisionChannel):
@@ -244,7 +250,7 @@ class ImpulseBuilder extends Node:
 	
 	
 	func _try_to_push_body(body: PhysicsBody2D, collision_channel: CollisionChannel):
-		if _excluded_bodies.has(body): return
+		if _excluded_bodies_from_impulse.has(body): return
 		
 		if body is BreakableBody2D:
 			var impulse_callable: Callable

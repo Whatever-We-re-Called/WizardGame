@@ -11,6 +11,7 @@ func _handle_input(player: Player, button_input: String):
 			if not is_on_cooldown():
 				_place_remote_land_mine.rpc(player.get_peer_id())
 		else:
+			_explode_remote_land_mine_server.rpc_id(1, current_remote_land_mine_scene.global_position)
 			_explode_remote_land_mine.rpc()
 			start_cooldown()
 
@@ -27,62 +28,52 @@ func _place_remote_land_mine(executor_peer_id: int):
 
 
 @rpc("any_peer", "call_local")
+func _explode_remote_land_mine_server(mine_global_position: Vector2):
+	if current_remote_land_mine_scene == null: return
+	
+	var executor_player = get_executor_player()
+	var impact_polygon = PolygonUtil.get_polygon_from_radius(16, 175.0)
+	impact_polygon = PolygonUtil.get_translated_polygon(impact_polygon, mine_global_position)
+	
+	PhysicsManager.ImpulseBuilder.new()\
+		.collision_polygon(impact_polygon)\
+		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
+		.applied_body_impulse(_push_body.bindv([executor_player, mine_global_position]))\
+		.applied_player_impulse(_push_player.bindv([executor_player, mine_global_position]))\
+		.execute()
+
+
+@rpc("any_peer", "call_local")
 func _explode_remote_land_mine():
 	if current_remote_land_mine_scene == null: return
 	
-	var remote_land_mine_global_position = current_remote_land_mine_scene.global_position
-	current_remote_land_mine_scene.call_deferred("queue_free")
-	
-	var executor_player = get_executor_player()
-	
-	var area = Area2D.new()
-	BreakablePhysicsUtil.set_environment_mask_to_all(area)
-	area.set_collision_mask_value(5, true)
-	area.global_position = current_remote_land_mine_scene.global_position
-	var collision_polygon = CollisionPolygon2D.new()
-	collision_polygon.polygon = PolygonUtil.get_polygon_from_radius(16, 175.0)
-	area.add_child(collision_polygon)
 	var sprite = Sprite2D.new()
 	sprite.texture = preload("res://abilities/textures/shitty_remote_land_mine_explosion_texture.png")
-	area.add_child(sprite)
-	call_deferred("add_child", area)
+	sprite.global_position = current_remote_land_mine_scene.global_position
+	add_child(sprite)
 	
-	await get_tree().physics_frame
-	await get_tree().physics_frame
-	var all_created_shards: Array[ShardPieceOld]
-	for overlapping_body in area.get_overlapping_bodies():
-		var direction = (overlapping_body.global_position - remote_land_mine_global_position).normalized()
-		if overlapping_body is FragileBody2D:
-			var created_shards = overlapping_body.break_apart(collision_polygon)
-			all_created_shards.append_array(created_shards)
-		elif overlapping_body is RigidBody2D:
-			_push_rigid_body(overlapping_body, executor_player, direction)
-		elif overlapping_body is Player:
-			_push_player(overlapping_body, executor_player, direction)
+	current_remote_land_mine_scene.call_deferred("queue_free")
 	
-	for shard in all_created_shards:
-		if shard is RigidBody2D:
-			var direction = (shard.global_position - remote_land_mine_global_position).normalized()
-			_push_rigid_body(shard, executor_player, direction)
-	
-	await get_tree().create_timer(1.0).timeout
-	area.call_deferred("queue_free")
+	await Engine.get_main_loop().create_timer(0.5).timeout
+	sprite.queue_free()
 
 
-func _push_rigid_body(rigid_body: RigidBody2D, executor_player: Player, direction: Vector2):
-	var push_force = _get_push_force(rigid_body, executor_player)
-	rigid_body.apply_central_impulse(direction * push_force)
+func _push_body(body: PhysicsBody2D, executor_player: Player, mine_global_position: Vector2) -> Vector2:
+	var direction = (body.global_position - mine_global_position).normalized()
+	var push_force = _get_push_force(body, mine_global_position)
+	return direction * push_force
 
 
-func _push_player(player: Player, executor_player: Player, direction: Vector2):
-	var push_force = _get_push_force(player, executor_player) * 2.5
+func _push_player(player: Player, executor_player: Player, mine_global_position: Vector2) -> Vector2:
+	var direction = (player.global_position - mine_global_position).normalized()
+	var push_force = _get_push_force(player, mine_global_position) * 2.5
 	player.velocity = Vector2.ZERO
-	player.apply_central_impulse(direction * push_force)
+	return direction * push_force
 
 # TODO Revisit game feel of this (literally just inappropriately copied
 # from wind_gust.gd.
-func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:
-	var distance = executor_player.global_position.distance_to(body.global_position)
+func _get_push_force(body: PhysicsBody2D, mine_global_position: Vector2) -> float:
+	var distance = mine_global_position.distance_to(body.global_position)
 	var distance_ratio = 1.0 - (distance / 500.0)
 	distance_ratio = clamp(distance_ratio, 0.0, 1.0)
 	var power_ratio = EasingFunctions.ease_out_circ(0.0, 1.0, distance_ratio)

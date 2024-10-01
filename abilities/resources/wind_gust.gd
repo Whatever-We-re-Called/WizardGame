@@ -29,7 +29,7 @@ func _calculate_wind_gust(direction: Vector2):
 		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
 		.applied_body_impulse(_get_body_push_force.bindv([executor_player, direction]))\
 		.applied_player_impulse(_get_player_push_force.bindv([executor_player, direction]))\
-		.excluded_players([executor_player])\
+		.excluded_players_from_impulse([executor_player])\
 		.execute()
 
 
