@@ -18,9 +18,9 @@ static func place_onto_environment_layer(node: Node, layer: BreakableBody2D.Envi
 	
 	if adjust_z_index == true:
 		match layer:
-			FragileBodyData.EnvironmentLayer.FRONT:
+			BreakableBody2D.EnvironmentLayer.FRONT:
 				node.z_index = 1
-			FragileBodyData.EnvironmentLayer.BASE:
+			BreakableBody2D.EnvironmentLayer.BASE:
 				node.z_index = 0
-			FragileBodyData.EnvironmentLayer.BACK:
+			BreakableBody2D.EnvironmentLayer.BACK:
 				node.z_index = -1

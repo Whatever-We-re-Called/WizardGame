@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://h274jeu5m5ln"]
 
-[ext_resource type="Script" path="res://physics/v2/shard_body.gd" id="1_efnsj"]
-[ext_resource type="Script" path="res://physics/v2/breakable_data.gd" id="2_333ss"]
+[ext_resource type="Script" path="res://physics/shard_body.gd" id="1_efnsj"]
+[ext_resource type="Script" path="res://physics/breakable_data.gd" id="2_333ss"]
 [ext_resource type="Texture2D" uid="uid://c1vqrgye34xj1" path="res://maps/prototype_second_concept_level/textures/house_back.png" id="2_407s3"]
-[ext_resource type="Script" path="res://physics/v2/shard_polygon.gd" id="4_jyquh"]
+[ext_resource type="Script" path="res://physics/shard_polygon.gd" id="4_jyquh"]
 
 [sub_resource type="Resource" id="Resource_01ugp"]
 script = ExtResource("2_333ss")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bvjek3s370fu7"]
 
-[ext_resource type="Script" path="res://physics/v2/shard_piece.gd" id="1_epd6h"]
-[ext_resource type="Script" path="res://physics/v2/shard_polygon.gd" id="2_djd7s"]
+[ext_resource type="Script" path="res://physics/shard_piece.gd" id="1_epd6h"]
+[ext_resource type="Script" path="res://physics/shard_polygon.gd" id="2_djd7s"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_oq15i"]
 properties/0/path = NodePath(".:position")

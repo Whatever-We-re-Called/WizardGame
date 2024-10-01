@@ -218,7 +218,7 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, i
 		non_overlap_polygon = PolygonUtil.remove_far_off_points(non_overlap_polygon)
 		
 		if PolygonUtil.get_area_of_polygon(non_overlap_polygon) > MINIMUM_NON_OVERLAP_AREA:
-			var new_shard_polygon = preload("res://physics/v2/spawnable_scenes/shard_polygon_scene.tscn").instantiate()
+			var new_shard_polygon = preload("res://physics/spawnable_scenes/shard_polygon_scene.tscn").instantiate()
 			add_child(new_shard_polygon, true)
 			new_shard_polygon.init_non_overlap_shard_polygon_rpc.rpc(non_overlap_polygon)
 #endregion
@@ -226,12 +226,12 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, i
 
 #region Initialize bodies, chunks, and pieces.
 func _init_shard_chunk(intersect_polygon: PackedVector2Array, impulse_callable: Callable):
-	var shard_chunk = preload("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
+	var shard_chunk = preload("res://physics/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
 	_init_shard(shard_chunk, intersect_polygon, impulse_callable)
 
 
 func _init_shard_piece(intersect_polygon: PackedVector2Array, impulse_callable: Callable):
-	var shard_piece = preload("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn").instantiate()
+	var shard_piece = preload("res://physics/spawnable_scenes/shard_piece_scene.tscn").instantiate()
 	_init_shard(shard_piece, intersect_polygon, impulse_callable)
 
 

@@ -76,7 +76,7 @@ func _create_test_overlap_area(pos):
 func _has_overlap(area) -> bool:
 	var has_overlap: bool = false
 	for body in area.get_overlapping_bodies():
-		if body is FragileBody2D or body is RigidBody2D or body is Player:
+		if body is BreakableBody2D or body is RigidBody2D or body is Player:
 			has_overlap = true
 			break
 	

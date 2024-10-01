@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://438vb86uyyob"]
 
-[ext_resource type="Script" path="res://physics/v2/shard_body.gd" id="1_xwyqt"]
-[ext_resource type="Script" path="res://physics/v2/breakable_data.gd" id="2_lyjgb"]
+[ext_resource type="Script" path="res://physics/shard_body.gd" id="1_xwyqt"]
+[ext_resource type="Script" path="res://physics/breakable_data.gd" id="2_lyjgb"]
 [ext_resource type="Texture2D" uid="uid://bxyts0cqilht3" path="res://maps/prototype_second_concept_level/textures/boat.png" id="2_vplym"]
-[ext_resource type="Script" path="res://physics/v2/shard_polygon.gd" id="4_ptiyk"]
+[ext_resource type="Script" path="res://physics/shard_polygon.gd" id="4_ptiyk"]
 
 [sub_resource type="Resource" id="Resource_3kjn0"]
 script = ExtResource("2_lyjgb")
