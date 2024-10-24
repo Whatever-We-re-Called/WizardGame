@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-[gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
-=======
 [gd_scene load_steps=15 format=3 uid="uid://ms1v61f8e6f3"]
->>>>>>> 388f8c1 (steam friends screen & quick start args)
 
 [ext_resource type="Script" path="res://game/wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]

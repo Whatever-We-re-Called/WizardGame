@@ -1,7 +1,6 @@
 extends Node
 
 @onready var buttons = [ $CenterContainer/HBoxContainer/IP, $CenterContainer/HBoxContainer/Steam, $CenterContainer/HBoxContainer/Local ]
-var selected_button = load("res://multiplayer/example_scene/ui/resources/selected_button_theme.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,7 +33,6 @@ func _update_button(selected):
 		button.theme = null
 		button.screen.visible = false
 	if selected:
-		selected.theme = selected_button
 		selected.screen.visible = true
 
 
