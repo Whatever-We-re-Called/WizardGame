@@ -14,6 +14,11 @@ func _ready():
 	SessionManager.client_connection_failed.connect(on_fail)
 	SessionManager.session_added.connect(_on_session_added)
 	
+	if StartArgs.has("host"):
+		buttons[0]._on_host_pressed() # IP based hosting
+	elif StartArgs.has("join"):
+		buttons[0]._on_join_pressed() # IP based joining
+	
 	
 func _process(delta):
 	if SessionManager.is_connected_to_peer():

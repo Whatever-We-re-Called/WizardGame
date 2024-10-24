@@ -1,10 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://c8vor4fc0g8tb"]
+[gd_scene load_steps=14 format=3 uid="uid://c8vor4fc0g8tb"]
 
-[ext_resource type="Script" path="res://multiplayer/example_scene/ui/ui.gd" id="2_y1rju"]
-[ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="3_71fb1"]
-[ext_resource type="Script" path="res://multiplayer/example_scene/ui/ip.gd" id="4_j66hj"]
-[ext_resource type="Script" path="res://multiplayer/example_scene/ui/steam.gd" id="5_tnyqy"]
-[ext_resource type="Script" path="res://multiplayer/example_scene/ui/screen_button.gd" id="6_jlcle"]
 [ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_7pyox"]
 [ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_yfdx1"]
 [ext_resource type="PackedScene" uid="uid://t63uqq1jdp5t" path="res://maps/prototype_generic/green_box.tscn" id="9_qdnvq"]
@@ -43,12 +38,161 @@ func _server_closed():
 		child.queue_free()
 "
 
+[sub_resource type="GDScript" id="GDScript_wo6p1"]
+script/source = "extends Node
+
+@onready var buttons = [ $CenterContainer/HBoxContainer/IP, $CenterContainer/HBoxContainer/Steam, $CenterContainer/HBoxContainer/Local ]
+var selected_button = load(\"res://multiplayer/example_scene/ui/resources/selected_button_theme.tres\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	self.visible = true
+	
+	for button in buttons:
+		button.pressed.connect(_update_button.bind(button))
+	_update_button(null)
+	SessionManager.serverbound_client_connected_to_server.connect(on_connect)
+	SessionManager.client_connection_failed.connect(on_fail)
+	SessionManager.session_added.connect(_on_session_added)
+	
+	
+func _process(delta):
+	if SessionManager.is_connected_to_peer():
+		$Disconnect.visible = true
+	else:
+		$Disconnect.visible = false
+	
+	
+func _update_button(selected):
+	if selected != null and selected.theme != null:
+		return
+	for button in buttons:
+		button.theme = null
+		button.screen.visible = false
+	if selected:
+		selected.theme = selected_button
+		selected.screen.visible = true
+
+
+func on_connect(id):
+	if SessionManager.debug:
+		print(\"Client connected: \", id)
+	
+func on_fail():
+	if SessionManager.debug:
+		print(\"Connection failed\")
+
+
+func _on_disconnect_pressed():
+	SessionManager.disconnect_client()
+	SessionManager.close_server()
+
+
+func _on_users_pressed():
+	print(\"Users: \", SessionManager.connected_clients)
+	
+	
+func _on_local_pressed():
+	SessionManager.set_strategy(LocalBasedConnection.new())
+
+
+func _on_toggle_ui_pressed():
+	$CenterContainer.visible = not $CenterContainer.visible
+	$LocalScreen.visible = false if not $CenterContainer.visible else $CenterContainer/HBoxContainer/Local.theme != null
+	$IPScreen.visible = false if not $CenterContainer.visible else $CenterContainer/HBoxContainer/IP.theme != null
+	$SteamScreen.visible = false if not $CenterContainer.visible else $CenterContainer/HBoxContainer/Steam.theme != null
+	
+
+func _on_session_added(data):
+	if data.peer_id == 1 and $CenterContainer.visible:
+		_on_toggle_ui_pressed()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpcn4"]
+bg_color = Color(0.152941, 0.568627, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxft1"]
+bg_color = Color(0, 0.729412, 0.00392157, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wj5t"]
+bg_color = Color(0.152941, 0.568627, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Theme" id="Theme_g837m"]
+Button/styles/hover = SubResource("StyleBoxFlat_jpcn4")
+Button/styles/normal = SubResource("StyleBoxFlat_gxft1")
+Button/styles/pressed = SubResource("StyleBoxFlat_5wj5t")
+
+[sub_resource type="GDScript" id="GDScript_tkm85"]
+script/source = "extends ScreenButton
+
+@onready var address = $\"../../../IPScreen/VBoxContainer/Address\"
+@onready var port = $\"../../../IPScreen/VBoxContainer/Port\"
+
+
+func _ready():
+	port.placeholder_text = str(IPBasedConnection.DEFAULT_PORT)
+
+
+func _on_host_pressed():
+	var port = port.text.strip_edges()
+	if port == \"\" or port == null:
+		port = IPBasedConnection.DEFAULT_PORT
+	SessionManager.set_strategy(IPBasedConnection.new(\"127.0.0.1\", int(port)))
+	SessionManager.create_server()
+
+
+func _on_join_pressed():
+	var address = address.text.strip_edges()
+	if address == \"\" or address == null:
+		address = \"127.0.0.1\"
+	var port = port.text.strip_edges()
+	if port == \"\" or port == null:
+		port = IPBasedConnection.DEFAULT_PORT
+	if SessionManager.debug:
+		print(\"Connecting to server {0}:{1}\".format([address, port]))
+	SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
+	SessionManager.connect_to_server()
+"
+
+[sub_resource type="GDScript" id="GDScript_3152k"]
+script/source = "extends ScreenButton
+
+
+func _on_host_pressed():
+	SessionManager.set_strategy(SteamBasedStrategy.new())
+	SessionManager.create_server()
+
+
+func _ready():
+	if Steam.isSteamRunning():
+		screen.get_child(0).theme = load(\"res://multiplayer/example_scene/ui/resources/selected_button_theme.tres\")
+"
+
+[sub_resource type="GDScript" id="GDScript_sooay"]
+script/source = "extends Button
+class_name ScreenButton
+
+@export var screen: Node
+"
+
 [node name="WaitLobby" type="Node2D"]
 script = SubResource("GDScript_frw3p")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
-script = ExtResource("2_y1rju")
+script = SubResource("GDScript_wo6p1")
 
 [node name="LocalScreen" type="CenterContainer" parent="CanvasLayer"]
 visible = false
@@ -106,7 +250,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_71fb1")
+theme = SubResource("Theme_g837m")
 text = "HOST"
 
 [node name="Spacer2" type="Container" parent="CanvasLayer/IPScreen/VBoxContainer"]
@@ -117,7 +261,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_71fb1")
+theme = SubResource("Theme_g837m")
 text = "JOIN"
 
 [node name="SteamScreen" type="CenterContainer" parent="CanvasLayer"]
@@ -127,12 +271,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Host" type="Button" parent="CanvasLayer/SteamScreen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SteamScreen"]
+layout_mode = 2
+
+[node name="Host" type="Button" parent="CanvasLayer/SteamScreen/VBoxContainer"]
 custom_minimum_size = Vector2(300, 35)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_71fb1")
+theme = SubResource("Theme_g837m")
 text = "HOST"
+
+[node name="Container" type="Container" parent="CanvasLayer/SteamScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 26.165)
+layout_mode = 2
+
+[node name="Friends" type="Button" parent="CanvasLayer/SteamScreen/VBoxContainer"]
+custom_minimum_size = Vector2(300, 35)
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_g837m")
+text = "FRIENDS"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchors_preset = 10
@@ -148,11 +306,11 @@ clip_contents = true
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_71fb1")
+theme = SubResource("Theme_g837m")
 theme_override_colors/icon_normal_color = Color(0, 1, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 1, 0, 1)
 text = "IP"
-script = ExtResource("4_j66hj")
+script = SubResource("GDScript_tkm85")
 screen = NodePath("../../../IPScreen")
 
 [node name="Steam" type="Button" parent="CanvasLayer/CenterContainer/HBoxContainer" node_paths=PackedStringArray("screen")]
@@ -160,7 +318,7 @@ custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 focus_mode = 0
 text = "STEAM"
-script = ExtResource("5_tnyqy")
+script = SubResource("GDScript_3152k")
 screen = NodePath("../../../SteamScreen")
 
 [node name="Local" type="Button" parent="CanvasLayer/CenterContainer/HBoxContainer" node_paths=PackedStringArray("screen")]
@@ -168,7 +326,7 @@ custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 focus_mode = 0
 text = "LOCAL"
-script = ExtResource("6_jlcle")
+script = SubResource("GDScript_sooay")
 screen = NodePath("../../../LocalScreen")
 
 [node name="Users" type="Button" parent="CanvasLayer"]
@@ -240,7 +398,8 @@ position = Vector2(-960, -16)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
-[connection signal="pressed" from="CanvasLayer/SteamScreen/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/SteamScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/SteamScreen/VBoxContainer/Friends" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_friends_pressed"]
 [connection signal="pressed" from="CanvasLayer/CenterContainer/HBoxContainer/Local" to="CanvasLayer" method="_on_local_pressed"]
 [connection signal="pressed" from="CanvasLayer/Users" to="CanvasLayer" method="_on_users_pressed"]
 [connection signal="pressed" from="CanvasLayer/Disconnect" to="CanvasLayer" method="_on_disconnect_pressed"]

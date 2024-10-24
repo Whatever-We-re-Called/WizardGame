@@ -1,15 +1,44 @@
+<<<<<<< HEAD
 [gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
+=======
+[gd_scene load_steps=15 format=3 uid="uid://ms1v61f8e6f3"]
+>>>>>>> 388f8c1 (steam friends screen & quick start args)
 
 [ext_resource type="Script" path="res://game/wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
 [ext_resource type="Script" path="res://game/wait_lobby/ui/ui.gd" id="2_4rllb"]
-[ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="3_hph5r"]
 [ext_resource type="Script" path="res://game/wait_lobby/ui/ip.gd" id="4_8sotc"]
 [ext_resource type="Script" path="res://game/wait_lobby/ui/steam.gd" id="5_cue4b"]
 [ext_resource type="Script" path="res://game/wait_lobby/ui/screen_button.gd" id="6_m5bdq"]
 [ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_oy4lr"]
 [ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_6ha4y"]
 [ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpcn4"]
+bg_color = Color(0.152941, 0.568627, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gxft1"]
+bg_color = Color(0, 0.729412, 0.00392157, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wj5t"]
+bg_color = Color(0.152941, 0.568627, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Theme" id="Theme_g837m"]
+Button/styles/hover = SubResource("StyleBoxFlat_jpcn4")
+Button/styles/normal = SubResource("StyleBoxFlat_gxft1")
+Button/styles/pressed = SubResource("StyleBoxFlat_5wj5t")
 
 [node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_ajb20")
@@ -80,7 +109,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_hph5r")
+theme = SubResource("Theme_g837m")
 text = "HOST"
 
 [node name="Spacer2" type="Container" parent="CanvasLayer/IPScreen/VBoxContainer"]
@@ -91,7 +120,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_hph5r")
+theme = SubResource("Theme_g837m")
 text = "JOIN"
 
 [node name="SteamScreen" type="CenterContainer" parent="CanvasLayer"]
@@ -101,12 +130,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Host" type="Button" parent="CanvasLayer/SteamScreen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/SteamScreen"]
+layout_mode = 2
+
+[node name="Host" type="Button" parent="CanvasLayer/SteamScreen/VBoxContainer"]
 custom_minimum_size = Vector2(300, 35)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_hph5r")
+theme = SubResource("Theme_g837m")
 text = "HOST"
+
+[node name="Container" type="Container" parent="CanvasLayer/SteamScreen/VBoxContainer"]
+custom_minimum_size = Vector2(0, 26.165)
+layout_mode = 2
+
+[node name="Friends" type="Button" parent="CanvasLayer/SteamScreen/VBoxContainer"]
+custom_minimum_size = Vector2(300, 35)
+layout_mode = 2
+focus_mode = 0
+theme = SubResource("Theme_g837m")
+text = "FRIENDS"
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchors_preset = 10
@@ -124,7 +167,7 @@ clip_contents = true
 custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 focus_mode = 0
-theme = ExtResource("3_hph5r")
+theme = SubResource("Theme_g837m")
 theme_override_colors/icon_normal_color = Color(0, 1, 0, 1)
 theme_override_colors/icon_disabled_color = Color(0, 1, 0, 1)
 text = "IP"
@@ -231,7 +274,9 @@ scale = Vector2(2, 2)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
-[connection signal="pressed" from="CanvasLayer/SteamScreen/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/SteamScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/SteamScreen/VBoxContainer/Friends" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_friends_pressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/HBoxContainer/Steam" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_pressed"]
 [connection signal="pressed" from="CanvasLayer/CenterContainer/HBoxContainer/Local" to="CanvasLayer" method="_on_local_pressed"]
 [connection signal="pressed" from="CanvasLayer/Users" to="CanvasLayer" method="_on_users_pressed"]
 [connection signal="pressed" from="CanvasLayer/Disconnect" to="CanvasLayer" method="_on_disconnect_pressed"]

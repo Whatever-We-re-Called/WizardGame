@@ -20,15 +20,16 @@ config/icon="res://icon.svg"
 [autoload]
 
 SessionManager="*res://multiplayer/session_manager.gd"
+SteamWrapper="*res://multiplayer/steam/steam_wrapper.gd"
 RigidBodyAutoScaler="*res://addons/rigidbody_auto_scaler/RigidBodyAutoScaler.gd"
 Abilities="*res://abilities/abilities.gd"
 DisasterManager="*res://disasters/disaster_manager.gd"
 PhysicsManager="*res://physics/manager/physics_manager.tscn"
 NetworkManager="*res://addons/godot_steam_sync/Network/RadomeSteamSync/NetworkManager.gd"
-SteamWrapper="*res://multiplayer/steam/steam_wrapper.gd"
 P2P="*res://addons/godot_steam_sync/Network/RadomeSteamSync/P2P.gd"
 Command="*res://addons/godot_steam_sync/Network/RadomeSteamSync/SyncNode/CommandSync.gd"
 SceneManager="*res://addons/godot_steam_sync/SceneChanger/SceneManager.gd"
+StartArgs="*res://util/startargs/start_args.gd"
 
 [display]
 
