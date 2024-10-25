@@ -15,7 +15,7 @@ spawn_points = NodePath("SpawnPoints")
 [node name="SpawnPoints" parent="." instance=ExtResource("1_qggt3")]
 
 [node name="Node2D" type="Node2D" parent="SpawnPoints"]
-position = Vector2(960, 800)
+position = Vector2(960, 768)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -173,15 +173,27 @@ position = Vector2(960, 540)
 
 [node name="Environment" type="Node" parent="."]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment"]
+[node name="Background" type="ColorRect" parent="Environment"]
+z_index = -10
+offset_left = -64.0
+offset_top = -704.0
+offset_right = 1984.0
+offset_bottom = 1152.0
+color = Color(0.32549, 0.329412, 0.352941, 1)
+metadata/_edit_lock_ = true
 
-[node name="Polygon2D" type="Polygon2D" parent="Environment/StaticBody2D"]
+[node name="Foreground" type="Polygon2D" parent="Environment"]
 position = Vector2(968, 1000)
 color = Color(0.164706, 0.196078, 0.294118, 1)
-polygon = PackedVector2Array(-160, -88, 1016, -232, 1016, 152, -1032, 152, -1032, -40)
+polygon = PackedVector2Array(-144, -168, 128, -168, 256, -232, 520, -232, 648, -296, 1016, -296, 1016, 152, -1032, 152, -1032, -1704, 1016, -1704, 1016, -296, 920, -296, 920, -1640, -936, -1640, -936, -104, -144, -104)
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment"]
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Environment/StaticBody2D"]
-polygon = PackedVector2Array(-64, 960, -64, 1152, 1984, 1152, 1984, 768, 816, 912)
+polygon = PackedVector2Array(-64, 896, -64, 1152, 1984, 1152, 1984, 704, 1984, -704, -64, -704, -64, 896, 32, 896, 32, -640, 1888, -640, 1888, 704, 1616, 704, 1488, 768, 1224, 768, 1096, 832, 824, 832, 824, 896)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]

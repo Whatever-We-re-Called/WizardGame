@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://tjmncfnms2m0"]
 
-[ext_resource type="Script" path="res://game/level/level.gd" id="1_7fumv"]
+[ext_resource type="Script" path="res://game/map_scene.gd" id="1_jce3o"]
 [ext_resource type="PackedScene" uid="uid://438vb86uyyob" path="res://maps/prototype_second_concept_level/scenes/boat.tscn" id="2_1q5kc"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="2_sr0yk"]
 [ext_resource type="PackedScene" uid="uid://6ghlx0yjaura" path="res://maps/prototype_second_concept_level/scenes/cabin.tscn" id="4_8ast6"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bd4aa4bjc71o4" path="res://game/level/kill_zone.tscn" id="11_0ki5m"]
 
 [node name="PrototypeSecondConceptLevel" type="Node" node_paths=PackedStringArray("spawn_points")]
-script = ExtResource("1_7fumv")
+script = ExtResource("1_jce3o")
 spawn_points = NodePath("SpawnPoints")
 
 [node name="SpawnPoints" parent="." instance=ExtResource("2_sr0yk")]
