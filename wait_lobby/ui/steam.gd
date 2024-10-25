@@ -8,4 +8,4 @@ func _on_host_pressed():
 
 func _ready():
 	if Steam.isSteamRunning():
-		screen.get_child(0).theme = load("res://game/wait_lobby/ui/resources/selected_button_theme.tres")
+		screen.get_child(0).theme = load("res://wait_lobby/ui/resources/selected_button_theme.tres")

@@ -41,7 +41,7 @@ func _ready() -> void:
 	SessionManager.server_closed.connect(_server_closed)
 	
 	# TODO Change this to load correct current game scene.
-	change_to_scene("res://game/wait_lobby/wait_lobby.tscn")
+	change_to_scene("res://wait_lobby/wait_lobby.tscn")
 
 
 func _process(delta: float) -> void:
