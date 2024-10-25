@@ -53,7 +53,7 @@ func handle_physics(delta):
 	
 	var input_direction = _get_input_direction()
 	if input_direction != Vector2.ZERO:
-		player.last_input_direction = input_direction
+		previous_input_direction = input_direction
 
 
 func handle_post_physics(delta):
@@ -147,3 +147,13 @@ func handle_debug_inputs():
 
 func _get_input_direction() -> Vector2:
 	return Input.get_vector(player.im.move_left, player.im.move_right, player.im.move_up, player.im.move_down).normalized()
+
+
+func get_pointer_direction() -> Vector2:
+	match player.im.get_device_type():
+		DeviceInputMap.DeviceType.KEYBOARD_MOUSE:
+			return player.get_center_global_position().direction_to(player.get_global_mouse_position()).normalized()
+		DeviceInputMap.DeviceType.CONTROLLER:
+			return player.get_direction()
+		_:
+			return Vector2.ZERO

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=8 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
@@ -7,9 +7,6 @@
 [ext_resource type="Script" path="res://wait_lobby/ui/ip.gd" id="4_8sotc"]
 [ext_resource type="Script" path="res://wait_lobby/ui/steam.gd" id="5_cue4b"]
 [ext_resource type="Script" path="res://wait_lobby/ui/screen_button.gd" id="6_m5bdq"]
-[ext_resource type="Texture2D" uid="uid://cjvpq40pvdtrh" path="res://maps/prototype_first_concept_level/bgb.png" id="7_oy4lr"]
-[ext_resource type="Texture2D" uid="uid://bd6an24ovojqy" path="res://maps/prototype_first_concept_level/foreground_background.png" id="8_6ha4y"]
-[ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
 
 [node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_ajb20")
@@ -174,60 +171,17 @@ text = "TOGGLE UI"
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(960, 540)
+[node name="Environment" type="Node" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-975, 429, -500, 432, -321, 346, -278, 459, -140, 399, -20, 378, 52, 378, 163, 407, 254, 465, 314, 340, 489, 432, 985, 432, 990, 588, -990, 581)
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment"]
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
-build_mode = 1
-polygon = PackedVector2Array(-960, 104, -977, -561, -673, -559, -755, -374, -782, -307, -806, -248, -828, -189, -903, -18)
+[node name="Polygon2D" type="Polygon2D" parent="Environment/StaticBody2D"]
+position = Vector2(968, 1000)
+color = Color(0.164706, 0.196078, 0.294118, 1)
+polygon = PackedVector2Array(-160, -88, 1016, -232, 1016, 152, -1032, 152, -1032, -40)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
-build_mode = 1
-polygon = PackedVector2Array(960, 120, 970, -562, 665, -558, 753, -375, 804, -250, 828, -194, 902, -19)
-
-[node name="Background" type="Sprite2D" parent="."]
-z_index = -10
-position = Vector2(960, 540)
-texture = ExtResource("7_oy4lr")
-metadata/_edit_lock_ = true
-
-[node name="ForegroundBackground" type="Sprite2D" parent="."]
-z_index = -9
-position = Vector2(960, 540)
-texture = ExtResource("8_6ha4y")
-
-[node name="DisasterArea" type="Polygon2D" parent="."]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(-28, -31, 784.616, -31.8271, 1937, -33, 1964, 1132, -47, 1135)
-metadata/_edit_lock_ = true
-
-[node name="RedBox10" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(656, 688)
-
-[node name="RedBox" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(904, 512)
-
-[node name="RedBox2" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(904, 448)
-
-[node name="RedBox3" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(968, 448)
-
-[node name="RedBox4" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(1032, 448)
-
-[node name="RedBox5" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(1096, 448)
-
-[node name="RedBox6" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(1160, 448)
-
-[node name="RedBox7" parent="." instance=ExtResource("11_wv8q6")]
-position = Vector2(1264, 632)
-scale = Vector2(2, 2)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Environment/StaticBody2D"]
+polygon = PackedVector2Array(-64, 960, -64, 1152, 1984, 1152, 1984, 768, 816, 912)
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]

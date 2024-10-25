@@ -114,7 +114,7 @@ func _axis(axis: JoyAxis, value: float):
 	var input = InputEventJoypadMotion.new()
 	input.axis = axis
 	input.axis_value = value
-	return input 
+	return input
 
 
 class DefaultMappings:

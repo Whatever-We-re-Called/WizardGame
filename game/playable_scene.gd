@@ -3,9 +3,9 @@ class_name PlayableScene extends Node
 @export var spawn_points: SpawnPoints
 
 var game_manager: GameManager
-
-func _ready():
-	DisasterManager.set_disaster_area($DisasterArea.polygon)
+#
+#func _ready():
+	#DisasterManager.set_disaster_area($DisasterArea.polygon)
 
 
 @rpc("any_peer", "call_local")

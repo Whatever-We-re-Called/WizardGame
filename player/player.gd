@@ -19,7 +19,6 @@ signal received_debug_input(int)
 var peer_id: int
 var im: DeviceInputMap
 var can_use_abilities: bool = true
-var last_input_direction: Vector2 = Vector2.ZERO
 var is_dead = false
 
 
@@ -87,18 +86,8 @@ func get_center_global_position() -> Vector2:
 	return center_point.global_position
 
 
-func get_pointer_direction() -> Vector2:
-	match im.get_device_type():
-		DeviceInputMap.DeviceType.KEYBOARD_MOUSE:
-			return get_center_global_position().direction_to(get_global_mouse_position()).normalized()
-		DeviceInputMap.DeviceType.CONTROLLER:
-			return get_direction()
-		_:
-			return Vector2.ZERO
-
-
 func get_direction() -> Vector2:
-	return last_input_direction
+	return controller.previous_input_direction
 
 
 func get_peer_id() -> int:
