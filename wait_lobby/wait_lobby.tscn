@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=9 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" path="res://wait_lobby/ui/ip.gd" id="4_8sotc"]
 [ext_resource type="Script" path="res://wait_lobby/ui/steam.gd" id="5_cue4b"]
 [ext_resource type="Script" path="res://wait_lobby/ui/screen_button.gd" id="6_m5bdq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nvr8y"]
+font_size = 120
 
 [node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_ajb20")
@@ -194,6 +197,46 @@ metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Environment/StaticBody2D"]
 polygon = PackedVector2Array(-64, 896, -64, 1152, 1984, 1152, 1984, 704, 1984, -704, -64, -704, -64, 896, 32, 896, 32, -640, 1888, -640, 1888, 704, 1616, 704, 1488, 768, 1224, 768, 1096, 832, 824, 832, 824, 896)
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="StartInteractable" type="ColorRect" parent="Interactables"]
+z_index = -5
+offset_left = 1288.0
+offset_top = 576.0
+offset_right = 1424.0
+offset_bottom = 768.0
+color = Color(0.260318, 0.682407, 0.310273, 1)
+
+[node name="Label" type="Label" parent="Interactables/StartInteractable"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 544.0
+offset_bottom = 123.0
+scale = Vector2(0.25, 0.25)
+text = "Start"
+label_settings = SubResource("LabelSettings_nvr8y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsInteractable2" type="ColorRect" parent="Interactables"]
+z_index = -5
+offset_left = 1688.0
+offset_top = 512.0
+offset_right = 1824.0
+offset_bottom = 704.0
+color = Color(1, 0.490196, 0.211765, 1)
+
+[node name="Label" type="Label" parent="Interactables/SettingsInteractable2"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 544.0
+offset_bottom = 173.0
+scale = Vector2(0.25, 0.25)
+text = "Settings"
+label_settings = SubResource("LabelSettings_nvr8y")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
