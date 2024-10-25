@@ -25,6 +25,7 @@ const GRAVITY: float = 9.81
 @export var air_friction: float
 
 var previous_input_direction: Vector2
+var prevent_jump: bool = false
 
 
 func _ready():
@@ -102,6 +103,8 @@ func _handle_air_horizontal_movement(input_direction: Vector2, delta: float):
 
 
 func _handle_jump():
+	if prevent_jump == true: return
+	
 	if Input.is_action_just_pressed(player.im.jump):
 		jump_buffer.start()
 	

@@ -190,11 +190,15 @@ func increment_scores():
 				scores[player] = 1
 
 
+func try_to_start_game():
+	if multiplayer.is_server() and not game_settings_ui.visible:
+		transition_to_state.rpc_id(1, "gamestart")
+
+
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
-			if multiplayer.is_server() and not game_settings_ui.visible:
-				transition_to_state.rpc_id(1, "gamestart")
+			try_to_start_game()
 		2:
 			if multiplayer.is_server() and not game_settings_ui.visible:
 				transition_to_state.rpc_id(1, "waitlobby")

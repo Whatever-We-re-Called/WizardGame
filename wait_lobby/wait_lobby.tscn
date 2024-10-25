@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=11 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://wait_lobby/ui/ip.gd" id="4_8sotc"]
 [ext_resource type="Script" path="res://wait_lobby/ui/steam.gd" id="5_cue4b"]
 [ext_resource type="Script" path="res://wait_lobby/ui/screen_button.gd" id="6_m5bdq"]
+[ext_resource type="PackedScene" uid="uid://beoa0qb0ocbes" path="res://wait_lobby/interactable_area/interactable_area.tscn" id="8_yjbph"]
 [ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvr8y"]
@@ -203,15 +204,26 @@ polygon = PackedVector2Array(-64, 896, -64, 1152, 1984, 1152, 1984, 704, 1984, -
 
 [node name="Interactables" type="Node" parent="."]
 
-[node name="StartInteractable" type="ColorRect" parent="Interactables"]
+[node name="StartInteractable" parent="Interactables" instance=ExtResource("8_yjbph")]
+position = Vector2(1344, 736)
+interact_action_text = "Play"
+
+[node name="CollisionPolygon2D" parent="Interactables/StartInteractable" index="0"]
+polygon = PackedVector2Array(-96, -160, 96, -160, 96, 64, -96, 64)
+
+[node name="Label" parent="Interactables/StartInteractable" index="1"]
+offset_top = -192.0
+offset_bottom = 64.0
+
+[node name="ColorRect" type="ColorRect" parent="Interactables/StartInteractable"]
 z_index = -5
-offset_left = 1280.0
-offset_top = 608.0
-offset_right = 1408.0
-offset_bottom = 800.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+offset_bottom = 64.0
 color = Color(0.260318, 0.682407, 0.310273, 1)
 
-[node name="Label" type="Label" parent="Interactables/StartInteractable"]
+[node name="Label" type="Label" parent="Interactables/StartInteractable/ColorRect"]
 layout_mode = 0
 offset_top = 8.0
 offset_right = 512.0
@@ -266,3 +278,6 @@ position = Vector2(512, 768)
 [connection signal="pressed" from="CanvasLayer/Users" to="CanvasLayer" method="_on_users_pressed"]
 [connection signal="pressed" from="CanvasLayer/Disconnect" to="CanvasLayer" method="_on_disconnect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Toggle UI" to="CanvasLayer" method="_on_toggle_ui_pressed"]
+[connection signal="interacted" from="Interactables/StartInteractable" to="." method="_on_start_interactable_interacted"]
+
+[editable path="Interactables/StartInteractable"]
