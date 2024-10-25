@@ -210,7 +210,3 @@ func _on_player_received_debug_input(debug_value: int) -> void:
 		1:
 			if multiplayer.is_server() and not game_settings_ui.visible:
 				transition_to_state.rpc_id(1, "waitlobby")
-		2:
-			try_to_start_game()
-		3:
-			toggle_game_settings()
