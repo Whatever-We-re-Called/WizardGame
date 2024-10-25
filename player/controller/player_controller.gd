@@ -41,10 +41,14 @@ func _ready():
 
 
 func handle_pre_physics(delta):
+	if player.freeze == true: return
+	
 	was_on_floor = player.is_on_floor()
 
 
 func handle_physics(delta):
+	if player.freeze == true: return
+	
 	_handle_gravity(delta)
 	_handle_jump()
 	_handle_wasd(delta)
@@ -58,6 +62,8 @@ func handle_physics(delta):
 
 
 func handle_post_physics(delta):
+	if player.freeze == true: return
+	
 	if was_on_floor and not player.is_on_floor():
 		coyote_timer.start()
 	

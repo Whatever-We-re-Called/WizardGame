@@ -122,10 +122,10 @@ unique_name_in_owner = true
 replication_config = SubResource("SceneReplicationConfig_gpxhm")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -73.0
-offset_top = -148.0
-offset_right = 74.0
-offset_bottom = -108.0
+offset_left = -72.0
+offset_top = -112.0
+offset_right = 75.0
+offset_bottom = -72.0
 bbcode_enabled = true
 
 [node name="PlayerController" type="Node" parent="."]

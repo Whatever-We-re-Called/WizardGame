@@ -195,20 +195,22 @@ func try_to_start_game():
 		transition_to_state.rpc_id(1, "gamestart")
 
 
+func toggle_game_settings():
+	if multiplayer.is_server():
+		if game_settings_ui.visible == false:
+			game_settings_ui.populate(game_settings)
+			game_settings_ui.visible = true
+		else:
+			game_settings = game_settings_ui.get_game_settings().duplicate()
+			game_settings_ui.visible = false
+
+
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
-			try_to_start_game()
-		2:
 			if multiplayer.is_server() and not game_settings_ui.visible:
 				transition_to_state.rpc_id(1, "waitlobby")
-		5:
-			if multiplayer.is_server():
-				if game_settings_ui.visible:
-					game_settings = game_settings_ui.get_game_settings().duplicate()
-					game_settings_ui.visible = false
-					get_player_from_peer_id(1).can_use_abilities = true
-				else:
-					game_settings_ui.populate(game_settings)
-					game_settings_ui.visible = true
-					get_player_from_peer_id(1).can_use_abilities = false
+		2:
+			try_to_start_game()
+		3:
+			toggle_game_settings()

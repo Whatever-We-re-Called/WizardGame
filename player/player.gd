@@ -20,6 +20,7 @@ var peer_id: int
 var im: DeviceInputMap
 var can_use_abilities: bool = true
 var is_dead = false
+var freeze: bool = false
 
 
 func _enter_tree():

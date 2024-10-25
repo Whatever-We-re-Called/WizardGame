@@ -202,6 +202,26 @@ metadata/_edit_lock_ = true
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Environment/StaticBody2D"]
 polygon = PackedVector2Array(-64, 896, -64, 1152, 1984, 1152, 1984, 704, 1984, -704, -64, -704, -64, 896, 64, 896, 64, -576, 1856, -576, 1856, 704, 1600, 704, 1472, 768, 1216, 768, 1088, 832, 832, 832, 704, 896)
 
+[node name="Playground" type="Node" parent="Environment"]
+
+[node name="RedBox" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(256, 896)
+
+[node name="RedBox2" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(256, 832)
+
+[node name="RedBox3" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(256, 768)
+
+[node name="RedBox4" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(512, 896)
+
+[node name="RedBox5" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(512, 832)
+
+[node name="RedBox6" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(512, 768)
+
 [node name="Interactables" type="Node" parent="."]
 
 [node name="StartInteractable" parent="Interactables" instance=ExtResource("8_yjbph")]
@@ -234,15 +254,26 @@ label_settings = SubResource("LabelSettings_nvr8y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SettingsInteractable2" type="ColorRect" parent="Interactables"]
+[node name="SettingsInteractable" parent="Interactables" instance=ExtResource("8_yjbph")]
+position = Vector2(1728, 672)
+interact_action_text = "Edit"
+
+[node name="CollisionPolygon2D" parent="Interactables/SettingsInteractable" index="0"]
+polygon = PackedVector2Array(-96, -160, 96, -160, 96, 64, -96, 64)
+
+[node name="Label" parent="Interactables/SettingsInteractable" index="1"]
+offset_top = -192.0
+offset_bottom = 64.0
+
+[node name="ColorRect" type="ColorRect" parent="Interactables/SettingsInteractable"]
 z_index = -5
-offset_left = 1664.0
-offset_top = 544.0
-offset_right = 1792.0
-offset_bottom = 736.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+offset_bottom = 64.0
 color = Color(1, 0.490196, 0.211765, 1)
 
-[node name="Label" type="Label" parent="Interactables/SettingsInteractable2"]
+[node name="Label" type="Label" parent="Interactables/SettingsInteractable/ColorRect"]
 layout_mode = 0
 offset_top = 8.0
 offset_right = 512.0
@@ -253,24 +284,6 @@ label_settings = SubResource("LabelSettings_nvr8y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RedBox" parent="Interactables" instance=ExtResource("11_wv8q6")]
-position = Vector2(256, 896)
-
-[node name="RedBox2" parent="Interactables" instance=ExtResource("11_wv8q6")]
-position = Vector2(256, 832)
-
-[node name="RedBox3" parent="Interactables" instance=ExtResource("11_wv8q6")]
-position = Vector2(256, 768)
-
-[node name="RedBox4" parent="Interactables" instance=ExtResource("11_wv8q6")]
-position = Vector2(512, 896)
-
-[node name="RedBox5" parent="Interactables" instance=ExtResource("11_wv8q6")]
-position = Vector2(512, 832)
-
-[node name="RedBox6" parent="Interactables" instance=ExtResource("11_wv8q6")]
-position = Vector2(512, 768)
-
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Host" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_host_pressed"]
 [connection signal="pressed" from="CanvasLayer/IPScreen/VBoxContainer/Join" to="CanvasLayer/CenterContainer/HBoxContainer/IP" method="_on_join_pressed"]
 [connection signal="pressed" from="CanvasLayer/SteamScreen/Host" to="CanvasLayer/CenterContainer/HBoxContainer/Steam" method="_on_host_pressed"]
@@ -279,5 +292,7 @@ position = Vector2(512, 768)
 [connection signal="pressed" from="CanvasLayer/Disconnect" to="CanvasLayer" method="_on_disconnect_pressed"]
 [connection signal="pressed" from="CanvasLayer/Toggle UI" to="CanvasLayer" method="_on_toggle_ui_pressed"]
 [connection signal="interacted" from="Interactables/StartInteractable" to="." method="_on_start_interactable_interacted"]
+[connection signal="interacted" from="Interactables/SettingsInteractable" to="." method="_on_settings_interactable_interacted"]
 
 [editable path="Interactables/StartInteractable"]
+[editable path="Interactables/SettingsInteractable"]

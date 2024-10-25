@@ -1,6 +1,6 @@
 extends Area2D
 
-signal interacted
+signal interacted(player: Player)
 
 @export var only_host_can_interact: bool = true
 @export var interact_action_text: String = "Interact"
@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 	if label.visible == true:
 		for player in possible_interact_players:
 			if Input.is_action_just_pressed(player.im.jump):
-				interacted.emit()
+				interacted.emit(player)
 
 
 func _on_body_entered(body: Node2D) -> void:
