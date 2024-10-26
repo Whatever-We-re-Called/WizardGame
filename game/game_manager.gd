@@ -45,7 +45,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if is_multiplayer_authority():
+	if multiplayer.is_server():
 		if current_state != null:
 			current_state._update(delta)
 

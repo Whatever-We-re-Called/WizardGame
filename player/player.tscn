@@ -1,12 +1,33 @@
-[gd_scene load_steps=8 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=15 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
-[ext_resource type="Script" path="res://player/change_abilities_panel.gd" id="2_5idy2"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
+[ext_resource type="Script" path="res://player/change_abilities_ui.gd" id="2_ojypj"]
 [ext_resource type="Texture2D" uid="uid://d2kdvrnsglfkg" path="res://player/textures/prototype_player.png" id="2_tkvjb"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b0pup"]
-bg_color = Color(0.295867, 0.295866, 0.295866, 0.784314)
+[sub_resource type="LabelSettings" id="LabelSettings_03ctb"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_73i8e"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_tnxg8"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_nxbd3"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_cbw3c"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40yum"]
+bg_color = Color(0.294118, 0.294118, 0.294118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1w4gh"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5wop"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
 radius = 36.0
@@ -39,64 +60,171 @@ controller = NodePath("PlayerController")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ChangeAbilitiesPanel" type="PanelContainer" parent="CanvasLayer"]
+[node name="ChangeAbilitiesUI" type="CenterContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ojypj")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/ChangeAbilitiesUI"]
+custom_minimum_size = Vector2(1500, 750)
+layout_mode = 2
+color = Color(0.117647, 0.117647, 0.117647, 0.784314)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Title" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer"]
+layout_mode = 2
+text = "Change Abilities
+"
+label_settings = SubResource("LabelSettings_03ctb")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Slot #1:"
+label_settings = SubResource("LabelSettings_73i8e")
+
+[node name="Slot1ValueLabel" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_b0pup")
-script = ExtResource("2_5idy2")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ChangeAbilitiesPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+text = "TEST"
+label_settings = SubResource("LabelSettings_tnxg8")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Slot #2:"
+label_settings = SubResource("LabelSettings_73i8e")
+
+[node name="Slot2ValueLabel" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "TEST"
+label_settings = SubResource("LabelSettings_tnxg8")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Slot #3:"
+label_settings = SubResource("LabelSettings_73i8e")
+
+[node name="Slot3ValueLabel" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "TEST"
+label_settings = SubResource("LabelSettings_tnxg8")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="AbilityList" type="ItemList" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 350)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(700, 350)
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer2/VBoxContainer2"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="DescriptionTextLabel" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer2/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
-text = "Ability #1"
+text = "Description"
+label_settings = SubResource("LabelSettings_nxbd3")
+horizontal_alignment = 1
 
-[node name="Ability1OptionButton" type="OptionButton" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="DescriptionValueLabel" type="Label" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer2/VBoxContainer2/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(192, 37)
+layout_mode = 2
+text = "Nothing selected."
+label_settings = SubResource("LabelSettings_cbw3c")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="SetSlot1Button" type="Button" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/hover = SubResource("StyleBoxFlat_40yum")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1w4gh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s5wop")
+text = "Set Slot #1
+"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Ability #2"
-
-[node name="Ability2OptionButton" type="OptionButton" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="SetSlot2Button" type="Button" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer3"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(192, 37)
+custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/hover = SubResource("StyleBoxFlat_40yum")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1w4gh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s5wop")
+text = "Set Slot #2
+"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="Label" type="Label" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-text = "Ability #3"
-
-[node name="Ability3OptionButton" type="OptionButton" parent="CanvasLayer/ChangeAbilitiesPanel/MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="SetSlot3Button" type="Button" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer/HBoxContainer3"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(192, 37)
+custom_minimum_size = Vector2(300, 50)
 layout_mode = 2
 focus_mode = 0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/hover = SubResource("StyleBoxFlat_40yum")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1w4gh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s5wop")
+text = "Set Slot #3
+"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/ChangeAbilitiesUI/VBoxContainer"]
+layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

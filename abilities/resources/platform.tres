@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_omxmk")
-name = "Dash"
-description = "ahhhh poopy stinky teehee"
+name = "Platform"
+description = "Temporarily spawns a breakable platform beneath your feet."
 cooldown = 7.0
 execution_script = ExtResource("1_sdaqf")

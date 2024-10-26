@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("2_ptkx2")
 name = "Remote Land Mine"
-description = "ahhhh poopy stinky teehee"
+description = "Spawns a land mine at your location. Explodes either manually by your input or automatically by something pressing its button."
 cooldown = 3.0
 execution_script = ExtResource("1_gsn8l")

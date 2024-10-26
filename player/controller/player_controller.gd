@@ -24,6 +24,7 @@ const GRAVITY: float = 9.81
 @export var air_acceleration: float
 @export var air_friction: float
 
+var freeze_input: bool = false
 var previous_input_direction: Vector2
 var prevent_jump: bool = false
 
@@ -41,43 +42,53 @@ func _ready():
 
 
 func handle_pre_physics(delta):
-	if player.freeze == true: return
-	
-	was_on_floor = player.is_on_floor()
+	if freeze_input == false:
+		was_on_floor = player.is_on_floor()
 
 
 func handle_physics(delta):
-	if player.freeze == true: return
-	
+	_handle_ui()
 	_handle_gravity(delta)
-	_handle_jump()
-	_handle_wasd(delta)
-	_handle_abilities()
+	
+	if freeze_input == false:
+		_handle_jump()
+		_handle_wasd(delta)
+		_handle_abilities()
+		
+		var input_direction = _get_input_direction()
+		if input_direction != Vector2.ZERO:
+			previous_input_direction = input_direction
+	else:
+		_handle_wasd(delta, true)
 	
 	player.move_and_slide()
-	
-	var input_direction = _get_input_direction()
-	if input_direction != Vector2.ZERO:
-		previous_input_direction = input_direction
 
 
 func handle_post_physics(delta):
-	if player.freeze == true: return
-	
-	if was_on_floor and not player.is_on_floor():
-		coyote_timer.start()
-	
-	
+	if freeze_input == false:
+		if was_on_floor and not player.is_on_floor():
+			coyote_timer.start()
+
+
+func _handle_ui():
+	if Input.is_action_just_pressed(player.im.change_abilities):
+		player.toggle_change_abilities_ui()
+
+
 func _handle_gravity(delta):
 	if not player.is_on_floor():
 		player.velocity.y += GRAVITY * delta * gravity_scale
 
 
-func _handle_wasd(delta):
-	var input_direction = _get_input_direction()
+func _handle_wasd(delta: float, ignore_input: bool = false):
+	var input_direction: Vector2
+	if ignore_input == false:
+		input_direction = _get_input_direction()
 	
-	if (input_direction.x > 0 and player.velocity.x > 0) or (input_direction.x < 0 and player.velocity.x < 0):
-		previous_input_direction = input_direction
+		if (input_direction.x > 0 and player.velocity.x > 0) or (input_direction.x < 0 and player.velocity.x < 0):
+			previous_input_direction = input_direction
+	else:
+		input_direction = Vector2.ZERO
 	
 	if player.is_on_floor():
 		_handle_ground_horizontal_movement(input_direction, delta)
@@ -130,6 +141,8 @@ func _handle_abilities():
 	]
 	
 	for i in range(3):
+		if player.abilities[i] == Abilities.Type.NONE: continue
+		
 		var ability_node = player.ability_nodes.get_child(i)
 		var ability_input_string = ability_input_strings[i]
 		if ability_node.get_script() != null:
@@ -144,12 +157,7 @@ func handle_debug_inputs():
 	if Input.is_action_just_pressed(player.im.debug_3):
 		player.received_debug_input.emit(3)
 	if Input.is_action_just_pressed(player.im.debug_4):
-		if player.change_abilities_panel.visible:
-			player.change_abilities_panel.visible = false
-			player.can_use_abilities = true
-		else:
-			player.change_abilities_panel.visible = true
-			player.can_use_abilities = false
+		player.received_debug_input.emit(4)
 	if Input.is_action_just_pressed(player.im.debug_tab):
 		player.received_debug_input.emit(5)
 

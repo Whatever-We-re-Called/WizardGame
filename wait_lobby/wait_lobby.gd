@@ -9,8 +9,8 @@ func _on_settings_interactable_interacted(player: Player) -> void:
 	if game_manager.game_settings_ui.visible == true: return
 	
 	game_manager.toggle_game_settings()
-	player.freeze = true
+	player.controller.freeze_input = true
 	await game_manager.game_settings_ui.closed
 	
 	game_manager.toggle_game_settings()
-	player.freeze = false
+	player.controller.freeze_input = false

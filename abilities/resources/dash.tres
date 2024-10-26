@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("2_a3khv")
 name = "Dash"
-description = "ahhhh poopy stinky teehee"
+description = "Greatly launches you toward the direction you are pointing."
 cooldown = 3.0
 execution_script = ExtResource("1_68oo3")

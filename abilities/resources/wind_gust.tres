@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_e4r4g")
 name = "Wind Gust"
-description = "ahhhh poopy stinky teehee"
+description = "Significantly pushes players and enviroment bodies forward in direction you are pointing."
 cooldown = 3.0
 execution_script = ExtResource("1_vmb6d")
