@@ -1,14 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=6 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
-[ext_resource type="Script" path="res://wait_lobby/ui/ui.gd" id="2_4rllb"]
-[ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="3_hph5r"]
-[ext_resource type="Script" path="res://wait_lobby/ui/ip.gd" id="4_8sotc"]
-[ext_resource type="Script" path="res://wait_lobby/ui/steam.gd" id="5_cue4b"]
-[ext_resource type="Script" path="res://wait_lobby/ui/screen_button.gd" id="6_m5bdq"]
 [ext_resource type="PackedScene" uid="uid://beoa0qb0ocbes" path="res://wait_lobby/interactable_area/interactable_area.tscn" id="8_yjbph"]
-[ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
+[ext_resource type="PackedScene" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvr8y"]
 font_size = 108
@@ -21,10 +16,6 @@ spawn_points = NodePath("SpawnPoints")
 
 [node name="Node2D" type="Node2D" parent="SpawnPoints"]
 position = Vector2(960, 800)
-
-[node name="UI" type="CanvasLayer" parent="."]
-visible = false
-script = SubResource("GDScript_bg5sb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)
