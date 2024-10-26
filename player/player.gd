@@ -72,11 +72,9 @@ func _create_ability_nodes_rpc():
 		var ability = abilities[i]
 		var ability_scene = Abilities.get_ability_scene(ability)
 		var new_ability_scene = ability_scene.instantiate()
-		
-		if ability != Abilities.Type.NONE:
-			var ability_resource = Abilities.get_ability_resource(ability)
-			new_ability_scene.setup(ability_resource)
-			ability_nodes.add_child(new_ability_scene, true)
+		var ability_resource = Abilities.get_ability_resource(ability)
+		new_ability_scene.setup(ability_resource)
+		ability_nodes.add_child(new_ability_scene, true)
 
 
 @rpc("any_peer", "call_local", "reliable")

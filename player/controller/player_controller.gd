@@ -141,8 +141,6 @@ func _handle_abilities():
 	]
 	
 	for i in range(3):
-		if player.abilities[i] == Abilities.Type.NONE: continue
-		
 		var ability_node = player.ability_nodes.get_child(i)
 		var ability_input_string = ability_input_strings[i]
 		if ability_node.get_script() != null:
