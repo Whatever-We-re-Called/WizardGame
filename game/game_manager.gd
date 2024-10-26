@@ -45,7 +45,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if is_multiplayer_authority():
+	if SessionManager.is_connected_to_peer() and is_multiplayer_authority():
 		if current_state != null:
 			current_state._update(delta)
 

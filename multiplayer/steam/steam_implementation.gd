@@ -15,7 +15,9 @@ func setup():
 	
 	# This is what's called when a user accepts an invite or clicks join game
 	Steam.join_requested.connect(_handle_join_game)
-	
+	# This is what's called when a user is invited to a game
+	Steam.lobby_invite.connect(_handle_invite_game)
+	print("Steam init")
 	
 func process():
 	if Steam.isSteamRunning():
@@ -28,8 +30,24 @@ func _handle_join_game(id, connect):
 		SessionManager.connect_to_server()
 		
 		
+func _handle_invite_game(friend_id, lobby_id, game_id):
+	if not is_friend_playing_this_game(friend_id):
+		return
+	
+	var friend = get_friend(friend_id)
+	SteamWrapper.invite_received.emit(friend, lobby_id)
+		
+		
+func accept_invite(lobby_id):
+	_handle_join_game(lobby_id, true)
+		
+		
 func get_friends_list():
 	return Steam.getUserSteamFriends()
+	
+	
+func get_friend(id):
+	return SteamFriend.new(id, Steam.getFriendPersonaName(id), SteamFriend.SteamStatus.In_Game)
 	
 	
 func get_friend_icon_small(friend_id):

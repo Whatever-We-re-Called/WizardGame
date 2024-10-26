@@ -1,0 +1,176 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5oor4ptj13jf"]
+
+[ext_resource type="Script" path="res://main_menu/main_menu.gd" id="1_ig8se"]
+[ext_resource type="Script" path="res://main_menu/play.gd" id="2_mu4l5"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_ig8se")
+
+[node name="Main" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="WizardGame" type="RichTextLabel" parent="Main"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 51.0
+offset_right = -1.0
+offset_bottom = 263.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/bold_italics_font_size = 626
+theme_override_font_sizes/bold_font_size = 156
+bbcode_enabled = true
+text = "[center][b]Wizard Game"
+fit_content = true
+
+[node name="WWC" type="RichTextLabel" parent="Main"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 244.0
+offset_right = 3.0
+offset_bottom = 456.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 41
+bbcode_enabled = true
+text = "[center]by Whatever We're Called"
+fit_content = true
+
+[node name="Play" type="Button" parent="Main"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.5
+offset_top = -98.5
+offset_right = 180.5
+offset_bottom = 98.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+focus_mode = 0
+theme_override_font_sizes/font_size = 138
+text = "Play
+"
+flat = true
+
+[node name="Quit" type="Button" parent="Main"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = 245.0
+offset_right = 181.0
+offset_bottom = 367.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+focus_mode = 0
+theme_override_font_sizes/font_size = 78
+text = "Quit"
+flat = true
+
+[node name="Settings" type="Button" parent="Main"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = 105.0
+offset_right = 181.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+focus_mode = 0
+theme_override_font_sizes/font_size = 78
+text = "Settings
+"
+flat = true
+
+[node name="Copyright" type="RichTextLabel" parent="Main"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -67.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_font_sizes/bold_italics_font_size = 626
+theme_override_font_sizes/bold_font_size = 156
+bbcode_enabled = true
+text = "[center]© Copyright 2024 by your mom"
+fit_content = true
+
+[node name="Play" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+script = ExtResource("2_mu4l5")
+
+[node name="CenterContainer" type="CenterContainer" parent="Play"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Play/CenterContainer"]
+layout_mode = 2
+
+[node name="Local" type="Button" parent="Play/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(600, 1000)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 52
+text = "Local"
+
+[node name="Spacer" type="Container" parent="Play/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Online" type="Button" parent="Play/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 52
+text = "Online"
+
+[node name="DirectConnection" type="Button" parent="Play/CenterContainer/HBoxContainer/Online"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -59.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Direct Connection"
+flat = true
+
+[node name="Back" type="Button" parent="Play"]
+offset_left = 25.0
+offset_top = 19.0
+offset_right = 190.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 32
+text = "< Back"
+flat = true
+
+[connection signal="pressed" from="Main/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Main/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Main/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Local" to="Play" method="_on_local_pressed"]
+[connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Online" to="Play" method="_on_online_pressed"]
+[connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Online/DirectConnection" to="Play" method="_on_direct_connection_pressed"]
+[connection signal="pressed" from="Play/Back" to="Play" method="_on_back_pressed"]

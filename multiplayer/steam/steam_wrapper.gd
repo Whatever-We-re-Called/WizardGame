@@ -7,6 +7,8 @@ var small_avatar_cache = {}
 var medium_avatar_cache = {}
 var large_avatar_cache = {}
 
+signal invite_received(friend, lobby_id)
+
 
 func _process(delta: float) -> void:
 	if DisplayServer.get_name().contains("headless"): return
@@ -32,6 +34,12 @@ func get_friends_list():
 		var status = -1 if is_friend_playing_this_game(friend.id) else friend.status
 		friends.append(SteamFriend.new(friend.id, friend.name, status))
 	return friends
+	
+	
+func get_friend_info(id) -> SteamFriend:
+	if not is_steam_running():
+		return null
+	return steam_impl.get_friend(id)
 	
 	
 func get_friend_avatar_small(friend_id):
@@ -71,6 +79,12 @@ func invite(friend_id):
 	var strategy = SessionManager.connection_strategy
 	if strategy is SteamBasedStrategy and strategy.lobby_id != -1:
 		steam_impl.invite(strategy.lobby_id, friend_id)
+		
+		
+func accept_invite(lobby_id):
+	if not is_steam_running():
+		return
+	steam_impl.accept_invite(lobby_id)
 		
 		
 func is_friend_playing_this_game(friend_id) -> bool:
