@@ -1,0 +1,11 @@
+extends MultiplayerScreenButton
+
+
+func _on_host_pressed():
+	SessionManager.set_strategy(SteamBasedStrategy.new())
+	SessionManager.create_server()
+
+
+func _ready():
+	if Steam.isSteamRunning():
+		screen.get_child(0).theme = load("res://wait_lobby/ui/resources/selected_button_theme.tres")

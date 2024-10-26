@@ -12,14 +12,13 @@ signal received_debug_input(int)
 @onready var ability_nodes = %AbilityNodes
 @onready var center_point = %CenterPoint
 @onready var ability_multiplayer_spawner: MultiplayerSpawner = %AbilityMultiplayerSpawner
-@onready var change_abilities_panel: PanelContainer = %ChangeAbilitiesPanel
-@onready var abilities = [ ability_1, ability_2, ability_3 ]
+@onready var change_abilities_ui: CenterContainer = $CanvasLayer/ChangeAbilitiesUI
+@onready var abilities: Array[Abilities.Type] = [ ability_1, ability_2, ability_3 ]
 @onready var player_collision_shape_2d: CollisionShape2D = %PlayerCollisionShape2D
 
 var peer_id: int
 var im: DeviceInputMap
 var can_use_abilities: bool = true
-var last_input_direction: Vector2 = Vector2.ZERO
 var is_dead = false
 
 
@@ -33,7 +32,9 @@ func _enter_tree():
 
 
 func _ready():
-	change_abilities_panel.setup(self)
+	change_abilities_ui.visible = false
+	change_abilities_ui.setup(self)
+	
 	for ability_scene in Abilities.loaded_ability_scenes.values():
 		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
 
@@ -69,10 +70,9 @@ func create_ability_nodes():
 func _create_ability_nodes_rpc():
 	for i in range(3):
 		var ability = abilities[i]
-		var ability_resource = Abilities.get_ability_resource(ability)
 		var ability_scene = Abilities.get_ability_scene(ability)
-		
 		var new_ability_scene = ability_scene.instantiate()
+		var ability_resource = Abilities.get_ability_resource(ability)
 		new_ability_scene.setup(ability_resource)
 		ability_nodes.add_child(new_ability_scene, true)
 
@@ -87,18 +87,8 @@ func get_center_global_position() -> Vector2:
 	return center_point.global_position
 
 
-func get_pointer_direction() -> Vector2:
-	match im.get_device_type():
-		DeviceInputMap.DeviceType.KEYBOARD_MOUSE:
-			return get_center_global_position().direction_to(get_global_mouse_position()).normalized()
-		DeviceInputMap.DeviceType.CONTROLLER:
-			return get_direction()
-		_:
-			return Vector2.ZERO
-
-
 func get_direction() -> Vector2:
-	return last_input_direction
+	return controller.previous_input_direction
 
 
 func get_peer_id() -> int:
@@ -169,3 +159,12 @@ func add_velocity(velocity: Vector2):
 @rpc("any_peer", "call_local")
 func _add_velocity_rpc(velocity: Vector2):
 	apply_central_impulse(velocity)
+
+
+func toggle_change_abilities_ui():
+	if change_abilities_ui.visible == false:
+		change_abilities_ui.visible = true
+		controller.freeze_input = true
+	else:
+		change_abilities_ui.visible = false
+		controller.freeze_input = false

@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("2_om3ra")
 name = "Wayback Point"
-description = "ahhhh poopy stinky teehee"
+description = "Places a point in space that you can teleport to at anytime. "
 cooldown = 3.0
 execution_script = ExtResource("1_1pwvj")

@@ -1,0 +1,144 @@
+[gd_scene load_steps=7 format=3 uid="uid://ms1v61f8e6f3"]
+
+[ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
+[ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
+[ext_resource type="Script" path="res://wait_lobby/ui/ui.gd" id="2_4rllb"]
+[ext_resource type="Theme" uid="uid://bailv3k7caocg" path="res://multiplayer/example_scene/ui/resources/selected_button_theme.tres" id="3_hph5r"]
+[ext_resource type="Script" path="res://wait_lobby/ui/ip.gd" id="4_8sotc"]
+[ext_resource type="Script" path="res://wait_lobby/ui/steam.gd" id="5_cue4b"]
+[ext_resource type="Script" path="res://wait_lobby/ui/screen_button.gd" id="6_m5bdq"]
+[ext_resource type="PackedScene" uid="uid://beoa0qb0ocbes" path="res://wait_lobby/interactable_area/interactable_area.tscn" id="8_yjbph"]
+[ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nvr8y"]
+font_size = 108
+
+[node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
+script = ExtResource("1_ajb20")
+spawn_points = NodePath("SpawnPoints")
+
+[node name="SpawnPoints" parent="." instance=ExtResource("1_qggt3")]
+
+[node name="Node2D" type="Node2D" parent="SpawnPoints"]
+position = Vector2(960, 800)
+
+[node name="UI" type="CanvasLayer" parent="."]
+visible = false
+script = SubResource("GDScript_bg5sb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="Background" type="ColorRect" parent="Environment"]
+z_index = -10
+offset_left = -64.0
+offset_top = -672.0
+offset_right = 1984.0
+offset_bottom = 1184.0
+color = Color(0.32549, 0.329412, 0.352941, 1)
+metadata/_edit_lock_ = true
+
+[node name="Foreground" type="Polygon2D" parent="Environment"]
+z_index = -1
+position = Vector2(968, 1032)
+color = Color(0.164706, 0.196078, 0.294118, 1)
+polygon = PackedVector2Array(-136, -168, 120, -168, 248, -232, 504, -232, 632, -296, 1016, -296, 1016, 152, -1032, 152, -1032, -1704, 1016, -1704, 1016, -296, 888, -296, 888, -1576, -904, -1576, -904, -104, -264, -104)
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment"]
+position = Vector2(0, 32)
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Environment/StaticBody2D"]
+polygon = PackedVector2Array(-64, 896, -64, 1152, 1984, 1152, 1984, 704, 1984, -704, -64, -704, -64, 896, 64, 896, 64, -576, 1856, -576, 1856, 704, 1600, 704, 1472, 768, 1216, 768, 1088, 832, 832, 832, 704, 896)
+
+[node name="Playground" type="Node" parent="Environment"]
+
+[node name="RedBox" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(256, 896)
+
+[node name="RedBox2" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(256, 832)
+
+[node name="RedBox3" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(256, 768)
+
+[node name="RedBox4" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(512, 896)
+
+[node name="RedBox5" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(512, 832)
+
+[node name="RedBox6" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
+position = Vector2(512, 768)
+
+[node name="Interactables" type="Node" parent="."]
+
+[node name="StartInteractable" parent="Interactables" instance=ExtResource("8_yjbph")]
+position = Vector2(1344, 736)
+interact_action_text = "Play"
+
+[node name="CollisionPolygon2D" parent="Interactables/StartInteractable" index="0"]
+polygon = PackedVector2Array(-96, -160, 96, -160, 96, 64, -96, 64)
+
+[node name="Label" parent="Interactables/StartInteractable" index="1"]
+offset_top = -192.0
+offset_bottom = 64.0
+
+[node name="ColorRect" type="ColorRect" parent="Interactables/StartInteractable"]
+z_index = -5
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+offset_bottom = 64.0
+color = Color(0.260318, 0.682407, 0.310273, 1)
+
+[node name="Label" type="Label" parent="Interactables/StartInteractable/ColorRect"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 512.0
+offset_bottom = 173.0
+scale = Vector2(0.25, 0.25)
+text = "Start"
+label_settings = SubResource("LabelSettings_nvr8y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsInteractable" parent="Interactables" instance=ExtResource("8_yjbph")]
+position = Vector2(1728, 672)
+interact_action_text = "Edit"
+
+[node name="CollisionPolygon2D" parent="Interactables/SettingsInteractable" index="0"]
+polygon = PackedVector2Array(-96, -160, 96, -160, 96, 64, -96, 64)
+
+[node name="Label" parent="Interactables/SettingsInteractable" index="1"]
+offset_top = -192.0
+offset_bottom = 64.0
+
+[node name="ColorRect" type="ColorRect" parent="Interactables/SettingsInteractable"]
+z_index = -5
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+offset_bottom = 64.0
+color = Color(1, 0.490196, 0.211765, 1)
+
+[node name="Label" type="Label" parent="Interactables/SettingsInteractable/ColorRect"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 512.0
+offset_bottom = 173.0
+scale = Vector2(0.25, 0.25)
+text = "Settings"
+label_settings = SubResource("LabelSettings_nvr8y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="interacted" from="Interactables/StartInteractable" to="." method="_on_start_interactable_interacted"]
+[connection signal="interacted" from="Interactables/SettingsInteractable" to="." method="_on_settings_interactable_interacted"]
+
+[editable path="Interactables/StartInteractable"]
+[editable path="Interactables/SettingsInteractable"]

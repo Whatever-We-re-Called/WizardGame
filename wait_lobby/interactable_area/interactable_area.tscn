@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://beoa0qb0ocbes"]
+
+[ext_resource type="Script" path="res://wait_lobby/interactable_area/interactable_area.gd" id="1_ihlpi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4ho1"]
+font_size = 96
+
+[node name="InteractableArea" type="Area2D"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_ihlpi")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -192.0
+offset_top = -128.0
+offset_right = 1344.0
+offset_bottom = 128.0
+scale = Vector2(0.25, 0.25)
+text = "Press Space to Interact"
+label_settings = SubResource("LabelSettings_g4ho1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

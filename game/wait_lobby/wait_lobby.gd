@@ -1,1 +1,0 @@
-class_name WaitLobby extends PlayableScene

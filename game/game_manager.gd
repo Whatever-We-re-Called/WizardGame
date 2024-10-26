@@ -41,11 +41,11 @@ func _ready() -> void:
 	SessionManager.server_closed.connect(_server_closed)
 	
 	# TODO Change this to load correct current game scene.
-	change_to_scene("res://game/wait_lobby/wait_lobby.tscn")
+	change_to_scene("res://wait_lobby/wait_lobby.tscn")
 
 
 func _process(delta: float) -> void:
-	if SessionManager.is_connected_to_peer() and is_multiplayer_authority():
+	if multiplayer.is_server():
 		if current_state != null:
 			current_state._update(delta)
 
@@ -190,21 +190,23 @@ func increment_scores():
 				scores[player] = 1
 
 
+func try_to_start_game():
+	if multiplayer.is_server() and not game_settings_ui.visible:
+		transition_to_state.rpc_id(1, "gamestart")
+
+
+func toggle_game_settings():
+	if multiplayer.is_server():
+		if game_settings_ui.visible == false:
+			game_settings_ui.populate(game_settings)
+			game_settings_ui.visible = true
+		else:
+			game_settings = game_settings_ui.get_game_settings().duplicate()
+			game_settings_ui.visible = false
+
+
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
 			if multiplayer.is_server() and not game_settings_ui.visible:
-				transition_to_state.rpc_id(1, "gamestart")
-		2:
-			if multiplayer.is_server() and not game_settings_ui.visible:
 				transition_to_state.rpc_id(1, "waitlobby")
-		5:
-			if multiplayer.is_server():
-				if game_settings_ui.visible:
-					game_settings = game_settings_ui.get_game_settings().duplicate()
-					game_settings_ui.visible = false
-					get_player_from_peer_id(1).can_use_abilities = true
-				else:
-					game_settings_ui.populate(game_settings)
-					game_settings_ui.visible = true
-					get_player_from_peer_id(1).can_use_abilities = false

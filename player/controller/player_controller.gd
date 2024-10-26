@@ -24,7 +24,9 @@ const GRAVITY: float = 9.81
 @export var air_acceleration: float
 @export var air_friction: float
 
+var freeze_input: bool = false
 var previous_input_direction: Vector2
+var prevent_jump: bool = false
 
 
 func _ready():
@@ -40,37 +42,53 @@ func _ready():
 
 
 func handle_pre_physics(delta):
-	was_on_floor = player.is_on_floor()
+	if freeze_input == false:
+		was_on_floor = player.is_on_floor()
 
 
 func handle_physics(delta):
+	_handle_ui()
 	_handle_gravity(delta)
-	_handle_jump()
-	_handle_wasd(delta)
-	_handle_abilities()
+	
+	if freeze_input == false:
+		_handle_jump()
+		_handle_wasd(delta)
+		_handle_abilities()
+		
+		var input_direction = _get_input_direction()
+		if input_direction != Vector2.ZERO:
+			previous_input_direction = input_direction
+	else:
+		_handle_wasd(delta, true)
 	
 	player.move_and_slide()
-	
-	var input_direction = _get_input_direction()
-	if input_direction != Vector2.ZERO:
-		player.last_input_direction = input_direction
 
 
 func handle_post_physics(delta):
-	if was_on_floor and not player.is_on_floor():
-		coyote_timer.start()
-	
-	
+	if freeze_input == false:
+		if was_on_floor and not player.is_on_floor():
+			coyote_timer.start()
+
+
+func _handle_ui():
+	if Input.is_action_just_pressed(player.im.change_abilities):
+		player.toggle_change_abilities_ui()
+
+
 func _handle_gravity(delta):
 	if not player.is_on_floor():
 		player.velocity.y += GRAVITY * delta * gravity_scale
 
 
-func _handle_wasd(delta):
-	var input_direction = _get_input_direction()
+func _handle_wasd(delta: float, ignore_input: bool = false):
+	var input_direction: Vector2
+	if ignore_input == false:
+		input_direction = _get_input_direction()
 	
-	if (input_direction.x > 0 and player.velocity.x > 0) or (input_direction.x < 0 and player.velocity.x < 0):
-		previous_input_direction = input_direction
+		if (input_direction.x > 0 and player.velocity.x > 0) or (input_direction.x < 0 and player.velocity.x < 0):
+			previous_input_direction = input_direction
+	else:
+		input_direction = Vector2.ZERO
 	
 	if player.is_on_floor():
 		_handle_ground_horizontal_movement(input_direction, delta)
@@ -102,6 +120,8 @@ func _handle_air_horizontal_movement(input_direction: Vector2, delta: float):
 
 
 func _handle_jump():
+	if prevent_jump == true: return
+	
 	if Input.is_action_just_pressed(player.im.jump):
 		jump_buffer.start()
 	
@@ -135,15 +155,20 @@ func handle_debug_inputs():
 	if Input.is_action_just_pressed(player.im.debug_3):
 		player.received_debug_input.emit(3)
 	if Input.is_action_just_pressed(player.im.debug_4):
-		if player.change_abilities_panel.visible:
-			player.change_abilities_panel.visible = false
-			player.can_use_abilities = true
-		else:
-			player.change_abilities_panel.visible = true
-			player.can_use_abilities = false
+		player.received_debug_input.emit(4)
 	if Input.is_action_just_pressed(player.im.debug_tab):
 		player.received_debug_input.emit(5)
 
 
 func _get_input_direction() -> Vector2:
 	return Input.get_vector(player.im.move_left, player.im.move_right, player.im.move_up, player.im.move_down).normalized()
+
+
+func get_pointer_direction() -> Vector2:
+	match player.im.get_device_type():
+		DeviceInputMap.DeviceType.KEYBOARD_MOUSE:
+			return player.get_center_global_position().direction_to(player.get_global_mouse_position()).normalized()
+		DeviceInputMap.DeviceType.CONTROLLER:
+			return player.get_direction()
+		_:
+			return Vector2.ZERO

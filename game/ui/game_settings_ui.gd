@@ -1,5 +1,7 @@
 extends CenterContainer
 
+signal closed
+
 @onready var survival_goals_line_edit: LineEdit = %SurvivalGoalsLineEdit
 @onready var map_disaster_severity_line_edit: LineEdit = %MapDisasterSeverityLineEdit
 @onready var disaster_duration_line_edit: LineEdit = %DisasterDurationLineEdit
@@ -38,3 +40,7 @@ func get_game_settings() -> GameSettings:
 	game_settings.disaster_pool = saved_game_settings.disaster_pool.duplicate()
 	
 	return game_settings
+
+
+func _on_save_and_close_button_pressed() -> void:
+	closed.emit()
