@@ -26,8 +26,18 @@ func process():
 	
 func _handle_join_game(id, connect):
 	if connect:
+		var main_menu = get_tree().root.get_child(-1)
+		
+		# TODO - this can happen at any time. We need to properly handle if they aren't in the main menu
+		var game_manager = preload("res://game/game_manager.tscn").instantiate()
+		get_tree().root.add_child(game_manager)
+		
 		SessionManager.set_strategy(SteamBasedStrategy.new(id))
 		SessionManager.connect_to_server()
+		
+		get_tree().root.remove_child.call_deferred(main_menu)
+		main_menu.queue_free()
+		
 		
 		
 func _handle_invite_game(friend_id, lobby_id, game_id):

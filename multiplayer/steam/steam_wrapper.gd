@@ -16,6 +16,7 @@ func _process(delta: float) -> void:
 		steam_impl = Node.new()
 		steam_impl.script = load("res://multiplayer/steam/steam_implementation.gd")
 		steam_impl.setup()
+		add_child(steam_impl)
 		init = false
 	if steam_impl != null:
 		steam_impl.process()
