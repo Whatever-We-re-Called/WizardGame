@@ -1,13 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bs03vvdlr6db6"]
+[gd_scene load_steps=8 format=3 uid="uid://bs03vvdlr6db6"]
 
-[ext_resource type="Script" path="res://game/wait_lobby/ui/join_invite/join_invite.gd" id="1_1xvhr"]
-[ext_resource type="Texture2D" uid="uid://c8wkjd8ys8bi" path="res://game/wait_lobby/ui/join_invite/mouse_left_outline.png" id="2_oifkk"]
-[ext_resource type="Texture2D" uid="uid://bme21oj1di7vg" path="res://game/wait_lobby/ui/join_invite/xbox_button_a.png" id="3_ovgp8"]
+[ext_resource type="Script" path="res://game/ui/player_info/player_info.gd" id="1_3qrla"]
+[ext_resource type="Texture2D" uid="uid://c8wkjd8ys8bi" path="res://game/ui/player_info/mouse_left_outline.png" id="2_1cluh"]
+[ext_resource type="Texture2D" uid="uid://bme21oj1di7vg" path="res://game/ui/player_info/xbox_button_a.png" id="3_873dl"]
+[ext_resource type="Script" path="res://game/ui/player_info/states/invite.gd" id="4_cxute"]
+[ext_resource type="Script" path="res://game/ui/player_info/states/join.gd" id="5_5hd05"]
+[ext_resource type="Script" path="res://game/ui/player_info/states/online_player.gd" id="6_5qw08"]
+[ext_resource type="Script" path="res://game/ui/player_info/states/local_player.gd" id="7_ahwk1"]
 
-[node name="JoinInvite" type="Control"]
+[node name="PlayerInfo" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_1xvhr")
+script = ExtResource("1_3qrla")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(150, 180)
@@ -82,8 +86,23 @@ fit_content = true
 
 [node name="Mouse" type="Sprite2D" parent="ControlType"]
 position = Vector2(0, -115)
-texture = ExtResource("2_oifkk")
+texture = ExtResource("2_1cluh")
 
 [node name="Controller" type="Sprite2D" parent="ControlType"]
 position = Vector2(0, -115)
-texture = ExtResource("3_ovgp8")
+texture = ExtResource("3_873dl")
+
+[node name="States" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="Invite" type="Node" parent="States"]
+script = ExtResource("4_cxute")
+
+[node name="Join" type="Node" parent="States"]
+script = ExtResource("5_5hd05")
+
+[node name="OnlinePlayer" type="Node" parent="States"]
+script = ExtResource("6_5qw08")
+
+[node name="LocalPlayer" type="Node" parent="States"]
+script = ExtResource("7_ahwk1")

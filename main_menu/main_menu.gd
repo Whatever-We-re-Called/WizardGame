@@ -28,11 +28,13 @@ func _handle_startup_args() -> void:
 	
 	if StartArgs.has("host"):
 		swap_to_game_manager()
+		await get_tree().process_frame
 		SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
 		SessionManager.create_server()
 		_remove_self()
 	elif StartArgs.has("join"):
 		swap_to_game_manager()
+		await get_tree().process_frame
 		SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
 		SessionManager.connect_to_server()
 		_remove_self()
@@ -44,5 +46,5 @@ func swap_to_game_manager():
 	
 	
 func _remove_self():
-	get_tree().root.remove_child(self)
+	get_tree().root.remove_child.call_deferred(self)
 	self.queue_free()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8wkjd8ys8bi"
-path="res://.godot/imported/mouse_left_outline.png-aa9b3c6179563d00f41c424ef5409c62.ctex"
+uid="uid://bme21oj1di7vg"
+path="res://.godot/imported/xbox_button_a.png-fd1406142b7cf33d5134df333da79236.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/wait_lobby/ui/join_invite/mouse_left_outline.png"
-dest_files=["res://.godot/imported/mouse_left_outline.png-aa9b3c6179563d00f41c424ef5409c62.ctex"]
+source_file="res://game/ui/player_info/xbox_button_a.png"
+dest_files=["res://.godot/imported/xbox_button_a.png-fd1406142b7cf33d5134df333da79236.ctex"]
 
 [params]
 
