@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqnjsfbcdv5ih"
-path="res://.godot/imported/symbol_questionmark.png-d39f23e945c79324020599118da8bf03.ctex"
+path="res://.godot/imported/question_64.png-a50c8194c8900ef256ae1e4b8b86d4bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://multiplayer/steam/list/assets/symbol_questionmark.png"
-dest_files=["res://.godot/imported/symbol_questionmark.png-d39f23e945c79324020599118da8bf03.ctex"]
+source_file="res://multiplayer/steam/list/assets/question_64.png"
+dest_files=["res://.godot/imported/question_64.png-a50c8194c8900ef256ae1e4b8b86d4bb.ctex"]
 
 [params]
 

@@ -50,8 +50,7 @@ func _handle_invite_game(friend_id, lobby_id, game_id):
 	if not is_friend_playing_this_game(friend_id):
 		return
 	
-	var friend = get_friend(friend_id)
-	SteamWrapper.invite_received.emit(friend, lobby_id)
+	SteamWrapper.invite_received.emit(friend_id, lobby_id)
 		
 		
 func accept_invite(lobby_id):

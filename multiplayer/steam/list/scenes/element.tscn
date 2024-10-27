@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://do6lmb7tm66fw"]
 
 [ext_resource type="Script" path="res://multiplayer/steam/list/scenes/element.gd" id="1_loc04"]
-[ext_resource type="Texture2D" uid="uid://bqnjsfbcdv5ih" path="res://multiplayer/steam/list/assets/symbol_questionmark.png" id="2_5vpcw"]
+[ext_resource type="Texture2D" uid="uid://bqnjsfbcdv5ih" path="res://multiplayer/steam/list/assets/question_64.png" id="2_5vpcw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1j06"]
 bg_color = Color(0.291651, 0.65071, 0.780984, 1)

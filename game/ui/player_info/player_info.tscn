@@ -110,6 +110,7 @@ grow_vertical = 0
 [node name="Sprite" type="Sprite2D" parent="Avatar"]
 unique_name_in_owner = true
 visible = false
+scale = Vector2(0.696, 0.696)
 texture = ExtResource("2_yqf53")
 
 [node name="InputType" type="Control" parent="."]

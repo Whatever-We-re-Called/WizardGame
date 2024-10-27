@@ -19,4 +19,4 @@ func on_player_update(player):
 	var friend = SteamWrapper.get_friend_info(peer_info.steam_id)
 	
 	%Name.text = "[center]" + friend.display_name
-	%Sprite.texture = friend.icon
+	%Sprite.texture = ImageTexture.create_from_image(SteamWrapper.get_friend_avatar_large(friend.id))

@@ -28,7 +28,12 @@ func _enter_tree():
 	im = DeviceInputMap.new(self, peer_id, [0, 2])
 	if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
 		set_multiplayer_authority(peer_id, true)
-	$RichTextLabel.text = "[center]" + name
+		
+	if SessionManager.connection_strategy is SteamBasedStrategy:
+		var steam_info = SteamWrapper.get_friend_info(SessionManager.connected_clients[peer_id].steam_id)
+		$RichTextLabel.text = "[center]" + steam_info.display_name
+	else:
+		$RichTextLabel.text = "[center]Player " + name
 
 
 func _ready():

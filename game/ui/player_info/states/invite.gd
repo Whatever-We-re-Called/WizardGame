@@ -2,6 +2,9 @@ extends Node
 class_name InviteState
 
 
+var connected = false
+
+
 func on_enter():
 	%Action.visible = true
 	%Action/Join.visible = false
@@ -31,11 +34,13 @@ func on_exit():
 
 
 func on_player_update(player):
-	var im = get_parent().get_parent().player.im
-	im.device_swapped.disconnect(_on_device_switch)
+	if get_parent().get_parent().player != null and connected:
+		var im = get_parent().get_parent().player.im
+		im.device_swapped.disconnect(_on_device_switch)
 	
-	im = player.im
+	var im = player.im
 	im.device_swapped.connect(_on_device_switch)
+	connected = true
 	
 	_on_device_switch(-1, im.get_device_type())
 
