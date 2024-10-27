@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8wkjd8ys8bi"
-path="res://.godot/imported/mouse_left_outline.png-b53b38df3bf7cd718173ee01e4468294.ctex"
+uid="uid://cpkwhoghq3ipw"
+path="res://.godot/imported/mouse_right_outline.png-6baaf1fba18f8b3f666d239ab545ceea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/ui/player_info/mouse_left_outline.png"
-dest_files=["res://.godot/imported/mouse_left_outline.png-b53b38df3bf7cd718173ee01e4468294.ctex"]
+source_file="res://game/ui/player_info/assets/mouse_right_outline.png"
+dest_files=["res://.godot/imported/mouse_right_outline.png-6baaf1fba18f8b3f666d239ab545ceea.ctex"]
 
 [params]
 

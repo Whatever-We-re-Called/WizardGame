@@ -7,6 +7,8 @@ var _player: Node
 var _device_ids: Array
 var _device_type: DeviceType
 
+signal device_swapped(device_id, device_type)
+
 
 var move_left = DefaultMappings.new([_keyboard(KEY_A)], [_axis(JOY_AXIS_LEFT_X, -0.3)])
 var move_right = DefaultMappings.new([_keyboard(KEY_D)], [_axis(JOY_AXIS_LEFT_X, 0.3)])
@@ -62,17 +64,27 @@ func cleanup():
 		
 func _input(event):
 	var owns_device = false
-	for property in _get_property_list():
-		if event.is_action(self[property.name]):
+	if event is InputEventKey or event is InputEventMouse:
+		if event.device in _device_ids:
 			owns_device = true
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		if (event.device + 2) in _device_ids:
+			owns_device = true
+			
 	if not owns_device:
 		return
 	
 	if event is InputEventKey or event is InputEventMouse:
-		_device_type = DeviceType.KEYBOARD_MOUSE
+		if _device_type == null or _device_type == DeviceType.CONTROLLER:
+			_device_type = DeviceType.KEYBOARD_MOUSE
+			device_swapped.emit(event.device, DeviceType.KEYBOARD_MOUSE)
 			
 	if event is InputEventJoypadButton or event is InputEventJoypadMotion:
-		_device_type = DeviceType.CONTROLLER
+		if event is InputEventJoypadMotion and event.axis_value < 0.5:
+			return # Deadzone/Stick drift handling (it was aggresively emitting this signal)
+		if _device_type == null or _device_type == DeviceType.KEYBOARD_MOUSE:
+			_device_type = DeviceType.CONTROLLER
+			device_swapped.emit(event.device + 2, DeviceType.CONTROLLER)
 		
 		
 func get_device_type() -> DeviceType:
