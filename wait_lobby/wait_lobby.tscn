@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
 [ext_resource type="PackedScene" uid="uid://beoa0qb0ocbes" path="res://wait_lobby/interactable_area/interactable_area.tscn" id="8_yjbph"]
-[ext_resource type="PackedScene" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
+[ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvr8y"]
 font_size = 108

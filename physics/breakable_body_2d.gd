@@ -47,10 +47,10 @@ func _init_multiplayer_handling():
 	var multiplayer_spawner = MultiplayerSpawner.new()
 	add_child(multiplayer_spawner, true)
 	multiplayer_spawner.spawn_path = get_path()
-	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_body_scene.tscn")
-	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_chunk_scene.tscn")
-	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_piece_scene.tscn")
-	multiplayer_spawner.add_spawnable_scene("res://physics/v2/spawnable_scenes/shard_polygon_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/spawnable_scenes/shard_body_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/spawnable_scenes/shard_chunk_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/spawnable_scenes/shard_piece_scene.tscn")
+	multiplayer_spawner.add_spawnable_scene("res://physics/spawnable_scenes/shard_polygon_scene.tscn")
 
 
 func _init_scaling():

@@ -53,9 +53,9 @@ collision_mask = 5
 floor_max_angle = 1.0472
 floor_snap_length = 16.0
 script = ExtResource("1_v4k2b")
-ability_1 = 2
+ability_1 = 1
 ability_2 = 3
-ability_3 = 4
+ability_3 = 5
 controller = NodePath("PlayerController")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
