@@ -98,8 +98,12 @@ func _remove_player(id):
 
 
 func _server_closed():
-	for child in players_root.get_children():
-		child.queue_free()
+	SessionManager.disconnect_client()
+	
+	var main_menu = preload("res://main_menu/main_menu.tscn").instantiate()
+	get_tree().root.add_child.call_deferred(main_menu)
+	get_tree().root.remove_child.call_deferred(self)
+	self.queue_free()
 
 
 func get_player_from_peer_id(peer_id: int) -> Player:

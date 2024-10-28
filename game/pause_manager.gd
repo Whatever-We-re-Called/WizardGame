@@ -64,5 +64,12 @@ func _on_wait_lobby_button_pressed() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	# TODO
-	pass
+	if SessionManager.get_self_peer_id() == 1:
+		SessionManager.close_server()
+	else:
+		SessionManager.disconnect_client()
+	
+	var main_menu = preload("res://main_menu/main_menu.tscn").instantiate()
+	get_tree().root.add_child.call_deferred(main_menu)
+	get_tree().root.remove_child.call_deferred(game_manager)
+	game_manager.queue_free()
