@@ -1,4 +1,5 @@
 extends Control
+class_name PlayerInfoUI
 
 
 var player
@@ -6,6 +7,8 @@ var current_state
 
 
 func set_player(player):
+	if current_state != null:
+		current_state.on_player_update(player)
 	self.player = player
 	
 
@@ -16,7 +19,7 @@ func set_state(state: State):
 		State.Invite: current_state = $States/Invite
 		State.Join: current_state = $States/Join
 		State.OnlinePlayer: current_state = $States/OnlinePlayer
-		State.LocalPlayer: current_state = $States/OnlinePlayer
+		State.LocalPlayer: current_state = $States/LocalPlayer
 	current_state.on_enter()
 	
 	

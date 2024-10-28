@@ -3,6 +3,7 @@ extends Node2D
 
 func _ready() -> void:
 	_handle_startup_args()
+	SteamWrapper.invite_received.connect(_online_invite_received)
 
 
 func _on_play_pressed() -> void:
@@ -48,3 +49,7 @@ func swap_to_game_manager():
 func _remove_self():
 	get_tree().root.remove_child.call_deferred(self)
 	self.queue_free()
+
+
+func _online_invite_received(friend_id, lobby_id):
+	%Invite.invite_received(friend_id, lobby_id)

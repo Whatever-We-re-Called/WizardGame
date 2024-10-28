@@ -424,6 +424,20 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_rmcuc")
 theme_override_styles/normal = SubResource("StyleBoxFlat_cstnl")
 text = "Save and Close"
 
+[node name="PlayerInfoUI" type="CenterContainer" parent="GameUI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 128)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/PlayerInfoUI"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+
 [node name="GameStates" type="Node" parent="."]
 unique_name_in_owner = true
 

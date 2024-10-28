@@ -41,6 +41,8 @@ func _ready() -> void:
 	SessionManager.serverbound_client_disconnected.connect(_remove_player)
 	SessionManager.server_closed.connect(_server_closed)
 	
+	SessionManager.session_added.connect(_update_player_info_ui)
+	
 	# TODO Change this to load correct current game scene.
 	change_to_scene("res://wait_lobby/wait_lobby.tscn")
 
@@ -206,9 +208,36 @@ func toggle_game_settings():
 			game_settings_ui.visible = false
 
 
+
 func return_to_wait_lobby():
 	if multiplayer.is_server() and not game_settings_ui.visible:
 		transition_to_state.rpc_id(1, "waitlobby")
+
+
+func _update_player_info_ui(data):
+	await get_tree().process_frame
+	for child in %PlayerInfoUI/HBoxContainer.get_children():
+		child.queue_free()
+		
+	for player in players:
+		var info = preload("res://game/ui/player_info/player_info.tscn").instantiate()
+		info.set_player(player)
+		if SessionManager.connection_strategy is SteamBasedStrategy:
+			info.set_state(PlayerInfoUI.State.OnlinePlayer)
+		else:
+			info.set_state(PlayerInfoUI.State.LocalPlayer)
+			
+		%PlayerInfoUI/HBoxContainer.add_child(info)
+			
+	if is_multiplayer_authority() and not SessionManager.connection_strategy is IPBasedConnection:
+		var info2 = preload("res://game/ui/player_info/player_info.tscn").instantiate()
+		info2.set_player(get_player_from_peer_id(1))
+		if SessionManager.connection_strategy is LocalBasedConnection:
+			info2.set_state(PlayerInfoUI.State.Join)
+		else:
+			info2.set_state(PlayerInfoUI.State.Invite)
+			
+		%PlayerInfoUI/HBoxContainer.add_child(info2)
 
 
 func _on_player_received_debug_input(debug_value: int) -> void:

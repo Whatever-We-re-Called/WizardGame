@@ -8,7 +8,12 @@ const app_id = 480
 var current_friends_promise: Promise
 
 
-func setup():
+func setup() -> bool:
+	if not Steam.isSteamRunning():
+		"steam not running"
+		return false
+	
+	"steam running"
 	OS.set_environment("SteamAppId", str(app_id))
 	OS.set_environment("SteamGameId", str(app_id))
 	Steam.steamInitEx()
@@ -18,6 +23,7 @@ func setup():
 	# This is what's called when a user is invited to a game
 	Steam.lobby_invite.connect(_handle_invite_game)
 	print("Steam init")
+	return true
 	
 func process():
 	if Steam.isSteamRunning():
@@ -44,8 +50,7 @@ func _handle_invite_game(friend_id, lobby_id, game_id):
 	if not is_friend_playing_this_game(friend_id):
 		return
 	
-	var friend = get_friend(friend_id)
-	SteamWrapper.invite_received.emit(friend, lobby_id)
+	SteamWrapper.invite_received.emit(friend_id, lobby_id)
 		
 		
 func accept_invite(lobby_id):
@@ -94,3 +99,7 @@ func is_friend_playing_this_game(friend_id):
 	if game == null or not game.has("id"):
 		return false
 	return game.id == app_id
+	
+	
+func is_self(friend_id):
+	return friend_id == Steam.getSteamID()

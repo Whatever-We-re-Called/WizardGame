@@ -21,7 +21,7 @@ func _load_game_manager():
 	
 	
 func _remove_self():
-	get_tree().root.remove_child(self)
+	get_tree().root.remove_child.call_deferred(self)
 	self.queue_free()
 
 
