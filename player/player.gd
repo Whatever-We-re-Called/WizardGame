@@ -159,12 +159,3 @@ func add_velocity(velocity: Vector2):
 @rpc("any_peer", "call_local")
 func _add_velocity_rpc(velocity: Vector2):
 	apply_central_impulse(velocity)
-
-
-func toggle_change_abilities_ui():
-	if change_abilities_ui.visible == false:
-		change_abilities_ui.visible = true
-		controller.freeze_input = true
-	else:
-		change_abilities_ui.visible = false
-		controller.freeze_input = false

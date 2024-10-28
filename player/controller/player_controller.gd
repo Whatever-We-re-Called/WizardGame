@@ -72,7 +72,7 @@ func handle_post_physics(delta):
 
 func _handle_ui():
 	if Input.is_action_just_pressed(player.im.change_abilities):
-		player.toggle_change_abilities_ui()
+		player.change_abilities_ui.toggle()
 
 
 func _handle_gravity(delta):

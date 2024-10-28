@@ -36,6 +36,16 @@ func setup(player: Player):
 	_update_slot_value_labels(player.abilities)
 
 
+func toggle():
+	if visible == false:
+		ability_list.grab_focus()
+		visible = true
+		player.controller.freeze_input = true
+	else:
+		visible = false
+		player.controller.freeze_input = false
+
+
 func _update_slot_value_labels(abilities: Array[Abilities.Type]):
 	for i in range(slot_value_labels.size()):
 		var slot_value_label = slot_value_labels[i]

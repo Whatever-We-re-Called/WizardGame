@@ -64,5 +64,5 @@ func _on_wait_lobby_button_pressed() -> void:
 
 
 func _on_main_menu_button_pressed() -> void:
-	toggle_pause()
-	SessionManager.disconnect_client()
+	# TODO
+	pass
