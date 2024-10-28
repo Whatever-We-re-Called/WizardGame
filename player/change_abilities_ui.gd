@@ -20,6 +20,8 @@ var player: Player
 
 
 func _ready() -> void:
+	visible = false
+	
 	for ability in Abilities.Type:
 		ability_list.add_item(ability)
 	

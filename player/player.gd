@@ -37,7 +37,6 @@ func _enter_tree():
 
 
 func _ready():
-	change_abilities_ui.visible = false
 	change_abilities_ui.setup(self)
 	
 	for ability_scene in Abilities.loaded_ability_scenes.values():
