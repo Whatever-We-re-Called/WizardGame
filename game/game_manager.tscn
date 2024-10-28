@@ -1,7 +1,8 @@
-[gd_scene load_steps=26 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=28 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
+[ext_resource type="Script" path="res://game/pause_manager.gd" id="3_euche"]
 [ext_resource type="Script" path="res://game/ui/map_progress_ui.gd" id="3_q0doh"]
 [ext_resource type="Script" path="res://game/states/wait_lobby_game_state.gd" id="4_0m4h4"]
 [ext_resource type="Script" path="res://game/ui/player_score_ui.gd" id="4_rlrby"]
@@ -24,6 +25,18 @@ properties/1/path = NodePath("GameUI/PlayerScoreUI:visible")
 properties/1/spawn = true
 properties/1/replication_mode = 2
 
+[sub_resource type="LabelSettings" id="LabelSettings_u4a7m"]
+font_size = 96
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rcq4"]
+bg_color = Color(0.294118, 0.294118, 0.294118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rmcuc"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cstnl"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_5u4d7"]
 font_size = 32
 outline_color = Color(0, 0, 0, 1)
@@ -42,15 +55,6 @@ font_size = 24
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n36nu"]
 content_margin_left = 4.0
-bg_color = Color(0.392157, 0.392157, 0.392157, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2rcq4"]
-bg_color = Color(0.294118, 0.294118, 0.294118, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rmcuc"]
-bg_color = Color(0.392157, 0.392157, 0.392157, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cstnl"]
 bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [node name="GameManager" type="Node"]
@@ -74,6 +78,98 @@ spawn_path = NodePath("../ActiveSceneRoot")
 
 [node name="ActiveSceneRoot" type="Node" parent="."]
 unique_name_in_owner = true
+
+[node name="PauseManager" type="Node" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+script = ExtResource("3_euche")
+
+[node name="PauseMenu" type="CanvasLayer" parent="PauseManager"]
+unique_name_in_owner = true
+process_mode = 3
+layer = 128
+
+[node name="CenterContainer" type="CenterContainer" parent="PauseManager/PauseMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PauseManager/PauseMenu/CenterContainer"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 2
+color = Color(0, 0, 0, 0.784314)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseManager/PauseMenu/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="Label" type="Label" parent="PauseManager/PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_u4a7m")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseManager/PauseMenu/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ResumeButton" type="Button" parent="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../MainMenuButton")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = SubResource("StyleBoxFlat_2rcq4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rmcuc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cstnl")
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ResumeButton")
+focus_neighbor_bottom = NodePath("../WaitLobbyButton")
+focus_next = NodePath("../WaitLobbyButton")
+focus_previous = NodePath("../ResumeButton")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = SubResource("StyleBoxFlat_2rcq4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rmcuc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cstnl")
+text = "Settings"
+
+[node name="WaitLobbyButton" type="Button" parent="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 2
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
+focus_next = NodePath("../MainMenuButton")
+focus_previous = NodePath("../SettingsButton")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = SubResource("StyleBoxFlat_2rcq4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rmcuc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cstnl")
+text = "Wait Lobby"
+
+[node name="MainMenuButton" type="Button" parent="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 75)
+layout_mode = 2
+focus_neighbor_top = NodePath("../WaitLobbyButton")
+focus_neighbor_bottom = NodePath("../ResumeButton")
+focus_next = NodePath("../ResumeButton")
+focus_previous = NodePath("../WaitLobbyButton")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = SubResource("StyleBoxFlat_2rcq4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rmcuc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cstnl")
+text = "Main Menu"
 
 [node name="GameUI" type="CanvasLayer" parent="."]
 
@@ -361,4 +457,8 @@ script = ExtResource("13_eh6g2")
 [node name="ResultScreen" type="Node" parent="GameStates"]
 script = ExtResource("14_26wd8")
 
+[connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="PauseManager" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/SettingsButton" to="PauseManager" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/WaitLobbyButton" to="PauseManager" method="_on_wait_lobby_button_pressed"]
+[connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/MainMenuButton" to="PauseManager" method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/SaveAndCloseButton" to="GameUI/GameSettingsUI" method="_on_save_and_close_button_pressed"]

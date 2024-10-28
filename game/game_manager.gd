@@ -6,6 +6,7 @@ class_name GameManager extends Node
 @onready var players_root: Node = %PlayersRoot
 @onready var scene_spawner: MultiplayerSpawner = %SceneSpawner
 @onready var active_scene_root: Node = %ActiveSceneRoot
+@onready var pause_manager: Node = %PauseManager
 @onready var map_progress_ui: CenterContainer = %MapProgressUI
 @onready var game_states_node: Node = %GameStates
 @onready var player_score_ui: CenterContainer = %PlayerScoreUI
@@ -205,8 +206,18 @@ func toggle_game_settings():
 			game_settings_ui.visible = false
 
 
+func return_to_wait_lobby():
+	if multiplayer.is_server() and not game_settings_ui.visible:
+		transition_to_state.rpc_id(1, "waitlobby")
+
+
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:
-			if multiplayer.is_server() and not game_settings_ui.visible:
-				transition_to_state.rpc_id(1, "waitlobby")
+			pass
+		2:
+			pass
+		3:
+			pass
+		4:
+			pass

@@ -103,6 +103,10 @@ func add_player(user: Dictionary):
 	_add_player.rpc_id(1, user)
 
 
+func is_playing_local():
+	return connection_strategy is LocalBasedConnection
+
+
 @rpc("any_peer", "call_local", "reliable")
 func _add_player(user: Dictionary):
 	if SessionManager.debug:

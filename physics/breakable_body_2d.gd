@@ -83,6 +83,7 @@ func create_fragment_polygons():
 	if primary_shard_polygon == null:
 		return
 	
+	print("A ", primary_shard_polygon)
 	texture = primary_shard_polygon.texture
 	texture_offset = primary_shard_polygon.texture_offset
 	texture_scale = primary_shard_polygon.texture_scale
@@ -255,6 +256,7 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: 
 	
 	var shard_polygon = %ShardPolygon
 	shard_polygon.polygon = corrected_polygon
+	print("Texture: ", get_parent(), " ", get_parent().texture)
 	shard_polygon.texture = get_parent().texture
 	shard_polygon.texture_offset = get_parent().texture_offset + position_delta
 	shard_polygon.texture_scale = get_parent().texture_scale

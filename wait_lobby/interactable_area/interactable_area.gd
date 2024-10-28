@@ -19,7 +19,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if label.visible == true:
 		for player in possible_interact_players:
-			if Input.is_action_just_pressed(player.im.jump):
+			if Input.is_action_just_pressed(player.im.jump) and player.controller.freeze_input == false:
 				interacted.emit(player)
 
 
