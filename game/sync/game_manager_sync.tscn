@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://tm2uh5tkd80x"]
+
+[ext_resource type="Script" path="res://game/sync/game_manager_sync.gd" id="1_xt6ln"]
+
+[node name="GameManagerSync" type="Node"]
+script = ExtResource("1_xt6ln")

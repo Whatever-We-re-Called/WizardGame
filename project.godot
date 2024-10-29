@@ -13,9 +13,8 @@ config_version=5
 config/name="Wizard Game"
 config/version="0.1"
 config/tags=PackedStringArray("current")
-run/main_scene="res://main_menu/main_menu.tscn"
+run/main_scene="res://game_instance.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://icon.svg"
 
 [autoload]
 
