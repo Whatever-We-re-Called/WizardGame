@@ -11,6 +11,8 @@ signal invite_received(friend, lobby_id)
 
 
 func _process(delta: float) -> void:
+	if steam_impl != null:
+		steam_impl.process()
 	if DisplayServer.get_name().contains("headless"): return
 	if init:
 		steam_impl = Node.new()
@@ -18,9 +20,7 @@ func _process(delta: float) -> void:
 		if steam_impl.setup():
 			add_child(steam_impl)
 			init = false
-	if steam_impl != null:
-		steam_impl.process()
-		
+			
 
 func is_steam_running() -> bool:
 	return steam_impl != null

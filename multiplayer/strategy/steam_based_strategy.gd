@@ -11,6 +11,9 @@ func _init(lobby_id = -1):
 	self.lobby_id = lobby_id
 	SessionManager.client_connected_to_server.connect(_on_connect)
 	
+	Steam.lobby_created.connect(_lobby_created)
+	Steam.lobby_joined.connect(_lobby_joined)
+	
 	
 func _on_connect():
 	SessionManager.add_player({"steam_id": Steam.getSteamID(), "peer_id": peer.get_unique_id()})
@@ -21,11 +24,12 @@ func create_connection():
 		print("Invalid Lobby ID")
 		return
 		
-	Steam.lobby_joined.connect(_lobby_joined)
 	Steam.joinLobby(lobby_id)
 	
 	
 func _lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int):
+	if peer != null:
+		return
 	if response != 1:
 		print("There was an error while joining that lobby:")
 		var fail_reason: String
@@ -60,7 +64,6 @@ func _lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int)
 	
 	
 func create_server():
-	Steam.lobby_created.connect(_lobby_created)
 	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, 32)
 	
 	
@@ -85,6 +88,6 @@ func _lobby_created(connect, lobby_id):
 		
 		multiplayer.set_multiplayer_peer(peer)
 		SessionManager.connected = true
-		SessionManager.add_player({"steam_id": Steam.getLobbyOwner(lobby_id), "peer_id": 1})
+		SessionManager.add_player({"steam_id": Steam.getSteamID(), "peer_id": 1})
 		if SessionManager.debug:
 			print("Steam Lobby started: ", Steam.getLobbyData(lobby_id, "name"), " ({0})".format([lobby_id]))

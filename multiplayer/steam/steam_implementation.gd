@@ -5,29 +5,25 @@ class_name SteamImplementation
 ## Change this when we're on steam. Temporary testing ID
 const app_id = 480
 
-var current_friends_promise: Promise
-
 
 func setup() -> bool:
 	if not Steam.isSteamRunning():
-		"steam not running"
 		return false
 	
-	"steam running"
-	OS.set_environment("SteamAppId", str(app_id))
-	OS.set_environment("SteamGameId", str(app_id))
-	Steam.steamInitEx()
+	#OS.set_environment("SteamAppId", str(app_id))
+	#OS.set_environment("SteamGameId", str(app_id))
+	var init = Steam.steamInitEx(true, app_id)
+	print("Steam init'd:")
+	print(init)
 	
 	# This is what's called when a user accepts an invite or clicks join game
 	Steam.join_requested.connect(_handle_join_game)
 	# This is what's called when a user is invited to a game
 	Steam.lobby_invite.connect(_handle_invite_game)
-	print("Steam init")
 	return true
 	
 func process():
-	if Steam.isSteamRunning():
-		Steam.run_callbacks()
+	Steam.run_callbacks()
 	
 	
 func _handle_join_game(id, connect):
