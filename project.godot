@@ -25,7 +25,7 @@ RigidBodyAutoScaler="*res://addons/rigidbody_auto_scaler/RigidBodyAutoScaler.gd"
 Abilities="*res://abilities/abilities.gd"
 DisasterManager="*res://disasters/disaster_manager.gd"
 PhysicsManager="*res://physics/manager/physics_manager.tscn"
-StartArgs="*res://util/startargs/start_args.gd"
+StartArgs="*res://util/start_args/start_args.gd"
 
 [display]
 

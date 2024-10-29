@@ -28,12 +28,20 @@ func _handle_startup_args() -> void:
 		port = StartArgs.get_value("port")
 	
 	if StartArgs.has("host"):
+		if StartArgs.has("delay"):
+			var delay = float(StartArgs.get_value("delay")) 
+			await get_tree().create_timer(delay).timeout
+		
 		swap_to_game_manager()
 		await get_tree().process_frame
 		SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
 		SessionManager.create_server()
 		_remove_self()
 	elif StartArgs.has("join"):
+		if StartArgs.has("delay"):
+			var delay = float(StartArgs.get_value("delay")) 
+			await get_tree().create_timer(delay).timeout
+		
 		swap_to_game_manager()
 		await get_tree().process_frame
 		SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
