@@ -3,7 +3,7 @@ extends CanvasLayer
 
 @export var expire_timer: Timer
 @export var text: RichTextLabel
-@export var icon: TextureButton
+@export var icon: Sprite2D
 
 var current_lobby_id
 
@@ -17,7 +17,7 @@ func invite_received(friend_id, lobby_id):
 	var friend = SteamWrapper.get_friend_info(friend_id)
 	text.text = "[center][b]" + friend.display_name + " has invited you to a game!"
 	
-	icon.texture_normal = ImageTexture.create_from_image(SteamWrapper.get_friend_avatar_large(friend_id))
+	icon.texture = ImageTexture.create_from_image(SteamWrapper.get_friend_avatar_large(friend_id))
 	
 	self.visible = true
 	expire_timer.start()

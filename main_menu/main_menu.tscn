@@ -168,12 +168,13 @@ theme_override_font_sizes/font_size = 32
 text = "< Back"
 flat = true
 
-[node name="Invite" type="CanvasLayer" parent="." node_paths=PackedStringArray("expire_timer", "text")]
+[node name="Invite" type="CanvasLayer" parent="." node_paths=PackedStringArray("expire_timer", "text", "icon")]
 unique_name_in_owner = true
 visible = false
 script = ExtResource("3_jgj41")
 expire_timer = NodePath("ExpireTimer")
 text = NodePath("Container/HBoxContainer/CenterContainer/VBoxContainer/RichTextLabel")
+icon = NodePath("Container/HBoxContainer/TextureButton")
 
 [node name="Container" type="CenterContainer" parent="Invite"]
 custom_minimum_size = Vector2(700, 150)
