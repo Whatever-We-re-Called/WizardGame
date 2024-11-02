@@ -6,5 +6,6 @@ func _ready() -> void:
 
 
 func _on_creation() -> void:
+	_init_texture_info()
 	freeze = true
 	create_fragment_polygons()

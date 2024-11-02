@@ -27,8 +27,9 @@ func _enter_tree():
 	peer_id = name.to_int()
 	
 	im = DeviceInputMap.new(self, peer_id, [0, 2])
-	if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
-		set_multiplayer_authority(peer_id, true)
+	if not SessionManager.is_playing_local():
+		if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
+			set_multiplayer_authority(peer_id, true)
 
 
 func _ready():

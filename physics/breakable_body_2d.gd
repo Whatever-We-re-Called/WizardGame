@@ -70,6 +70,13 @@ func _update_physics_layer():
 func _init_area_handling():
 	total_area = PolygonUtil.get_area_of_polygon(_get_primary_shard_polygon().polygon)
 
+
+func _init_texture_info():
+	var primary_shard_polygon = _get_primary_shard_polygon()
+	if primary_shard_polygon != null:
+		texture = primary_shard_polygon.texture
+		texture_offset = primary_shard_polygon.texture_offset
+		texture_scale = primary_shard_polygon.texture_scale
  
 func _handle_data_update():
 	_init_health()
@@ -82,11 +89,6 @@ func create_fragment_polygons():
 	var primary_shard_polygon = _get_primary_shard_polygon()
 	if primary_shard_polygon == null:
 		return
-	
-	print("A ", primary_shard_polygon)
-	texture = primary_shard_polygon.texture
-	texture_offset = primary_shard_polygon.texture_offset
-	texture_scale = primary_shard_polygon.texture_scale
 	
 	if multiplayer.is_server():
 		var sites = _get_voronoi_sites(primary_shard_polygon.polygon)
@@ -245,6 +247,8 @@ func _init_shard(new_shard: BreakableBody2D, intersect_polygon: PackedVector2Arr
 	
 	var applied_impulse = impulse_callable.call(new_shard)
 	new_shard.apply_central_impulse(applied_impulse)
+	
+	await get_tree().create_timer(0.5).timeout
 
 
 @rpc("authority", "call_local", "reliable")
@@ -255,12 +259,16 @@ func _init_self_shard_polygon_rpc(polygon: PackedVector2Array, data_dictionary: 
 	var corrected_polygon = PolygonUtil.get_translated_polygon(polygon, -position_delta)
 	
 	var shard_polygon = %ShardPolygon
+	var parent_shard = get_parent()
 	shard_polygon.polygon = corrected_polygon
-	print("Texture: ", get_parent(), " ", get_parent().texture)
-	shard_polygon.texture = get_parent().texture
-	shard_polygon.texture_offset = get_parent().texture_offset + position_delta
-	shard_polygon.texture_scale = get_parent().texture_scale
+	shard_polygon.texture = parent_shard.texture
+	shard_polygon.texture_offset = parent_shard.texture_offset + position_delta
+	shard_polygon.texture_scale = parent_shard.texture_scale
 	shard_polygon.update_collision_polygon()
+	
+	texture = shard_polygon.texture
+	texture_offset = shard_polygon.texture_offset
+	texture_scale = shard_polygon.texture_scale
 	
 	data = BreakableData.get_from_dictionary(data_dictionary)
 	data.number_of_break_points = int(data.number_of_break_points * area_ratio)

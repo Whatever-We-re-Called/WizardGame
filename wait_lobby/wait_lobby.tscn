@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
 [ext_resource type="PackedScene" uid="uid://beoa0qb0ocbes" path="res://wait_lobby/interactable_area/interactable_area.tscn" id="8_yjbph"]
-[ext_resource type="PackedScene" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
+[ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvr8y"]
 font_size = 108
@@ -48,23 +48,8 @@ polygon = PackedVector2Array(-64, 896, -64, 1152, 1984, 1152, 1984, 704, 1984, -
 
 [node name="Playground" type="Node" parent="Environment"]
 
-[node name="RedBox" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
-position = Vector2(256, 896)
-
-[node name="RedBox2" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
-position = Vector2(256, 832)
-
-[node name="RedBox3" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
-position = Vector2(256, 768)
-
 [node name="RedBox4" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
 position = Vector2(512, 896)
-
-[node name="RedBox5" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
-position = Vector2(512, 832)
-
-[node name="RedBox6" parent="Environment/Playground" instance=ExtResource("11_wv8q6")]
-position = Vector2(512, 768)
 
 [node name="Interactables" type="Node" parent="."]
 

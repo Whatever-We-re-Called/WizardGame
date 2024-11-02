@@ -46,7 +46,7 @@ func _ready():
 
 
 func _process(delta: float) -> void:
-	if not is_multiplayer_authority():
+	if not SessionManager.is_playing_local() and not is_multiplayer_authority():
 		return
 	
 	_handle_pause()
