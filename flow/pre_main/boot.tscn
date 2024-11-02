@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://hywf8noe8m04"]
+
+[ext_resource type="Script" path="res://flow/pre_main/boot.gd" id="1_jn1nb"]
+
+[node name="Boot" type="Node"]
+script = ExtResource("1_jn1nb")

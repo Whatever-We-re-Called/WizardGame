@@ -32,31 +32,21 @@ func _handle_startup_args() -> void:
 			var delay = float(StartArgs.get_value("delay")) 
 			await get_tree().create_timer(delay).timeout
 		
-		swap_to_game_manager()
-		await get_tree().process_frame
-		SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
-		SessionManager.create_server()
-		_remove_self()
+		GameInstance.host_online(func o():
+			SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
+			SessionManager.create_server(),
+			true
+		)
 	elif StartArgs.has("join"):
 		if StartArgs.has("delay"):
 			var delay = float(StartArgs.get_value("delay")) 
 			await get_tree().create_timer(delay).timeout
 		
-		swap_to_game_manager()
-		await get_tree().process_frame
-		SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
-		SessionManager.connect_to_server()
-		_remove_self()
-		
-		
-func swap_to_game_manager():
-	var game_manager = load("res://game/game_manager.tscn").instantiate()
-	get_tree().root.add_child.call_deferred(game_manager)
-	
-	
-func _remove_self():
-	get_tree().root.remove_child.call_deferred(self)
-	self.queue_free()
+		GameInstance.connect_online(func o():
+			SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
+			SessionManager.connect_to_server(),
+			true
+		)
 
 
 func _online_invite_received(friend_id, lobby_id):
