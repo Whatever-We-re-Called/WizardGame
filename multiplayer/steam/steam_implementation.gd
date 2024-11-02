@@ -18,6 +18,7 @@ func setup() -> bool:
 	Steam.join_requested.connect(_handle_join_game)
 	# This is what's called when a user is invited to a game
 	Steam.lobby_invite.connect(_handle_invite_game)
+	Steam.steam_server_disconnected.connect(_handle_disconnect)
 	return true
 	
 func process():
@@ -96,3 +97,8 @@ func is_friend_playing_this_game(friend_id):
 	
 func is_self(friend_id):
 	return friend_id == Steam.getSteamID()
+	
+	
+func _handle_disconnect():
+	if SessionManager.connection_strategy is SteamBasedStrategy:
+		GameInstance.disconnected(true)

@@ -3,7 +3,7 @@ extends CanvasLayer
 
 @export var expire_timer: Timer
 @export var text: RichTextLabel
-@export var icon: Sprite2D
+@export var icon: TextureRect
 
 var current_lobby_id
 
