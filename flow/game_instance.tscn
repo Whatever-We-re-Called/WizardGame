@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://dju5sh6kuii3c"]
+
+[ext_resource type="Script" path="res://flow/game_instance.gd" id="1_vu7pv"]
+[ext_resource type="Script" path="res://flow/handshake/handshake.gd" id="2_6slx1"]
+
+[node name="GameInstance" type="Node" node_paths=PackedStringArray("current_scenes")]
+script = ExtResource("1_vu7pv")
+current_scenes = NodePath("CurrentScenes")
+
+[node name="CurrentScenes" type="Node" parent="."]
+
+[node name="Handshake" type="Node" parent="."]
+script = ExtResource("2_6slx1")
+
+[node name="HandshakeUI" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="Center" type="CenterContainer" parent="HandshakeUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="HandshakeUI/Center"]
+custom_minimum_size = Vector2(5000, 5000)
+layout_mode = 2
+color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[node name="Text" type="RichTextLabel" parent="HandshakeUI/Center"]
+clip_contents = false
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Connecting..."
+fit_content = true
+scroll_active = false

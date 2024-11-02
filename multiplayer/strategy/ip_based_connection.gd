@@ -14,6 +14,10 @@ func _init(address = "127.0.0.1", port = DEFAULT_PORT):
 	self.port = port
 	
 	SessionManager.client_connected_to_server.connect(_on_connect)
+	
+	
+func _on_connect():
+	SessionManager.add_player({"name": null, "peer_id": peer.get_unique_id()})
 
 
 func create_connection():
@@ -31,10 +35,11 @@ func create_connection():
 		
 	peer.get_host().compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
-	
-	
-func _on_connect():
-	SessionManager.add_player({ "name": null, "peer_id": peer.get_unique_id()})
+	GameInstance.handshake_init_client.connect(func init(handshake: HandshakeInstance):
+		handshake.handshake_complete.connect(func complete(data):
+			SessionManager.add_player({"name": null, "peer_id": peer.get_unique_id()})
+		)
+	)
 	
 	
 func create_server():

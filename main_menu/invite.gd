@@ -24,11 +24,10 @@ func invite_received(friend_id, lobby_id):
 
 
 func _accept():
-	get_parent().swap_to_game_manager()
-	await get_tree().process_frame
-	SessionManager.set_strategy(SteamBasedStrategy.new(current_lobby_id))
-	SessionManager.connect_to_server()
-	get_parent()._remove_self()
+	GameInstance.connect_online(func o():
+		SessionManager.set_strategy(SteamBasedStrategy.new(current_lobby_id))
+		SessionManager.connect_to_server()
+	)
 	
 	expire_timer.stop()
 	

@@ -28,12 +28,6 @@ func _enter_tree():
 	im = DeviceInputMap.new(self, peer_id, [0, 2])
 	if peer_id in multiplayer.get_peers() or SessionManager.get_self_peer_id() == peer_id:
 		set_multiplayer_authority(peer_id, true)
-		
-	if SessionManager.connection_strategy is SteamBasedStrategy:
-		var steam_info = SteamWrapper.get_friend_info(SessionManager.connected_clients[peer_id].steam_id)
-		$RichTextLabel.text = "[center]" + steam_info.display_name
-	else:
-		$RichTextLabel.text = "[center]Player " + name
 
 
 func _ready():
@@ -41,6 +35,13 @@ func _ready():
 	
 	for ability_scene in Abilities.loaded_ability_scenes.values():
 		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
+
+	if SessionManager.connection_strategy is SteamBasedStrategy and is_multiplayer_authority():
+		print("CC: ", SessionManager.connected_clients)
+		var steam_info = SteamWrapper.get_friend_info(SessionManager.connected_clients[peer_id].steam_id)
+		$RichTextLabel.text = "[center]" + steam_info.display_name
+	else:
+		$RichTextLabel.text = "[center]Player " + name
 
 
 func set_device(device_ids: Array):

@@ -37,15 +37,29 @@ const PLAYER_SCENE = preload("res://player/player.tscn")
 func _ready() -> void:
 	set_multiplayer_authority(1)
 	
-	SessionManager.session_added.connect(_add_player)
+	SessionManager.session_added.connect(_non_handshake_connect)
+	GameInstance.handshake_start_server.connect(_handshake_init)
+	
 	SessionManager.serverbound_client_disconnected.connect(_remove_player)
 	SessionManager.server_closed.connect(_server_closed)
 	
-	SessionManager.session_added.connect(_update_player_info_ui)
-	
 	# TODO Change this to load correct current game scene.
 	change_to_scene("res://wait_lobby/wait_lobby.tscn")
+	
+	if SessionManager.connection_strategy is LocalBasedConnection:
+		_update_player_info_ui()
 
+
+func _handshake_init(handshake: HandshakeInstance):
+	handshake.handshake_complete.connect(_add_player.bind(handshake.data))
+	handshake.handshake_complete.connect(_update_player_info_ui.bind(handshake.data))
+	
+	
+func _non_handshake_connect(data):
+	if (data.peer_id == 1 and SessionManager.get_self_peer_id() == 1) or SessionManager.connection_strategy is LocalBasedConnection:
+		_add_player(data)
+		_update_player_info_ui(data)
+		
 
 func _process(delta: float) -> void:
 	if multiplayer.is_server():
@@ -218,7 +232,7 @@ func return_to_wait_lobby():
 		transition_to_state.rpc_id(1, "waitlobby")
 
 
-func _update_player_info_ui(data):
+func _update_player_info_ui(_data = null):
 	await get_tree().process_frame
 	for child in %PlayerInfoUI/HBoxContainer.get_children():
 		child.queue_free()
