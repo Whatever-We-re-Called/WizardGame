@@ -252,8 +252,17 @@ func _update_player_info_ui(_data = null):
 			info2.set_state(PlayerInfoUI.State.Join)
 		else:
 			info2.set_state(PlayerInfoUI.State.Invite)
+			info2.invite_pressed.connect(_open_online_invite)
 			
 		%PlayerInfoUI/HBoxContainer.add_child(info2)
+
+
+func _open_online_invite(controller, player):
+	player.controller.freeze_input = true
+	var steam_menu = preload("res://multiplayer/steam/list/scenes/friend_list.tscn").instantiate()
+	steam_menu.controller = controller
+	steam_menu.closed.connect(func o(): player.controller.freeze_input = false)
+	add_child(steam_menu)
 
 
 func _on_player_received_debug_input(debug_value: int) -> void:

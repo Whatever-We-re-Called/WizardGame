@@ -1,40 +1,72 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxrg3g7q6hvd5"]
+[gd_scene load_steps=4 format=3 uid="uid://dxrg3g7q6hvd5"]
 
 [ext_resource type="Script" path="res://multiplayer/steam/list/scenes/friend_list.gd" id="1_uhho0"]
+[ext_resource type="Texture2D" uid="uid://dhyo6l76m468r" path="res://multiplayer/steam/list/assets/cross.png" id="2_uspgo"]
+[ext_resource type="Texture2D" uid="uid://bhawobd6fooal" path="res://multiplayer/steam/list/assets/cross (2).png" id="3_kcc0d"]
 
 [node name="Control" type="Control"]
+custom_minimum_size = Vector2(1200, 800)
 layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+script = ExtResource("1_uhho0")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("1_uhho0")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 color = Color(0.314316, 0.314316, 0.314316, 1)
 
-[node name="Scroll" type="ScrollContainer" parent="."]
-custom_minimum_size = Vector2(0, 1080)
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -310.0
-offset_top = -1.0
-offset_right = -1.0
-offset_bottom = -1.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 61.925)
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/CenterContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_font_sizes/bold_font_size = 31
+bbcode_enabled = true
+text = "[center][b]Invite Friends"
+fit_content = true
+
+[node name="CloseButton" type="TextureButton" parent="VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+texture_normal = ExtResource("2_uspgo")
+texture_focused = ExtResource("3_kcc0d")
+
+[node name="Scroll" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Container" type="VBoxContainer" parent="Scroll"]
+[node name="Container" type="GridContainer" parent="VBoxContainer/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+columns = 5
+
+[connection signal="pressed" from="VBoxContainer/PanelContainer/CloseButton" to="." method="_close"]

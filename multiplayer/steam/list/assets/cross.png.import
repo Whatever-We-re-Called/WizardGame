@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bme21oj1di7vg"
-path="res://.godot/imported/xbox_button_a.png-b4ac111e06de45b205b6833584c441bd.ctex"
+uid="uid://dhyo6l76m468r"
+path="res://.godot/imported/cross.png-93923ab220da59eff80e40714e7fe13a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/ui/player_info/assets/xbox_button_a.png"
-dest_files=["res://.godot/imported/xbox_button_a.png-b4ac111e06de45b205b6833584c441bd.ctex"]
+source_file="res://multiplayer/steam/list/assets/cross.png"
+dest_files=["res://.godot/imported/cross.png-93923ab220da59eff80e40714e7fe13a.ctex"]
 
 [params]
 
