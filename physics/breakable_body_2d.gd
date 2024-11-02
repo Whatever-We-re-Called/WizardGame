@@ -34,7 +34,6 @@ func _enter_tree() -> void:
 	_init_area_handling()
 
 
-
 func _init_health():
 	if data == null: return
 	
