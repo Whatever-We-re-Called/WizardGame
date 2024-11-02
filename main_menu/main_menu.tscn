@@ -52,7 +52,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-focus_mode = 0
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Settings")
+focus_next = NodePath("../Settings")
+focus_previous = NodePath("../Quit")
 theme_override_font_sizes/font_size = 138
 text = "Play
 "
@@ -72,7 +75,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-focus_mode = 0
+focus_neighbor_top = NodePath("../Settings")
+focus_neighbor_bottom = NodePath("../Play")
+focus_next = NodePath("../Play")
+focus_previous = NodePath("../Settings")
 theme_override_font_sizes/font_size = 78
 text = "Quit"
 flat = true
@@ -91,7 +97,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-focus_mode = 0
+focus_neighbor_top = NodePath("../Play")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Play")
 theme_override_font_sizes/font_size = 78
 text = "Settings
 "
@@ -131,7 +140,10 @@ layout_mode = 2
 [node name="Local" type="Button" parent="Play/CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(600, 1000)
 layout_mode = 2
-focus_mode = 0
+focus_neighbor_left = NodePath("../../../Back")
+focus_neighbor_right = NodePath("../Online")
+focus_next = NodePath("../Online")
+focus_previous = NodePath("../../../Back")
 theme_override_font_sizes/font_size = 52
 text = "Local"
 
@@ -142,28 +154,20 @@ layout_mode = 2
 [node name="Online" type="Button" parent="Play/CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
-focus_mode = 0
+focus_neighbor_left = NodePath("../Local")
+focus_neighbor_right = NodePath("../Local")
+focus_next = NodePath("../Local")
+focus_previous = NodePath("../Local")
 theme_override_font_sizes/font_size = 52
 text = "Online"
-
-[node name="DirectConnection" type="Button" parent="Play/CenterContainer/HBoxContainer/Online"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -59.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 18
-text = "Direct Connection"
-flat = true
 
 [node name="Back" type="Button" parent="Play"]
 offset_left = 25.0
 offset_top = 19.0
 offset_right = 190.0
 offset_bottom = 91.0
+focus_neighbor_right = NodePath("../CenterContainer/HBoxContainer/Local")
+focus_next = NodePath("../CenterContainer/HBoxContainer/Local")
 theme_override_font_sizes/font_size = 32
 text = "< Back"
 flat = true
@@ -273,7 +277,6 @@ one_shot = true
 [connection signal="pressed" from="Main/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Local" to="Play" method="_on_local_pressed"]
 [connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Online" to="Play" method="_on_online_pressed"]
-[connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Online/DirectConnection" to="Play" method="_on_direct_connection_pressed"]
 [connection signal="pressed" from="Play/Back" to="Play" method="_on_back_pressed"]
 [connection signal="pressed" from="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/Accept" to="Invite" method="_accept"]
 [connection signal="pressed" from="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/Ignore" to="Invite" method="_ignore"]
