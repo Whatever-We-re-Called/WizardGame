@@ -1,6 +1,8 @@
 extends Node
 class_name PlayerController
 
+signal paused
+
 @onready var player: CharacterBody2D = $".."
 
 @export_category("Jump & Gravity")
@@ -30,6 +32,8 @@ var prevent_jump: bool = false
 
 
 func _ready():
+	set_multiplayer_authority(player.peer_id)
+	
 	self.coyote_timer = Timer.new()
 	self.coyote_timer.wait_time = coyote_time
 	self.coyote_timer.one_shot = true
@@ -39,6 +43,18 @@ func _ready():
 	self.jump_buffer.wait_time = jump_buffer_time
 	self.jump_buffer.one_shot = true
 	add_child(jump_buffer)
+
+
+func _process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
+	
+	_handle_pause()
+
+
+func _handle_pause():
+	if Input.is_action_just_pressed(player.im.pause):
+		paused.emit()
 
 
 func handle_pre_physics(delta):

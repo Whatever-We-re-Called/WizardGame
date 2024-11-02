@@ -1,6 +1,7 @@
 class_name Player extends CharacterBody2D
 
 signal killed(int)
+signal paused
 signal received_debug_input(int)
 
 @export var ability_1: Abilities.Type

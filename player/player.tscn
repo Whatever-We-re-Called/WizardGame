@@ -270,6 +270,7 @@ offset_bottom = -72.0
 bbcode_enabled = true
 
 [node name="PlayerController" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("2_ist2s")
 jump_velocity = -1100.0
 coyote_time = 0.075

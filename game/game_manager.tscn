@@ -18,10 +18,10 @@
 [ext_resource type="Script" path="res://game/states/result_screen_game_state.gd" id="14_26wd8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_smshx"]
-properties/0/path = NodePath("GameUI/MapProgressUI:visible")
+properties/0/path = NodePath("Game/GameUI/MapProgressUI:visible")
 properties/0/spawn = true
 properties/0/replication_mode = 2
-properties/1/path = NodePath("GameUI/PlayerScoreUI:visible")
+properties/1/path = NodePath("Game/GameUI/PlayerScoreUI:visible")
 properties/1/spawn = true
 properties/1/replication_mode = 2
 
@@ -58,25 +58,22 @@ content_margin_left = 4.0
 bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [node name="GameManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_juohy")
 game_settings = ExtResource("2_58jvp")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_smshx")
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="Players" type="Node" parent="."]
+process_mode = 1
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="Players"]
 unique_name_in_owner = true
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../PlayersRoot")
 
-[node name="PlayersRoot" type="Node" parent="."]
-unique_name_in_owner = true
-
-[node name="SceneSpawner" type="MultiplayerSpawner" parent="."]
-unique_name_in_owner = true
-spawn_path = NodePath("../ActiveSceneRoot")
-
-[node name="ActiveSceneRoot" type="Node" parent="."]
+[node name="PlayersRoot" type="Node" parent="Players"]
 unique_name_in_owner = true
 
 [node name="PauseManager" type="Node" parent="."]
@@ -171,9 +168,19 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_rmcuc")
 theme_override_styles/normal = SubResource("StyleBoxFlat_cstnl")
 text = "Main Menu"
 
-[node name="GameUI" type="CanvasLayer" parent="."]
+[node name="Game" type="Node" parent="."]
+process_mode = 1
 
-[node name="MapProgressUI" type="CenterContainer" parent="GameUI"]
+[node name="SceneSpawner" type="MultiplayerSpawner" parent="Game"]
+unique_name_in_owner = true
+spawn_path = NodePath("../ActiveSceneRoot")
+
+[node name="ActiveSceneRoot" type="Node" parent="Game"]
+unique_name_in_owner = true
+
+[node name="GameUI" type="CanvasLayer" parent="Game"]
+
+[node name="MapProgressUI" type="CenterContainer" parent="Game/GameUI"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 10
@@ -183,11 +190,11 @@ mouse_filter = 2
 script = ExtResource("3_q0doh")
 metadata/_edit_use_anchors_ = true
 
-[node name="PanelContainer" type="PanelContainer" parent="GameUI/MapProgressUI"]
+[node name="PanelContainer" type="PanelContainer" parent="Game/GameUI/MapProgressUI"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="GameUI/MapProgressUI/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Game/GameUI/MapProgressUI/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 64
@@ -195,25 +202,25 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/MapProgressUI/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Game/GameUI/MapProgressUI/PanelContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="CurrentDisasterLabel" type="Label" parent="GameUI/MapProgressUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="CurrentDisasterLabel" type="Label" parent="Game/GameUI/MapProgressUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 label_settings = SubResource("LabelSettings_5u4d7")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="DisasterIcons" type="HBoxContainer" parent="GameUI/MapProgressUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="DisasterIcons" type="HBoxContainer" parent="Game/GameUI/MapProgressUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="PlayerScoreUI" type="CenterContainer" parent="GameUI"]
+[node name="PlayerScoreUI" type="CenterContainer" parent="Game/GameUI"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 1
@@ -225,11 +232,11 @@ grow_horizontal = 0
 mouse_filter = 2
 script = ExtResource("4_rlrby")
 
-[node name="PanelContainer" type="PanelContainer" parent="GameUI/PlayerScoreUI"]
+[node name="PanelContainer" type="PanelContainer" parent="Game/GameUI/PlayerScoreUI"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="GameUI/PlayerScoreUI/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Game/GameUI/PlayerScoreUI/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 64
@@ -237,25 +244,25 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/PlayerScoreUI/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Game/GameUI/PlayerScoreUI/PanelContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="GameUI/PlayerScoreUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Game/GameUI/PlayerScoreUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Survivals"
 label_settings = SubResource("LabelSettings_7fwbh")
 horizontal_alignment = 1
 
-[node name="ScoresList" type="GridContainer" parent="GameUI/PlayerScoreUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="ScoresList" type="GridContainer" parent="Game/GameUI/PlayerScoreUI/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 32
 columns = 2
 
-[node name="GameSettingsUI" type="CenterContainer" parent="GameUI"]
+[node name="GameSettingsUI" type="CenterContainer" parent="Game/GameUI"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 8
@@ -272,11 +279,11 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("5_73nkb")
 
-[node name="PanelContainer" type="PanelContainer" parent="GameUI/GameSettingsUI"]
+[node name="PanelContainer" type="PanelContainer" parent="Game/GameUI/GameSettingsUI"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="GameUI/GameSettingsUI/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Game/GameUI/GameSettingsUI/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 64
@@ -284,36 +291,36 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="Title" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Game Settings"
 label_settings = SubResource("LabelSettings_dy6bj")
 horizontal_alignment = 1
 
-[node name="GeneralLabel" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="GeneralLabel" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "General"
 label_settings = SubResource("LabelSettings_a8jh6")
 horizontal_alignment = 1
 
-[node name="GeneralSettings" type="GridContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="GeneralSettings" type="GridContainer" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 32
 columns = 2
 
-[node name="Label" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+[node name="Label" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 layout_mode = 2
 text = "Survivals Goal"
 label_settings = SubResource("LabelSettings_dfp14")
 
-[node name="SurvivalGoalsLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+[node name="SurvivalGoalsLineEdit" type="LineEdit" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/GeneralSettings"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -322,24 +329,24 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
 text = "2"
 alignment = 1
 
-[node name="Maps" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Maps" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Maps"
 label_settings = SubResource("LabelSettings_a8jh6")
 horizontal_alignment = 1
 
-[node name="MapsSettings" type="GridContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MapsSettings" type="GridContainer" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 32
 columns = 2
 
-[node name="Label" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/MapsSettings"]
+[node name="Label" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/MapsSettings"]
 layout_mode = 2
 text = "Map Disaster Severity"
 label_settings = SubResource("LabelSettings_dfp14")
 
-[node name="MapDisasterSeverityLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/MapsSettings"]
+[node name="MapDisasterSeverityLineEdit" type="LineEdit" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/MapsSettings"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -348,24 +355,24 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
 text = "2"
 alignment = 1
 
-[node name="Disasters" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Disasters" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Disasters"
 label_settings = SubResource("LabelSettings_a8jh6")
 horizontal_alignment = 1
 
-[node name="DisastersSettings" type="GridContainer" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="DisastersSettings" type="GridContainer" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 32
 columns = 2
 
-[node name="Label" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="Label" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 layout_mode = 2
 text = "Disaster Duration"
 label_settings = SubResource("LabelSettings_dfp14")
 
-[node name="DisasterDurationLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="DisasterDurationLineEdit" type="LineEdit" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -374,12 +381,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
 text = "2"
 alignment = 1
 
-[node name="Label2" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="Label2" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 layout_mode = 2
 text = "Time Before First Disaster"
 label_settings = SubResource("LabelSettings_dfp14")
 
-[node name="TimeBeforeFirstDisasterLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="TimeBeforeFirstDisasterLineEdit" type="LineEdit" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -388,12 +395,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
 text = "2"
 alignment = 1
 
-[node name="Label3" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="Label3" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 layout_mode = 2
 text = "Time Inbetween Disasters"
 label_settings = SubResource("LabelSettings_dfp14")
 
-[node name="TimeInbetweenDisastersLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="TimeInbetweenDisastersLineEdit" type="LineEdit" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -402,12 +409,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
 text = "2"
 alignment = 1
 
-[node name="Label4" type="Label" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="Label4" type="Label" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 layout_mode = 2
 text = "Time After Last Disaster"
 label_settings = SubResource("LabelSettings_dfp14")
 
-[node name="TimeAfterLastDisasterLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+[node name="TimeAfterLastDisasterLineEdit" type="LineEdit" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -416,7 +423,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_n36nu")
 text = "2"
 alignment = 1
 
-[node name="SaveAndCloseButton" type="Button" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="SaveAndCloseButton" type="Button" parent="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 theme_override_styles/hover = SubResource("StyleBoxFlat_2rcq4")
@@ -424,7 +431,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_rmcuc")
 theme_override_styles/normal = SubResource("StyleBoxFlat_cstnl")
 text = "Save and Close"
 
-[node name="PlayerInfoUI" type="CenterContainer" parent="GameUI"]
+[node name="PlayerInfoUI" type="CenterContainer" parent="Game/GameUI"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 128)
 anchors_preset = 12
@@ -434,45 +441,45 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/PlayerInfoUI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Game/GameUI/PlayerInfoUI"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 
-[node name="GameStates" type="Node" parent="."]
+[node name="GameStates" type="Node" parent="Game"]
 unique_name_in_owner = true
 
-[node name="WaitLobby" type="Node" parent="GameStates"]
+[node name="WaitLobby" type="Node" parent="Game/GameStates"]
 script = ExtResource("4_0m4h4")
 
-[node name="GameStart" type="Node" parent="GameStates"]
+[node name="GameStart" type="Node" parent="Game/GameStates"]
 script = ExtResource("6_too1t")
 
-[node name="MapStart" type="Node" parent="GameStates"]
+[node name="MapStart" type="Node" parent="Game/GameStates"]
 script = ExtResource("5_78ssb")
 
-[node name="DisasterStart" type="Node" parent="GameStates"]
+[node name="DisasterStart" type="Node" parent="Game/GameStates"]
 script = ExtResource("6_k8xa5")
 
-[node name="Disaster" type="Node" parent="GameStates"]
+[node name="Disaster" type="Node" parent="Game/GameStates"]
 script = ExtResource("6_xatxq")
 
-[node name="DisasterEnd" type="Node" parent="GameStates"]
+[node name="DisasterEnd" type="Node" parent="Game/GameStates"]
 script = ExtResource("10_pa7wn")
 
-[node name="MapEnd" type="Node" parent="GameStates"]
+[node name="MapEnd" type="Node" parent="Game/GameStates"]
 script = ExtResource("8_4pkwd")
 
-[node name="Intermission" type="Node" parent="GameStates"]
+[node name="Intermission" type="Node" parent="Game/GameStates"]
 script = ExtResource("9_iy1xj")
 
-[node name="GameEnd" type="Node" parent="GameStates"]
+[node name="GameEnd" type="Node" parent="Game/GameStates"]
 script = ExtResource("13_eh6g2")
 
-[node name="ResultScreen" type="Node" parent="GameStates"]
+[node name="ResultScreen" type="Node" parent="Game/GameStates"]
 script = ExtResource("14_26wd8")
 
 [connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" to="PauseManager" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/SettingsButton" to="PauseManager" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/WaitLobbyButton" to="PauseManager" method="_on_wait_lobby_button_pressed"]
 [connection signal="pressed" from="PauseManager/PauseMenu/CenterContainer/VBoxContainer/VBoxContainer/MainMenuButton" to="PauseManager" method="_on_main_menu_button_pressed"]
-[connection signal="pressed" from="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/SaveAndCloseButton" to="GameUI/GameSettingsUI" method="_on_save_and_close_button_pressed"]
+[connection signal="pressed" from="Game/GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/SaveAndCloseButton" to="Game/GameUI/GameSettingsUI" method="_on_save_and_close_button_pressed"]

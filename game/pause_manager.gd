@@ -8,17 +8,20 @@ func _ready() -> void:
 	pause_menu.visible = false
 
 
-func _process(delta: float) -> void:
-	for player in game_manager.players:
-		if Input.is_action_just_pressed(player.im.pause):
-			toggle_pause()
-
-
 func toggle_pause():
 	if SessionManager.is_playing_local():
 		_toggle_pause_local()
 	else:
 		_toggle_pause_online()
+
+
+func _toggle_pause_local():
+	if pause_menu.visible == false:
+		_enable_pause_menu(true)
+		game_manager.get_tree().paused = true
+	else:
+		_enable_pause_menu(false)
+		game_manager.get_tree().paused = false
 
 
 func _toggle_pause_online():
@@ -31,15 +34,6 @@ func _toggle_pause_online():
 	else:
 		_enable_pause_menu(false)
 		source_player.controller.freeze_input = false
-
-
-func _toggle_pause_local():
-	if pause_menu.visible == false:
-		_enable_pause_menu(true)
-		game_manager.get_tree().paused = true
-	else:
-		_enable_pause_menu(false)
-		game_manager.get_tree().paused = false
 
 
 func _enable_pause_menu(enabled: bool):

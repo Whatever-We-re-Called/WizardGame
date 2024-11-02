@@ -89,6 +89,7 @@ func _handle_add_player_signals(target_peer_id: int):
 	var target_player = get_player_from_peer_id(target_peer_id)
 	target_player.killed.connect(_on_player_killed)
 	target_player.received_debug_input.connect(_on_player_received_debug_input)
+	target_player.controller.paused.connect(pause_manager.toggle_pause)
 
 
 func _remove_player(id):
