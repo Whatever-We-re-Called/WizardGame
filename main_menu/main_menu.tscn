@@ -173,8 +173,8 @@ unique_name_in_owner = true
 visible = false
 script = ExtResource("3_jgj41")
 expire_timer = NodePath("ExpireTimer")
-text = NodePath("Container/HBoxContainer/CenterContainer/VBoxContainer/RichTextLabel")
-icon = NodePath("Container/HBoxContainer/TextureButton")
+text = NodePath("Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/RichTextLabel")
+icon = NodePath("Container/MarginContainer/HBoxContainer/CenterContainer2/TextureButton")
 
 [node name="Container" type="CenterContainer" parent="Invite"]
 custom_minimum_size = Vector2(700, 150)
@@ -199,51 +199,64 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0.277528, 0.277528, 0.277528, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Invite/Container"]
-custom_minimum_size = Vector2(685, 135)
+[node name="MarginContainer" type="MarginContainer" parent="Invite/Container"]
+layout_mode = 2
+theme_override_constants/margin_left = -10
+theme_override_constants/margin_top = -5
+theme_override_constants/margin_right = -10
+theme_override_constants/margin_bottom = -5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Invite/Container/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 55
+
+[node name="CenterContainer2" type="CenterContainer" parent="Invite/Container/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 
-[node name="TextureButton" type="Sprite2D" parent="Invite/Container/HBoxContainer"]
-scale = Vector2(0.696, 0.696)
+[node name="TextureButton" type="TextureRect" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer2"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+expand_mode = 5
 
-[node name="CenterContainer" type="CenterContainer" parent="Invite/Container/HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="Invite/Container/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Invite/Container/HBoxContainer/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/bold_font_size = 21
 bbcode_enabled = true
 text = "[center][b]Blast has invited you to a game!"
 fit_content = true
 
-[node name="Spacer" type="Container" parent="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer"]
+[node name="Spacer" type="Container" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 4.15)
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 44.855)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer"]
 layout_mode = 2
 
-[node name="Accept" type="Button" parent="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+[node name="Accept" type="Button" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Accept"
 
-[node name="Spacer" type="Container" parent="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+[node name="Spacer" type="Container" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(14.015, 0)
 layout_mode = 2
 
-[node name="Ignore" type="Button" parent="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
+[node name="Ignore" type="Button" parent="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -262,5 +275,5 @@ one_shot = true
 [connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Online" to="Play" method="_on_online_pressed"]
 [connection signal="pressed" from="Play/CenterContainer/HBoxContainer/Online/DirectConnection" to="Play" method="_on_direct_connection_pressed"]
 [connection signal="pressed" from="Play/Back" to="Play" method="_on_back_pressed"]
-[connection signal="pressed" from="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/Accept" to="Invite" method="_accept"]
-[connection signal="pressed" from="Invite/Container/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/Ignore" to="Invite" method="_ignore"]
+[connection signal="pressed" from="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/Accept" to="Invite" method="_accept"]
+[connection signal="pressed" from="Invite/Container/MarginContainer/HBoxContainer/CenterContainer/VBoxContainer/CenterContainer/HBoxContainer/Ignore" to="Invite" method="_ignore"]
