@@ -12,11 +12,11 @@ current_scenes = NodePath("CurrentScenes")
 [node name="Handshake" type="Node" parent="."]
 script = ExtResource("2_6slx1")
 
-[node name="HandshakeUI" type="CanvasLayer" parent="."]
+[node name="MidFlowUI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 visible = false
 
-[node name="Center" type="CenterContainer" parent="HandshakeUI"]
+[node name="Center" type="CenterContainer" parent="MidFlowUI"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,12 +25,12 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="HandshakeUI/Center"]
+[node name="ColorRect" type="ColorRect" parent="MidFlowUI/Center"]
 custom_minimum_size = Vector2(5000, 5000)
 layout_mode = 2
 color = Color(0.310617, 0.310617, 0.310617, 1)
 
-[node name="Text" type="RichTextLabel" parent="HandshakeUI/Center"]
+[node name="Text" type="RichTextLabel" parent="MidFlowUI/Center"]
 clip_contents = false
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
@@ -38,3 +38,21 @@ bbcode_enabled = true
 text = "[center]Connecting..."
 fit_content = true
 scroll_active = false
+
+[node name="Button" type="Button" parent="MidFlowUI"]
+visible = false
+custom_minimum_size = Vector2(84.56, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = 55.325
+offset_right = 15.0
+offset_bottom = 86.325
+grow_horizontal = 2
+grow_vertical = 2
+text = "Ok"
+
+[connection signal="pressed" from="MidFlowUI/Button" to="." method="_on_ui_button_pressed"]

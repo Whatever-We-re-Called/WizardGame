@@ -107,6 +107,8 @@ func _handle_add_player_signals(target_peer_id: int):
 
 
 func _remove_player(id):
+	if id == 1 and SessionManager.get_self_peer_id() != 1:
+		GameInstance.disconnected(true)
 	for child in players_root.get_children():
 		if child.name == str(id):
 			child.queue_free()
@@ -114,11 +116,6 @@ func _remove_player(id):
 
 func _server_closed():
 	SessionManager.disconnect_client()
-	
-	var main_menu = preload("res://main_menu/main_menu.tscn").instantiate()
-	get_tree().root.add_child.call_deferred(main_menu)
-	get_tree().root.remove_child.call_deferred(self)
-	self.queue_free()
 
 
 func get_player_from_peer_id(peer_id: int) -> Player:

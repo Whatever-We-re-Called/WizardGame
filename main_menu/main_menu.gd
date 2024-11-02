@@ -1,5 +1,7 @@
 extends Node2D
 
+static var handled_startargs = false
+
 
 func _ready() -> void:
 	_handle_startup_args()
@@ -20,6 +22,9 @@ func _on_quit_pressed() -> void:
 
 
 func _handle_startup_args() -> void:
+	if handled_startargs:
+		return
+	
 	var address = "127.0.0.1"
 	var port = IPBasedConnection.DEFAULT_PORT
 	if StartArgs.has("address"):
@@ -47,6 +52,8 @@ func _handle_startup_args() -> void:
 			SessionManager.connect_to_server(),
 			true
 		)
+	
+	handled_startargs = true
 
 
 func _online_invite_received(friend_id, lobby_id):

@@ -24,8 +24,8 @@ func host_online(create_peer_callback: Callable, wait = false):
 	
 	
 func connect_online(create_peer_callback: Callable, wait = false):
-	%HandshakeUI/Center/Text.text = "[center]Connecting..."
-	%HandshakeUI.visible = true
+	%MidFlowUI/Center/Text.text = "[center]Connecting..."
+	%MidFlowUI.visible = true
 	_kill_children()
 	_swap_to_scene("game_manager")
 	if wait:
@@ -36,10 +36,10 @@ func connect_online(create_peer_callback: Callable, wait = false):
 		
 		
 func _handshake_init(handshake: HandshakeInstance):
-	%HandshakeUI/Center/Text.text = "[center]Initializing..."
+	%MidFlowUI/Center/Text.text = "[center]Initializing..."
 	
 	handshake.handshake_complete.connect(func complete():
-		%HandshakeUI.visible = false
+		%MidFlowUI.visible = false
 	)
 		
 	
@@ -60,3 +60,17 @@ func _swap_to_scene(scene: String):
 func _kill_children():
 	for child in current_scenes.get_children():
 		child.queue_free()
+		
+		
+func disconnected(forced = false):
+	if forced:
+		%MidFlowUI/Center/Text.text = "[center]The server was closed"
+		%MidFlowUI/Button.visible = true
+		%MidFlowUI.visible = true
+		SessionManager.disconnect_client()
+	swap_to_main_menu()
+
+
+func _on_ui_button_pressed() -> void:
+	%MidFlowUI/Button.visible = false
+	%MidFlowUI.visible = false

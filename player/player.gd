@@ -38,7 +38,6 @@ func _ready():
 		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
 
 	if SessionManager.connection_strategy is SteamBasedStrategy and is_multiplayer_authority():
-		print("CC: ", SessionManager.connected_clients)
 		var steam_info = SteamWrapper.get_friend_info(SessionManager.connected_clients[peer_id].steam_id)
 		$RichTextLabel.text = "[center]" + steam_info.display_name
 	else:

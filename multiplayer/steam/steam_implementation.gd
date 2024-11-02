@@ -10,11 +10,9 @@ func setup() -> bool:
 	if not Steam.isSteamRunning():
 		return false
 	
-	#OS.set_environment("SteamAppId", str(app_id))
-	#OS.set_environment("SteamGameId", str(app_id))
+	OS.set_environment("SteamAppId", str(app_id))
+	OS.set_environment("SteamGameId", str(app_id))
 	var init = Steam.steamInitEx(true, app_id)
-	print("Steam init'd:")
-	print(init)
 	
 	# This is what's called when a user accepts an invite or clicks join game
 	Steam.join_requested.connect(_handle_join_game)
