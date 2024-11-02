@@ -69,6 +69,8 @@ func disconnected(forced = false):
 		%MidFlowUI.visible = true
 		SessionManager.disconnect_client()
 	swap_to_main_menu()
+	
+	get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())
 
 
 func _on_ui_button_pressed() -> void:
