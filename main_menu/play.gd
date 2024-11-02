@@ -1,7 +1,6 @@
 extends CanvasLayer
 
 
-
 func _on_local_pressed() -> void:
 	GameInstance.connect_local()
 

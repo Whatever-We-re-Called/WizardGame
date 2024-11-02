@@ -63,4 +63,5 @@ func _on_main_menu_button_pressed() -> void:
 	else:
 		SessionManager.disconnect_client()
 		
+	toggle_pause()
 	GameInstance.disconnected()

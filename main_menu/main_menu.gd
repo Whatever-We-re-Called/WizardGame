@@ -5,10 +5,22 @@ static var handled_startargs = false
 
 func _ready() -> void:
 	_handle_startup_args()
+	print("Main")
 	SteamWrapper.invite_received.connect(_online_invite_received)
+	
+	print("Main 2")
+	$Main/Play.disabled = true
+	$Main/Settings.disabled = true
+	$Main/Quit.disabled = true
+	await get_tree().process_frame
+	$Main/Play.disabled = false
+	$Main/Settings.disabled = false
+	$Main/Quit.disabled = false
+	print("Main 3")
 
 
 func _on_play_pressed() -> void:
+	print("Play")
 	%Main.visible = false
 	%Play.visible = true
 
