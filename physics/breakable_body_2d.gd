@@ -16,7 +16,7 @@ const DISPLAY_VORONOI_DEBUG: bool = true
 const EDGE_THRESHOLD: float = 10.0
 const BREAK_POINT_DISTANCE_MINIMUM: float = 20.0
 const MAX_FAILED_BREAK_POINT_ATTEMPTS: int = 100
-const MINIMUM_CHUNK_AREA = 2000
+const MINIMUM_CHUNK_AREA = 500
 const MINIMUM_NON_OVERLAP_AREA = 200
 
 # Note about frequent use of preload(). 
@@ -195,17 +195,11 @@ func _get_overlap_polygon(collision_polygon: CollisionPolygon2D, incoming_collis
 func _create_new_shards(overlap_polygon: PackedVector2Array, impulse_callable: Callable):
 	if not multiplayer.is_server(): return
 	
-	var is_creating_pieces = PolygonUtil.get_area_of_polygon(overlap_polygon) < MINIMUM_CHUNK_AREA
-	
 	for fragment_polygon in fragment_polygons:
 		var potential_fragment_polygons = Geometry2D.intersect_polygons(overlap_polygon, fragment_polygon)
 		if potential_fragment_polygons.size() > 0:
 			var intersect_polygon = potential_fragment_polygons[0]
-			
-			if is_creating_pieces:
-				_init_shard_piece(intersect_polygon, impulse_callable)
-			else:
-				_init_shard_chunk(intersect_polygon, impulse_callable)
+			_init_shard(intersect_polygon, impulse_callable)
 
 
 func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, incoming_collision_polygon: CollisionPolygon2D):
@@ -228,17 +222,12 @@ func _create_non_overlap_shard_polygons(collision_polygon: CollisionPolygon2D, i
 
 
 #region Initialize bodies, chunks, and pieces.
-func _init_shard_chunk(intersect_polygon: PackedVector2Array, impulse_callable: Callable):
-	var shard_chunk = preload("res://physics/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
-	_init_shard(shard_chunk, intersect_polygon, impulse_callable)
-
-
-func _init_shard_piece(intersect_polygon: PackedVector2Array, impulse_callable: Callable):
-	var shard_piece = preload("res://physics/spawnable_scenes/shard_piece_scene.tscn").instantiate()
-	_init_shard(shard_piece, intersect_polygon, impulse_callable)
-
-
-func _init_shard(new_shard: BreakableBody2D, intersect_polygon: PackedVector2Array, impulse_callable: Callable):
+func _init_shard(intersect_polygon: PackedVector2Array, impulse_callable: Callable):
+	var new_shard: BreakableBody2D
+	if PolygonUtil.get_area_of_polygon(intersect_polygon) >= MINIMUM_CHUNK_AREA:
+		new_shard = preload("res://physics/spawnable_scenes/shard_chunk_scene.tscn").instantiate()
+	else:
+		new_shard = preload("res://physics/spawnable_scenes/shard_piece_scene.tscn").instantiate()
 	add_child(new_shard, true)
 	
 	var area_ratio = PolygonUtil.get_area_of_polygon(intersect_polygon) / total_area
