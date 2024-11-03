@@ -2,4 +2,4 @@ extends GameState
 
 
 func _enter():
-	game_manager.transition_to_state("mapstart")
+	game_scene.transition_to_state("mapstart")

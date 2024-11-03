@@ -2,26 +2,26 @@ extends GameState
 
 
 func _enter():
-	game_manager.load_random_map.rpc_id(1)
+	game_scene.load_random_map.rpc_id(1)
 	
-	game_manager.current_disaster_number = 1
+	game_scene.current_disaster_number = 1
 	_populate_current_map_disasters()
 	
-	game_manager.map_progress_ui.visible = true
-	game_manager.player_score_ui.visible = true
+	game_scene.map_progress_ui.visible = true
+	game_scene.player_score_ui.visible = true
 	
 	await get_tree().process_frame
-	game_manager.transition_to_state("disasterstart")
+	game_scene.transition_to_state("disasterstart")
 
 
 func _populate_current_map_disasters():
-	game_manager.current_map_disasters.clear()
+	game_scene.current_map_disasters.clear()
 	
 	var current_severity = 0
-	var target_severity = game_manager.game_settings.map_disaster_severity
+	var target_severity = game_scene.game_manager.game_settings.map_disaster_severity
 	while true:
 		randomize()
-		var disaster_pool_copy = game_manager.game_settings.disaster_pool.duplicate()
+		var disaster_pool_copy = game_scene.game_manager.game_settings.disaster_pool.duplicate()
 		disaster_pool_copy.shuffle()
 		
 		var added_at_least_one = false
@@ -29,7 +29,7 @@ func _populate_current_map_disasters():
 			var added_severity = int(disaster.severity) + 1
 			
 			if (current_severity + added_severity) <= target_severity:
-				game_manager.current_map_disasters.append(disaster)
+				game_scene.current_map_disasters.append(disaster)
 				current_severity += added_severity
 				added_at_least_one = true
 		
@@ -39,4 +39,4 @@ func _populate_current_map_disasters():
 			break
 	
 	randomize()
-	game_manager.current_map_disasters.shuffle()
+	game_scene.current_map_disasters.shuffle()

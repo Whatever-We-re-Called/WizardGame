@@ -1,6 +1,6 @@
 class_name GameState extends Node
 
-var game_manager: GameManager
+var game_scene: GameManagerModule
 
 
 func _enter():

@@ -8,11 +8,11 @@
 
 [resource]
 script = ExtResource("1_vmk68")
-survivals_goal = 10
+survivals_goal = 5
 map_pool = Array[PackedScene]([ExtResource("1_sl5e0")])
 map_disaster_severity = 5
-disaster_duration = 15.0
-time_before_first_disaster = 5.0
-time_inbetween_disasters = 3.0
-time_after_last_disaster = 5.0
+disaster_duration = 2.0
+time_before_first_disaster = 2.0
+time_inbetween_disasters = 2.0
+time_after_last_disaster = 2.0
 disaster_pool = Array[ExtResource("1_n3v6n")]([ExtResource("2_yx8np"), ExtResource("3_qb3uf")])

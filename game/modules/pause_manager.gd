@@ -1,11 +1,8 @@
-extends Node
-
-@onready var game_manager = get_parent() as GameManager
-@onready var pause_menu: CanvasLayer = %PauseMenu
+extends GameManagerModule
 
 
 func _ready() -> void:
-	pause_menu.visible = false
+	%PauseMenu.visible = false
 
 
 func toggle_pause():
@@ -16,7 +13,7 @@ func toggle_pause():
 
 
 func _toggle_pause_local():
-	if pause_menu.visible == false:
+	if %PauseMenu.visible == false:
 		_enable_pause_menu(true)
 		game_manager.get_tree().paused = true
 	else:
@@ -28,7 +25,7 @@ func _toggle_pause_online():
 	var source_peer_id = SessionManager.get_self_peer_id()
 	var source_player = game_manager.get_player_from_peer_id(source_peer_id)
 	
-	if pause_menu.visible == false:
+	if %PauseMenu.visible == false:
 		_enable_pause_menu(true)
 		source_player.controller.freeze_input = true
 	else:
@@ -37,7 +34,7 @@ func _toggle_pause_online():
 
 
 func _enable_pause_menu(enabled: bool):
-	pause_menu.visible = enabled
+	%PauseMenu.visible = enabled
 	
 	if enabled == true:
 		%ResumeButton.grab_focus()
