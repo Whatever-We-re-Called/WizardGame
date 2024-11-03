@@ -3,11 +3,10 @@ extends Node
 
 var registry = {}
 
+
 func _ready():
-	for i in 5:
-		await get_tree().process_frame
-	
 	var canvas = CanvasLayer.new()
+	canvas.layer = 9999
 	var console = preload("res://util/commands/console.tscn").instantiate()
 	console.visible = false
 	canvas.add_child(console)
