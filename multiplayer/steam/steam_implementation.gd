@@ -4,12 +4,17 @@ class_name SteamImplementation
 
 ## Change this when we're on steam. Temporary testing ID
 const app_id = 480
+var connected = false
 
 
-func setup() -> bool:
+func setup():
 	if not Steam.isSteamRunning():
+		Steam.steam_server_connected.connect(_connect)
 		return false
+	_connect()
 	
+	
+func _connect():
 	OS.set_environment("SteamAppId", str(app_id))
 	OS.set_environment("SteamGameId", str(app_id))
 	var init = Steam.steamInitEx(true, app_id)
@@ -19,7 +24,8 @@ func setup() -> bool:
 	# This is what's called when a user is invited to a game
 	Steam.lobby_invite.connect(_handle_invite_game)
 	Steam.steam_server_disconnected.connect(_handle_disconnect)
-	return true
+	connected = true
+	
 	
 func process():
 	Steam.run_callbacks()

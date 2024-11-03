@@ -14,6 +14,10 @@ func _on_play_pressed() -> void:
 	%Main.visible = false
 	%Play.visible = true
 	
+	if not SteamWrapper.is_steam_running():
+		%Play/CenterContainer/HBoxContainer/Online.disabled = true
+		%Play/CenterContainer/HBoxContainer/Online/OnlineDisconnected.visible = true
+	
 	%Play/CenterContainer/HBoxContainer/Local.grab_focus()
 
 

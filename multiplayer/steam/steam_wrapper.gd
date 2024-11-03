@@ -17,13 +17,13 @@ func _process(delta: float) -> void:
 	if init:
 		steam_impl = Node.new()
 		steam_impl.script = load("res://multiplayer/steam/steam_implementation.gd")
-		if steam_impl.setup():
-			add_child(steam_impl)
-			init = false
-			
+		steam_impl.setup()
+		add_child(steam_impl)
+		init = false
+
 
 func is_steam_running() -> bool:
-	return steam_impl != null
+	return steam_impl != null and steam_impl.connected
 		
 		
 func get_friends_list():

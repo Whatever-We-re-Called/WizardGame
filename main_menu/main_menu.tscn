@@ -161,6 +161,24 @@ focus_previous = NodePath("../Local")
 theme_override_font_sizes/font_size = 52
 text = "Online"
 
+[node name="OnlineDisconnected" type="CenterContainer" parent="Play/CenterContainer/HBoxContainer/Online"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Play/CenterContainer/HBoxContainer/Online/OnlineDisconnected"]
+custom_minimum_size = Vector2(190.115, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][color=indian_red]Online not connected"
+fit_content = true
+scroll_active = false
+
 [node name="Back" type="Button" parent="Play"]
 offset_left = 25.0
 offset_top = 19.0
