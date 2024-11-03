@@ -1,6 +1,7 @@
 extends GameManagerModule
 
 func _ready():
+	super._ready()
 	if SessionManager.connection_strategy is LocalBasedConnection:
 		update_player_info()
 
@@ -29,6 +30,8 @@ func is_game_settings_ui_visible() -> bool:
 
 
 func update_player_info(_data = null):
+	print("??????????????")
+	
 	await get_tree().process_frame
 	for child in %PlayerInfoUI/HBoxContainer.get_children():
 		child.queue_free()
@@ -50,5 +53,14 @@ func update_player_info(_data = null):
 			info2.set_state(PlayerInfoUI.State.Join)
 		else:
 			info2.set_state(PlayerInfoUI.State.Invite)
+			info2.invite_pressed.connect(_open_online_invite)
 			
 		%PlayerInfoUI/HBoxContainer.add_child(info2)
+
+
+func _open_online_invite(controller, player):
+	player.controller.freeze_input = true
+	var steam_menu = preload("res://multiplayer/steam/list/scenes/friend_list.tscn").instantiate()
+	steam_menu.controller = controller
+	steam_menu.closed.connect(func o(): player.controller.freeze_input = false)
+	add_child(steam_menu)

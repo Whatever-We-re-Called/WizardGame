@@ -131,6 +131,7 @@ text = "Survivals Goal"
 label_settings = SubResource("LabelSettings_dfp14")
 
 [node name="SurvivalGoalsLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/GeneralSettings"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -156,6 +157,7 @@ text = "Map Disaster Severity"
 label_settings = SubResource("LabelSettings_dfp14")
 
 [node name="MapDisasterSeverityLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/MapsSettings"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -181,6 +183,7 @@ text = "Disaster Duration"
 label_settings = SubResource("LabelSettings_dfp14")
 
 [node name="DisasterDurationLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -194,6 +197,7 @@ text = "Time Before First Disaster"
 label_settings = SubResource("LabelSettings_dfp14")
 
 [node name="TimeBeforeFirstDisasterLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -207,6 +211,7 @@ text = "Time Inbetween Disasters"
 label_settings = SubResource("LabelSettings_dfp14")
 
 [node name="TimeInbetweenDisastersLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
@@ -220,6 +225,7 @@ text = "Time After Last Disaster"
 label_settings = SubResource("LabelSettings_dfp14")
 
 [node name="TimeAfterLastDisasterLineEdit" type="LineEdit" parent="GameUI/GameSettingsUI/PanelContainer/MarginContainer/VBoxContainer/DisastersSettings"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
