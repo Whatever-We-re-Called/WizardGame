@@ -14,7 +14,7 @@ func _ready():
 	
 	
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("debug_1") and Console.window != null:
+	if Input.is_action_just_pressed("console_open") and Console.window != null:
 		Console.window.visible = !Console.window.visible
 		Console.window.clear_text_edit()
 
