@@ -44,7 +44,7 @@ func _add_channel():
 
 
 func _update_channel_count():
-	var ratio = free_channels.size() / get_children().size()
+	var ratio = int(free_channels.size() / float(get_children().size()))
 	if ratio < min_free_ratio:
 		_add_channel()
 

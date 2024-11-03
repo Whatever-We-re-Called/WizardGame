@@ -71,8 +71,8 @@ func create_server():
 	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, 32)
 	
 	
-func _lobby_created(connect, lobby_id):
-	if connect == 1:
+func _lobby_created(connect_value, lobby_id):
+	if connect_value == 1:
 		self.lobby_id = lobby_id
 		
 		Steam.setLobbyData(lobby_id, "name", Steam.getPersonaName() + "'s Lobby")

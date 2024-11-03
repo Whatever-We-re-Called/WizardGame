@@ -16,9 +16,9 @@ func _ready() -> void:
 		
 	await get_tree().process_frame
 	if controller:
-		var range = $VBoxContainer/Scroll/Container.get_children().size() - 1
-		for i in range:
-			set_neighbors(i, range, $VBoxContainer/Scroll/Container.get_child(i))
+		var count = $VBoxContainer/Scroll/Container.get_children().size() - 1
+		for i in count:
+			set_neighbors(i, count, $VBoxContainer/Scroll/Container.get_child(i))
 		
 		if $VBoxContainer/Scroll/Container.get_child_count() > 0:
 			$VBoxContainer/Scroll/Container.get_child(0).focus()
@@ -27,15 +27,15 @@ func _ready() -> void:
 			%CloseButton.focus_next = $VBoxContainer/Scroll/Container.get_child(0).get_path()
 
 
-func set_neighbors(i, max, node):
+func set_neighbors(i, max_neighbors, node):
 	var children = $VBoxContainer/Scroll/Container.get_children()
-	if i + 5 <= max:
+	if i + 5 <= max_neighbors:
 		node.get_button().focus_neighbor_bottom = children[i + 5].get_button().get_path()
 	if i - 5 >= 0:
 		node.get_button().focus_neighbor_top = children[i - 5].get_button().get_path()
 	else:
 		node.get_button().focus_neighbor_top = %CloseButton.get_path()
-	if i + 1 <= max:
+	if i + 1 <= max_neighbors:
 		node.get_button().focus_neighbor_right = children[i + 1].get_button().get_path()
 		node.get_button().focus_next = children[i + 1].get_button().get_path()
 	if i - 1 >= 0:

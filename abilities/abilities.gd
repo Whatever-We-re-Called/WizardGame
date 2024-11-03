@@ -18,45 +18,45 @@ enum Type {
 	PLATFORM = 5
 }
 
-static var loaded_ability_resources = {}
-static var loaded_ability_scenes = {}
+var loaded_ability_resources = {}
+var loaded_ability_scenes = {}
 
 
 func _ready():
-	Abilities.load_all_ability_resources()
-	Abilities.load_all_ability_scenes()
+	load_all_ability_resources()
+	load_all_ability_scenes()
 
 
-static func load_ability_resource(type: Type, resource: Ability):
+func load_ability_resource(type: Type, resource: Ability):
 	loaded_ability_resources[type] = resource
 
 
-static func load_ability_scene(type: Type, scene: PackedScene):
+func load_ability_scene(type: Type, scene: PackedScene):
 	loaded_ability_scenes[type] = scene
 
 
-static func get_ability_resource(type: Type) -> Resource:
+func get_ability_resource(type: Type) -> Resource:
 	if loaded_ability_resources.has(type):
 		return loaded_ability_resources[type]
 	else:
 		return null
 
 
-static func get_ability_scene(type: Type) -> PackedScene:
+func get_ability_scene(type: Type) -> PackedScene:
 	if loaded_ability_scenes.has(type):
 		return loaded_ability_scenes[type]
 	else:
 		return null
 
 
-static func get_type(ability: Ability) -> Type:
+func get_type(ability: Ability) -> Type:
 	for key in loaded_ability_resources.keys():
 		if loaded_ability_resources[key] == ability:
 			return key
 	return 0
 
 
-static func load_all_ability_resources():
+func load_all_ability_resources():
 	var resource_file_paths = _get_all_ability_resource_file_paths("res://abilities/resources/")
 	
 	var regex = RegEx.new()
@@ -73,7 +73,7 @@ static func load_all_ability_resources():
 			load_ability_resource(ability_type, load(resource_file_path.trim_suffix(".remap")))
 
 
-static func load_all_ability_scenes():
+func load_all_ability_scenes():
 	var resource_file_paths = _get_all_ability_resource_file_paths("res://abilities/resources/")
 	
 	var regex = RegEx.new()
@@ -90,7 +90,7 @@ static func load_all_ability_scenes():
 			load_ability_scene(ability_type, load(resource_file_path.trim_suffix(".remap")))
 
 
-static func _get_all_ability_resource_file_paths(path: String) -> Array[String]:  
+func _get_all_ability_resource_file_paths(path: String) -> Array[String]:  
 	var file_paths: Array[String] = []  
 	var dir = DirAccess.open(path)  
 	dir.list_dir_begin()  

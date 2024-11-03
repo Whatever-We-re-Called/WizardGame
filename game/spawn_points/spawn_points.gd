@@ -5,7 +5,6 @@ func get_random_list_of_spawn_locations(quantity: int, try_to_avoid_duplicates: 
 	var result: Array[Vector2]
 	
 	randomize()
-	var rng = RandomNumberGenerator.new()
 	var spawn_locations = _get_list_of_spawn_locations().duplicate()
 	while result.size() < quantity:
 		var i = randi_range(0, spawn_locations.size() - 1)
@@ -20,7 +19,6 @@ func get_random_list_of_spawn_locations(quantity: int, try_to_avoid_duplicates: 
 
 func get_random_spawn_location() -> Vector2:
 	randomize()
-	var rng = RandomNumberGenerator.new()
 	var spawn_locations = _get_list_of_spawn_locations()
 	return spawn_locations[randi_range(0, spawn_locations.size() - 1)]
 

@@ -64,12 +64,12 @@ func is_valid_peer(peer) -> bool:
 		
 
 
-func set_strategy(connection_strategy: MultiplayerConnectionStrategy):
+func set_strategy(new_connection_strategy: MultiplayerConnectionStrategy):
 	if self.connection_strategy != null:
 		remove_child(self.connection_strategy)
 		self.connection_strategy.free()
-	self.connection_strategy = connection_strategy
-	add_child(connection_strategy)
+	self.connection_strategy = new_connection_strategy
+	add_child(new_connection_strategy)
 	
 	
 func create_server():

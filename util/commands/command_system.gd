@@ -43,16 +43,16 @@ func setup_args(input: String) -> Array:
 	
 	for segment in segments:
 		var required = false
-		var name = segment
+		var arg_name = segment
 		
 		if segment.begins_with("<") and segment.ends_with(">"):
 			required = true
-			name = segment.lstrip("<").rstrip(">")
+			arg_name = segment.lstrip("<").rstrip(">")
 		elif segment.begins_with("[") and segment.ends_with("]"):
 			required = false
-			name = segment.lstrip("[").rstrip("]")
+			arg_name = segment.lstrip("[").rstrip("]")
 			
-		parsed_segments.append({"name": name, "required": required})
+		parsed_segments.append({"name": arg_name, "required": required})
 		
 	return parsed_segments
 	

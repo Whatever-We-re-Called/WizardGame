@@ -155,13 +155,13 @@ func _teleport_rpc(target_global_position: Vector2):
 	global_position = target_global_position
 
 
-func add_velocity(velocity: Vector2):
+func add_velocity(addi_velocity: Vector2):
 	if SessionManager.is_valid_peer(self):
-		_add_velocity_rpc.rpc_id(get_peer_id(), velocity)
+		_add_velocity_rpc.rpc_id(get_peer_id(), addi_velocity)
 	else:
-		_add_velocity_rpc(velocity)
+		_add_velocity_rpc(addi_velocity)
 
 
 @rpc("any_peer", "call_local")
-func _add_velocity_rpc(velocity: Vector2):
-	apply_central_impulse(velocity)
+func _add_velocity_rpc(addi_velocity: Vector2):
+	apply_central_impulse(addi_velocity)

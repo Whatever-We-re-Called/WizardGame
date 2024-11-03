@@ -30,10 +30,9 @@ var debug_tab = DefaultMappings.new([_keyboard(KEY_TAB)], [_controller(JOY_BUTTO
 
 func _init(player: Node, peer_id: int, device_ids: Array):
 	for property in _get_property_list():
-		var name = property.name
-		var val = self[name]
+		var val = self[property.name]
 			
-		var action_name = name + "_" + str(peer_id)
+		var action_name = property.name + "_" + str(peer_id)
 		InputMap.add_action(action_name)
 			
 		for device in device_ids:
@@ -44,7 +43,7 @@ func _init(player: Node, peer_id: int, device_ids: Array):
 				
 				InputMap.action_add_event(action_name, input)
 				
-		self[name] = action_name
+		self[property.name] = action_name
 	
 	self._player = player
 	self._device_ids = device_ids

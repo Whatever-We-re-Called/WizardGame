@@ -3,8 +3,8 @@ class_name PolygonUtil
 
 static func get_center_of_polygon(polygon: PackedVector2Array) -> Vector2:
 	var number_of_vertices = polygon.size()
-	var vertices_x_sum: float
-	var vertices_y_sum: float
+	var vertices_x_sum: float = 0
+	var vertices_y_sum: float = 0
 	for poly in polygon:
 		vertices_x_sum += poly.x
 		vertices_y_sum += poly.y
@@ -34,7 +34,6 @@ static func get_global_polygon_from_local_space(polygon: PackedVector2Array, glo
 
 
 static func get_local_polygon_from_global_space(polygon: PackedVector2Array, parent_node: Node2D) -> PackedVector2Array:
-	var offset = get_center_of_polygon(polygon)
 	var result: PackedVector2Array
 	
 	for point in polygon:
@@ -63,8 +62,8 @@ static func create_debug_collision_polygon(polygon: PackedVector2Array, parent: 
 
 
 static func get_area_of_polygon(polygon: PackedVector2Array) -> float:
-	var result_a: float
-	var result_b: float
+	var result_a: float = 0
+	var result_b: float = 0
 	for i in range(polygon.size()):
 		result_a += polygon[i].x * polygon[(i + 1) % polygon.size()].y
 		result_b += polygon[(i + 1) % polygon.size()].x * polygon[i].y

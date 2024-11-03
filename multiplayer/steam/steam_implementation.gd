@@ -17,7 +17,7 @@ func setup():
 func _connect():
 	OS.set_environment("SteamAppId", str(app_id))
 	OS.set_environment("SteamGameId", str(app_id))
-	var init = Steam.steamInitEx(true, app_id)
+	Steam.steamInitEx(true, app_id)
 	
 	# This is what's called when a user accepts an invite or clicks join game
 	Steam.join_requested.connect(_handle_join_game)
@@ -31,8 +31,8 @@ func process():
 	Steam.run_callbacks()
 	
 	
-func _handle_join_game(id, connect):
-	if connect:
+func _handle_join_game(id, should_connect):
+	if should_connect:
 		# TODO - this can happen at any time. We need to properly handle if they aren't in the main menu
 		GameInstance.connect_online(func o():
 			SessionManager.set_strategy(SteamBasedStrategy.new(id))

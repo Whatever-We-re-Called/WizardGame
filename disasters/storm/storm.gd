@@ -26,7 +26,7 @@ func spawn_lightning():
 	while location == Vector2.ZERO and tries < 10:
 		tries += 1
 		
-		var x = randi_range(DisasterManager.disaster_area.position.x, DisasterManager.disaster_area.end.x)
+		var x = randi_range(int(DisasterManager.disaster_area.position.x), int(DisasterManager.disaster_area.end.x))
 		var y = DisasterManager.disaster_area.position.y
 		var areas = []
 		while y < DisasterManager.disaster_area.end.y:

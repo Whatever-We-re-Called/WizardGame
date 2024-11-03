@@ -40,9 +40,9 @@ func _generate_first_pass_polygon():
 	var bitmap = BitMap.new()
 	bitmap.create_from_image_alpha(image)
 	
-	var polygons = bitmap.opaque_to_polygons(Rect2(Vector2(0, 0), bitmap.get_size()), 10.0)
-	if polygons.size() > 0:
-		polygon = PolygonUtil.get_translated_polygon(polygons[0], -texture.get_size() / 2.0)
+	var polygons_arr = bitmap.opaque_to_polygons(Rect2(Vector2(0, 0), bitmap.get_size()), 10.0)
+	if polygons_arr.size() > 0:
+		polygon = PolygonUtil.get_translated_polygon(polygons_arr[0], -texture.get_size() / 2.0)
 
 
 @rpc("any_peer", "call_local", "reliable")
