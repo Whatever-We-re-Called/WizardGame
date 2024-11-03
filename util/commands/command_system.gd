@@ -12,6 +12,8 @@ func _ready():
 	canvas.add_child(console)
 	add_child(canvas)
 	
+	register("man <command>", man)
+	
 	
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("console_open") and Console.window != null:
@@ -71,9 +73,7 @@ func execute(input: String):
 		Console.error("The command '{0}' does not exist".format([command]))
 		return
 	
-	if not args.is_empty():
-		args = parse_args(args)
-		print(args)
+	args = parse_args(args)
 	
 	var handlers = 0
 	
@@ -87,7 +87,7 @@ func execute(input: String):
 		if mapped_args is bool and not mapped_args:
 			Console.error("Not enough args supplied")
 			Console.error("Proper usage: " + reg.usage)
-			continue
+			return
 			
 		var node: Node = reg.callable.get_object()
 		if not is_instance_valid(node):
@@ -176,3 +176,14 @@ func parse_args(input: String) -> Array:
 				results.append(segment)
 	
 	return results
+	
+	
+func man(args):
+	var command = args["command"]
+	if not registry.has(command):
+		Console.error("That is not a valid command")
+		return
+		
+	Console.log("Valid usages:")
+	for reg in registry[command]:
+		Console.log(" - " + reg.usage)

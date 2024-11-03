@@ -25,7 +25,6 @@ func _process(_delta):
 func _submit() -> void:
 	var text = text_input.text.replace("\n", "")
 	if text != null and not text.is_empty():
-		print(text)
 		Console.log("> " + text)
 		clear_text_edit()
 		CommandSystem.execute(text)

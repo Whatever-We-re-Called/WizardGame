@@ -8,6 +8,7 @@ func _ready() -> void:
 	SteamWrapper.invite_received.connect(_online_invite_received)
 	
 	%Main/Play.grab_focus()
+	CommandSystem.register("ipconnect <host/join> [address] [port]", ip_connect_command)
 
 
 func _on_play_pressed() -> void:
@@ -62,6 +63,36 @@ func _handle_startup_args() -> void:
 		)
 	
 	handled_startargs = true
+
+
+func ip_connect_command(args):
+	var host_join = args["host/join"]
+	
+	var address = "127.0.0.1"
+	var port = IPBasedConnection.DEFAULT_PORT
+	
+	if args.has("address"):
+		address = args["address"]
+		if address.find(":") != -1:
+			var split = address.split(":")
+			address = split[0]
+			port = int(split[1])
+			
+	if args.has("port"):
+		port = args["port"]
+		
+	if host_join == "host":
+		GameInstance.host_online(func o():
+			SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
+			SessionManager.create_server(),
+			true
+		)
+	else:
+		GameInstance.connect_online(func o():
+			SessionManager.set_strategy(IPBasedConnection.new(address, int(port)))
+			SessionManager.connect_to_server(),
+			true
+		)
 
 
 func _online_invite_received(friend_id, lobby_id):
