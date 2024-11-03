@@ -4,15 +4,20 @@ extends Node
 var registry = {}
 
 func _ready():
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
+	for i in 5:
+		await get_tree().process_frame
 	
 	var canvas = CanvasLayer.new()
 	var console = preload("res://util/commands/console.tscn").instantiate()
+	console.visible = false
 	canvas.add_child(console)
 	add_child(canvas)
+	
+	
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("debug_1") and Console.window != null:
+		Console.window.visible = !Console.window.visible
+		Console.window.clear_text_edit()
 
 
 func register(command_with_args: String, callable: Callable, pass_null_args = false):

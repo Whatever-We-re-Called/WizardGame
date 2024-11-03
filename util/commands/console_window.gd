@@ -27,10 +27,14 @@ func _submit() -> void:
 	if text != null and not text.is_empty():
 		print(text)
 		Console.log("> " + text)
-		text_input.clear()
+		clear_text_edit()
 		CommandSystem.execute(text)
 
 
 func _on_text_edit_text_changed() -> void:
 	text_input.text = text_input.text.replace("\n", "")
 	text_input.set_caret_column(text_input.text.length())
+
+
+func clear_text_edit():
+	text_input.clear()
