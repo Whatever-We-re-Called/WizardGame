@@ -58,6 +58,19 @@ func return_to_wait_lobby():
 		game_scene.transition_to_state.rpc_id(1, "waitlobby")
 
 
+func get_modules():
+	var modules = []
+	for child in get_children():
+		if child is GameManagerModule:
+			modules.append(child)
+	return modules
+
+
+func on_game_state_change(old_state: String, new_state: String):
+	for module in get_modules():
+		module.on_game_state_change(old_state, new_state)
+
+
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:

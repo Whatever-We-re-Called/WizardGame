@@ -6,6 +6,7 @@ extends GameManagerModule
 @onready var map_progress_ui: CenterContainer = %MapProgressUI
 @onready var player_score_ui: CenterContainer = %PlayerScoreUI
 
+var current_state_name: String
 var current_state: GameState
 var game_states: Dictionary
 var current_map_disasters: Array[DisasterResource]
@@ -15,7 +16,6 @@ var dead_players: Array[Player]
 
 func _ready():
 	super._ready()
-	
 	# TODO Change this to load correct current game scene.
 	change_to_scene("res://wait_lobby/wait_lobby.tscn")
 
@@ -32,13 +32,15 @@ func setup_states():
 			game_states[child.name.to_lower()] = child
 			child.game_scene = self
 	
-	transition_to_state.rpc_id(1, "waiting", true, true)
+	transition_to_state.rpc_id(1, "waitlobby", true, true)
 
 
 @rpc("authority", "call_local", "reliable")
 func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_exit: bool = false):
 	var new_state = game_states.get(new_state_name.to_lower())
-	if not new_state: return
+	if not new_state:
+		print("Invalid state: ", new_state_name)
+		return
 	
 	if current_state != null and skip_exit == false:
 		current_state._exit()
@@ -47,6 +49,9 @@ func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_
 		new_state._enter()
 	
 	current_state = new_state
+	var old_state_name = current_state_name
+	current_state_name = new_state_name
+	game_manager.on_game_state_change(old_state_name, new_state_name)
 
 
 @rpc("authority", "call_local", "reliable")

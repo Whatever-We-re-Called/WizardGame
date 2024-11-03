@@ -2,6 +2,7 @@ extends GameManagerModule
 
 
 func _ready() -> void:
+	super._ready()
 	%PauseMenu.visible = false
 
 

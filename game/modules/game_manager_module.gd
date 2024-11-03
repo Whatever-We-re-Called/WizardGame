@@ -14,3 +14,7 @@ func _handshake_init(handshake: HandshakeInstance):
 
 func _non_handshake_connect(data):
 	pass
+
+
+func on_game_state_change(old_state, new_state):
+	pass
