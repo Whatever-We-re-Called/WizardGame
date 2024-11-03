@@ -1,18 +1,50 @@
-[gd_scene load_steps=4 format=3 uid="uid://do6lmb7tm66fw"]
+[gd_scene load_steps=7 format=3 uid="uid://do6lmb7tm66fw"]
 
 [ext_resource type="Script" path="res://multiplayer/steam/list/scenes/element.gd" id="1_loc04"]
 [ext_resource type="Texture2D" uid="uid://bqnjsfbcdv5ih" path="res://multiplayer/steam/list/assets/question_64.png" id="2_5vpcw"]
+[ext_resource type="Script" path="res://multiplayer/steam/list/scenes/button.gd" id="3_oqevl"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1j06"]
-bg_color = Color(0.291651, 0.65071, 0.780984, 1)
-corner_detail = 1
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x04o4"]
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 10
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1x2k1"]
+bg_color = Color(0.243137, 0.243137, 0.243137, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x40bf"]
+bg_color = Color(0.244776, 0.244776, 0.244776, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 10
+expand_margin_left = 5.0
+expand_margin_top = 3.0
+expand_margin_right = 5.0
+expand_margin_bottom = 3.0
 
 [node name="Control" type="Control"]
 clip_contents = true
 custom_minimum_size = Vector2(256, 64)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 256.0
+offset_right = 300.0
 offset_bottom = 65.0
 script = ExtResource("1_loc04")
 
@@ -70,39 +102,41 @@ autowrap_mode = 0
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -19.5
+offset_bottom = 20.5
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="InviteButton" type="Button" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_styles/disabled = SubResource("StyleBoxFlat_x04o4")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1x2k1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_x40bf")
+text = "Invite"
+script = ExtResource("3_oqevl")
+
+[node name="ControllerButton" type="Button" parent="."]
+unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-theme_override_styles/hover = SubResource("StyleBoxFlat_r1j06")
 flat = true
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 65.325
-offset_bottom = 96.325
-grow_horizontal = 2
-
-[node name="Invite" type="Button" parent="CenterContainer"]
-custom_minimum_size = Vector2(224, 0)
-layout_mode = 2
-focus_mode = 0
-mouse_default_cursor_shape = 2
-text = "Invite"
-flat = true
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Button" to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
-[connection signal="mouse_entered" from="CenterContainer/Invite" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="CenterContainer/Invite" to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="CenterContainer/Invite" to="." method="_on_invite_pressed"]
+[connection signal="pressed" from="CenterContainer/InviteButton" to="." method="_on_invite_pressed"]
+[connection signal="focus_entered" from="ControllerButton" to="." method="_on_controller_button_focus_entered"]
+[connection signal="focus_exited" from="ControllerButton" to="." method="_on_controller_button_focus_exited"]
+[connection signal="pressed" from="ControllerButton" to="." method="_on_invite_pressed"]

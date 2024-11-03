@@ -4,11 +4,11 @@ class_name InviteState
 
 var connected = false
 
-
 func on_enter():
 	%Action.visible = true
 	%Action/Join.visible = false
 	%Action/Invite.visible = true
+	%InviteButton.visible = true
 	
 	var im = get_parent().get_parent().player.im
 	im.device_swapped.connect(_on_device_switch)
@@ -25,6 +25,7 @@ func on_enter():
 func on_exit():
 	%Action.visible = false
 	%Action/Invite.visible = false
+	%InviteButton.visible = false
 	
 	%ControlType.visible = false
 	%ControlType/Mouse.visible = false

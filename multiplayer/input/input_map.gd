@@ -20,6 +20,7 @@ var use_ability_2 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_MIDDLE)], [_
 var use_ability_3 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_RIGHT)], [_controller(JOY_BUTTON_B)])
 var change_abilities = DefaultMappings.new([_keyboard(KEY_E)], [_controller(JOY_BUTTON_RIGHT_SHOULDER)])
 var pause = DefaultMappings.new([_keyboard(KEY_ESCAPE)], [_controller(JOY_BUTTON_START)])
+var invite_friend = DefaultMappings.new([], [_controller(JOY_BUTTON_DPAD_DOWN)])
 var debug_1 = DefaultMappings.new([_keyboard(KEY_1)], [_controller(JOY_BUTTON_DPAD_UP)])
 var debug_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(JOY_BUTTON_DPAD_RIGHT)])
 var debug_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DPAD_DOWN)])

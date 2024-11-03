@@ -1,7 +1,6 @@
 extends CanvasLayer
 
 
-
 func _on_local_pressed() -> void:
 	GameInstance.connect_local()
 
@@ -20,3 +19,5 @@ func _on_direct_connection_pressed() -> void:
 func _on_back_pressed() -> void:
 	%Main.visible = true
 	%Play.visible = false
+	
+	%Main/Play.grab_focus()

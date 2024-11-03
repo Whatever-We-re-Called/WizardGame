@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwmpj6u76ojit"]
+
+[ext_resource type="Script" path="res://util/commands/log_record.gd" id="1_xo1f8"]
+
+[node name="LogRecord" type="VBoxContainer"]
+script = ExtResource("1_xo1f8")
+
+[node name="Text" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(0, 27.28)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.533037, 0.533037, 0.533037, 1)
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 1.3)
+layout_mode = 2
+color = Color(1, 1, 1, 0.227451)

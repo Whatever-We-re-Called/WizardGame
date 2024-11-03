@@ -58,6 +58,14 @@ func return_to_wait_lobby():
 		game_scene.transition_to_state.rpc_id(1, "waitlobby")
 
 
+func _open_online_invite(controller, player):
+	player.controller.freeze_input = true
+	var steam_menu = preload("res://multiplayer/steam/list/scenes/friend_list.tscn").instantiate()
+	steam_menu.controller = controller
+	steam_menu.closed.connect(func o(): player.controller.freeze_input = false)
+	add_child(steam_menu)
+
+
 func _on_player_received_debug_input(debug_value: int) -> void:
 	match debug_value:
 		1:

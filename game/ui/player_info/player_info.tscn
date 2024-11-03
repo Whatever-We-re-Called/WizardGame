@@ -3,12 +3,12 @@
 [ext_resource type="Script" path="res://game/ui/player_info/player_info.gd" id="1_3qrla"]
 [ext_resource type="Texture2D" uid="uid://c8wkjd8ys8bi" path="res://game/ui/player_info/assets/mouse_left_outline.png" id="2_1cluh"]
 [ext_resource type="Texture2D" uid="uid://b0nxbxjrr432n" path="res://game/ui/player_info/assets/square-128.png" id="2_yqf53"]
-[ext_resource type="Texture2D" uid="uid://bme21oj1di7vg" path="res://game/ui/player_info/assets/xbox_button_a.png" id="3_873dl"]
 [ext_resource type="Texture2D" uid="uid://dy7xbuirch4a3" path="res://game/ui/player_info/assets/keyboard-128.png" id="3_auxty"]
 [ext_resource type="Texture2D" uid="uid://dd686kajklme5" path="res://game/ui/player_info/assets/controller_generic.png" id="4_b8tq7"]
 [ext_resource type="Script" path="res://game/ui/player_info/states/invite.gd" id="4_cxute"]
 [ext_resource type="Script" path="res://game/ui/player_info/states/join.gd" id="5_5hd05"]
 [ext_resource type="Script" path="res://game/ui/player_info/states/online_player.gd" id="6_5qw08"]
+[ext_resource type="Texture2D" uid="uid://q06njv4rbmef" path="res://game/ui/player_info/assets/playstation_dpad_down_outline.png" id="6_w2cp7"]
 [ext_resource type="Script" path="res://game/ui/player_info/states/local_player.gd" id="7_ahwk1"]
 
 [node name="PlayerInfo" type="Control"]
@@ -95,6 +95,17 @@ text = "[center]to Invite
 "
 fit_content = true
 
+[node name="InviteButton" type="Button" parent="ColorRect"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
 [node name="Avatar" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -157,7 +168,7 @@ texture = ExtResource("2_1cluh")
 
 [node name="Controller" type="Sprite2D" parent="ControlType"]
 visible = false
-texture = ExtResource("3_873dl")
+texture = ExtResource("6_w2cp7")
 
 [node name="States" type="Node" parent="."]
 unique_name_in_owner = true
@@ -173,3 +184,5 @@ script = ExtResource("6_5qw08")
 
 [node name="LocalPlayer" type="Node" parent="States"]
 script = ExtResource("7_ahwk1")
+
+[connection signal="pressed" from="ColorRect/InviteButton" to="." method="_on_button_pressed"]

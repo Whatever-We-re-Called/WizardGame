@@ -6,11 +6,15 @@ static var handled_startargs = false
 func _ready() -> void:
 	_handle_startup_args()
 	SteamWrapper.invite_received.connect(_online_invite_received)
+	
+	%Main/Play.grab_focus()
 
 
 func _on_play_pressed() -> void:
 	%Main.visible = false
 	%Play.visible = true
+	
+	%Play/CenterContainer/HBoxContainer/Local.grab_focus()
 
 
 func _on_settings_pressed() -> void:
