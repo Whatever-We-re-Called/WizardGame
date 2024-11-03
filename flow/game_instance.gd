@@ -67,9 +67,8 @@ func disconnected(forced = false):
 		%MidFlowUI/Center/Text.text = "[center]The server was closed"
 		%MidFlowUI/Button.visible = true
 		%MidFlowUI.visible = true
-		SessionManager.disconnect_client()
+		
 	swap_to_main_menu()
-	
 	get_tree().set_multiplayer(MultiplayerAPI.create_default_interface())
 
 

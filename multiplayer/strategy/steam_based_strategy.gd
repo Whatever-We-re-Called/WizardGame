@@ -61,7 +61,7 @@ func _lobby_joined(lobby_id: int, permissions: int, locked: bool, response: int)
 	
 	multiplayer.set_multiplayer_peer(peer)
 	GameInstance.handshake_init_client.connect(func init(handshake: HandshakeInstance):
-		handshake.handshake_complete.connect(func complete(data):
+		handshake.handshake_complete.connect(func complete():
 			SessionManager.add_player({"steam_id": Steam.getSteamID(), "peer_id": peer.get_unique_id()})
 		)
 	)
