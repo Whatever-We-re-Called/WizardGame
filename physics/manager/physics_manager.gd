@@ -189,7 +189,6 @@ class ImpulseBuilder extends Node:
 			.claim()
 		
 		for overlapping_body in collision_channel.get_overlapping_bodies():
-			print(overlapping_body)
 			if overlapping_body is Player:
 				if _kills_players == true:
 					if not _excluded_players_from_damage.has(overlapping_body):

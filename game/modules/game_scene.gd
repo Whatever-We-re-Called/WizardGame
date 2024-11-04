@@ -45,7 +45,7 @@ func setup_states():
 func transition_to_state(new_state_name: String, skip_enter: bool = false, skip_exit: bool = false):
 	var new_state = game_states.get(new_state_name.to_lower())
 	if not new_state:
-		print("Invalid state: ", new_state_name)
+		push_error("Invalid state: ", new_state_name)
 		return
 	
 	if current_state != null and skip_exit == false:

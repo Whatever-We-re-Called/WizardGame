@@ -29,7 +29,6 @@ func on_player_update(player):
 	
 	
 func on_device_swap(device_id, device_type):
-	print(device_type)
 	if device_type == DeviceInputMap.DeviceType.KEYBOARD_MOUSE:
 		%InputType/Controller.visible = false
 		%InputType/Keyboard.visible = true
