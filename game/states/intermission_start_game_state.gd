@@ -2,5 +2,5 @@ extends GameState
 
 
 func _enter():
-	await get_tree().process_frame
-	game_scene.transition_to_state("intermissionend")
+	game_scene.change_to_scene("res://game/intermission/intermission_scene.tscn")
+	game_scene.transition_to_state("intermissionscoring ")

@@ -27,7 +27,7 @@ func set_countdown_to_disaster_text(countdown: int, is_first: bool):
 @rpc("authority", "call_local")
 func set_countdown_to_intermission_text(countdown: int):
 	current_disaster_label.label_settings.font_color = Color.WHITE
-	current_disaster_label.text = "Switching maps in " + str(countdown) + "s"
+	current_disaster_label.text = "Intermission starts in " + str(countdown) + "s"
 
 
 @rpc("authority", "call_local")

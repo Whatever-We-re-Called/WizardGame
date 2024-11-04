@@ -72,7 +72,8 @@ func change_to_scene(new_scene_resource_path: String):
 	new_scene.game_manager = game_manager
 	active_scene_root.add_child(new_scene, true)
 	
-	new_scene.teleport_players_to_random_spawn_points.rpc_id(1)
+	if new_scene is PlayableScene:
+		new_scene.teleport_players_to_random_spawn_points.rpc_id(1)
 
 
 @rpc("authority", "call_local", "reliable")

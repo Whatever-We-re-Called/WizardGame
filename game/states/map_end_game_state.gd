@@ -9,6 +9,11 @@ func _enter():
 	game_scene.map_progress_ui.update_disaster_icons.rpc(game_scene.current_map_disasters, game_scene.current_disaster_number + 1, false)
 
 
+func _exit():
+	game_scene.map_progress_ui.visible = false
+	game_scene.player_score_ui.visible = false
+
+
 func _update(delta):
 	if countdown <= 0.0:
 		game_scene.transition_to_state("intermissionstart")
