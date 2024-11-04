@@ -11,7 +11,7 @@ func _enter():
 
 func _update(delta):
 	if countdown <= 0.0:
-		game_scene.transition_to_state("intermission")
+		game_scene.transition_to_state("intermissionstart")
 	else:
 		game_scene.map_progress_ui.set_countdown_to_intermission_text.rpc(ceil(countdown))
 		countdown -= delta

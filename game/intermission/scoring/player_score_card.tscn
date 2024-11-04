@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctx4ldhsk4s0"]
+
+[ext_resource type="Script" path="res://game/intermission/scoring/player_score_card.gd" id="1_kjkmg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0smi3"]
+font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ae05c"]
+bg_color = Color(0.235294, 0.235294, 0.235294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cl0pj"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wcco0"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_iktu0"]
+font_size = 48
+font_color = Color(0.235294, 0.235294, 0.235294, 1)
+
+[node name="PlayerScoreCard" type="HBoxContainer"]
+theme_override_constants/separation = 50
+alignment = 1
+script = ExtResource("1_kjkmg")
+
+[node name="PlayerNameLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+text = "Player"
+label_settings = SubResource("LabelSettings_0smi3")
+horizontal_alignment = 2
+
+[node name="ScoreProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_ae05c")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cl0pj")
+max_value = 25.0
+value = 10.0
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="CurrentPointsLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "10
+"
+label_settings = SubResource("LabelSettings_wcco0")
+
+[node name="GoalPointsLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "/25"
+label_settings = SubResource("LabelSettings_iktu0")

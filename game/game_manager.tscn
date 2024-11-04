@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=35 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
@@ -14,11 +14,15 @@
 [ext_resource type="Script" path="res://game/states/game_start_game_state.gd" id="6_too1t"]
 [ext_resource type="Script" path="res://game/states/disaster_game_state.gd" id="6_xatxq"]
 [ext_resource type="Script" path="res://game/states/map_end_game_state.gd" id="8_4pkwd"]
-[ext_resource type="Script" path="res://game/states/intermission_game_state.gd" id="9_iy1xj"]
+[ext_resource type="Script" path="res://game/states/intermission_start_game_state.gd" id="9_iy1xj"]
 [ext_resource type="Script" path="res://game/states/disaster_end_game_state.gd" id="10_pa7wn"]
 [ext_resource type="Script" path="res://game/states/game_end_game_state.gd" id="13_eh6g2"]
-[ext_resource type="Script" path="res://game/states/result_screen_game_state.gd" id="14_26wd8"]
+[ext_resource type="Script" path="res://game/states/intermission_end_game_state.gd" id="17_bkyog"]
+[ext_resource type="Script" path="res://game/states/intermission_scoring_game_state.gd" id="17_kjaj5"]
+[ext_resource type="Script" path="res://game/states/intermission_results_game_state.gd" id="18_h0wvm"]
+[ext_resource type="Script" path="res://game/states/intermission_perks_game_state.gd" id="19_c5ju1"]
 [ext_resource type="Script" path="res://game/modules/pause_manager.gd" id="19_v5m1n"]
+[ext_resource type="Script" path="res://game/states/intermission_abilities_game_state.gd" id="20_sgt4w"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_smshx"]
 properties/0/path = NodePath("GameScene/GameSceneUI/MapProgressUI:visible")
@@ -389,14 +393,26 @@ script = ExtResource("10_pa7wn")
 [node name="MapEnd" type="Node" parent="GameScene/GameStates"]
 script = ExtResource("8_4pkwd")
 
-[node name="Intermission" type="Node" parent="GameScene/GameStates"]
+[node name="IntermissionStart" type="Node" parent="GameScene/GameStates"]
 script = ExtResource("9_iy1xj")
+
+[node name="IntermissionScoring" type="Node" parent="GameScene/GameStates"]
+script = ExtResource("17_kjaj5")
+
+[node name="IntermissionResults" type="Node" parent="GameScene/GameStates"]
+script = ExtResource("18_h0wvm")
+
+[node name="IntermissionPerks" type="Node" parent="GameScene/GameStates"]
+script = ExtResource("19_c5ju1")
+
+[node name="IntermissionAbilities" type="Node" parent="GameScene/GameStates"]
+script = ExtResource("20_sgt4w")
+
+[node name="IntermissionEnd" type="Node" parent="GameScene/GameStates"]
+script = ExtResource("17_bkyog")
 
 [node name="GameEnd" type="Node" parent="GameScene/GameStates"]
 script = ExtResource("13_eh6g2")
-
-[node name="ResultScreen" type="Node" parent="GameScene/GameStates"]
-script = ExtResource("14_26wd8")
 
 [node name="PauseManager" type="Node" parent="."]
 unique_name_in_owner = true
