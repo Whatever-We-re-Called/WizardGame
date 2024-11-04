@@ -13,6 +13,12 @@ var current_map_disasters: Array[DisasterResource]
 var current_disaster_number: int = 1
 var dead_players: Array[Player]
 
+var intermission: Intermission:
+	get:
+		for child in active_scene_root.get_children():
+			if child is Intermission: return child
+		return null
+
 
 func _ready():
 	super._ready()
