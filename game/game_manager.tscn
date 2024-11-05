@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=34 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
@@ -20,9 +20,8 @@
 [ext_resource type="Script" path="res://game/states/intermission_end_game_state.gd" id="17_bkyog"]
 [ext_resource type="Script" path="res://game/states/intermission_scoring_game_state.gd" id="17_kjaj5"]
 [ext_resource type="Script" path="res://game/states/intermission_results_game_state.gd" id="18_h0wvm"]
-[ext_resource type="Script" path="res://game/states/intermission_perks_game_state.gd" id="19_c5ju1"]
+[ext_resource type="Script" path="res://game/states/intermission_modifying_game_state.gd" id="19_lnnjd"]
 [ext_resource type="Script" path="res://game/modules/pause_manager.gd" id="19_v5m1n"]
-[ext_resource type="Script" path="res://game/states/intermission_abilities_game_state.gd" id="20_sgt4w"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_smshx"]
 properties/0/path = NodePath("GameScene/GameSceneUI/MapProgressUI:visible")
@@ -402,11 +401,8 @@ script = ExtResource("17_kjaj5")
 [node name="IntermissionResults" type="Node" parent="GameScene/GameStates"]
 script = ExtResource("18_h0wvm")
 
-[node name="IntermissionPerks" type="Node" parent="GameScene/GameStates"]
-script = ExtResource("19_c5ju1")
-
-[node name="IntermissionAbilities" type="Node" parent="GameScene/GameStates"]
-script = ExtResource("20_sgt4w")
+[node name="IntermissionModifying" type="Node" parent="GameScene/GameStates"]
+script = ExtResource("19_lnnjd")
 
 [node name="IntermissionEnd" type="Node" parent="GameScene/GameStates"]
 script = ExtResource("17_bkyog")
