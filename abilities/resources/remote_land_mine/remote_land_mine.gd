@@ -5,41 +5,37 @@ var current_remote_land_mine_scene: Node2D
 const MAX_PUSH_FORCE = 750.0
 const REMOTE_LAND_MINE_SCENE = preload("res://abilities/scenes/remote_land_mine_scene.tscn")
 
-func _handle_input(player: Player, button_input: String):
-	if Input.is_action_just_pressed(button_input):
-		if current_remote_land_mine_scene == null:
-			if not is_on_cooldown():
-				_place_remote_land_mine.rpc(player.get_peer_id())
-		else:
-			_explode_remote_land_mine_server.rpc_id(1, current_remote_land_mine_scene.global_position)
-			_explode_remote_land_mine.rpc()
-			start_cooldown()
+func _on_button_up() -> bool:
+	if current_remote_land_mine_scene == null:
+		_place_remote_land_mine.rpc(player.get_peer_id())
+		return false
+	else:
+		_explode_remote_land_mine_server.rpc_id(1, current_remote_land_mine_scene.global_position)
+		_explode_remote_land_mine.rpc()
+		return true
 
 
 @rpc("any_peer", "call_local")
 func _place_remote_land_mine(executor_peer_id: int):
-	var executor_player = get_executor_player()
-	
 	current_remote_land_mine_scene = REMOTE_LAND_MINE_SCENE.instantiate()
-	current_remote_land_mine_scene.global_position = executor_player.global_position
-	executor_player.ability_nodes.add_child(current_remote_land_mine_scene)
-	current_remote_land_mine_scene.add_collision_exception_with(executor_player)
-	current_remote_land_mine_scene.button_area.body_entered.connect(_remote_land_mine_triggered)
+	current_remote_land_mine_scene.global_position = player.global_position
+	player.ability_nodes.add_child(current_remote_land_mine_scene)
+	await get_tree().process_frame
+	current_remote_land_mine_scene.add_collision_exception_with(player)
+	current_remote_land_mine_scene.get_node("./ButtonArea").body_entered.connect(_remote_land_mine_triggered)
 
 
 @rpc("any_peer", "call_local")
 func _explode_remote_land_mine_server(mine_global_position: Vector2):
 	if current_remote_land_mine_scene == null: return
-	
-	var executor_player = get_executor_player()
 	var impact_polygon = PolygonUtil.get_polygon_from_radius(16, 175.0)
 	impact_polygon = PolygonUtil.get_translated_polygon(impact_polygon, mine_global_position)
 	
 	PhysicsManager.ImpulseBuilder.new()\
 		.collision_polygon(impact_polygon)\
 		.affected_environment_layers([BreakableBody2D.EnvironmentLayer.ALL])\
-		.applied_body_impulse(_push_body.bindv([executor_player, mine_global_position]))\
-		.applied_player_impulse(_push_player.bindv([executor_player, mine_global_position]))\
+		.applied_body_impulse(_push_body.bindv([player, mine_global_position]))\
+		.applied_player_impulse(_push_player.bindv([player, mine_global_position]))\
 		.execute()
 
 
@@ -81,5 +77,5 @@ func _get_push_force(body: PhysicsBody2D, mine_global_position: Vector2) -> floa
 
 
 func _remote_land_mine_triggered(body: Node):
-	if body != get_executor_player() and body != current_remote_land_mine_scene:
+	if body != player and body != current_remote_land_mine_scene:
 		_explode_remote_land_mine.rpc()

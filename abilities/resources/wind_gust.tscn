@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bftt07b1lrf6j"]
-
-[ext_resource type="Script" path="res://abilities/resources/wind_gust.gd" id="1_x2dbq"]
-
-[node name="WindGust" type="Node2D"]
-script = ExtResource("1_x2dbq")

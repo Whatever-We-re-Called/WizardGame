@@ -4,18 +4,16 @@ signal killed(int)
 signal paused
 signal received_debug_input(int)
 
-@export var ability_1: Abilities.Type
-@export var ability_2: Abilities.Type
-@export var ability_3: Abilities.Type
 @export var controller: PlayerController
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
 @onready var ability_nodes = %AbilityNodes
 @onready var center_point = %CenterPoint
-@onready var ability_multiplayer_spawner: MultiplayerSpawner = %AbilityMultiplayerSpawner
 @onready var change_abilities_ui: CenterContainer = $CanvasLayer/ChangeAbilitiesUI
-@onready var abilities: Array[Abilities.Type] = [ ability_1, ability_2, ability_3 ]
 @onready var player_collision_shape_2d: CollisionShape2D = %PlayerCollisionShape2D
+
+var ability_types: Array[Abilities.Type] = [ Abilities.Type.WIND_GUST, Abilities.Type.REMOTE_LAND_MINE, Abilities.Type.PLATFORM ]
+var abilities: Array[Node2D] = []
 
 var peer_id: int
 var im: DeviceInputMap
@@ -33,10 +31,8 @@ func _enter_tree():
 
 
 func _ready():
+	create_ability_nodes()
 	change_abilities_ui.setup(self)
-	
-	for ability_scene in Abilities.loaded_ability_scenes.values():
-		ability_multiplayer_spawner.add_spawnable_scene(ability_scene.resource_path)
 
 	if SessionManager.connection_strategy is SteamBasedStrategy and is_multiplayer_authority():
 		var steam_info = SteamWrapper.get_friend_info(SessionManager.connected_clients[peer_id].steam_id)
@@ -66,27 +62,29 @@ func _physics_process(delta):
 
 
 func create_ability_nodes():
-	if SessionManager.is_valid_peer(self):
-		_create_ability_nodes_rpc.rpc_id(peer_id)
-	else:
-		_create_ability_nodes_rpc()
+	for i in range(3):
+		_set_ability_slot(i, ability_types[i])
 
 
 @rpc("any_peer", "call_local", "reliable")
-func _create_ability_nodes_rpc():
-	for i in range(3):
-		var ability = abilities[i]
-		var ability_scene = Abilities.get_ability_scene(ability)
-		var new_ability_scene = ability_scene.instantiate()
-		var ability_resource = Abilities.get_ability_resource(ability)
-		new_ability_scene.setup(ability_resource)
-		ability_nodes.add_child(new_ability_scene, true)
+func _set_ability_slot(slot: int, type: int):
+	if abilities.size() > slot:
+		abilities[slot].queue_free()
+	
+	ability_types[slot] = type
+	var ability_node = Abilities.create_node_for_rpc(type, self, slot)
+	ability_nodes.add_child(ability_node, true)
+	if abilities.size() == slot:
+		abilities.append(ability_node)
+	else:
+		abilities[slot] = ability_node
 
 
 @rpc("any_peer", "call_local", "reliable")
 func clear_ability_nodes():
 	for child in ability_nodes.get_children():
 		child.queue_free()
+	abilities.clear()
 
 
 func get_center_global_position() -> Vector2:

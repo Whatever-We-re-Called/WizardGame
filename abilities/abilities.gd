@@ -1,105 +1,55 @@
 extends Node
 
-# IMPORTANT NOTE: 
-# Due to how Godot stores Enums, if you were to change the integer
-# value of an enum entry, or if you were to delete an enum entry
-# altogether, Godot will make inappropriate assumptions on what to
-# replace any references to the changed type with.
-# 
-# It's okay to remove entries, but DO NOT add entries within the center
-# or as replacements. Always add a new entry with a newly unique integer
-# value on the bottom.
+# The order of this no longer really matters.
+# We no longer store this on the resource, so adding one is still dynamically registered.
 enum Type {
-	NONE = 0,
-	WIND_GUST = 1,
-	WAYBACK_POINT = 2,
-	REMOTE_LAND_MINE = 3,
-	DASH = 4,
-	PLATFORM = 5
+	NONE,
+	WIND_GUST,
+	WAYBACK_POINT,
+	REMOTE_LAND_MINE,
+	DASH,
+	PLATFORM
 }
 
-var loaded_ability_resources = {}
-var loaded_ability_scenes = {}
+const resource_path = "res://abilities/resources/"
+var registry = {}
 
 
 func _ready():
-	load_all_ability_resources()
-	load_all_ability_scenes()
-
-
-func load_ability_resource(type: Type, resource: Ability):
-	loaded_ability_resources[type] = resource
-
-
-func load_ability_scene(type: Type, scene: PackedScene):
-	loaded_ability_scenes[type] = scene
-
-
-func get_ability_resource(type: Type) -> Resource:
-	if loaded_ability_resources.has(type):
-		return loaded_ability_resources[type]
-	else:
-		return null
-
-
-func get_ability_scene(type: Type) -> PackedScene:
-	if loaded_ability_scenes.has(type):
-		return loaded_ability_scenes[type]
-	else:
-		return null
-
-
-func get_type(ability: Ability) -> Type:
-	for key in loaded_ability_resources.keys():
-		if loaded_ability_resources[key] == ability:
-			return key
-	return 0
-
-
-func load_all_ability_resources():
-	var resource_file_paths = _get_all_ability_resource_file_paths("res://abilities/resources/")
+	_register_all()
 	
-	var regex = RegEx.new()
-	regex.compile("[a-z,A-Z,0-9,_]*.tres")
-	for resource_file_path in resource_file_paths:
-		var result = regex.search(resource_file_path)
-		if result != null:
-			var result_string = result.get_string()
-			var file_name = result_string.substr(0, result_string.length() - 5)
-			var ability_type = Type.get(file_name.to_upper())
-			
-			# Added ".trim_suffix(".remap")" to fix a strange Godot 4.3 build 
-			# export bug.
-			load_ability_resource(ability_type, load(resource_file_path.trim_suffix(".remap")))
-
-
-func load_all_ability_scenes():
-	var resource_file_paths = _get_all_ability_resource_file_paths("res://abilities/resources/")
 	
-	var regex = RegEx.new()
-	regex.compile("[a-z,A-Z,0-9,_]*.tscn")
-	for resource_file_path in resource_file_paths:
-		var result = regex.search(resource_file_path)
-		if result != null:
-			var result_string = result.get_string()
-			var file_name = result_string.substr(0, result_string.length() - 5)
-			var ability_type = Type.get(file_name.to_upper())
+func _register_all():
+	registry.clear()
+	
+	for type in Type.keys():
+		if type == Type.keys()[Type.NONE]:
+			continue
+		
+		type = type.to_lower()
+		
+		if not FileAccess.file_exists("{0}{1}/{1}.gd".format([resource_path, type])):
+			push_error("Could not find ability script for {0}. Expected to find {1}{0}/{0}.gd".format([type, resource_path]))
+		if not FileAccess.file_exists("{0}{1}/{1}.tres".format([resource_path, type])):
+			push_error("Could not find ability resource for {0}. Expected to find {1}{0}/{0}.tres".format([type, resource_path]))
 			
-			# Added ".trim_suffix(".remap")" to fix a strange Godot 4.3 build 
-			# export bug.
-			load_ability_scene(ability_type, load(resource_file_path.trim_suffix(".remap")))
+		var script = load("{0}{1}/{1}.gd".format([resource_path, type]))
+		var resource = ResourceLoader.load("{0}{1}/{1}.tres".format([resource_path, type]))
+		
+		registry[Type[type.to_upper()]] = { "script": script, "resource": resource }
+		
+		
+func get_ability_resource(type: Abilities.Type):
+	return registry[int(type)].resource
+	
+	
+func get_ability_script(type: Abilities.Type):
+	return registry[int(type)].script
 
 
-func _get_all_ability_resource_file_paths(path: String) -> Array[String]:  
-	var file_paths: Array[String] = []  
-	var dir = DirAccess.open(path)  
-	dir.list_dir_begin()  
-	var file_name = dir.get_next()  
-	while file_name != "":  
-		var file_path = path + "/" + file_name  
-		if dir.current_is_dir():  
-			file_paths += _get_all_ability_resource_file_paths(file_path)  
-		else:  
-			file_paths.append(file_path)  
-		file_name = dir.get_next()
-	return file_paths
+func create_node_for_rpc(type: Abilities.Type, player: Player, slot: int) -> Node:
+	var node = get_ability_script(type).new()
+	var resource = get_ability_resource(type)
+	node.name = resource.name.replace(" ", "")
+	node.setup(resource, type, player, slot)
+	return node
