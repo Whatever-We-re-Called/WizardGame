@@ -27,3 +27,8 @@ func _teleport_player_to_wayback_point(executor_peer_id: int):
 	player.velocity = Vector2.ZERO
 	
 	current_wayback_point_scene.queue_free()
+
+
+func _cleanup():
+	if current_wayback_point_scene != null and is_instance_valid(current_wayback_point_scene):
+		current_wayback_point_scene.queue_free()

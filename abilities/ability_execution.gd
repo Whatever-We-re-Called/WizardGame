@@ -56,5 +56,9 @@ func _start_cooldown():
 	cooldown_timer = get_tree().create_timer(ability.cooldown)
 	
 	
+func _cleanup():
+	pass
+	
+	
 func get_level():
 	return level # TODO - perks

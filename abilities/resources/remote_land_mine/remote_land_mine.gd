@@ -79,3 +79,8 @@ func _get_push_force(body: PhysicsBody2D, mine_global_position: Vector2) -> floa
 func _remote_land_mine_triggered(body: Node):
 	if body != player and body != current_remote_land_mine_scene:
 		_explode_remote_land_mine.rpc()
+		
+		
+func _cleanup():
+	if current_remote_land_mine_scene != null and is_instance_valid(current_remote_land_mine_scene):
+		current_remote_land_mine_scene.queue_free()

@@ -23,3 +23,8 @@ func _place_platform(executor_peer_id: int):
 	
 	current_platform_scene.queue_free()
 	current_platform_scene = null
+
+
+func _cleanup():
+	if current_platform_scene != null and is_instance_valid(current_platform_scene):
+		current_platform_scene.queue_free()

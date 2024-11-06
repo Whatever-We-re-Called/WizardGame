@@ -3,6 +3,7 @@ extends Node
 
 func _ready():
 	SessionManager.session_added.connect(_client_connected)
+	GameInstance.handshake_start_server.connect(_handle_sync_serverside)
 
 
 func _client_connected(data):
@@ -15,7 +16,7 @@ func _client_connected(data):
 		return
 		
 	var handshake_node = HandshakeInstance.new()
-	handshake_node.name = str(peer_id)
+	handshake_node.name = "HS_" + str(peer_id)
 	handshake_node.peer_id = peer_id
 	handshake_node.data = data
 	
@@ -24,8 +25,7 @@ func _client_connected(data):
 	handshake_node.add_child(sync)
 	
 	add_child(handshake_node)
-	
-	GameInstance.handshake_start_server.connect(_handle_sync_serverside)
+
 	_connected_to_server_clientbound.rpc_id(peer_id)
 	
 	
@@ -36,7 +36,7 @@ func _handle_sync_serverside(handshake: HandshakeInstance):
 @rpc("any_peer", "reliable")
 func _connected_to_server_clientbound():
 	var handshake_node = HandshakeInstance.new()
-	handshake_node.name = str(SessionManager.get_self_peer_id())
+	handshake_node.name = "HS_" + str(SessionManager.get_self_peer_id())
 	handshake_node.peer_id = SessionManager.get_self_peer_id()
 	
 	var sync = HandshakeSync.new(handshake_node.peer_id)
@@ -45,6 +45,7 @@ func _connected_to_server_clientbound():
 	handshake_node.add_child(sync)
 	
 	add_child(handshake_node)
+
 	
 	GameInstance.handshake_init_client.emit(handshake_node)
 	await get_tree().process_frame

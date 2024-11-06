@@ -1,7 +1,7 @@
 extends AbilityExecution
 
 const MAX_PUSH_FORCE = 750.0
-
+var sprite
 
 func _on_button_up() -> bool:
 	var direction = player.controller.get_pointer_direction()
@@ -50,7 +50,7 @@ func _get_push_force(body: PhysicsBody2D, executor_player: Player) -> float:
 
 @rpc("any_peer", "call_local", "reliable")
 func _display_wind_gust_texture(direction: Vector2):
-	var sprite = Sprite2D.new()
+	sprite = Sprite2D.new()
 	sprite.global_position = player.global_position
 	sprite.rotation = -direction.angle_to(Vector2.RIGHT)
 	sprite.texture = preload("res://abilities/textures/shitty_wind_gust_texture.png")
@@ -59,3 +59,8 @@ func _display_wind_gust_texture(direction: Vector2):
 	
 	await get_tree().create_timer(1.0).timeout
 	sprite.call_deferred("queue_free")
+
+
+func _cleanup():
+	if sprite != null and is_instance_valid(sprite):
+		sprite.queue_free()

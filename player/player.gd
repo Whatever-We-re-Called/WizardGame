@@ -69,7 +69,8 @@ func create_ability_nodes():
 @rpc("any_peer", "call_local", "reliable")
 func _set_ability_slot(slot: int, type: int):
 	if abilities.size() > slot:
-		abilities[slot].queue_free()
+		abilities[slot].cleaup()
+		abilities[slot].free()
 	
 	ability_types[slot] = type
 	var ability_node = Abilities.create_node_for_rpc(type, self, slot)
