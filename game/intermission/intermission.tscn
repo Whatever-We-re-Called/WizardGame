@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bw1ex181nuo6m"]
+[gd_scene load_steps=9 format=3 uid="uid://bw1ex181nuo6m"]
 
 [ext_resource type="Script" path="res://game/intermission/intermission.gd" id="1_ay0xj"]
 [ext_resource type="PackedScene" uid="uid://ctx4ldhsk4s0" path="res://game/intermission/scoring/player_score_card.tscn" id="2_5gyd5"]
+[ext_resource type="Script" path="res://game/intermission/scoring/scoring_ui.gd" id="2_feipp"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1pv4n"]
 
@@ -54,6 +55,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_feipp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ScoringUI"]
 layout_mode = 2
@@ -66,6 +68,7 @@ label_settings = SubResource("LabelSettings_iy6gk")
 horizontal_alignment = 1
 
 [node name="PlayerScoreCards" type="VBoxContainer" parent="CanvasLayer/ScoringUI/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
