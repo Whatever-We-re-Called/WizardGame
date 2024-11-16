@@ -15,6 +15,12 @@ var players: Array[Player]:
 		for child in %GamePlayers.players_root.get_children():
 			if child is Player: result.append(child)
 		return result
+var peer_id_players: Array[int]:
+	get:
+		var result: Array[int]
+		for player in players:
+			result.append(player.peer_id)
+		return result
 var active_scene: PlayableScene:
 	get:
 		for child in %GameScene.active_scene_root.get_children():

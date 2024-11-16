@@ -1,7 +1,7 @@
 class_name GameSettings extends Resource
 
-@export_category("General")
-@export var survivals_goal: int
+@export_category("Scoring")
+@export var goal_score: int
 @export_category("Maps")
 @export var map_pool: Array[PackedScene]
 @export var map_disaster_severity: int

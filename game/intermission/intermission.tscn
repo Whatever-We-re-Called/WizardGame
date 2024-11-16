@@ -1,7 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://bw1ex181nuo6m"]
+[gd_scene load_steps=8 format=3 uid="uid://bw1ex181nuo6m"]
 
 [ext_resource type="Script" path="res://game/intermission/intermission.gd" id="1_ay0xj"]
-[ext_resource type="PackedScene" uid="uid://ctx4ldhsk4s0" path="res://game/intermission/scoring/player_score_card.tscn" id="2_5gyd5"]
 [ext_resource type="Script" path="res://game/intermission/scoring/scoring_ui.gd" id="2_feipp"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1pv4n"]
@@ -49,7 +48,6 @@ label_settings = SubResource("LabelSettings_h4v1i")
 
 [node name="ScoringUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -71,18 +69,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
-
-[node name="PlayerScoreCard" parent="CanvasLayer/ScoringUI/VBoxContainer/PlayerScoreCards" instance=ExtResource("2_5gyd5")]
-layout_mode = 2
-
-[node name="PlayerScoreCard2" parent="CanvasLayer/ScoringUI/VBoxContainer/PlayerScoreCards" instance=ExtResource("2_5gyd5")]
-layout_mode = 2
-
-[node name="PlayerScoreCard3" parent="CanvasLayer/ScoringUI/VBoxContainer/PlayerScoreCards" instance=ExtResource("2_5gyd5")]
-layout_mode = 2
-
-[node name="PlayerScoreCard4" parent="CanvasLayer/ScoringUI/VBoxContainer/PlayerScoreCards" instance=ExtResource("2_5gyd5")]
-layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/ScoringUI/VBoxContainer"]
 layout_mode = 2

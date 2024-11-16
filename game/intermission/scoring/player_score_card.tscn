@@ -55,8 +55,14 @@ text = "10
 "
 label_settings = SubResource("LabelSettings_wcco0")
 
+[node name="Label" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "/"
+label_settings = SubResource("LabelSettings_iktu0")
+
 [node name="GoalPointsLabel" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "/25"
+text = "25"
 label_settings = SubResource("LabelSettings_iktu0")
