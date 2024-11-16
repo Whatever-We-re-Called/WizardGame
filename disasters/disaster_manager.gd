@@ -3,7 +3,7 @@ extends Node
 var disasters = {}
 var disaster_nodes
 
-var current_disaster
+var current_disaster: Node
 var disaster_area: Rect2
 
 func get_disaster_resource(disaster_type: DisasterEnum) -> DisasterResource:

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ScoringEvent" load_steps=2 format=3 uid="uid://dpvfvay633je8"]
+
+[ext_resource type="Script" path="res://game/scoring_events/scoring_event.gd" id="1_nu6f4"]
+
+[resource]
+script = ExtResource("1_nu6f4")
+title = "Severity 3 Disaster Survived"
+rewarded_score = 3
+color = Color(1, 0, 0, 1)

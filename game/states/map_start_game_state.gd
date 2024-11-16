@@ -8,7 +8,6 @@ func _enter():
 	_populate_current_map_disasters()
 	
 	game_scene.map_progress_ui.visible = true
-	game_scene.player_score_ui.visible = true
 	
 	await get_tree().process_frame
 	game_scene.transition_to_state("disasterstart")

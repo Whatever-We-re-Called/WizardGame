@@ -11,7 +11,6 @@ func _enter():
 
 func _exit():
 	game_scene.map_progress_ui.visible = false
-	game_scene.player_score_ui.visible = false
 
 
 func _update(delta):

@@ -2,9 +2,6 @@ extends GameState
 
 
 func _enter():
-	game_scene.increment_scores()
-	game_scene.player_score_ui.update(game_scene.game_manager.players, game_scene.game_manager.scores)
-	
 	await get_tree().process_frame
 	if _is_last_disaster():
 		game_scene.transition_to_state("mapend")

@@ -4,10 +4,9 @@ class_name GameManager extends Node
 
 @onready var game_ui: CanvasLayer = %GameUI
 @onready var game_players: Node = %GamePlayers
+@onready var game_scoring: Node = %GameScoring
 @onready var game_scene: Node = %GameScene
 @onready var pause_manager: Node = %PauseManager
-
-var scores: Dictionary
 
 var players: Array[Player]:
 	get:

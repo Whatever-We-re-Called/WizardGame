@@ -1,11 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=33 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
 [ext_resource type="Script" path="res://game/ui/map_progress_ui.gd" id="3_q0doh"]
 [ext_resource type="Script" path="res://game/modules/game_ui.gd" id="3_reatb"]
 [ext_resource type="Script" path="res://game/states/wait_lobby_game_state.gd" id="4_0m4h4"]
-[ext_resource type="Script" path="res://game/ui/player_score_ui.gd" id="4_rlrby"]
 [ext_resource type="Script" path="res://game/ui/game_settings_ui.gd" id="5_73nkb"]
 [ext_resource type="Script" path="res://game/states/map_start_game_state.gd" id="5_78ssb"]
 [ext_resource type="Script" path="res://game/modules/game_players.gd" id="5_xsd4s"]
@@ -22,14 +21,12 @@
 [ext_resource type="Script" path="res://game/states/intermission_results_game_state.gd" id="18_h0wvm"]
 [ext_resource type="Script" path="res://game/states/intermission_modifying_game_state.gd" id="19_lnnjd"]
 [ext_resource type="Script" path="res://game/modules/pause_manager.gd" id="19_v5m1n"]
+[ext_resource type="Script" path="res://game/modules/game_scoring.gd" id="23_q0it8"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_smshx"]
 properties/0/path = NodePath("GameScene/GameSceneUI/MapProgressUI:visible")
 properties/0/spawn = true
 properties/0/replication_mode = 2
-properties/1/path = NodePath("GameScene/GameSceneUI/PlayerScoreUI:visible")
-properties/1/spawn = true
-properties/1/replication_mode = 2
 
 [sub_resource type="LabelSettings" id="LabelSettings_dy6bj"]
 font_size = 48
@@ -56,9 +53,6 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_5u4d7"]
 font_size = 32
 outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_7fwbh"]
-font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_u4a7m"]
 font_size = 96
@@ -272,6 +266,10 @@ spawn_path = NodePath("../PlayersRoot")
 [node name="PlayersRoot" type="Node" parent="GamePlayers"]
 unique_name_in_owner = true
 
+[node name="GameScoring" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("23_q0it8")
+
 [node name="GameScene" type="Node" parent="."]
 unique_name_in_owner = true
 process_mode = 1
@@ -325,48 +323,6 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 alignment = 1
-
-[node name="PlayerScoreUI" type="CenterContainer" parent="GameScene/GameSceneUI"]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -129.0
-offset_bottom = 81.0
-grow_horizontal = 0
-mouse_filter = 2
-script = ExtResource("4_rlrby")
-
-[node name="PanelContainer" type="PanelContainer" parent="GameScene/GameSceneUI/PlayerScoreUI"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="GameScene/GameSceneUI/PlayerScoreUI/PanelContainer"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 64
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 64
-theme_override_constants/margin_bottom = 16
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameScene/GameSceneUI/PlayerScoreUI/PanelContainer/MarginContainer"]
-layout_mode = 2
-mouse_filter = 2
-alignment = 1
-
-[node name="Title" type="Label" parent="GameScene/GameSceneUI/PlayerScoreUI/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Survivals"
-label_settings = SubResource("LabelSettings_7fwbh")
-horizontal_alignment = 1
-
-[node name="ScoresList" type="GridContainer" parent="GameScene/GameSceneUI/PlayerScoreUI/PanelContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/h_separation = 32
-columns = 2
 
 [node name="GameStates" type="Node" parent="GameScene"]
 unique_name_in_owner = true

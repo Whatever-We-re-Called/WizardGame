@@ -4,7 +4,6 @@ extends GameManagerModule
 @onready var active_scene_root: Node = %ActiveSceneRoot
 @onready var game_states_node: Node = %GameStates
 @onready var map_progress_ui: CenterContainer = %MapProgressUI
-@onready var player_score_ui: CenterContainer = %PlayerScoreUI
 
 var current_state_name: String
 var current_state: GameState
@@ -119,13 +118,3 @@ func _kill_player(peer_id: int):
 	var killed_player = game_manager.get_player_from_peer_id(peer_id)
 	if not dead_players.has(killed_player):
 		dead_players.append(killed_player)
-
-
-@rpc("authority", "call_local", "reliable")
-func increment_scores():
-	for player in game_manager.players:
-		if not dead_players.has(player):
-			if game_manager.scores.has(player):
-				game_manager.scores[player] += 1
-			else:
-				game_manager.scores[player] = 1
