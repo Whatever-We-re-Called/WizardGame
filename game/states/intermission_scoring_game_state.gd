@@ -26,10 +26,13 @@ func _execute_scoring_events():
 	var queued_scoring_events = game_scene.game_manager.game_scoring.queued_scoring_events
 	while not queued_scoring_events.is_empty():
 		var scoring_event = queued_scoring_events.dequeue()
+		var scoring_event_text_subtitle =\
+			"+{0} Point".format([str(scoring_event.rewarded_score)])\
+			+ ("s" if scoring_event.rewarded_score > 1 else "")
 		
 		game_scene.intermission.scoring_ui.set_scoring_event_text.rpc(
 			scoring_event.title,
-			"+{0} Point(s)".format([str(scoring_event.rewarded_score)]),
+			scoring_event_text_subtitle,
 			scoring_event.color)
 		for player in scoring_event.rewarded_players:
 			game_scene.game_manager.game_scoring.add_player_score(
