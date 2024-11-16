@@ -12,4 +12,6 @@ func setup(player_name: String, player_score: int, goal_score: int):
 
 
 func update(player_score: int):
+	%ScoreProgressBar.value = player_score
+	
 	%CurrentPointsLabel.text = str(player_score)

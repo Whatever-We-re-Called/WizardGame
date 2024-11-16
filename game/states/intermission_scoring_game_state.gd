@@ -4,6 +4,9 @@ extends GameState
 func _enter():
 	game_scene.intermission.set_state.rpc(Intermission.State.SCORING)
 	_init_player_score_cards()
+	await _execute_scoring_events()
+	
+	print("finished executing scoring events")
 
 
 func _init_player_score_cards():
@@ -14,3 +17,27 @@ func _init_player_score_cards():
 			game_scene.game_manager.game_scoring.get_player_score(player),
 			game_scene.game_manager.game_settings.goal_score
 		)
+
+
+func _execute_scoring_events():
+	game_scene.intermission.scoring_ui.clear_scoring_event_text.rpc()
+	await get_tree().create_timer(1.0).timeout
+	
+	var queued_scoring_events = game_scene.game_manager.game_scoring.queued_scoring_events
+	while not queued_scoring_events.is_empty():
+		var scoring_event = queued_scoring_events.dequeue()
+		
+		game_scene.intermission.scoring_ui.set_scoring_event_text.rpc(
+			scoring_event.title,
+			"+{0} Point(s)".format([str(scoring_event.rewarded_score)]),
+			scoring_event.color)
+		for player in scoring_event.rewarded_players:
+			game_scene.game_manager.game_scoring.add_player_score(
+				player, scoring_event.rewarded_score)
+			game_scene.intermission.scoring_ui.update_player_score_card.rpc(
+				player.peer_id,
+				game_scene.game_manager.game_scoring.get_player_score(player))
+		await get_tree().create_timer(1.0).timeout
+		
+		game_scene.intermission.scoring_ui.clear_scoring_event_text.rpc()
+		await get_tree().create_timer(0.5).timeout

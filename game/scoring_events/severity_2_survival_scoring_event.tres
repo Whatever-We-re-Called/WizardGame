@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="ScoringEvent" load_steps=2 format=3 uid="uid://b5g31m6i0n5uf"]
+[gd_resource type="Resource" script_class="ScoringEvent" load_steps=2 format=3 uid="uid://5hue3qgkl3p7"]
 
-[ext_resource type="Script" path="res://game/scoring_events/scoring_event.gd" id="1_ernsf"]
+[ext_resource type="Script" path="res://game/scoring_events/scoring_event.gd" id="1_m0ljd"]
 
 [resource]
-script = ExtResource("1_ernsf")
-title = "Severity 1 Disaster Survived"
-rewarded_score = 1
-color = Color(0, 1, 0, 1)
+script = ExtResource("1_m0ljd")
+title = "Severity 2 Disaster Survived"
+rewarded_score = 2
+color = Color(1, 1, 0, 1)

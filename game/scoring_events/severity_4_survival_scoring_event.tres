@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_nu6f4")
-title = "Severity 3 Disaster Survived"
-rewarded_score = 3
-color = Color(1, 0, 0, 1)
+title = "Severity 4 Disaster Survived"
+rewarded_score = 4
+color = Color(0.498039, 0, 0, 1)

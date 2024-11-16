@@ -15,6 +15,12 @@ func get_player_score(player: Player) -> int:
 		return 0
 
 
+func add_player_score(player: Player, added_score: int):
+	if player_scores.has(player):
+		player_scores[player] += added_score
+	else:
+		player_scores[player] = added_score
+
 
 func queue_survival_scoring_event(survived_players: Array[Player], severity: DisasterManager.Severity):
 	const SEVERITY_SURVIVAL_SCORING_EVENTS = {

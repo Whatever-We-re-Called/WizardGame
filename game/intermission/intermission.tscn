@@ -73,13 +73,15 @@ alignment = 1
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/ScoringUI/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/ScoringUI/VBoxContainer/VBoxContainer2"]
+[node name="ScoringEventTitleLabel" type="Label" parent="CanvasLayer/ScoringUI/VBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Severity 2 Disaster Survived"
 label_settings = SubResource("LabelSettings_gh480")
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="CanvasLayer/ScoringUI/VBoxContainer/VBoxContainer2"]
+[node name="ScoringEventSubtitleLabel" type="Label" parent="CanvasLayer/ScoringUI/VBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "+2 Points"
 label_settings = SubResource("LabelSettings_7vyf4")
