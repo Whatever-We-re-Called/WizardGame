@@ -2,5 +2,7 @@ extends GameState
 
 
 func _enter():
-	await get_tree().process_frame
+	game_scene.intermission.set_state.rpc(Intermission.State.END)
+	await get_tree().create_timer(2.0).timeout
+	
 	game_scene.transition_to_state("mapstart")
