@@ -17,6 +17,40 @@ func get_player_score(player: Player) -> int:
 		return 0
 
 
+func get_player_placements() -> Dictionary:
+	var result: Dictionary
+	
+	var unscored_players = game_manager.players.duplicate()
+	var current_placement_number = 1
+	while unscored_players.size() > 0:
+		var leading_players = get_leading_players()
+		for player in leading_players:
+			result[player] = current_placement_number
+			unscored_players.erase(player)
+		
+		current_placement_number += leading_players.size()
+	
+	return result
+
+
+# Returns array in the case of a tie. Requires whatever 
+# calls it to account for that case.
+func get_leading_players() -> Array[Player]:
+	var result: Array[Player]
+	
+	for player in game_manager.players:
+		if result.size() > 0:
+			if get_player_score(player) > get_player_score(result[0]):
+				result.clear()
+				result.append(player)
+			elif get_player_score(player) == get_player_score(result[0]):
+				result.append(player)
+		else:
+			result.append(player)
+	
+	return result
+
+
 func set_survival_bonus(player: Player, bonus: int):
 	active_survival_bonuses[player] = bonus
 

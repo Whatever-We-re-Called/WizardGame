@@ -5,8 +5,6 @@ func _enter():
 	game_scene.intermission.set_state.rpc(Intermission.State.SCORING)
 	_init_player_score_cards()
 	await _execute_scoring_events()
-	
-	print("finished executing scoring events")
 
 
 func _init_player_score_cards():

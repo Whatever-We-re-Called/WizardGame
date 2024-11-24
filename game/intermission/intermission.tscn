@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bw1ex181nuo6m"]
+[gd_scene load_steps=13 format=3 uid="uid://bw1ex181nuo6m"]
 
 [ext_resource type="Script" path="res://game/intermission/intermission.gd" id="1_ay0xj"]
 [ext_resource type="Script" path="res://game/intermission/scoring/scoring_ui.gd" id="2_feipp"]
+[ext_resource type="Script" path="res://game/intermission/results/results_ui.gd" id="3_nahkx"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1pv4n"]
 
@@ -16,6 +17,18 @@ font_size = 48
 
 [sub_resource type="LabelSettings" id="LabelSettings_7vyf4"]
 font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwk56"]
+bg_color = Color(0.294118, 0.294118, 0.294118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_25405"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sftsf"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ah1rl"]
+font_size = 48
 
 [node name="Intermission" type="Node"]
 script = ExtResource("1_ay0xj")
@@ -48,6 +61,7 @@ label_settings = SubResource("LabelSettings_h4v1i")
 
 [node name="ScoringUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -89,9 +103,50 @@ horizontal_alignment = 1
 
 [node name="ResultsUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_nahkx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ResultsUI"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="Title" type="Label" parent="CanvasLayer/ResultsUI/VBoxContainer"]
+layout_mode = 2
+text = "Results"
+label_settings = SubResource("LabelSettings_iy6gk")
+horizontal_alignment = 1
+
+[node name="PlayerResultCards" type="VBoxContainer" parent="CanvasLayer/ResultsUI/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/ResultsUI/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 96)
+layout_mode = 2
+focus_neighbor_left = NodePath("../SetSlot3Button")
+focus_neighbor_top = NodePath("../../HBoxContainer2/AbilityList")
+focus_neighbor_right = NodePath("../SetSlot2Button")
+focus_next = NodePath("../SetSlot2Button")
+focus_previous = NodePath("../../HBoxContainer2/AbilityList")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/hover = SubResource("StyleBoxFlat_hwk56")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_25405")
+theme_override_styles/normal = SubResource("StyleBoxFlat_sftsf")
+text = "Continue
+"
+
+[node name="WaitingForHostLabel" type="Label" parent="CanvasLayer/ResultsUI/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Waiting for host..."
+label_settings = SubResource("LabelSettings_ah1rl")
+horizontal_alignment = 1
 
 [node name="ModifyingLocalUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
@@ -110,3 +165,5 @@ unique_name_in_owner = true
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
+
+[connection signal="pressed" from="CanvasLayer/ResultsUI/VBoxContainer/ContinueButton" to="CanvasLayer/ResultsUI" method="_on_continue_button_pressed"]

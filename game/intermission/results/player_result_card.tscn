@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf6jr501owncl"]
+
+[ext_resource type="Script" path="res://game/intermission/results/player_result_card.gd" id="1_cnkto"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0smi3"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_yo2fj"]
+font_size = 48
+
+[node name="PlayerResultCard" type="HBoxContainer"]
+theme_override_constants/separation = 50
+alignment = 1
+script = ExtResource("1_cnkto")
+
+[node name="PlayerNameLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+text = "1. Player"
+label_settings = SubResource("LabelSettings_0smi3")
+horizontal_alignment = 2
+
+[node name="CurrentPointsLabel" type="Label" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+text = "10
+"
+label_settings = SubResource("LabelSettings_yo2fj")
