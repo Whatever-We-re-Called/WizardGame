@@ -23,7 +23,7 @@ func get_player_placements() -> Dictionary:
 	var unscored_players = game_manager.players.duplicate()
 	var current_placement_number = 1
 	while unscored_players.size() > 0:
-		var leading_players = get_leading_players()
+		var leading_players = _get_leading_players_from_list(unscored_players)
 		for player in leading_players:
 			result[player] = current_placement_number
 			unscored_players.erase(player)
@@ -36,9 +36,13 @@ func get_player_placements() -> Dictionary:
 # Returns array in the case of a tie. Requires whatever 
 # calls it to account for that case.
 func get_leading_players() -> Array[Player]:
+	return _get_leading_players_from_list(game_manager.players)
+
+
+func _get_leading_players_from_list(players_list: Array[Player]) -> Array[Player]:
 	var result: Array[Player]
 	
-	for player in game_manager.players:
+	for player in players_list:
 		if result.size() > 0:
 			if get_player_score(player) > get_player_score(result[0]):
 				result.clear()
@@ -49,6 +53,15 @@ func get_leading_players() -> Array[Player]:
 			result.append(player)
 	
 	return result
+	
+
+
+func get_highest_player_score() -> int:
+	var leading_players = get_leading_players()
+	if leading_players.size() > 0:
+		return get_player_score(leading_players[0])
+	else:
+		return 0
 
 
 func set_survival_bonus(player: Player, bonus: int):

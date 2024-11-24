@@ -125,7 +125,11 @@ unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="ContinueButton" type="Button" parent="CanvasLayer/ResultsUI/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ResultsUI/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/ResultsUI/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(480, 96)
 layout_mode = 2
@@ -166,4 +170,4 @@ visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[connection signal="pressed" from="CanvasLayer/ResultsUI/VBoxContainer/ContinueButton" to="CanvasLayer/ResultsUI" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/ResultsUI/VBoxContainer/HBoxContainer/ContinueButton" to="CanvasLayer/ResultsUI" method="_on_continue_button_pressed"]

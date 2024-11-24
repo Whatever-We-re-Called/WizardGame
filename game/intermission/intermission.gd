@@ -13,6 +13,12 @@ enum State { START, SCORING, RESULTS, MODIFYING_LOCAL, MODIFYING_ONLINE, END }
 var game_manager: GameManager
 
 
+func _ready():
+	results_ui.continued.connect(
+		func(): game_manager.game_scene.transition_to_state("waitlobby")
+	)
+
+
 @rpc("authority", "call_local", "reliable")
 func set_state(state: State):
 	start_ui.visible = (state == State.START)

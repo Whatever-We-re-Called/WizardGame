@@ -2,7 +2,8 @@ extends HBoxContainer
 
 
 func setup(player_name: String, placement: int, player_score: int):
-	%PlayerNameLabel.text = "%s. %s" % [str(placement), player_name]
+	%PlayerNameLabel.text = "#%s: %s" % [str(placement), player_name]
+	%PlayerNameLabel.label_settings = %PlayerNameLabel.label_settings.duplicate()
 	%PlayerNameLabel.label_settings.font_color = _get_placement_color(placement)
 	
 	%CurrentPointsLabel.text = str(player_score)

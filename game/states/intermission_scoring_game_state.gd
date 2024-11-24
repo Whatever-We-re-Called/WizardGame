@@ -5,6 +5,11 @@ func _enter():
 	game_scene.intermission.set_state.rpc(Intermission.State.SCORING)
 	_init_player_score_cards()
 	await _execute_scoring_events()
+	
+	if _has_player_reached_goal_score():
+		game_scene.transition_to_state("intermissionresults")
+	else:
+		game_scene.transition_to_state("intermissionend")
 
 
 func _init_player_score_cards():
@@ -42,3 +47,9 @@ func _execute_scoring_events():
 		
 		game_scene.intermission.scoring_ui.clear_scoring_event_text.rpc()
 		await get_tree().create_timer(0.5).timeout
+
+
+func _has_player_reached_goal_score() -> bool:
+	var highest_score = game_scene.game_manager.game_scoring.get_highest_player_score()
+	var goal_score = game_scene.game_manager.game_settings.goal_score
+	return highest_score >= goal_score
