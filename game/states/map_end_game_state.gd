@@ -5,8 +5,10 @@ var countdown: float
 
 func _enter():
 	countdown = game_scene.game_manager.game_settings.time_after_last_disaster
+	game_scene.game_manager.game_scoring.clear_survival_bonuses()
 	
 	game_scene.map_progress_ui.update_disaster_icons.rpc(game_scene.current_map_disasters, game_scene.current_disaster_number + 1, false)
+
 
 
 func _exit():
