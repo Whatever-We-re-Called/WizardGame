@@ -10,10 +10,8 @@ func _enter():
 
 func _init_player_result_cards():
 	var player_placements = game_scene.game_manager.game_scoring.get_player_placements()
-	print(player_placements)
 	for player in player_placements:
 		var placement = player_placements[player]
-		print(player, " ", placement)
 		game_scene.intermission.results_ui.create_player_result_card.rpc(
 			player.name,
 			placement,
