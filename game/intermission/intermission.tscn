@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bw1ex181nuo6m"]
+[gd_scene load_steps=14 format=3 uid="uid://bw1ex181nuo6m"]
 
 [ext_resource type="Script" path="res://game/intermission/intermission.gd" id="1_ay0xj"]
 [ext_resource type="Script" path="res://game/intermission/scoring/scoring_ui.gd" id="2_feipp"]
 [ext_resource type="Script" path="res://game/intermission/results/results_ui.gd" id="3_nahkx"]
+[ext_resource type="Script" path="res://game/intermission/modifying/online/modifying_online_ui.gd" id="4_wats4"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1pv4n"]
 
@@ -103,6 +104,7 @@ horizontal_alignment = 1
 
 [node name="ResultsUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -152,13 +154,26 @@ text = "Waiting for host..."
 label_settings = SubResource("LabelSettings_ah1rl")
 horizontal_alignment = 1
 
-[node name="ModifyingLocalUI" type="CenterContainer" parent="CanvasLayer"]
-unique_name_in_owner = true
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="ModifyingOnlineUI" type="CenterContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_wats4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ModifyingOnlineUI"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer/CenterContainer"]
+layout_mode = 2
+text = "test"
+
+[node name="ModifyingLocalUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
 visible = false
 offset_right = 40.0
