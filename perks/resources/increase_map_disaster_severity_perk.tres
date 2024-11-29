@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://bfj0bla480jfh"]
+
+[ext_resource type="Texture2D" uid="uid://badqk4r3pjhs7" path="res://perks/icons/shitty_default_perk_icon.png" id="1_7fq7i"]
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="2_jwmah"]
+
+[resource]
+script = ExtResource("2_jwmah")
+name = "Increase Map Disaster Severity"
+icon = ExtResource("1_7fq7i")
+rarity = 1
+description = "Slightly increase the next map's disaster severity level, causing more and stronger disasters to occur."

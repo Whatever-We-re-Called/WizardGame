@@ -81,11 +81,11 @@ func add_player_score(player: Player, added_score: int):
 
 func queue_survival_scoring_event(survived_players: Array[Player], severity: DisasterManager.Severity):
 	const SEVERITY_SURVIVAL_SCORING_EVENTS = {
-		DisasterManager.Severity.ONE: preload("res://game/scoring_events/severity_1_survival_scoring_event.tres"),
-		DisasterManager.Severity.TWO: preload("res://game/scoring_events/severity_2_survival_scoring_event.tres"),
-		DisasterManager.Severity.THREE: preload("res://game/scoring_events/severity_3_survival_scoring_event.tres"),
-		DisasterManager.Severity.FOUR: preload("res://game/scoring_events/severity_4_survival_scoring_event.tres"),
-		DisasterManager.Severity.FIVE: preload("res://game/scoring_events/severity_5_survival_scoring_event.tres")
+		DisasterManager.Severity.ONE: preload("res://game/scoring_events/severity_one_survival_scoring_event.tres"),
+		DisasterManager.Severity.TWO: preload("res://game/scoring_events/severity_two_survival_scoring_event.tres"),
+		DisasterManager.Severity.THREE: preload("res://game/scoring_events/severity_three_survival_scoring_event.tres"),
+		DisasterManager.Severity.FOUR: preload("res://game/scoring_events/severity_four_survival_scoring_event.tres"),
+		DisasterManager.Severity.FIVE: preload("res://game/scoring_events/severity_five_survival_scoring_event.tres")
 	}
 	
 	var scoring_event = SEVERITY_SURVIVAL_SCORING_EVENTS[severity].duplicate()
@@ -93,8 +93,8 @@ func queue_survival_scoring_event(survived_players: Array[Player], severity: Dis
 	
 	queued_scoring_events.enqueue(scoring_event)
 	
-	_queue_survival_bonus_scoring_event(survived_players, 1, preload("res://game/scoring_events/bonus_1_survival_scoring_event.tres"))
-	_queue_survival_bonus_scoring_event(survived_players, 2, preload("res://game/scoring_events/bonus_2_survival_scoring_event.tres"))
+	_queue_survival_bonus_scoring_event(survived_players, 1, preload("res://game/scoring_events/bonus_one_survival_scoring_event.tres"))
+	_queue_survival_bonus_scoring_event(survived_players, 2, preload("res://game/scoring_events/bonus_two_survival_scoring_event.tres"))
 	
 	_queue_sole_survivor_scoring_event(survived_players)
 

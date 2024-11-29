@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://cjxklphjlequh"]
+
+[ext_resource type="Texture2D" uid="uid://badqk4r3pjhs7" path="res://perks/icons/shitty_default_perk_icon.png" id="1_bayop"]
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="2_65nti"]
+
+[resource]
+script = ExtResource("2_65nti")
+name = "Spawn a Medal"
+icon = ExtResource("1_bayop")
+rarity = 0
+description = "Make a medal randomly spawn sometime during the next map."

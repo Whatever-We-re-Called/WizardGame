@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://bmogxp03457ha"]
+
+[ext_resource type="Texture2D" uid="uid://badqk4r3pjhs7" path="res://perks/icons/shitty_default_perk_icon.png" id="1_pitor"]
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="2_exr2d"]
+
+[resource]
+script = ExtResource("2_exr2d")
+name = "Survival Points Boost"
+icon = ExtResource("1_pitor")
+rarity = 1
+description = "During the next map, gain +1 point for each disaster you survive."

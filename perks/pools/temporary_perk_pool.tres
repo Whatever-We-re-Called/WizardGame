@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PerkPool" load_steps=15 format=3 uid="uid://6bh3febmuk5v"]
+
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_dipyj"]
+[ext_resource type="Resource" uid="uid://bfj0bla480jfh" path="res://perks/resources/increase_map_disaster_severity_perk.tres" id="2_4c2of"]
+[ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_bvl5d"]
+[ext_resource type="Resource" uid="uid://6h5rqgua52hg" path="res://perks/resources/new_random_ability_perk.tres" id="3_x111y"]
+[ext_resource type="Resource" uid="uid://bqsua122k4h33" path="res://perks/resources/new_selected_ability_perk.tres" id="4_yqbq3"]
+[ext_resource type="Resource" uid="uid://cc07ma2exytao" path="res://perks/resources/plus_one_ability_level_perk.tres" id="5_73fcj"]
+[ext_resource type="Resource" uid="uid://b6y1ookknrqj2" path="res://perks/resources/plus_one_max_health_perk.tres" id="6_tyrb2"]
+[ext_resource type="Resource" uid="uid://c6xnaorobxm4" path="res://perks/resources/plus_three_ability_levels_perk.tres" id="7_7knt7"]
+[ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/plus_two_ability_levels_perk.tres" id="8_vmigh"]
+[ext_resource type="Resource" uid="uid://b24kk1oe04qxi" path="res://perks/resources/plus_two_max_health_perk.tres" id="9_ba242"]
+[ext_resource type="Resource" uid="uid://cjxklphjlequh" path="res://perks/resources/spawn_a_medal_perk.tres" id="10_nwubk"]
+[ext_resource type="Resource" uid="uid://da23a8jw47pdd" path="res://perks/resources/steal_an_ability_perk.tres" id="11_r8hxq"]
+[ext_resource type="Resource" uid="uid://bmogxp03457ha" path="res://perks/resources/survival_points_boost_perk.tres" id="12_fei2y"]
+[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/survival_points_extra_boost_perk.tres" id="13_uv6bp"]
+
+[resource]
+script = ExtResource("2_bvl5d")
+perks = Array[ExtResource("1_dipyj")]([ExtResource("2_4c2of"), ExtResource("3_x111y"), ExtResource("4_yqbq3"), ExtResource("5_73fcj"), ExtResource("6_tyrb2"), ExtResource("7_7knt7"), ExtResource("8_vmigh"), ExtResource("9_ba242"), ExtResource("10_nwubk"), ExtResource("11_r8hxq"), ExtResource("12_fei2y"), ExtResource("13_uv6bp")])
