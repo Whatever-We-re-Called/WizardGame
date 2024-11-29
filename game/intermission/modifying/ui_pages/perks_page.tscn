@@ -1,0 +1,123 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1ml7pnps4lc7"]
+
+[ext_resource type="Texture2D" uid="uid://badqk4r3pjhs7" path="res://perks/icons/shitty_default_perk_icon.png" id="1_fbw73"]
+[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/perks_page.gd" id="1_yxusg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1daox"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbhim"]
+bg_color = Color(0.294118, 0.294118, 0.294118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijh4m"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfskf"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[node name="PerksPage" type="VBoxContainer"]
+script = ExtResource("1_yxusg")
+
+[node name="PerkButtonContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PerkButton1" type="Button" parent="PerkButtonContainer"]
+unique_name_in_owner = true
+z_index = 1
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Perk #1"
+icon = ExtResource("1_fbw73")
+autowrap_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="PerkButtonContainer/PerkButton1"]
+z_index = -1
+custom_minimum_size = Vector2(420, 140)
+layout_mode = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 418.0
+offset_bottom = 138.0
+mouse_filter = 2
+
+[node name="PerkButton2" type="Button" parent="PerkButtonContainer"]
+unique_name_in_owner = true
+z_index = 1
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Perk #1"
+icon = ExtResource("1_fbw73")
+autowrap_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="PerkButtonContainer/PerkButton2"]
+z_index = -1
+custom_minimum_size = Vector2(420, 140)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -70.0
+offset_right = 210.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PerkButton3" type="Button" parent="PerkButtonContainer"]
+unique_name_in_owner = true
+z_index = 1
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Perk #1"
+icon = ExtResource("1_fbw73")
+autowrap_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="PerkButtonContainer/PerkButton3"]
+z_index = -1
+custom_minimum_size = Vector2(420, 140)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -70.0
+offset_right = 210.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(0, 224)
+layout_mode = 2
+
+[node name="HighlightedPerkDescriptionLabel" type="Label" parent="CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1daox")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NextButton" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(416, 75)
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../MainMenuButton")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
+text = "Next"

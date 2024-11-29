@@ -166,12 +166,9 @@ script = ExtResource("4_wats4")
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ModifyingOnlineUI"]
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer"]
+[node name="SingleModifyingPlayerCardSlot" type="CenterContainer" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer/CenterContainer"]
-layout_mode = 2
-text = "test"
 
 [node name="ModifyingLocalUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true

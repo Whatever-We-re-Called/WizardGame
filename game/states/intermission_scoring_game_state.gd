@@ -9,7 +9,7 @@ func _enter():
 	if _has_player_reached_goal_score():
 		game_scene.transition_to_state("intermissionresults")
 	else:
-		game_scene.transition_to_state("intermissionend")
+		game_scene.transition_to_state("intermissionmodifying")
 
 
 func _init_player_score_cards():

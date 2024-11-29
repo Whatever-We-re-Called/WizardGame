@@ -1,4 +1,4 @@
-extends CenterContainer
+extends IntermissionUI
 
 var player_score_cards: Dictionary
 

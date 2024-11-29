@@ -1,4 +1,4 @@
-extends CenterContainer
+extends IntermissionUI
 
 signal continued
 

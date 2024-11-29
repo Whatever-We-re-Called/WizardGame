@@ -8,4 +8,4 @@ script = ExtResource("2_rt284")
 name = "Steal an Ability"
 icon = ExtResource("1_r5px5")
 rarity = 2
-description = "Choose an ability to steal from an opponent, including its level."
+description = "Choose an ability to steal from an opponent."
