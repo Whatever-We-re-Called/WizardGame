@@ -21,12 +21,26 @@ func setup(perk_pages_dictionary: Dictionary):
 func _append_perks_page(perks: Array[Perk]):
 	var perks_page = preload("res://game/intermission/modifying/ui_pages/perks_page.tscn").instantiate()
 	perks_page.setup(perks)
+	perks_page.perk_chosen.connect(
+		func(perk_resource_path: String):
+			# TODO Send chosen perk info to Perk GameModule.
+			_next_page()
+	)
 	pages.append(perks_page)
 
 
+func _next_page():
+	current_page += 1
+	_update_page()
+
+
+func _previous_page():
+	current_page -= 1
+	_update_page()
+
+
 func _update_page():
-	for child in %PageContainer.get_children():
-		child.queue_free()
+	%PageContainer.remove_child(%PageContainer.get_child(0))
 	
 	var page = pages[current_page - 1]
 	%PageContainer.add_child(page)

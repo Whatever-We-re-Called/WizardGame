@@ -1,5 +1,7 @@
 extends VBoxContainer
 
+signal perk_chosen(perk_resource_path: String)
+
 var perks: Array[Perk]
 
 
@@ -25,4 +27,7 @@ func _update_buttons():
 		)
 		perk_button.mouse_exited.connect(
 			func(): %HighlightedPerkDescriptionLabel.text = ""
+		)
+		perk_button.pressed.connect(
+			func(): perk_chosen.emit(perk.resource_path)
 		)

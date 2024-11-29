@@ -1,26 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1ml7pnps4lc7"]
+[gd_scene load_steps=5 format=3 uid="uid://d1ml7pnps4lc7"]
 
 [ext_resource type="Texture2D" uid="uid://badqk4r3pjhs7" path="res://perks/icons/shitty_default_perk_icon.png" id="1_fbw73"]
 [ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/perks_page.gd" id="1_yxusg"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_nx330"]
+font_size = 32
+
 [sub_resource type="LabelSettings" id="LabelSettings_1daox"]
 font_size = 24
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbhim"]
-bg_color = Color(0.294118, 0.294118, 0.294118, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijh4m"]
-bg_color = Color(0.392157, 0.392157, 0.392157, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfskf"]
-bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [node name="PerksPage" type="VBoxContainer"]
 script = ExtResource("1_yxusg")
 
 [node name="PerkButtonContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 32
+
+[node name="Title" type="Label" parent="PerkButtonContainer"]
+layout_mode = 2
+text = "Select a Perk"
+label_settings = SubResource("LabelSettings_nx330")
+horizontal_alignment = 1
 
 [node name="PerkButton1" type="Button" parent="PerkButtonContainer"]
 unique_name_in_owner = true
@@ -96,28 +96,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-custom_minimum_size = Vector2(0, 224)
+[node name="CenterContainer" type="CenterContainer" parent="PerkButtonContainer"]
+custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 
-[node name="HighlightedPerkDescriptionLabel" type="Label" parent="CenterContainer"]
+[node name="HighlightedPerkDescriptionLabel" type="Label" parent="PerkButtonContainer/CenterContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(416, 0)
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1daox")
 horizontal_alignment = 1
 autowrap_mode = 2
-
-[node name="NextButton" type="Button" parent="."]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(416, 75)
-layout_mode = 2
-focus_neighbor_top = NodePath("../MainMenuButton")
-focus_neighbor_bottom = NodePath("../SettingsButton")
-focus_next = NodePath("../SettingsButton")
-focus_previous = NodePath("../MainMenuButton")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
-text = "Next"
