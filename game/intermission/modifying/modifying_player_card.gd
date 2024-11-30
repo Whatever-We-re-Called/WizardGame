@@ -17,6 +17,9 @@ func setup(perk_pages_dictionary: Dictionary, player_scene_path: String):
 	
 	_append_ready_page()
 	
+	%PageProgressBar.min_value = 0
+	%PageProgressBar.max_value = pages.size() - 1
+	
 	self.current_page = 1
 	_update_page()
 
@@ -66,3 +69,18 @@ func _update_page():
 	
 	var page = pages[current_page - 1]
 	%PageContainer.add_child(page)
+	
+	_update_page_progress_bar_ui()
+
+
+func _update_page_progress_bar_ui():
+	%PageProgressBar.value = current_page - 1
+	
+	if current_page == pages.size():
+		var ready_fill_style = StyleBoxFlat.new()
+		ready_fill_style.bg_color = Color.GREEN
+		%PageProgressBar.add_theme_stylebox_override("fill", ready_fill_style)
+	else:
+		var in_progress_fill_style = StyleBoxFlat.new()
+		in_progress_fill_style.bg_color = Color.WHITE
+		%PageProgressBar.add_theme_stylebox_override("fill", in_progress_fill_style)
