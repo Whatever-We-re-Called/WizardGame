@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3uy57i4r1w2c"]
+[gd_scene load_steps=4 format=3 uid="uid://d3uy57i4r1w2c"]
 
 [ext_resource type="Texture2D" uid="uid://bchsmdw6sspxs" path="res://abilities/textures/shitty_remote_land_mine_texture.png" id="1_7nobn"]
-[ext_resource type="Script" path="res://abilities/scenes/remote_land_mine_scene.gd" id="1_p2ab8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e0n1a"]
 size = Vector2(74, 23)
@@ -11,7 +10,7 @@ size = Vector2(48, 12)
 
 [node name="RemoteLandMineScene" type="RigidBody2D"]
 collision_mask = 5
-script = ExtResource("1_p2ab8")
+can_sleep = false
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -50)

@@ -69,7 +69,7 @@ func handle_physics(delta):
 	if freeze_input == false:
 		_handle_jump()
 		_handle_wasd(delta)
-		_handle_abilities()
+		_handle_abilities(delta)
 		
 		var input_direction = _get_input_direction()
 		if input_direction != Vector2.ZERO:
@@ -147,20 +147,9 @@ func _handle_jump():
 		coyote_timer.stop()
 
 
-func _handle_abilities():
-	if not player.can_use_abilities: return
-	
-	var ability_input_strings = [
-		player.im.use_ability_1,
-		player.im.use_ability_2,
-		player.im.use_ability_3
-	]
-	
-	for i in range(3):
-		var ability_node = player.ability_nodes.get_child(i)
-		var ability_input_string = ability_input_strings[i]
-		if ability_node.get_script() != null:
-			ability_node._handle_input(player, ability_input_string)
+func _handle_abilities(delta):
+	for ability in player.abilities:
+		ability.process(delta)
 
 
 func handle_debug_inputs():

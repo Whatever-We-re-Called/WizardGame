@@ -4,4 +4,3 @@ class_name Ability extends Resource
 @export var icon_texture: Texture2D
 @export_multiline var description: String
 @export var cooldown: float
-@export var execution_script: Script

@@ -20,4 +20,5 @@ func _start() -> Promise:
 	
 @rpc("any_peer", "reliable")
 func complete():
+	print("Sync complete")
 	complete_signal.emit()
