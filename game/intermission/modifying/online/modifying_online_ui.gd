@@ -6,7 +6,7 @@ func setup_on_server():
 	
 	for player in intermission.game_manager.players:
 		# TODO Make this more dynamic.
-		var perk_page_count = 3
+		var perk_page_count = 1
 		
 		var perk_pages_dictionary = _get_generated_perks_dictionary(perk_page_count)
 		_create_modifying_player_card.rpc_id(player.peer_id, perk_pages_dictionary, player.get_path())

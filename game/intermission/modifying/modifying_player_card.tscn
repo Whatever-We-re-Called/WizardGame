@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dj3tk57280b5w"]
+[gd_scene load_steps=5 format=3 uid="uid://dj3tk57280b5w"]
 
 [ext_resource type="Script" path="res://game/intermission/modifying/modifying_player_card.gd" id="1_hbt38"]
-[ext_resource type="PackedScene" uid="uid://dj2y33fgklcnu" path="res://game/intermission/modifying/ui_pages/abilities_page.tscn" id="2_2s652"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_k0up6"]
 font_size = 48
@@ -11,18 +10,6 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjs6e"]
 bg_color = Color(0, 0.784314, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_hmi75"]
-font_size = 96
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbhim"]
-bg_color = Color(0.294118, 0.294118, 0.294118, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijh4m"]
-bg_color = Color(0.392157, 0.392157, 0.392157, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfskf"]
-bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [node name="ModifyingPlayerCard" type="CenterContainer"]
 custom_minimum_size = Vector2(480, 1080)
@@ -71,41 +58,3 @@ show_percentage = false
 [node name="PageContainer" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="AbilitiesPage" parent="." instance=ExtResource("2_2s652")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
-[node name="ReadyPage" type="VBoxContainer" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="CenterContainer" type="CenterContainer" parent="ReadyPage"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="ReadyPage/CenterContainer"]
-layout_mode = 2
-text = "Ready"
-label_settings = SubResource("LabelSettings_hmi75")
-horizontal_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="ReadyPage/CenterContainer"]
-layout_mode = 2
-mouse_filter = 2
-theme_override_constants/margin_top = 768
-
-[node name="ReadyButton" type="Button" parent="ReadyPage/CenterContainer/MarginContainer"]
-custom_minimum_size = Vector2(416, 75)
-layout_mode = 2
-focus_neighbor_top = NodePath("../MainMenuButton")
-focus_neighbor_bottom = NodePath("../SettingsButton")
-focus_next = NodePath("../SettingsButton")
-focus_previous = NodePath("../MainMenuButton")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
-text = "Go Back"

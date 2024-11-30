@@ -192,3 +192,5 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
 text = "Ready"
+
+[connection signal="pressed" from="ReadyButton" to="." method="_on_ready_button_pressed"]

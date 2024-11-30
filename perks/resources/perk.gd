@@ -1,6 +1,6 @@
 class_name Perk extends Resource
 
-enum Rarity { Common, Uncommon, Rare }
+enum Rarity { COMMON, UNCOMMON, RARE }
 
 @export var name: String
 @export var icon: Texture = preload("res://perks/icons/shitty_default_perk_icon.png")
@@ -10,11 +10,11 @@ enum Rarity { Common, Uncommon, Rare }
 
 func get_color() -> Color:
 	match rarity:
-		Rarity.Common:
+		Rarity.COMMON:
 			return Color.WHITE
-		Rarity.Uncommon:
+		Rarity.UNCOMMON:
 			return Color.GREEN
-		Rarity.Rare:
+		Rarity.RARE:
 			return Color.AQUA
 		_:
 			return Color.WHITE

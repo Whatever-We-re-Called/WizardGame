@@ -35,12 +35,19 @@ func _append_perks_page(perks: Array[Perk]):
 func _append_abilities_page(player: Player):
 	var abilities_page = preload("res://game/intermission/modifying/ui_pages/abilities_page.tscn").instantiate()
 	abilities_page.setup(player)
+	abilities_page.readied.connect(
+		# TODO Update player ability inventory data.
+		func(): _next_page()
+	)
 	pages.append(abilities_page)
 
 
 func _append_ready_page():
-	# TODO
-	pass
+	var ready_page = preload("res://game/intermission/modifying/ui_pages/ready_page.tscn").instantiate()
+	ready_page.unreadied.connect(
+		func(): _previous_page()
+	)
+	pages.append(ready_page)
 
 
 func _next_page():
