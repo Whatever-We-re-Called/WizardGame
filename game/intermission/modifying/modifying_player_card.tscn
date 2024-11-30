@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://dj3tk57280b5w"]
+[gd_scene load_steps=10 format=3 uid="uid://dj3tk57280b5w"]
 
 [ext_resource type="Script" path="res://game/intermission/modifying/modifying_player_card.gd" id="1_hbt38"]
-[ext_resource type="PackedScene" uid="uid://d1ml7pnps4lc7" path="res://game/intermission/modifying/ui_pages/perks_page.tscn" id="2_ne641"]
-[ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://abilities/textures/shitty_wayback_point_texture.png" id="3_ib7dd"]
+[ext_resource type="PackedScene" uid="uid://dj2y33fgklcnu" path="res://game/intermission/modifying/ui_pages/abilities_page.tscn" id="2_2s652"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_k0up6"]
 font_size = 48
@@ -13,17 +12,8 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjs6e"]
 bg_color = Color(0, 0.784314, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_tw3is"]
-font_size = 32
-
-[sub_resource type="LabelSettings" id="LabelSettings_8siio"]
-font_size = 20
-
-[sub_resource type="LabelSettings" id="LabelSettings_7jlov"]
-font_size = 20
-
-[sub_resource type="LabelSettings" id="LabelSettings_u6rec"]
-font_size = 20
+[sub_resource type="LabelSettings" id="LabelSettings_hmi75"]
+font_size = 96
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbhim"]
 bg_color = Color(0.294118, 0.294118, 0.294118, 1)
@@ -33,9 +23,6 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfskf"]
 bg_color = Color(0.392157, 0.392157, 0.392157, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_hmi75"]
-font_size = 96
 
 [node name="ModifyingPlayerCard" type="CenterContainer"]
 custom_minimum_size = Vector2(480, 1080)
@@ -85,148 +72,10 @@ show_percentage = false
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PerksPage" parent="." instance=ExtResource("2_ne641")]
+[node name="AbilitiesPage" parent="." instance=ExtResource("2_2s652")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-
-[node name="AbilitiesPage" type="VBoxContainer" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 32
-
-[node name="Title" type="Label" parent="AbilitiesPage"]
-layout_mode = 2
-text = "Change Abilities"
-label_settings = SubResource("LabelSettings_tw3is")
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="AbilitiesPage"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="AbilitiesPage/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 32
-alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="AbilitiesPage/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Ability #1:"
-label_settings = SubResource("LabelSettings_8siio")
-
-[node name="TextureRect" type="TextureRect" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("3_ib7dd")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Level: 1"
-horizontal_alignment = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="AbilitiesPage/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Ability #2:"
-label_settings = SubResource("LabelSettings_8siio")
-
-[node name="TextureRect" type="TextureRect" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer2"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("3_ib7dd")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Level: 1"
-horizontal_alignment = 1
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="AbilitiesPage/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Ability #3:"
-label_settings = SubResource("LabelSettings_8siio")
-
-[node name="TextureRect" type="TextureRect" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer3"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("3_ib7dd")
-expand_mode = 1
-
-[node name="Label" type="Label" parent="AbilitiesPage/VBoxContainer/HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Level: 1"
-horizontal_alignment = 1
-
-[node name="AbilityContainer" type="VBoxContainer" parent="AbilitiesPage"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="TabBar" type="TabBar" parent="AbilitiesPage/AbilityContainer"]
-custom_minimum_size = Vector2(416, 0)
-layout_mode = 2
-current_tab = 0
-tab_count = 3
-tab_0/title = "Ability #1"
-tab_1/title = "Ability #2"
-tab_2/title = "Ability #3"
-
-[node name="ItemList" type="ItemList" parent="AbilitiesPage/AbilityContainer"]
-custom_minimum_size = Vector2(416, 320)
-layout_mode = 2
-item_count = 3
-fixed_icon_size = Vector2i(32, 32)
-item_0/text = "TEST"
-item_0/icon = ExtResource("3_ib7dd")
-item_1/text = "TEST_2"
-item_1/icon = ExtResource("3_ib7dd")
-item_1/disabled = true
-item_2/text = "TEST_3"
-item_2/icon = ExtResource("3_ib7dd")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="AbilitiesPage/AbilityContainer"]
-custom_minimum_size = Vector2(0, 160)
-layout_mode = 2
-alignment = 1
-
-[node name="AbilityLabelLabel" type="Label" parent="AbilitiesPage/AbilityContainer/VBoxContainer"]
-layout_mode = 2
-text = "Level: 1"
-label_settings = SubResource("LabelSettings_7jlov")
-horizontal_alignment = 1
-
-[node name="AbilityDescriptionLabel" type="Label" parent="AbilitiesPage/AbilityContainer/VBoxContainer"]
-custom_minimum_size = Vector2(416, 0)
-layout_mode = 2
-text = "Places a point in space that you can teleport to at anytime. "
-label_settings = SubResource("LabelSettings_u6rec")
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="ReadyButton" type="Button" parent="AbilitiesPage"]
-custom_minimum_size = Vector2(416, 75)
-layout_mode = 2
-focus_neighbor_top = NodePath("../MainMenuButton")
-focus_neighbor_bottom = NodePath("../SettingsButton")
-focus_next = NodePath("../SettingsButton")
-focus_previous = NodePath("../MainMenuButton")
-theme_override_font_sizes/font_size = 36
-theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
-text = "Ready"
 
 [node name="ReadyPage" type="VBoxContainer" parent="."]
 unique_name_in_owner = true

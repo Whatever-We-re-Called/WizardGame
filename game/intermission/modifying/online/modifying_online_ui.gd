@@ -9,7 +9,7 @@ func setup_on_server():
 		var perk_page_count = 3
 		
 		var perk_pages_dictionary = _get_generated_perks_dictionary(perk_page_count)
-		_create_modifying_player_card.rpc_id(player.peer_id, perk_pages_dictionary)
+		_create_modifying_player_card.rpc_id(player.peer_id, perk_pages_dictionary, player.get_path())
 
 
 func _get_generated_perks_dictionary(perk_page_count: int) -> Dictionary:
@@ -28,10 +28,12 @@ func _get_generated_perks_dictionary(perk_page_count: int) -> Dictionary:
 
 
 @rpc("authority", "call_local", "reliable")
-func _create_modifying_player_card(perk_pages_dictionary: Dictionary):
+func _create_modifying_player_card(perk_pages_dictionary: Dictionary, player_scene_path: String):
 	for child in %SingleModifyingPlayerCardSlot.get_children():
 		child.queue_free()
 	
 	var modifying_player_card = preload("res://game/intermission/modifying/modifying_player_card.tscn").instantiate()
-	modifying_player_card.setup(perk_pages_dictionary)
 	%SingleModifyingPlayerCardSlot.add_child(modifying_player_card)
+	# Setup must come after ModifyingPlayerCard enters the scene
+	# tree, in order to the player scene absolute path to be valid.
+	modifying_player_card.setup(perk_pages_dictionary, player_scene_path)
