@@ -1,18 +1,23 @@
 extends CenterContainer
 
+signal page_updated(current_page: int, max_page: int)
+
 var current_page: int
 var pages: Array[VBoxContainer]
 
 
-func setup(perk_pages_dictionary: Dictionary, player_scene_path: String):
-	for page_dictionary in perk_pages_dictionary:
+func setup_online(player_data: Dictionary):
+	%PlayerNameLabel.text = player_data["name"]
+	
+	var perk_pages = player_data["perk_pages"]
+	for page in perk_pages:
 		var perks: Array[Perk]
-		for ability_resource_path in perk_pages_dictionary[page_dictionary]:
+		for ability_resource_path in perk_pages[page]:
 			perks.append(load(ability_resource_path))
 		
 		_append_perks_page(perks)
 	
-	var player = get_tree().root.get_node_or_null(player_scene_path)
+	var player = get_tree().root.get_node_or_null(player_data["node_path"])
 	_append_abilities_page(player)
 	
 	_append_ready_page()
@@ -70,6 +75,7 @@ func _update_page():
 	var page = pages[current_page - 1]
 	%PageContainer.add_child(page)
 	
+	#page_changed.emit(current_page, pages.size())
 	_update_page_progress_bar_ui()
 
 

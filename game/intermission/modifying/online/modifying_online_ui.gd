@@ -1,15 +1,29 @@
 extends IntermissionUI
 
+var other_player_page_progress_ui: Dictionary
+
 
 func setup_on_server():
 	if not multiplayer.is_server(): return
 	
 	for player in intermission.game_manager.players:
-		# TODO Make this more dynamic.
-		var perk_page_count = 1
-		
-		var perk_pages_dictionary = _get_generated_perks_dictionary(perk_page_count)
-		_create_modifying_player_card.rpc_id(player.peer_id, perk_pages_dictionary, player.get_path())
+		_init_modifying_player_card(player)
+		_init_other_players_page_progress_ui(player)
+
+
+func _init_modifying_player_card(player: Player):
+	# TODO Make this more dynamic.
+	var perk_page_count = 1
+	var perk_pages_dictionary = _get_generated_perks_dictionary(perk_page_count)
+	
+	var player_data: Dictionary = {
+		"peer_id": player.peer_id,
+		"name": player.name,
+		"node_path": player.get_path(),
+		"perk_pages": perk_pages_dictionary
+	}
+	
+	_create_modifying_player_card.rpc_id(player.peer_id, player_data)
 
 
 func _get_generated_perks_dictionary(perk_page_count: int) -> Dictionary:
@@ -27,8 +41,18 @@ func _get_generated_perks_dictionary(perk_page_count: int) -> Dictionary:
 	return result
 
 
+func _init_other_players_page_progress_ui(player: Player):
+	var other_players_data: Dictionary
+	for other_player in intermission.game_manager.players:
+		if player != other_player:
+			other_players_data[other_player] = {
+				"name": other_player.name
+			}
+	_create_other_players_page_progress_ui.rpc_id(player.peer_id, other_players_data)
+
+
 @rpc("authority", "call_local", "reliable")
-func _create_modifying_player_card(perk_pages_dictionary: Dictionary, player_scene_path: String):
+func _create_modifying_player_card(player_data: Dictionary):
 	for child in %SingleModifyingPlayerCardSlot.get_children():
 		child.queue_free()
 	
@@ -36,4 +60,12 @@ func _create_modifying_player_card(perk_pages_dictionary: Dictionary, player_sce
 	%SingleModifyingPlayerCardSlot.add_child(modifying_player_card)
 	# Setup must come after ModifyingPlayerCard enters the scene
 	# tree, in order to the player scene absolute path to be valid.
-	modifying_player_card.setup(perk_pages_dictionary, player_scene_path)
+	modifying_player_card.setup_online(player_data)
+	#modifying_player_card.page_updated.connect(_handle_page_change)
+
+
+@rpc("authority", "call_local", "reliable")
+func _create_other_players_page_progress_ui(other_players_data: Dictionary):
+	pass
+	#for other_player in other_players_page_progress_data:
+		#var other_player_page_progress
