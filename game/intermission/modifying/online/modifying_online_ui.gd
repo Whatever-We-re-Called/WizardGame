@@ -1,6 +1,6 @@
 extends IntermissionUI
 
-var other_player_page_progress_ui: Dictionary
+var other_players_data: Dictionary
 
 
 func setup_on_server():
@@ -45,8 +45,8 @@ func _init_other_players_page_progress_ui(player: Player):
 	var other_players_data: Dictionary
 	for other_player in intermission.game_manager.players:
 		if player != other_player:
-			other_players_data[other_player] = {
-				"name": other_player.name
+			other_players_data[other_player.peer_id] = {
+				"name": str(other_player.name)
 			}
 	_create_other_players_page_progress_ui.rpc_id(player.peer_id, other_players_data)
 
@@ -66,6 +66,13 @@ func _create_modifying_player_card(player_data: Dictionary):
 
 @rpc("authority", "call_local", "reliable")
 func _create_other_players_page_progress_ui(other_players_data: Dictionary):
-	pass
-	#for other_player in other_players_page_progress_data:
-		#var other_player_page_progress
+	self.other_players_data = other_players_data
+	
+	for other_player_data in other_players_data:
+		var other_player_name = other_players_data[other_player_data]["name"]
+		
+		var other_player_page_progress = preload("res://game/intermission/modifying/online/online_player_page_progress_ui.tscn").instantiate()
+		other_player_page_progress.setup(other_player_name)
+		%OtherPlayerPageProgressContainer.add_child(other_player_page_progress)
+		
+		other_players_data[other_player_data]["ui_node"] = other_player_page_progress

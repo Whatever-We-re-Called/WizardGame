@@ -1,11 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://bw1ex181nuo6m"]
+[gd_scene load_steps=15 format=3 uid="uid://bw1ex181nuo6m"]
 
 [ext_resource type="Script" path="res://game/intermission/intermission.gd" id="1_ay0xj"]
 [ext_resource type="Script" path="res://game/intermission/scoring/scoring_ui.gd" id="2_feipp"]
 [ext_resource type="Script" path="res://game/intermission/results/results_ui.gd" id="3_nahkx"]
 [ext_resource type="Script" path="res://game/intermission/modifying/online/modifying_online_ui.gd" id="4_wats4"]
 [ext_resource type="PackedScene" uid="uid://dj3tk57280b5w" path="res://game/intermission/modifying/modifying_player_card.tscn" id="5_ml6ev"]
-[ext_resource type="PackedScene" uid="uid://b3y67nf7klr2j" path="res://game/intermission/modifying/online/online_player_page_progress_ui.tscn" id="6_8df7t"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_1pv4n"]
 
@@ -182,15 +181,6 @@ custom_minimum_size = Vector2(480, 0)
 layout_mode = 2
 theme_override_constants/separation = 32
 alignment = 1
-
-[node name="OnlinePlayerPageProgressUI" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer/OtherPlayerPageProgressContainer" instance=ExtResource("6_8df7t")]
-layout_mode = 2
-
-[node name="OnlinePlayerPageProgressUI2" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer/OtherPlayerPageProgressContainer" instance=ExtResource("6_8df7t")]
-layout_mode = 2
-
-[node name="OnlinePlayerPageProgressUI3" parent="CanvasLayer/ModifyingOnlineUI/HBoxContainer/OtherPlayerPageProgressContainer" instance=ExtResource("6_8df7t")]
-layout_mode = 2
 
 [node name="ModifyingLocalUI" type="CenterContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
