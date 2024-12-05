@@ -1,20 +1,22 @@
-[gd_resource type="Resource" script_class="PerkPool" load_steps=15 format=3 uid="uid://6bh3febmuk5v"]
+[gd_resource type="Resource" script_class="PerkPool" load_steps=17 format=3 uid="uid://6bh3febmuk5v"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_dipyj"]
 [ext_resource type="Resource" uid="uid://bfj0bla480jfh" path="res://perks/resources/increase_map_disaster_severity_perk.tres" id="2_4c2of"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_bvl5d"]
-[ext_resource type="Resource" uid="uid://6h5rqgua52hg" path="res://perks/resources/new_random_ability_perk.tres" id="3_x111y"]
-[ext_resource type="Resource" uid="uid://bqsua122k4h33" path="res://perks/resources/new_selected_ability_perk.tres" id="4_yqbq3"]
-[ext_resource type="Resource" uid="uid://cc07ma2exytao" path="res://perks/resources/plus_one_ability_level_perk.tres" id="5_73fcj"]
+[ext_resource type="Resource" uid="uid://djdnu2t2drbu7" path="res://perks/resources/new_ability_tier_1_perk.tres" id="3_o2aor"]
+[ext_resource type="Resource" uid="uid://bsqoikjys54i1" path="res://perks/resources/new_ability_tier_2_perk.tres" id="4_i6cua"]
+[ext_resource type="Resource" uid="uid://txe26npymhbe" path="res://perks/resources/new_ability_tier_3_perk.tres" id="5_85kqp"]
 [ext_resource type="Resource" uid="uid://b6y1ookknrqj2" path="res://perks/resources/plus_one_max_health_perk.tres" id="6_tyrb2"]
-[ext_resource type="Resource" uid="uid://c6xnaorobxm4" path="res://perks/resources/plus_three_ability_levels_perk.tres" id="7_7knt7"]
-[ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/plus_two_ability_levels_perk.tres" id="8_vmigh"]
+[ext_resource type="Resource" uid="uid://cc07ma2exytao" path="res://perks/resources/one_assignable_ability_level_perk.tres" id="6_y330v"]
 [ext_resource type="Resource" uid="uid://b24kk1oe04qxi" path="res://perks/resources/plus_two_max_health_perk.tres" id="9_ba242"]
 [ext_resource type="Resource" uid="uid://cjxklphjlequh" path="res://perks/resources/spawn_a_medal_perk.tres" id="10_nwubk"]
 [ext_resource type="Resource" uid="uid://da23a8jw47pdd" path="res://perks/resources/steal_an_ability_perk.tres" id="11_r8hxq"]
 [ext_resource type="Resource" uid="uid://bmogxp03457ha" path="res://perks/resources/survival_points_boost_perk.tres" id="12_fei2y"]
+[ext_resource type="Resource" uid="uid://c6xnaorobxm4" path="res://perks/resources/three_assignable_ability_levels_perk.tres" id="13_ll68j"]
 [ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/survival_points_extra_boost_perk.tres" id="13_uv6bp"]
+[ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/two_assignable_ability_levels_perk.tres" id="14_5uafu"]
+[ext_resource type="Resource" uid="uid://bh4av4hl0swi2" path="res://perks/resources/weaken_first_place_perk.tres" id="15_bw48b"]
 
 [resource]
 script = ExtResource("2_bvl5d")
-perks = Array[ExtResource("1_dipyj")]([ExtResource("2_4c2of"), ExtResource("3_x111y"), ExtResource("4_yqbq3"), ExtResource("5_73fcj"), ExtResource("6_tyrb2"), ExtResource("7_7knt7"), ExtResource("8_vmigh"), ExtResource("9_ba242"), ExtResource("10_nwubk"), ExtResource("11_r8hxq"), ExtResource("12_fei2y"), ExtResource("13_uv6bp")])
+perks = Array[ExtResource("1_dipyj")]([ExtResource("2_4c2of"), ExtResource("3_o2aor"), ExtResource("4_i6cua"), ExtResource("5_85kqp"), ExtResource("6_y330v"), ExtResource("6_tyrb2"), ExtResource("9_ba242"), ExtResource("10_nwubk"), ExtResource("11_r8hxq"), ExtResource("12_fei2y"), ExtResource("13_uv6bp"), ExtResource("13_ll68j"), ExtResource("14_5uafu"), ExtResource("15_bw48b")])

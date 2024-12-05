@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://bv6lhtfc61se8"]
+
+[ext_resource type="Texture2D" uid="uid://badqk4r3pjhs7" path="res://perks/icons/shitty_default_perk_icon.png" id="1_p3r2q"]
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="2_njh1n"]
+
+[resource]
+script = ExtResource("2_njh1n")
+name = "+2 Ability Levels"
+icon = ExtResource("1_p3r2q")
+rarity = 1
+description = "Add +2 levels to any abilities in your inventory."
