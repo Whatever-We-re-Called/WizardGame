@@ -1,7 +1,10 @@
 extends IntermissionUI
 
+signal all_players_readied
+
 var player_data: Dictionary
 var other_players_data: Dictionary
+var readied_players: Array[int]
 
 
 func setup_on_server():
@@ -78,6 +81,11 @@ func _handle_page_change(current_page: int, max_page: int):
 			current_page,
 			max_page
 		)
+	
+	if max_page == current_page:
+		_ready_player_on_server.rpc_id(1, player_data["peer_id"])
+	else:
+		_unready_player_on_server.rpc_id(1, player_data["peer_id"])
 
 
 @rpc("authority", "call_local", "reliable")
@@ -98,8 +106,22 @@ func _create_other_players_page_progress_ui(other_players_data: Dictionary):
 func _update_other_player_page_progress_ui(other_player_peer_id: int, current_page: int, max_page: int):
 	for other_player_data in other_players_data:
 		var peer_id = other_players_data[other_player_data]["peer_id"]
-		print("Other Player Peer ID: ", other_player_peer_id, " Peer ID: ", peer_id)
 		if peer_id == other_player_peer_id:
-			print("B")
 			var ui_node = other_players_data[other_player_data]["ui_node"]
 			ui_node.update(current_page, max_page)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _ready_player_on_server(player_peer_id: int):
+	if not readied_players.has(player_peer_id):
+		readied_players.append(player_peer_id)
+	
+	var total_player_count = other_players_data.size() + 1
+	if readied_players.size() == total_player_count:
+		all_players_readied.emit()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _unready_player_on_server(player_peer_id: int):
+	if readied_players.has(player_peer_id):
+		readied_players.erase(player_peer_id)
