@@ -1,5 +1,6 @@
 extends IntermissionUI
 
+var player_data: Dictionary
 var other_players_data: Dictionary
 
 
@@ -16,14 +17,14 @@ func _init_modifying_player_card(player: Player):
 	var perk_page_count = 1
 	var perk_pages_dictionary = _get_generated_perks_dictionary(perk_page_count)
 	
-	var player_data: Dictionary = {
+	var created_player_data: Dictionary = {
 		"peer_id": player.peer_id,
 		"name": player.name,
 		"node_path": player.get_path(),
 		"perk_pages": perk_pages_dictionary
 	}
 	
-	_create_modifying_player_card.rpc_id(player.peer_id, player_data)
+	_create_modifying_player_card.rpc_id(player.peer_id, created_player_data)
 
 
 func _get_generated_perks_dictionary(perk_page_count: int) -> Dictionary:
@@ -46,6 +47,7 @@ func _init_other_players_page_progress_ui(player: Player):
 	for other_player in intermission.game_manager.players:
 		if player != other_player:
 			other_players_data[other_player.peer_id] = {
+				"peer_id": other_player.peer_id,
 				"name": str(other_player.name)
 			}
 	_create_other_players_page_progress_ui.rpc_id(player.peer_id, other_players_data)
@@ -53,6 +55,8 @@ func _init_other_players_page_progress_ui(player: Player):
 
 @rpc("authority", "call_local", "reliable")
 func _create_modifying_player_card(player_data: Dictionary):
+	self.player_data = player_data
+	
 	for child in %SingleModifyingPlayerCardSlot.get_children():
 		child.queue_free()
 	
@@ -61,7 +65,19 @@ func _create_modifying_player_card(player_data: Dictionary):
 	# Setup must come after ModifyingPlayerCard enters the scene
 	# tree, in order to the player scene absolute path to be valid.
 	modifying_player_card.setup_online(player_data)
-	#modifying_player_card.page_updated.connect(_handle_page_change)
+	modifying_player_card.page_updated.connect(_handle_page_change)
+
+
+func _handle_page_change(current_page: int, max_page: int):
+	for other_player_data in other_players_data:
+		var peer_id = other_players_data[other_player_data]["peer_id"]
+		
+		_update_other_player_page_progress_ui.rpc_id(
+			peer_id,
+			player_data["peer_id"],
+			current_page,
+			max_page
+		)
 
 
 @rpc("authority", "call_local", "reliable")
@@ -71,8 +87,19 @@ func _create_other_players_page_progress_ui(other_players_data: Dictionary):
 	for other_player_data in other_players_data:
 		var other_player_name = other_players_data[other_player_data]["name"]
 		
-		var other_player_page_progress = preload("res://game/intermission/modifying/online/online_player_page_progress_ui.tscn").instantiate()
+		var other_player_page_progress = preload("res://game/intermission/modifying/online/other_player_page_progress_ui.tscn").instantiate()
 		other_player_page_progress.setup(other_player_name)
 		%OtherPlayerPageProgressContainer.add_child(other_player_page_progress)
 		
 		other_players_data[other_player_data]["ui_node"] = other_player_page_progress
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _update_other_player_page_progress_ui(other_player_peer_id: int, current_page: int, max_page: int):
+	for other_player_data in other_players_data:
+		var peer_id = other_players_data[other_player_data]["peer_id"]
+		print("Other Player Peer ID: ", other_player_peer_id, " Peer ID: ", peer_id)
+		if peer_id == other_player_peer_id:
+			print("B")
+			var ui_node = other_players_data[other_player_data]["ui_node"]
+			ui_node.update(current_page, max_page)

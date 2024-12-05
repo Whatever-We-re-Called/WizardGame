@@ -75,7 +75,7 @@ func _update_page():
 	var page = pages[current_page - 1]
 	%PageContainer.add_child(page)
 	
-	#page_changed.emit(current_page, pages.size())
+	page_updated.emit(current_page, pages.size())
 	_update_page_progress_bar_ui()
 
 
