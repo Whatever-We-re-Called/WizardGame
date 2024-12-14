@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=34 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://game/states/map_start_game_state.gd" id="5_78ssb"]
 [ext_resource type="Script" path="res://game/modules/game_players.gd" id="5_xsd4s"]
 [ext_resource type="Script" path="res://game/modules/game_scene.gd" id="6_1bev3"]
+[ext_resource type="Script" path="res://game/modules/perks_manager.gd" id="6_dr4ud"]
 [ext_resource type="Script" path="res://game/states/disaster_start_game_state.gd" id="6_k8xa5"]
 [ext_resource type="Script" path="res://game/states/game_start_game_state.gd" id="6_too1t"]
 [ext_resource type="Script" path="res://game/states/disaster_game_state.gd" id="6_xatxq"]
@@ -265,6 +266,10 @@ spawn_path = NodePath("../PlayersRoot")
 
 [node name="PlayersRoot" type="Node" parent="GamePlayers"]
 unique_name_in_owner = true
+
+[node name="PerksManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_dr4ud")
 
 [node name="GameScoring" type="Node" parent="."]
 unique_name_in_owner = true

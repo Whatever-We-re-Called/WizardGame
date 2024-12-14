@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PerkPool" load_steps=3 format=3 uid="uid://c40dntygag7m"]
+
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_krj3x"]
+[ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_jrmra"]
+
+[resource]
+script = ExtResource("2_jrmra")
+max_distance = -1
+perks = Array[ExtResource("1_krj3x")]([])
+common_rarity_chance = 0.0
+uncommon_rarity_chance = 0.0
+rare_rarity_chance = 0.0

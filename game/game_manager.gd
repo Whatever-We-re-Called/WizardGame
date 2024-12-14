@@ -3,10 +3,11 @@ class_name GameManager extends Node
 @export var game_settings: GameSettings
 
 @onready var game_ui: CanvasLayer = %GameUI
-@onready var game_players: Node = %GamePlayers
-@onready var game_scoring: Node = %GameScoring
-@onready var game_scene: Node = %GameScene
-@onready var pause_manager: Node = %PauseManager
+@onready var game_players: GameManagerModule = %GamePlayers
+@onready var perks_manager: GameManagerModule = %PerksManager
+@onready var game_scoring: GameManagerModule = %GameScoring
+@onready var game_scene: GameManagerModule = %GameScene
+@onready var pause_manager: GameManagerModule = %PauseManager
 
 var players: Array[Player]:
 	get:

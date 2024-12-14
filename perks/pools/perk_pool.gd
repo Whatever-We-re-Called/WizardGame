@@ -1,6 +1,11 @@
 class_name PerkPool extends Resource
 
+@export var max_distance: int = 0
 @export var perks: Array[Perk]
+@export_group("Rarity Chances")
+@export_range(0.0, 1.0) var common_rarity_chance: float = 0.0
+@export_range(0.0, 1.0) var uncommon_rarity_chance: float = 0.0
+@export_range(0.0, 1.0) var rare_rarity_chance: float = 0.0
 
 
 func get_random_perks(quantity: int, allow_duplicates: bool) -> Array[Perk]:
