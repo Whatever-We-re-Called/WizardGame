@@ -17,7 +17,7 @@ func get_random_perks(quantity: int, allow_duplicates: bool) -> Array[Perk]:
 		var random_index = randi_range(0, perks_copy.size() - 1)
 		result.append(perks_copy[random_index])
 		
-		if allow_duplicates == false:
+		if allow_duplicates == false and perks_copy.size() >= quantity:
 			perks_copy.remove_at(random_index)
 	
 	return result

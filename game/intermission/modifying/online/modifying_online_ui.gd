@@ -17,8 +17,8 @@ func setup_on_server():
 
 func _init_modifying_player_card(player: Player):
 	# TODO Make this more dynamic.
-	var perk_page_count = 1
-	var perk_pages_dictionary = _get_generated_perks_dictionary(perk_page_count)
+	var perk_page_count = intermission.game_manager.perks_manager.get_player_perk_choice_count(player)
+	var perk_pages_dictionary = _get_generated_perks_dictionary(player, perk_page_count)
 	
 	var created_player_data: Dictionary = {
 		"peer_id": player.peer_id,
@@ -30,13 +30,13 @@ func _init_modifying_player_card(player: Player):
 	_create_modifying_player_card.rpc_id(player.peer_id, created_player_data)
 
 
-func _get_generated_perks_dictionary(perk_page_count: int) -> Dictionary:
+func _get_generated_perks_dictionary(player: Player, perk_page_count: int) -> Dictionary:
 	var result: Dictionary
 	
-	var perk_pool = preload("res://perks/pools/temporary_perk_pool.tres")
+	var perk_pool = intermission.game_manager.get
 	for i in range(perk_page_count):
 		var perk_page = i + 1
-		var perks = perk_pool.get_random_perks(3, false)
+		var perks = intermission.game_manager.perks_manager.get_perks_from_pool(player, 3)
 		
 		result[perk_page] = []
 		for perk in perks:
