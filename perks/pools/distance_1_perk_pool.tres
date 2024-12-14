@@ -1,13 +1,17 @@
-[gd_resource type="Resource" script_class="PerkPool" load_steps=4 format=3 uid="uid://drv487cxpbrip"]
+[gd_resource type="Resource" script_class="PerkPool" load_steps=8 format=3 uid="uid://drv487cxpbrip"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_4h8lk"]
 [ext_resource type="Resource" uid="uid://cc07ma2exytao" path="res://perks/resources/1_assignable_ability_level_perk.tres" id="2_ixv4f"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_ywmsc"]
+[ext_resource type="Resource" uid="uid://djdnu2t2drbu7" path="res://perks/resources/new_ability_tier_1_perk.tres" id="3_h2x38"]
+[ext_resource type="Resource" uid="uid://b6y1ookknrqj2" path="res://perks/resources/plus_1_max_health_perk.tres" id="4_ipysl"]
+[ext_resource type="Resource" uid="uid://bfj0bla480jfh" path="res://perks/resources/increase_map_disaster_severity_perk.tres" id="5_obpui"]
+[ext_resource type="Resource" uid="uid://cjxklphjlequh" path="res://perks/resources/spawn_a_medal_perk.tres" id="6_iw5l0"]
 
 [resource]
 script = ExtResource("2_ywmsc")
 max_distance = 2
-perks = Array[ExtResource("1_4h8lk")]([ExtResource("2_ixv4f")])
-common_rarity_chance = 0.0
-uncommon_rarity_chance = 0.0
-rare_rarity_chance = 0.0
+perks = Array[ExtResource("1_4h8lk")]([ExtResource("2_ixv4f"), ExtResource("3_h2x38"), ExtResource("4_ipysl"), ExtResource("5_obpui"), ExtResource("6_iw5l0")])
+common_rarity_weight = 18
+uncommon_rarity_weight = 2
+rare_rarity_weight = 0

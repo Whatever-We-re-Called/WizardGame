@@ -1,12 +1,21 @@
-[gd_resource type="Resource" script_class="PerkPool" load_steps=3 format=3 uid="uid://c40dntygag7m"]
+[gd_resource type="Resource" script_class="PerkPool" load_steps=12 format=3 uid="uid://c40dntygag7m"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_krj3x"]
+[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/survival_points_bonus_2_perk.tres" id="2_gl6bb"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_jrmra"]
+[ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/2_assignable_ability_levels_perk.tres" id="3_xv1qy"]
+[ext_resource type="Resource" uid="uid://c6xnaorobxm4" path="res://perks/resources/3_assignable_ability_levels_perk.tres" id="4_wok3q"]
+[ext_resource type="Resource" uid="uid://bsqoikjys54i1" path="res://perks/resources/new_ability_tier_2_perk.tres" id="5_47wp6"]
+[ext_resource type="Resource" uid="uid://txe26npymhbe" path="res://perks/resources/new_ability_tier_3_perk.tres" id="6_fof3d"]
+[ext_resource type="Resource" uid="uid://da23a8jw47pdd" path="res://perks/resources/steal_an_ability_perk.tres" id="7_ldby1"]
+[ext_resource type="Resource" uid="uid://bh4av4hl0swi2" path="res://perks/resources/weaken_first_place_perk.tres" id="8_n0f8i"]
+[ext_resource type="Resource" uid="uid://b6y1ookknrqj2" path="res://perks/resources/plus_1_max_health_perk.tres" id="9_lx6dt"]
+[ext_resource type="Resource" uid="uid://b24kk1oe04qxi" path="res://perks/resources/plus_2_max_health_perk.tres" id="10_er5ju"]
 
 [resource]
 script = ExtResource("2_jrmra")
 max_distance = -1
-perks = Array[ExtResource("1_krj3x")]([])
-common_rarity_chance = 0.0
-uncommon_rarity_chance = 0.0
-rare_rarity_chance = 0.0
+perks = Array[ExtResource("1_krj3x")]([ExtResource("2_gl6bb"), ExtResource("3_xv1qy"), ExtResource("4_wok3q"), ExtResource("5_47wp6"), ExtResource("6_fof3d"), ExtResource("7_ldby1"), ExtResource("8_n0f8i"), ExtResource("9_lx6dt"), ExtResource("10_er5ju")])
+common_rarity_weight = 0
+uncommon_rarity_weight = 12
+rare_rarity_weight = 8

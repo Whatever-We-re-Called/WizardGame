@@ -1,12 +1,24 @@
-[gd_resource type="Resource" script_class="PerkPool" load_steps=3 format=3 uid="uid://cv0c6fnq5fhwu"]
+[gd_resource type="Resource" script_class="PerkPool" load_steps=15 format=3 uid="uid://cv0c6fnq5fhwu"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_r63o6"]
+[ext_resource type="Resource" uid="uid://bmogxp03457ha" path="res://perks/resources/survival_points_bonus_1_perk.tres" id="2_fk5wa"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_yru8b"]
+[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/survival_points_bonus_2_perk.tres" id="3_po2uj"]
+[ext_resource type="Resource" uid="uid://cc07ma2exytao" path="res://perks/resources/1_assignable_ability_level_perk.tres" id="4_3cwkm"]
+[ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/2_assignable_ability_levels_perk.tres" id="5_0wb1w"]
+[ext_resource type="Resource" uid="uid://c6xnaorobxm4" path="res://perks/resources/3_assignable_ability_levels_perk.tres" id="6_7bhm1"]
+[ext_resource type="Resource" uid="uid://djdnu2t2drbu7" path="res://perks/resources/new_ability_tier_1_perk.tres" id="7_2c3af"]
+[ext_resource type="Resource" uid="uid://bsqoikjys54i1" path="res://perks/resources/new_ability_tier_2_perk.tres" id="8_nc44r"]
+[ext_resource type="Resource" uid="uid://txe26npymhbe" path="res://perks/resources/new_ability_tier_3_perk.tres" id="9_paotk"]
+[ext_resource type="Resource" uid="uid://da23a8jw47pdd" path="res://perks/resources/steal_an_ability_perk.tres" id="10_2jhrl"]
+[ext_resource type="Resource" uid="uid://bh4av4hl0swi2" path="res://perks/resources/weaken_first_place_perk.tres" id="11_lvxmu"]
+[ext_resource type="Resource" uid="uid://b6y1ookknrqj2" path="res://perks/resources/plus_1_max_health_perk.tres" id="12_8mnvf"]
+[ext_resource type="Resource" uid="uid://b24kk1oe04qxi" path="res://perks/resources/plus_2_max_health_perk.tres" id="13_oxfok"]
 
 [resource]
 script = ExtResource("2_yru8b")
 max_distance = 14
-perks = Array[ExtResource("1_r63o6")]([])
-common_rarity_chance = 0.0
-uncommon_rarity_chance = 0.0
-rare_rarity_chance = 0.0
+perks = Array[ExtResource("1_r63o6")]([ExtResource("2_fk5wa"), ExtResource("3_po2uj"), ExtResource("4_3cwkm"), ExtResource("5_0wb1w"), ExtResource("6_7bhm1"), ExtResource("7_2c3af"), ExtResource("8_nc44r"), ExtResource("9_paotk"), ExtResource("10_2jhrl"), ExtResource("11_lvxmu"), ExtResource("12_8mnvf"), ExtResource("13_oxfok")])
+common_rarity_weight = 6
+uncommon_rarity_weight = 9
+rare_rarity_weight = 5

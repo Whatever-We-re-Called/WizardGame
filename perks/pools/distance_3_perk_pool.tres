@@ -1,12 +1,23 @@
-[gd_resource type="Resource" script_class="PerkPool" load_steps=3 format=3 uid="uid://dcogbejapbrxf"]
+[gd_resource type="Resource" script_class="PerkPool" load_steps=14 format=3 uid="uid://dcogbejapbrxf"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_i5ikx"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_w6pb2"]
+[ext_resource type="Resource" uid="uid://bmogxp03457ha" path="res://perks/resources/survival_points_bonus_1_perk.tres" id="2_wshqn"]
+[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/survival_points_bonus_2_perk.tres" id="3_1siur"]
+[ext_resource type="Resource" uid="uid://cc07ma2exytao" path="res://perks/resources/1_assignable_ability_level_perk.tres" id="4_1qwr0"]
+[ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/2_assignable_ability_levels_perk.tres" id="5_22qm4"]
+[ext_resource type="Resource" uid="uid://djdnu2t2drbu7" path="res://perks/resources/new_ability_tier_1_perk.tres" id="6_t38c3"]
+[ext_resource type="Resource" uid="uid://bsqoikjys54i1" path="res://perks/resources/new_ability_tier_2_perk.tres" id="7_1ovh3"]
+[ext_resource type="Resource" uid="uid://bh4av4hl0swi2" path="res://perks/resources/weaken_first_place_perk.tres" id="8_70mxy"]
+[ext_resource type="Resource" uid="uid://b6y1ookknrqj2" path="res://perks/resources/plus_1_max_health_perk.tres" id="9_oi7tc"]
+[ext_resource type="Resource" uid="uid://b24kk1oe04qxi" path="res://perks/resources/plus_2_max_health_perk.tres" id="10_xhdpa"]
+[ext_resource type="Resource" uid="uid://bfj0bla480jfh" path="res://perks/resources/increase_map_disaster_severity_perk.tres" id="11_dbolq"]
+[ext_resource type="Resource" uid="uid://cjxklphjlequh" path="res://perks/resources/spawn_a_medal_perk.tres" id="12_pod8g"]
 
 [resource]
 script = ExtResource("2_w6pb2")
 max_distance = 9
-perks = Array[ExtResource("1_i5ikx")]([])
-common_rarity_chance = 0.0
-uncommon_rarity_chance = 0.0
-rare_rarity_chance = 0.0
+perks = Array[ExtResource("1_i5ikx")]([ExtResource("2_wshqn"), ExtResource("3_1siur"), ExtResource("4_1qwr0"), ExtResource("5_22qm4"), ExtResource("6_t38c3"), ExtResource("7_1ovh3"), ExtResource("8_70mxy"), ExtResource("9_oi7tc"), ExtResource("10_xhdpa"), ExtResource("11_dbolq"), ExtResource("12_pod8g")])
+common_rarity_weight = 12
+uncommon_rarity_weight = 6
+rare_rarity_weight = 2

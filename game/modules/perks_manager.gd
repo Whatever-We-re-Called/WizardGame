@@ -53,7 +53,6 @@ func _get_distance_from_leading_player(player: Player) -> int:
 
 func _get_distance_perk_pool(distance: int) -> PerkPool:
 	for distance_perk_pool in DISTANCE_PERK_POOLS:
-		print("1")
 		if distance < distance_perk_pool.max_distance:
 			return distance_perk_pool
 	
