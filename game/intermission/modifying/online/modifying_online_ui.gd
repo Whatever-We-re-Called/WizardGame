@@ -69,6 +69,7 @@ func _create_modifying_player_card(player_data: Dictionary):
 	# tree, in order to the player scene absolute path to be valid.
 	modifying_player_card.setup_online(player_data)
 	modifying_player_card.page_updated.connect(_handle_page_change)
+	modifying_player_card.perk_obtained.connect(_handle_perk_obtained.bind(player_data))
 
 
 func _handle_page_change(current_page: int, max_page: int):
@@ -86,6 +87,18 @@ func _handle_page_change(current_page: int, max_page: int):
 		_ready_player_on_server.rpc_id(1, player_data["peer_id"])
 	else:
 		_unready_player_on_server.rpc_id(1, player_data["peer_id"])
+
+
+func _handle_perk_obtained(perk_resource_path: String, player_data: Dictionary):
+	_handle_perk_obtained_on_server.rpc_id(1, perk_resource_path, player_data["peer_id"])
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _handle_perk_obtained_on_server(perk_resource_path: String, executor_peer_id: int):
+	var executor_player = intermission.game_manager.get_player_from_peer_id(executor_peer_id)
+	intermission.game_manager.perks_manager.execute_perk(
+		load(perk_resource_path), executor_player
+	)
 
 
 @rpc("authority", "call_local", "reliable")

@@ -1,6 +1,7 @@
 extends CenterContainer
 
 signal page_updated(current_page: int, max_page: int)
+signal perk_obtained(perk_resource_path: String)
 
 var current_page: int
 var pages: Array[VBoxContainer]
@@ -34,7 +35,7 @@ func _append_perks_page(perks: Array[Perk]):
 	perks_page.setup(perks)
 	perks_page.perk_chosen.connect(
 		func(perk_resource_path: String):
-			# TODO Send chosen perk info to Perk GameModule.
+			perk_obtained.emit(perk_resource_path)
 			_next_page()
 	)
 	pages.append(perks_page)

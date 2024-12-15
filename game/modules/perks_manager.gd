@@ -1,6 +1,7 @@
 extends GameManagerModule
 
 var player_perk_choice_counts: Dictionary
+var active_perk_executions: Array[PerkExecution]
 
 const DISTANCE_PERK_POOLS: Array = [
 	preload("res://perks/pools/distance_1_perk_pool.tres"),
@@ -9,6 +10,8 @@ const DISTANCE_PERK_POOLS: Array = [
 	preload("res://perks/pools/distance_4_perk_pool.tres"),
 	preload("res://perks/pools/distance_5_perk_pool.tres")
 ]
+const USE_TESTING_PERK_POOL: bool = true
+const TESTING_PERK_POOL: PerkPool = preload("res://perks/pools/testing_perk_pool.tres")
 
 
 func get_player_perk_choice_count(player: Player) -> int:
@@ -52,8 +55,27 @@ func _get_distance_from_leading_player(player: Player) -> int:
 
 
 func _get_distance_perk_pool(distance: int) -> PerkPool:
-	for distance_perk_pool in DISTANCE_PERK_POOLS:
-		if distance < distance_perk_pool.max_distance:
-			return distance_perk_pool
+	if USE_TESTING_PERK_POOL:
+		return TESTING_PERK_POOL
+	else:
+		for distance_perk_pool in DISTANCE_PERK_POOLS:
+			if distance < distance_perk_pool.max_distance:
+				return distance_perk_pool
+		
+		return DISTANCE_PERK_POOLS[DISTANCE_PERK_POOLS.size() - 1]
+
+
+func execute_perk(perk: Perk, executor_player: Player):
+	var execution_script = perk.execution_script.new()
+	execution_script.game_manager = game_manager
+	execution_script.perk = perk
+	execution_script.executor_player = executor_player
 	
-	return DISTANCE_PERK_POOLS[DISTANCE_PERK_POOLS.size() - 1]
+	active_perk_executions.append(execution_script)
+	execution_script._on_activate()
+
+
+func clear_all_active_perk_executions():
+	for active_perk_execution in active_perk_executions:
+		active_perk_execution._on_deactivate()
+	active_perk_executions.clear()

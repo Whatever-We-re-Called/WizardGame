@@ -6,6 +6,7 @@ enum Rarity { COMMON, UNCOMMON, RARE }
 @export var icon: Texture = preload("res://perks/icons/shitty_default_perk_icon.png")
 @export var rarity: Rarity
 @export_multiline var description: String
+@export var execution_script: Script
 
 
 func get_color() -> Color:
