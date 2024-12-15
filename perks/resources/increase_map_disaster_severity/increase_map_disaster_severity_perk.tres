@@ -10,4 +10,5 @@ name = "Increase Map Disaster Severity"
 icon = ExtResource("1_7fq7i")
 rarity = 1
 description = "Slightly increase the next map's disaster severity level, causing more and stronger disasters to occur."
+deactivation_event = 1
 execution_script = ExtResource("1_x7win")

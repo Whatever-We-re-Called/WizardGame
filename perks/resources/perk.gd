@@ -1,11 +1,13 @@
 class_name Perk extends Resource
 
 enum Rarity { COMMON, UNCOMMON, RARE }
+enum DeactivationEvent { NONE, ON_MAP_END }
 
 @export var name: String
 @export var icon: Texture = preload("res://perks/icons/shitty_default_perk_icon.png")
 @export var rarity: Rarity
 @export_multiline var description: String
+@export var deactivation_event: DeactivationEvent = DeactivationEvent.NONE
 @export var execution_script: Script
 
 

@@ -3,7 +3,15 @@ extends GameManagerModule
 var player_perk_choice_counts: Dictionary
 var active_perk_executions: Array[PerkExecution]
 
-const PERK_DATA = preload("res://perks/data/perk_data.tres")
+const DISTANCE_PERK_POOLS = [
+	preload("res://perks/pools/distance_1_perk_pool.tres"),
+	preload("res://perks/pools/distance_2_perk_pool.tres"),
+	preload("res://perks/pools/distance_3_perk_pool.tres"),
+	preload("res://perks/pools/distance_4_perk_pool.tres"),
+	preload("res://perks/pools/distance_5_perk_pool.tres")
+]
+const USE_DEBUG_PERK_POOL: bool = true
+const DEBUG_PERK_POOL = preload("res://perks/pools/debug_perk_pool.tres")
 
 func get_player_perk_choice_count(player: Player) -> int:
 	if not player_perk_choice_counts.has(player):
@@ -48,14 +56,14 @@ func _get_distance_from_leading_player(player: Player) -> int:
 # Returning a Resource instead of PerkPool due to a really fucking
 # weird GDScript bug lol. Might be fixed eventually..?
 func _get_distance_perk_pool(distance: int) -> Resource:
-	if PERK_DATA.use_debug_perk_pool:
-		return PERK_DATA.debug_perk_pool
+	if USE_DEBUG_PERK_POOL:
+		return DEBUG_PERK_POOL
 	else:
-		for distance_perk_pool in PERK_DATA.distance_perk_pools:
+		for distance_perk_pool in DISTANCE_PERK_POOLS:
 			if distance < distance_perk_pool.max_distance:
 				return distance_perk_pool
 		
-		return PERK_DATA.distance_perk_pools[PERK_DATA.distance_perk_pools.size() - 1]
+		return DISTANCE_PERK_POOLS[DISTANCE_PERK_POOLS.size() - 1]
 
 
 func execute_perk(perk: Perk, executor_player: Player):
@@ -72,3 +80,10 @@ func clear_all_active_perk_executions():
 	for active_perk_execution in active_perk_executions:
 		active_perk_execution._on_deactivate()
 	active_perk_executions.clear()
+
+
+func perform_deactivation_event(deactivation_event: Perk.DeactivationEvent):
+	var active_perk_executions_copy = active_perk_executions.duplicate()
+	for active_perk_execution in active_perk_executions_copy:
+		active_perk_execution._on_deactivate()
+		active_perk_executions.erase(active_perk_execution)

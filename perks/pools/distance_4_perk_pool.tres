@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="PerkPool" load_steps=15 format=3 uid="uid://cv0c6fnq5fhwu"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_r63o6"]
-[ext_resource type="Resource" uid="uid://bmogxp03457ha" path="res://perks/resources/unfinished/survival_points_bonus_1_perk.tres" id="2_fk5wa"]
+[ext_resource type="Resource" uid="uid://bmogxp03457ha" path="res://perks/resources/survival_points_bonus/survival_points_bonus_1_perk.tres" id="2_fk5wa"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_yru8b"]
-[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/unfinished/survival_points_bonus_2_perk.tres" id="3_po2uj"]
+[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/survival_points_bonus/survival_points_bonus_2_perk.tres" id="3_po2uj"]
 [ext_resource type="Resource" uid="uid://cc07ma2exytao" path="res://perks/resources/unfinished/1_assignable_ability_level_perk.tres" id="4_3cwkm"]
 [ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/unfinished/2_assignable_ability_levels_perk.tres" id="5_0wb1w"]
 [ext_resource type="Resource" uid="uid://c6xnaorobxm4" path="res://perks/resources/unfinished/3_assignable_ability_levels_perk.tres" id="6_7bhm1"]

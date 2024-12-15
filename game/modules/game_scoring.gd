@@ -68,11 +68,25 @@ func set_survival_bonus(player: Player, bonus: int):
 	active_survival_bonuses[player] = bonus
 
 
+func add_survival_bonus(player: Player, added_bonus: int):
+	print("Added survival bonus: ", player.name, " ", added_bonus)
+	if active_survival_bonuses.has(player):
+		active_survival_bonuses[player] += added_bonus
+	else:
+		active_survival_bonuses[player] = added_bonus
+
+
+func remove_survival_bonus(player: Player, removed_bonus: int):
+	if active_survival_bonuses.has(player):
+		active_survival_bonuses[player] -= removed_bonus
+
+
 func clear_survival_bonuses():
 	active_survival_bonuses = {}
 
 
 func add_player_score(player: Player, added_score: int):
+	print("Added player score: ", player.name, " ", added_score)
 	if player_scores.has(player):
 		player_scores[player] += added_score
 	else:
@@ -104,10 +118,10 @@ func _queue_survival_bonus_scoring_event(survived_players: Array[Player], bonus:
 	for player in survived_players:
 		if active_survival_bonuses.has(player):
 			if active_survival_bonuses[player] == bonus:
-				bonus_scoring_event.rewarded_players.append(player)
+				scoring_event.rewarded_players.append(player)
 	
-	if bonus_scoring_event.rewarded_players.size() > 0:
-		queued_scoring_events.enqueue(bonus_scoring_event)
+	if scoring_event.rewarded_players.size() > 0:
+		queued_scoring_events.enqueue(scoring_event)
 
 
 func _queue_sole_survivor_scoring_event(survived_players: Array[Player]):

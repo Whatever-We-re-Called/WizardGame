@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PerkPool" load_steps=12 format=3 uid="uid://c40dntygag7m"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_krj3x"]
-[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/unfinished/survival_points_bonus_2_perk.tres" id="2_gl6bb"]
+[ext_resource type="Resource" uid="uid://35pgaxhfng5r" path="res://perks/resources/survival_points_bonus/survival_points_bonus_2_perk.tres" id="2_gl6bb"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_jrmra"]
 [ext_resource type="Resource" uid="uid://bv6lhtfc61se8" path="res://perks/resources/unfinished/2_assignable_ability_levels_perk.tres" id="3_xv1qy"]
 [ext_resource type="Resource" uid="uid://c6xnaorobxm4" path="res://perks/resources/unfinished/3_assignable_ability_levels_perk.tres" id="4_wok3q"]
