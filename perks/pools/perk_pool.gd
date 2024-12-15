@@ -38,7 +38,7 @@ func get_random_perks(quantity: int, allow_duplicates: bool) -> Array[Perk]:
 
 # Made this its own function to allow it to recursively call itself.
 func _get_random_perk_with_weights(perks_pool: Array[Perk], attempts: int = 0) -> Perk:
-	if attempts > 50: return perks_pool[0]
+	if attempts > 100: return perks_pool[0]
 	
 	var random_weight: int = randi_range(1, rarity_weights_total)
 	var cumulative_weight = 0

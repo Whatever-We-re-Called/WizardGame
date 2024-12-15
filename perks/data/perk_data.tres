@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PerkData" load_steps=9 format=3 uid="uid://cg5xkj12c0nys"]
+
+[ext_resource type="Resource" uid="uid://be05dgpj7u2gu" path="res://perks/pools/debug_perk_pool.tres" id="1_pya4h"]
+[ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="1_u6s6a"]
+[ext_resource type="Resource" uid="uid://drv487cxpbrip" path="res://perks/pools/distance_1_perk_pool.tres" id="2_immnd"]
+[ext_resource type="Script" path="res://perks/data/perk_data.gd" id="2_xf1d5"]
+[ext_resource type="Resource" uid="uid://sjkbdxf2ky5v" path="res://perks/pools/distance_2_perk_pool.tres" id="3_rovfh"]
+[ext_resource type="Resource" uid="uid://dcogbejapbrxf" path="res://perks/pools/distance_3_perk_pool.tres" id="4_i83dv"]
+[ext_resource type="Resource" uid="uid://cv0c6fnq5fhwu" path="res://perks/pools/distance_4_perk_pool.tres" id="5_3t8up"]
+[ext_resource type="Resource" uid="uid://c40dntygag7m" path="res://perks/pools/distance_5_perk_pool.tres" id="6_38h5f"]
+
+[resource]
+script = ExtResource("2_xf1d5")
+distance_perk_pools = Array[ExtResource("1_u6s6a")]([ExtResource("2_immnd"), ExtResource("3_rovfh"), ExtResource("4_i83dv"), ExtResource("5_3t8up"), ExtResource("6_38h5f")])
+use_debug_perk_pool = true
+debug_perk_pool = ExtResource("1_pya4h")
+map_disaster_severity_increase_amount = 5
