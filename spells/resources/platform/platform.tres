@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://dqjbowq5v46bb"]
+
+[ext_resource type="Script" path="res://spells/resources/dash/dash.gd" id="1_sdaqf"]
+[ext_resource type="Script" path="res://spells/spell.gd" id="2_omxmk"]
+
+[resource]
+script = ExtResource("2_omxmk")
+name = "Platform"
+description = "Temporarily spawns a breakable platform beneath your feet."
+cooldown = 7.0
+execution_script = ExtResource("1_sdaqf")

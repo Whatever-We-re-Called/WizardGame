@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c745x5yfwfejw"]
-
-[ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://abilities/textures/shitty_wayback_point_texture.png" id="1_jjamq"]
-
-[node name="WaybackPointScene" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_jjamq")

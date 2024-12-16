@@ -26,7 +26,6 @@ func add_player(data: Dictionary):
 		player.name = str(data.peer_id)
 		player.peer_id = data.peer_id
 		players_root.add_child(player, true)
-		player.create_ability_nodes()
 		
 		if data.has("device_ids"):
 			player.set_device(data.device_ids)
