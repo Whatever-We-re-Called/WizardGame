@@ -148,7 +148,8 @@ tab_0/title = "Spell #1"
 tab_1/title = "Spell #2"
 tab_2/title = "Spell #3"
 
-[node name="ItemList" type="ItemList" parent="AbilityContainer"]
+[node name="SpellsList" type="ItemList" parent="AbilityContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(416, 320)
 layout_mode = 2
 item_count = 3
