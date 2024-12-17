@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bw1ex181nuo6m"]
+[gd_scene load_steps=15 format=3 uid="uid://crrwp2iqodyj1"]
 
 [ext_resource type="Script" path="res://game/intermission/intermission.gd" id="1_ay0xj"]
 [ext_resource type="Script" path="res://game/intermission/scoring/scoring_ui.gd" id="2_feipp"]

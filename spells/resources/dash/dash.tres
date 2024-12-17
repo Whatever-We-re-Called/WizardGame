@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://dydoodknoa05t"]
+[gd_resource type="Resource" script_class="Spell" load_steps=3 format=3 uid="uid://dydoodknoa05t"]
 
-[ext_resource type="Script" path="res://spells/resources/dash/dash.gd" id="1_68oo3"]
+[ext_resource type="Texture2D" uid="uid://cwrinos3wwt2i" path="res://spells/icons/shitty_dash_spell_icon.png" id="1_k51yy"]
 [ext_resource type="Script" path="res://spells/spell.gd" id="2_a3khv"]
 
 [resource]
 script = ExtResource("2_a3khv")
 name = "Dash"
+icon_texture = ExtResource("1_k51yy")
 description = "Greatly launches you toward the direction you are pointing."
-cooldown = 3.0
-execution_script = ExtResource("1_68oo3")
+max_level = 5

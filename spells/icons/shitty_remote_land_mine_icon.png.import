@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8cnmdeqpyah"
-path="res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"
+uid="uid://bbppjlup18lhy"
+path="res://.godot/imported/shitty_remote_land_mine_icon.png-362f6e93d2668df706cfde51f940f25b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spells/textures/shitty_default_ability_icon.png"
-dest_files=["res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"]
+source_file="res://spells/icons/shitty_remote_land_mine_icon.png"
+dest_files=["res://.godot/imported/shitty_remote_land_mine_icon.png-362f6e93d2668df706cfde51f940f25b.ctex"]
 
 [params]
 

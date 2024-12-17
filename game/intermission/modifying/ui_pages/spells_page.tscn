@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dj2y33fgklcnu"]
 
-[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/abilities_page.gd" id="1_4kgu1"]
-[ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://abilities/textures/shitty_wayback_point_texture.png" id="1_5hsrt"]
+[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/spells_page.gd" id="1_4kgu1"]
+[ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://spells/textures/shitty_wayback_point_texture.png" id="1_5hsrt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tw3is"]
 font_size = 32
@@ -30,7 +30,7 @@ script = ExtResource("1_4kgu1")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 2
-text = "Change Abilities"
+text = "Change Spells"
 label_settings = SubResource("LabelSettings_tw3is")
 horizontal_alignment = 1
 
@@ -42,15 +42,15 @@ layout_mode = 2
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="CurrentAbilityContainer" type="VBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer"]
+[node name="CurrentSpellContainer" type="VBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer"]
+[node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer"]
 layout_mode = 2
-text = "Ability #1:"
+text = "Spell #1:"
 label_settings = SubResource("LabelSettings_8siio")
 
-[node name="CurrentAbility1Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer"]
+[node name="CurrentSpell1Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
@@ -58,30 +58,30 @@ size_flags_horizontal = 4
 texture = ExtResource("1_5hsrt")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer/HBoxContainer"]
 layout_mode = 2
 text = "Level: "
 horizontal_alignment = 1
 
-[node name="CurrentAbility1LevelLabel" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer/HBoxContainer"]
+[node name="CurrentSpell1LevelLabel" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "1"
 
-[node name="CurrentAbilityContainer2" type="VBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer"]
+[node name="CurrentSpellContainer2" type="VBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer2"]
+[node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer2"]
 layout_mode = 2
-text = "Ability #2:"
+text = "Spell #2:"
 label_settings = SubResource("LabelSettings_8siio")
 
-[node name="CurrentAbility2Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer2"]
+[node name="CurrentSpell2Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
@@ -89,30 +89,30 @@ size_flags_horizontal = 4
 texture = ExtResource("1_5hsrt")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer2"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer2/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer2/HBoxContainer"]
 layout_mode = 2
 text = "Level: "
 horizontal_alignment = 1
 
-[node name="CurrentAbility2LevelLabel" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer2/HBoxContainer"]
+[node name="CurrentSpell2LevelLabel" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer2/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "1"
 
-[node name="CurrentAbilityContainer3" type="VBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer"]
+[node name="CurrentSpellContainer3" type="VBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer3"]
+[node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer3"]
 layout_mode = 2
-text = "Ability #3:"
+text = "Spell #3:"
 label_settings = SubResource("LabelSettings_8siio")
 
-[node name="CurrentAbility3Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer3"]
+[node name="CurrentSpell3Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer3"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
@@ -120,17 +120,17 @@ size_flags_horizontal = 4
 texture = ExtResource("1_5hsrt")
 expand_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer3"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer3"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer3/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer3/HBoxContainer"]
 layout_mode = 2
 text = "Level: "
 horizontal_alignment = 1
 
-[node name="CurrentAbility3LevelLabel" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentAbilityContainer3/HBoxContainer"]
+[node name="CurrentSpell3LevelLabel" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer3/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "1"
@@ -144,16 +144,16 @@ custom_minimum_size = Vector2(416, 0)
 layout_mode = 2
 current_tab = 0
 tab_count = 3
-tab_0/title = "Ability #1"
-tab_1/title = "Ability #2"
-tab_2/title = "Ability #3"
+tab_0/title = "Spell #1"
+tab_1/title = "Spell #2"
+tab_2/title = "Spell #3"
 
 [node name="ItemList" type="ItemList" parent="AbilityContainer"]
 custom_minimum_size = Vector2(416, 320)
 layout_mode = 2
 item_count = 3
 fixed_icon_size = Vector2i(32, 32)
-item_0/text = "TEST"
+item_0/text = "Wayback Point (Level: 1/5)"
 item_0/icon = ExtResource("1_5hsrt")
 item_1/text = "TEST_2"
 item_1/icon = ExtResource("1_5hsrt")

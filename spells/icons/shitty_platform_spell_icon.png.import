@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8cnmdeqpyah"
-path="res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"
+uid="uid://btxspt6mm2b0k"
+path="res://.godot/imported/shitty_platform_spell_icon.png-2ced42970114345574550737d540aeb3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spells/textures/shitty_default_ability_icon.png"
-dest_files=["res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"]
+source_file="res://spells/icons/shitty_platform_spell_icon.png"
+dest_files=["res://.godot/imported/shitty_platform_spell_icon.png-2ced42970114345574550737d540aeb3.ctex"]
 
 [params]
 

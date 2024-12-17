@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://dqjbowq5v46bb"]
+[gd_resource type="Resource" script_class="Spell" load_steps=3 format=3 uid="uid://dqjbowq5v46bb"]
 
-[ext_resource type="Script" path="res://spells/resources/dash/dash.gd" id="1_sdaqf"]
+[ext_resource type="Texture2D" uid="uid://btxspt6mm2b0k" path="res://spells/icons/shitty_platform_spell_icon.png" id="1_bcoen"]
 [ext_resource type="Script" path="res://spells/spell.gd" id="2_omxmk"]
 
 [resource]
 script = ExtResource("2_omxmk")
 name = "Platform"
+icon_texture = ExtResource("1_bcoen")
 description = "Temporarily spawns a breakable platform beneath your feet."
-cooldown = 7.0
-execution_script = ExtResource("1_sdaqf")
+max_level = 5

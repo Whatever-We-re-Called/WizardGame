@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://ch8u62u556ynj"]
+[gd_resource type="Resource" script_class="Spell" load_steps=3 format=3 uid="uid://ch8u62u556ynj"]
 
+[ext_resource type="Texture2D" uid="uid://sv3rildecnk1" path="res://spells/icons/shitty_wind_gust_spell_icon.png" id="1_6w66i"]
 [ext_resource type="Script" path="res://spells/spell.gd" id="1_e4r4g"]
-[ext_resource type="Script" path="res://spells/resources/wind_gust/wind_gust.gd" id="1_vmb6d"]
 
 [resource]
 script = ExtResource("1_e4r4g")
 name = "Wind Gust"
+icon_texture = ExtResource("1_6w66i")
 description = "Significantly pushes players and enviroment bodies forward in direction you are pointing."
-cooldown = 3.0
-execution_script = ExtResource("1_vmb6d")
+max_level = 5

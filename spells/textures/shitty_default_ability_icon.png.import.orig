@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8cnmdeqpyah"
-path="res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"
+path="res://.godot/imported/shitty_default_ability_icon.png-6fbb66767563ec8125415fef95e9efff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spells/textures/shitty_default_ability_icon.png"
-dest_files=["res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"]
+source_file="res://abilities/textures/shitty_default_ability_icon.png"
+dest_files=["res://.godot/imported/shitty_default_ability_icon.png-6fbb66767563ec8125415fef95e9efff.ctex"]
 
 [params]
 

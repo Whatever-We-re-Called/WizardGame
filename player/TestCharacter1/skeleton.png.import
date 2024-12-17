@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8cnmdeqpyah"
-path="res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"
+uid="uid://ctjg5h7gpr26h"
+path="res://.godot/imported/skeleton.png-b349372cc43f19210925d2a343560d64.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://spells/textures/shitty_default_ability_icon.png"
-dest_files=["res://.godot/imported/shitty_default_ability_icon.png-c1e8076ef56137d9a8abce1a4543e9b6.ctex"]
+source_file="res://player/TestCharacter1/skeleton.png"
+dest_files=["res://.godot/imported/skeleton.png-b349372cc43f19210925d2a343560d64.ctex"]
 
 [params]
 
