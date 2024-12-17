@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://5bcjc347dydn"]
+
+[ext_resource type="Script" path="res://spells/resources/wayback_point/wayback_point.gd" id="1_1pwvj"]
+[ext_resource type="Script" path="res://spells/spell.gd" id="2_om3ra"]
+
+[resource]
+script = ExtResource("2_om3ra")
+name = "Wayback Point"
+description = "Places a point in space that you can teleport to at anytime. "
+cooldown = 3.0
+execution_script = ExtResource("1_1pwvj")

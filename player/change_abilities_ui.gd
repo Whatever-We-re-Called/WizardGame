@@ -22,8 +22,8 @@ var player: Player
 func _ready() -> void:
 	visible = false
 	
-	for ability in Abilities.Type:
-		if ability != Abilities.Type.keys()[Abilities.Type.NONE]:
+	for ability in Spells.Type:
+		if ability != Spells.Type.keys()[Spells.Type.NONE]:
 			ability_list.add_item(ability)
 	
 	description_value_label.text = "Nothing selected."
@@ -51,19 +51,19 @@ func toggle():
 
 func _update_slot_value_labels():
 	for i in range(slot_value_labels.size()):
-		slot_value_labels[i].text = player.abilities[i].ability.name
+		slot_value_labels[i].text = player.spell_inventory.equipped_spells[i].resource.name
 
 
 func _on_set_slot(slot: int):
-	player._set_ability_slot.rpc(slot, _get_selected_ability())
+	player.spell_inventory.set_spell_slot.rpc(slot, _get_selected_spell())
 	_update_slot_value_labels()
 
 
-func _get_selected_ability() -> Abilities.Type:
+func _get_selected_spell() -> Spells.Type:
 	if ability_list.get_selected_items().size() > 0:
 		return ability_list.get_selected_items()[0] + 1 # We skip NONE, so these are offset by 1
 	else:
-		return Abilities.Type.NONE
+		return Spells.Type.NONE
 
 
 func _on_item_selected(index: int):
@@ -71,8 +71,8 @@ func _on_item_selected(index: int):
 
 
 func _update_description():
-	var selected_ability = _get_selected_ability()
-	var description = Abilities.get_ability_resource(selected_ability).description
+	var selected_ability = _get_selected_spell()
+	var description = Spells.get_spell_resource(selected_ability).description
 	description_value_label.text = description
 
 

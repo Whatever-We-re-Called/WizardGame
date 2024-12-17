@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Ability" load_steps=3 format=3 uid="uid://0e7lj8o1x5d0"]
+
+[ext_resource type="Script" path="res://spells/resources/remote_land_mine/remote_land_mine.gd" id="1_gsn8l"]
+[ext_resource type="Script" path="res://spells/spell.gd" id="2_ptkx2"]
+
+[resource]
+script = ExtResource("2_ptkx2")
+name = "Remote Land Mine"
+description = "Spawns a land mine at your location. Explodes either manually by your input or automatically by something pressing its button."
+cooldown = 3.0
+execution_script = ExtResource("1_gsn8l")

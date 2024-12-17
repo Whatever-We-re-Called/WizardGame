@@ -7,13 +7,12 @@ signal received_debug_input(int)
 @export var controller: PlayerController
 
 @onready var sprite_2d: Sprite2D = %Sprite2D
-@onready var ability_nodes = %AbilityNodes
 @onready var center_point = %CenterPoint
 @onready var change_abilities_ui: CenterContainer = $CanvasLayer/ChangeAbilitiesUI
 @onready var player_collision_shape_2d: CollisionShape2D = %PlayerCollisionShape2D
+@onready var spell_inventory: SpellInventory = %SpellInventory
+@onready var spell_nodes: Node = %SpellNodes
 
-var ability_types: Array[Abilities.Type] = [ Abilities.Type.WIND_GUST, Abilities.Type.REMOTE_LAND_MINE, Abilities.Type.PLATFORM ]
-var abilities: Array[Node2D] = []
 
 var peer_id: int
 var im: DeviceInputMap
@@ -31,7 +30,13 @@ func _enter_tree():
 
 
 func _ready():
-	create_ability_nodes()
+	var spells = {
+			Spells.Type.WIND_GUST: 1,
+			Spells.Type.REMOTE_LAND_MINE: 1,
+			Spells.Type.PLATFORM: 1
+		}
+	
+	spell_inventory.init_starting_spells(spells)
 	change_abilities_ui.setup(self)
 
 	if SessionManager.connection_strategy is SteamBasedStrategy and is_multiplayer_authority():
@@ -59,33 +64,6 @@ func _physics_process(delta):
 			controller.handle_pre_physics(delta)
 			controller.handle_physics(delta)
 			controller.handle_post_physics(delta)
-
-
-func create_ability_nodes():
-	for i in range(3):
-		_set_ability_slot(i, ability_types[i])
-
-
-@rpc("any_peer", "call_local", "reliable")
-func _set_ability_slot(slot: int, type: int):
-	if abilities.size() > slot:
-		abilities[slot]._cleanup()
-		abilities[slot].free()
-	
-	ability_types[slot] = type
-	var ability_node = Abilities.create_node_for_rpc(type, self, slot)
-	ability_nodes.add_child(ability_node, true)
-	if abilities.size() == slot:
-		abilities.append(ability_node)
-	else:
-		abilities[slot] = ability_node
-
-
-@rpc("any_peer", "call_local", "reliable")
-func clear_ability_nodes():
-	for child in ability_nodes.get_children():
-		child.queue_free()
-	abilities.clear()
 
 
 func get_center_global_position() -> Vector2:

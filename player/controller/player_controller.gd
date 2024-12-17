@@ -148,8 +148,8 @@ func _handle_jump():
 
 
 func _handle_abilities(delta):
-	for ability in player.abilities:
-		ability.process(delta)
+	for spell in player.spell_inventory.equipped_spells:
+		spell.process(delta)
 
 
 func handle_debug_inputs():

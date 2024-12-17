@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=16 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
 [ext_resource type="Script" path="res://player/change_abilities_ui.gd" id="2_ojypj"]
 [ext_resource type="Texture2D" uid="uid://d2kdvrnsglfkg" path="res://player/textures/prototype_player.png" id="2_tkvjb"]
+[ext_resource type="Script" path="res://spells/spell_inventory.gd" id="5_3pvpi"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_03ctb"]
 font_size = 48
@@ -249,9 +250,6 @@ shape = SubResource("CapsuleShape2D_ehwds")
 [node name="CenterPoint" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="AbilityNodes" type="Node" parent="."]
-unique_name_in_owner = true
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_gpxhm")
 
@@ -279,3 +277,10 @@ air_friction = 4000.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
+
+[node name="SpellNodes" type="Node" parent="."]
+unique_name_in_owner = true
+
+[node name="SpellInventory" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_3pvpi")
