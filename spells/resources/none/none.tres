@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Spell" load_steps=2 format=3 uid="uid://cnxn6jap6vs37"]
+
+[ext_resource type="Script" path="res://spells/spell.gd" id="2_hcojc"]
+
+[resource]
+script = ExtResource("2_hcojc")
+name = "None"
+description = ""
+max_level = 0

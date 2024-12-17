@@ -27,8 +27,8 @@ func _register_all():
 	registry.clear()
 	
 	for type in Type.keys():
-		if type == Type.keys()[Type.NONE]:
-			continue
+		#if type == Type.keys()[Type.NONE]:
+			#continue
 		
 		type = type.to_lower()
 		

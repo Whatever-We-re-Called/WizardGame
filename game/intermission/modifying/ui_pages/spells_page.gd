@@ -3,6 +3,8 @@ extends VBoxContainer
 signal readied
 
 var player: Player
+var item_list_spell_slot: int
+var item_spell_types: Array[Spells.Type]
 
 
 func setup(player: Player):
@@ -38,17 +40,62 @@ func _update_current_spells_ui():
 
 
 func _populate_spell_list(spell_slot: int):
+	item_list_spell_slot = spell_slot
+	
 	%SpellsList.clear()
-	for equipped_spell_type in player.spell_inventory.equipped_spell_types:
-		var spell_resource = Spells.get_spell_resource(equipped_spell_type)
-		var spell_icon = spell_resource.icon_texture
-		var spell_name = spell_resource.name
-		var spell_level = player.spell_inventory.get_level(equipped_spell_type)
-		var max_spell_level = spell_resource.max_level
-		
-		var text = "%s (Level: %s/%s)" % [spell_name, spell_level, max_spell_level]
-		var is_selectable = player.spell_inventory.equipped_spells[spell_slot - 1].get_script() != Spells.get_spell_script(equipped_spell_type)
-		%SpellsList.add_item(text, spell_icon, is_selectable)
+	item_spell_types.clear()
+	for spell_type in Spells.Type.values():
+		if player.spell_inventory.has(spell_type):
+			var spell_resource = Spells.get_spell_resource(spell_type)
+			var spell_icon = spell_resource.icon_texture
+			var spell_name = spell_resource.name
+			var spell_level = player.spell_inventory.get_true_level(spell_type)
+			var max_spell_level = spell_resource.max_level
+			
+			var text = "%s (Level: %s/%s)" % [spell_name, spell_level, max_spell_level]
+			var is_selectable = true #not player.spell_inventory.equipped_spell_types.has(spell_type)
+			%SpellsList.add_item(text, spell_icon, is_selectable)
+			
+			if spell_type == player.spell_inventory.equipped_spell_types[spell_slot - 1]:
+				%SpellsList.select(%SpellsList.get_item_count() - 1)
+			
+			item_spell_types.append(spell_type)
+
+
+func _on_spells_list_item_selected(index: int) -> void:
+	var spell_slot = item_list_spell_slot
+	var selected_spell = item_spell_types[index]
+	_select_new_equipped_spell(spell_slot, selected_spell)
+	
+	var spell_resource = Spells.get_spell_resource(selected_spell)
+	var spell_level = player.spell_inventory.get_level(selected_spell)
+	_set_spell_description(spell_resource, spell_level)
+
+
+func _select_new_equipped_spell(spell_slot: int, selected_spell: Spells.Type):
+	for i in range(player.spell_inventory.equipped_spell_types.size()):
+		var checked_spell = player.spell_inventory.equipped_spell_types[i]
+		if selected_spell == checked_spell:
+			player.spell_inventory.set_spell_slot.rpc(i, Spells.Type.NONE)
+	
+	player.spell_inventory.set_spell_slot.rpc(spell_slot - 1, selected_spell)
+	_update_current_spells_ui()
+	_populate_spell_list(spell_slot)
+
+
+func _set_spell_description(spell_resource: Spell, spell_level: int):
+	%SpellDescriptionContainer.visibility_layer = 1
+	
+	%SpellNameLabel.text = spell_resource.name
+	
+	var max_spell_level = spell_resource.max_level
+	%SpellLevelLabel.text = "%s/%s" % [spell_level, max_spell_level]
+	
+	%SpellDescriptionLabel.text = spell_resource.description
+
+
+func _clear_spell_description():
+	%SpellDescriptionContainer.visibility_layer = 0
 
 
 func _on_ready_button_pressed() -> void:
