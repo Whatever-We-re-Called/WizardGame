@@ -30,14 +30,15 @@ func _enter_tree():
 
 
 func _ready():
-	var spells = {
+	if is_multiplayer_authority():
+		var spells = {
 			Spells.Type.WIND_GUST: 1,
 			Spells.Type.REMOTE_LAND_MINE: 1,
 			Spells.Type.PLATFORM: 1
 		}
-	
-	spell_inventory.init_starting_spells(spells)
-	change_abilities_ui.setup(self)
+		spell_inventory.init_starting_spells(spells)
+		
+		change_abilities_ui.setup(self)
 
 	if SessionManager.connection_strategy is SteamBasedStrategy and is_multiplayer_authority():
 		var steam_info = SteamWrapper.get_friend_info(SessionManager.connected_clients[peer_id].steam_id)

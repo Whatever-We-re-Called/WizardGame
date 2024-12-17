@@ -47,7 +47,8 @@ func _populate_spell_list(spell_slot: int):
 		var max_spell_level = spell_resource.max_level
 		
 		var text = "%s (Level: %s/%s)" % [spell_name, spell_level, max_spell_level]
-		%SpellsList.add_item(text, spell_icon, true)
+		var is_selectable = player.spell_inventory.equipped_spells[spell_slot - 1].get_script() != Spells.get_spell_script(equipped_spell_type)
+		%SpellsList.add_item(text, spell_icon, is_selectable)
 
 
 func _on_ready_button_pressed() -> void:
