@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dj2y33fgklcnu"]
+[gd_scene load_steps=11 format=3 uid="uid://dj2y33fgklcnu"]
 
 [ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/spells_page.gd" id="1_4kgu1"]
 [ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://spells/textures/shitty_wayback_point_texture.png" id="1_5hsrt"]
@@ -9,11 +9,8 @@ font_size = 32
 [sub_resource type="LabelSettings" id="LabelSettings_8siio"]
 font_size = 20
 
-[sub_resource type="LabelSettings" id="LabelSettings_7jlov"]
-font_size = 20
-
-[sub_resource type="LabelSettings" id="LabelSettings_u6rec"]
-font_size = 20
+[sub_resource type="LabelSettings" id="LabelSettings_offpd"]
+font_size = 24
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbhim"]
 bg_color = Color(0.294118, 0.294118, 0.294118, 1)
@@ -23,6 +20,10 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfskf"]
 bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7jlov"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u6rec"]
 
 [node name="SpellsPage" type="VBoxContainer"]
 theme_override_constants/separation = 32
@@ -47,7 +48,7 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer"]
 layout_mode = 2
-text = "Spell #1:"
+text = "Slot #1:"
 label_settings = SubResource("LabelSettings_8siio")
 
 [node name="CurrentSpell1Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer"]
@@ -78,7 +79,7 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer2"]
 layout_mode = 2
-text = "Spell #2:"
+text = "Slot #2:"
 label_settings = SubResource("LabelSettings_8siio")
 
 [node name="CurrentSpell2Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer2"]
@@ -109,7 +110,7 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer3"]
 layout_mode = 2
-text = "Spell #3:"
+text = "Slot #3:"
 label_settings = SubResource("LabelSettings_8siio")
 
 [node name="CurrentSpell3Icon" type="TextureRect" parent="VBoxContainer/CurrentAbilitiesContainer/CurrentSpellContainer3"]
@@ -139,14 +140,70 @@ text = "1"
 layout_mode = 2
 theme_override_constants/separation = 0
 
+[node name="MarginContainer" type="MarginContainer" parent="AbilityContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AbilityContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="AbilityContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Select Spell:"
+label_settings = SubResource("LabelSettings_offpd")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AbilityContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="SelectSpellSlot1Button" type="Button" parent="AbilityContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(112, 40)
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../MainMenuButton")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
+text = "Slot #1
+"
+
+[node name="SelectSpellSlot2Button" type="Button" parent="AbilityContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(112, 40)
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../MainMenuButton")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
+text = "Slot #2
+"
+
+[node name="SelectSpellSlot3Button" type="Button" parent="AbilityContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(112, 40)
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../MainMenuButton")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/hover = SubResource("StyleBoxFlat_gbhim")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
+text = "Slot #3"
+
 [node name="TabBar" type="TabBar" parent="AbilityContainer"]
 custom_minimum_size = Vector2(416, 0)
 layout_mode = 2
-current_tab = 0
-tab_count = 3
-tab_0/title = "Spell #1"
-tab_1/title = "Spell #2"
-tab_2/title = "Spell #3"
 
 [node name="SpellsList" type="ItemList" parent="AbilityContainer"]
 unique_name_in_owner = true
@@ -164,7 +221,7 @@ item_2/icon = ExtResource("1_5hsrt")
 
 [node name="SpellDescriptionContainer" type="VBoxContainer" parent="AbilityContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 192)
+custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 alignment = 1
 
@@ -221,5 +278,8 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_ijh4m")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hfskf")
 text = "Ready"
 
+[connection signal="pressed" from="AbilityContainer/MarginContainer/VBoxContainer/HBoxContainer/SelectSpellSlot1Button" to="." method="_on_select_spell_button_pressed" binds= [1]]
+[connection signal="pressed" from="AbilityContainer/MarginContainer/VBoxContainer/HBoxContainer/SelectSpellSlot2Button" to="." method="_on_select_spell_button_pressed" binds= [2]]
+[connection signal="pressed" from="AbilityContainer/MarginContainer/VBoxContainer/HBoxContainer/SelectSpellSlot3Button" to="." method="_on_select_spell_button_pressed" binds= [3]]
 [connection signal="item_selected" from="AbilityContainer/SpellsList" to="." method="_on_spells_list_item_selected"]
 [connection signal="pressed" from="ReadyButton" to="." method="_on_ready_button_pressed"]

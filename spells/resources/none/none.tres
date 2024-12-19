@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("2_hcojc")
 name = "None"
-description = ""
+description = "Does nothing. What did you expect?"
 max_level = 0
