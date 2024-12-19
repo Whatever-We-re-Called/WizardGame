@@ -24,7 +24,6 @@ func init_starting_spells(spells_config: Dictionary):
 	var slot = 0
 	for type in spells_config.keys():
 		var level = spells_config[type]
-		set_level.rpc(type, level)
 		add_levels(level, type)
 		set_spell_slot(slot, type)
 		slot += 1
@@ -104,8 +103,8 @@ func _remove_levels(amount: int, type: Spells.Type):
 	
 	if levels[type] == 0:
 		levels.erase(type)
-
-
+	
+	
 func remove_spell(type: Spells.Type):
 	_remove_spell.rpc(type)
 	
