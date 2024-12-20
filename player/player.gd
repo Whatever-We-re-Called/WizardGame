@@ -40,11 +40,15 @@ func _ready():
 	if is_multiplayer_authority():
 		change_abilities_ui.setup(self)
 
+	$RichTextLabel.text = "[center]" + get_display_name()
+
+
+func get_display_name() -> String:
 	if SessionManager.connection_strategy is SteamBasedStrategy and is_multiplayer_authority():
 		var steam_info = SteamWrapper.get_friend_info(SessionManager.connected_clients[peer_id].steam_id)
-		$RichTextLabel.text = "[center]" + steam_info.display_name
+		return steam_info.display_name
 	else:
-		$RichTextLabel.text = "[center]Player " + name
+		return "Player " + name
 
 
 func set_device(device_ids: Array):

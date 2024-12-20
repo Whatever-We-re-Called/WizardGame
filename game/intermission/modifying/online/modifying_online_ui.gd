@@ -22,7 +22,7 @@ func _init_modifying_player_card(player: Player):
 	
 	var created_player_data: Dictionary = {
 		"peer_id": player.peer_id,
-		"name": player.name,
+		"name": player.get_display_name(),
 		"node_path": player.get_path(),
 		"perk_pages": perk_pages_dictionary
 	}
