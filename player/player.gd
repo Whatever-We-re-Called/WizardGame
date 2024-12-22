@@ -12,6 +12,7 @@ signal received_debug_input(int)
 @onready var player_collision_shape_2d: CollisionShape2D = %PlayerCollisionShape2D
 @onready var spell_inventory: SpellInventory = %SpellInventory
 @onready var spell_nodes: Node = %SpellNodes
+@onready var sync: Node = %Sync
 
 
 var peer_id: int
@@ -30,13 +31,19 @@ func _enter_tree():
 
 
 func _ready():
-	var spells = {
-			Spells.Type.WIND_GUST: 1,
-			Spells.Type.REMOTE_LAND_MINE: 1,
-			Spells.Type.PLATFORM: 1
-		}
+	SessionManager.player_node_created.emit(peer_id)
+	if is_multiplayer_authority():
+		SessionManager.player_node_created.connect(SessionManager.add_sync_filter)
 	
-	spell_inventory.init_starting_spells(spells)
+	var spells = {
+		Spells.Type.WIND_GUST: 1,
+		Spells.Type.REMOTE_LAND_MINE: 1,
+		Spells.Type.PLATFORM: 1
+	}
+	
+	if multiplayer.is_server():
+		spell_inventory.set_starting_spells(spells)
+		
 	change_abilities_ui.setup(self)
 
 	if SessionManager.connection_strategy is SteamBasedStrategy and is_multiplayer_authority():
@@ -44,7 +51,7 @@ func _ready():
 		$RichTextLabel.text = "[center]" + steam_info.display_name
 	else:
 		$RichTextLabel.text = "[center]Player " + name
-
+	
 
 func set_device(device_ids: Array):
 	if im != null:

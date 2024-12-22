@@ -17,10 +17,14 @@ signal server_opened
 # Called only on the server when the server is closed
 signal server_closed
 
+signal player_node_created(peer_id: int)
+
 
 var connection_strategy: MultiplayerConnectionStrategy
 var connected_clients = {}
 var connected: bool = false
+var sync_filter = []
+
 var debug = false
 
 # Called when the node enters the scene tree for the first time.
@@ -130,3 +134,12 @@ func remove_player(peer_id):
 	if SessionManager.debug:
 		print(peer_id, " disconnected")
 	connected_clients.erase(peer_id)
+	
+	
+func add_sync_filter(peer_id):
+	print("Adding sync filter ", peer_id, " for ", get_self_peer_id())
+	sync_filter.append(peer_id)
+	
+	
+func remove_sync_filter(peer_id):
+	sync_filter.erase(peer_id)

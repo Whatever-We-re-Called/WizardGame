@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://player/change_abilities_ui.gd" id="2_ojypj"]
 [ext_resource type="Texture2D" uid="uid://d2kdvrnsglfkg" path="res://player/textures/prototype_player.png" id="2_tkvjb"]
 [ext_resource type="Script" path="res://spells/spell_inventory.gd" id="5_3pvpi"]
+[ext_resource type="Script" path="res://player/player_sync.gd" id="6_kovcd"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_03ctb"]
 font_size = 48
@@ -33,20 +34,6 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
 radius = 36.0
 height = 128.0
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gpxhm"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 2
-properties/1/path = NodePath("RichTextLabel:text")
-properties/1/spawn = true
-properties/1/replication_mode = 2
-properties/2/path = NodePath("PlayerCollisionShape2D:disabled")
-properties/2/spawn = true
-properties/2/replication_mode = 2
-properties/3/path = NodePath(".:visible")
-properties/3/spawn = true
-properties/3/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("controller")]
 collision_layer = 16
@@ -250,9 +237,6 @@ shape = SubResource("CapsuleShape2D_ehwds")
 [node name="CenterPoint" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_gpxhm")
-
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = -72.0
 offset_top = -112.0
@@ -284,3 +268,7 @@ unique_name_in_owner = true
 [node name="SpellInventory" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_3pvpi")
+
+[node name="Sync" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_kovcd")

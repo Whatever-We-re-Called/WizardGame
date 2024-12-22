@@ -1,29 +1,22 @@
-extends Node
+extends HandshakeExecutor
 class_name SpellsHandshake
 
-signal client_complete
 
-
-func _ready():
-	GameInstance.handshake_init_client.connect(_start_client)
-	GameInstance.handshake_start_server.connect(_start_server)
+func _get_priority() -> int:
+	return 1
 	
 	
-func _start_client(handshake: HandshakeInstance):
-	handshake.register_promise(Promise.from(client_complete))
-	
-	
-func _start_server(handshake: HandshakeInstance):
+func _run(peer_id: int):
 	var game_manager = GameInstance.current_scenes.get_child(0) as GameManager
 	var players = game_manager.game_players.players_root.get_children()
 	
 	for player in players:
-		if player.peer_id == handshake.peer_id:
+		if player.peer_id == peer_id:
 			continue
 			
-		_set_player_spells.rpc_id(handshake.peer_id, player.peer_id, player.spell_inventory.equipped_spell_types)
+		_set_player_spells.rpc_id(peer_id, player.peer_id, player.spell_inventory.equipped_spell_types)
 		
-	_complete.rpc_id(handshake.peer_id)
+	_complete.rpc_id(peer_id)
 
 
 @rpc("any_peer", "reliable")
@@ -36,9 +29,3 @@ func _set_player_spells(peer_id, spell_types: Array[Spells.Type]):
 		player.spell_inventory.set_spell_slot(i, spell_types[i])
 		
 	player.spell_inventory.sync.rpc_id(peer_id, SessionManager.get_self_peer_id())
-	
-	
-@rpc("any_peer", "reliable")
-func _complete():
-	print("Spell HS complete")
-	client_complete.emit()

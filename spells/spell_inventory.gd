@@ -20,12 +20,12 @@ func _get_player() -> Player:
 
 # TODO - we may want to rework this based on the configured starting spells from game settings
 # I'm not sure how that system will work so leaving this as a TODO
-func init_starting_spells(spells_config: Dictionary):
+func set_starting_spells(spells_config: Dictionary):
 	var slot = 0
 	for type in spells_config.keys():
 		var level = spells_config[type]
-		add_levels(level, type)
-		set_spell_slot(slot, type)
+		set_level.rpc(type, level)
+		set_spell_slot.rpc(slot, type)
 		slot += 1
 
 
@@ -154,12 +154,12 @@ func _remove_temporary_levels(amount: int, type: Spells.Type):
 	temporary_levels[type] = level - amount
 	
 	
-@rpc("any_peer", "reliable") # Purposefully no call_local, used via sync
+@rpc("any_peer", "call_local", "reliable")
 func set_level(type: Spells.Type, level: int):
 	levels[type] = level
 	
 	
-@rpc("any_peer", "reliable") # Purposefully no call_local, used via sync
+@rpc("any_peer", "call_local", "reliable")
 func set_temporary_level(type: Spells.Type, level: int):
 	temporary_levels[type] = level
 	
