@@ -9,3 +9,4 @@ name = "Dash"
 icon_texture = ExtResource("1_k51yy")
 description = "Greatly launches you toward the direction you are pointing."
 max_level = 5
+level_increase_costs = Array[int]([1, 1, 2, 2])

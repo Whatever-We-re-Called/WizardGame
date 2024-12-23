@@ -9,3 +9,4 @@ name = "Platform"
 icon_texture = ExtResource("1_bcoen")
 description = "Temporarily spawns a breakable platform beneath your feet."
 max_level = 5
+level_increase_costs = Array[int]([1, 1, 2, 2])

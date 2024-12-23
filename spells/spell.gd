@@ -4,3 +4,4 @@ class_name Spell extends Resource
 @export var icon_texture: Texture2D
 @export_multiline var description: String
 @export var max_level: int
+@export var level_increase_costs: Array[int]

@@ -10,8 +10,9 @@ func setup(player: Player):
 	self.player = player
 	
 	_update_current_spells_ui()
-	_populate_spell_list(1)
+	_populate_spell_list()
 	_update_select_spell_slot_buttons()
+	_update_spell_upgrade_button()
 
 
 func _update_current_spells_ui():
@@ -37,9 +38,11 @@ func _update_current_spells_ui():
 		else:
 			current_spell_icon.texture = null
 			current_spell_level_label.text = "N/A"
+	
+	%CurrentRunesLabel.text = "Runes: %s" % [player.spell_inventory.runes]
 
 
-func _populate_spell_list(spell_slot: int):
+func _populate_spell_list():
 	%SpellsList.clear()
 	item_spell_types.clear()
 	
@@ -54,8 +57,7 @@ func _populate_spell_list(spell_slot: int):
 			var max_spell_level = spell_resource.max_level
 			
 			var text = "%s (Level: %s/%s)" % [spell_name, spell_level, max_spell_level]
-			var is_selectable = true #not player.spell_inventory.equipped_spell_types.has(spell_type)
-			%SpellsList.add_item(text, spell_icon, is_selectable)
+			%SpellsList.add_item(text, spell_icon, true)
 			
 			item_spell_types.append(spell_type)
 
@@ -67,6 +69,7 @@ func _on_spells_list_item_selected(index: int) -> void:
 	_set_spell_description(spell_resource, spell_level)
 	
 	_update_select_spell_slot_buttons()
+	_update_spell_upgrade_button()
 
 
 func _set_spell_description(spell_resource: Spell, spell_level: int):
@@ -98,6 +101,7 @@ func _select_new_equipped_spell(spell_slot: int, selected_spell: Spells.Type):
 	player.spell_inventory.set_spell_slot.rpc(spell_slot - 1, selected_spell)
 	_update_current_spells_ui()
 	_update_select_spell_slot_buttons()
+	_update_spell_upgrade_button()
 
 
 func _update_select_spell_slot_buttons():
@@ -126,6 +130,36 @@ func _get_list_selected_spell() -> Spells.Type:
 			return spell_type
 	
 	return Spells.Type.NONE
+
+
+func _update_spell_upgrade_button():
+	if %SpellsList.get_selected_items().size() == 0:
+		%UpgradeSpellButton.disabled = true
+		%UpgradeSpellButton.text = "Upgrade: N/A"
+	else:
+		var selected_spell_type = _get_list_selected_spell()
+		if player.spell_inventory.is_spell_max_level(selected_spell_type):
+			%UpgradeSpellButton.disabled = true
+			%UpgradeSpellButton.text = "Upgrade: Max"
+		else:
+			var upgrade_cost = player.spell_inventory.get_upgrade_cost(selected_spell_type)
+			%UpgradeSpellButton.disabled = player.spell_inventory.runes < upgrade_cost
+			%UpgradeSpellButton.text = "Upgrade: %s Rune(s)" % [upgrade_cost]
+
+
+func _on_upgrade_spell_button_pressed() -> void:
+	if %SpellsList.get_selected_items().size() == 1:
+		var selected_spell_type = _get_list_selected_spell()
+		player.spell_inventory.upgrade_spell(selected_spell_type)
+	
+		_update_current_spells_ui()
+		_populate_spell_list()
+		for i in range(item_spell_types.size()):
+			var item_spell_type = item_spell_types[i]
+			if selected_spell_type == item_spell_type:
+				%SpellsList.select(i, true)
+		_update_select_spell_slot_buttons()
+		_update_spell_upgrade_button()
 
 
 func _on_ready_button_pressed() -> void:

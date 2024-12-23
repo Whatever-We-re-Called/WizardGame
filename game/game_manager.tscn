@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=36 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]

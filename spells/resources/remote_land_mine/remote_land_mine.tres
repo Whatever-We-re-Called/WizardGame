@@ -9,3 +9,4 @@ name = "Remote Land Mine"
 icon_texture = ExtResource("1_x8kyy")
 description = "Spawns a land mine at your location. Explodes either manually by your input or automatically by something pressing its button."
 max_level = 5
+level_increase_costs = Array[int]([1, 1, 2, 2])

@@ -9,3 +9,4 @@ name = "Wayback Point"
 icon_texture = ExtResource("1_tg4mr")
 description = "Places a point in space that you can teleport to at anytime. "
 max_level = 5
+level_increase_costs = Array[int]([1, 1, 2, 2])

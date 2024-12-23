@@ -9,6 +9,7 @@ var equipped_spell_types: Array[Spells.Type]:
 		for spell in equipped_spells:
 			arr.append(spell.type)
 		return arr
+var runes: int = 0
 
 var levels = {}
 var temporary_levels = {}
@@ -170,6 +171,44 @@ func sync(peer_id):
 		set_level.rpc_id(peer_id, type, levels[type])
 	for type in temporary_levels.keys():
 		set_temporary_level.rpc_id(peer_id, type, temporary_levels[type])
+
+
+func add_runes(add_amount: int):
+	_set_runes.rpc(runes + add_amount)
+
+
+func remove_runes(remove_amount: int):
+	_set_runes.rpc(runes - remove_amount)
+
+
+func set_runes(amount: int):
+	_set_runes.rpc(amount)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _set_runes(amount: int):
+	self.runes = amount
+
+
+func is_spell_max_level(spell_type: Spells.Type):
+	if spell_type == Spells.Type.NONE: return true
 	
+	var max_level = Spells.get_spell_resource(spell_type).max_level
+	return levels[spell_type] >= max_level
+
+
+func get_upgrade_cost(spell_type: Spells.Type) -> int:
+	if spell_type == Spells.Type.NONE: return 0
 	
-	
+	if is_spell_max_level(spell_type):
+		return -1
+	else:
+		var spell_resource = Spells.get_spell_resource(spell_type)
+		return spell_resource.level_increase_costs[levels[spell_type] - 1]
+
+
+func upgrade_spell(spell_type: Spells.Type, ignore_max_check: bool = false):
+	if not is_spell_max_level(spell_type) and ignore_max_check == false:
+		var rune_cost = get_upgrade_cost(spell_type)
+		remove_runes(rune_cost)
+		add_levels(1, spell_type)

@@ -9,3 +9,4 @@ name = "Wind Gust"
 icon_texture = ExtResource("1_6w66i")
 description = "Significantly pushes players and enviroment bodies forward in direction you are pointing."
 max_level = 5
+level_increase_costs = Array[int]([1, 1, 2, 2])
