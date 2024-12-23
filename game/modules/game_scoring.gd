@@ -109,6 +109,7 @@ func queue_survival_scoring_event(survived_players: Array[Player], severity: Dis
 	
 	_queue_survival_bonus_scoring_event(survived_players, 1, preload("res://game/scoring_events/bonus_one_survival_scoring_event.tres"))
 	_queue_survival_bonus_scoring_event(survived_players, 2, preload("res://game/scoring_events/bonus_two_survival_scoring_event.tres"))
+	_queue_survival_bonus_scoring_event(survived_players, 3, preload("res://game/scoring_events/bonus_three_survival_scoring_event.tres"))
 	
 	_queue_sole_survivor_scoring_event(survived_players)
 

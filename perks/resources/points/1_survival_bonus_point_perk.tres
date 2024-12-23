@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://mc1x0de5bmk1"]
+[gd_resource type="Resource" script_class="Perk" load_steps=4 format=3 uid="uid://mc1x0de5bmk1"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_3e3r6"]
 [ext_resource type="Resource" uid="uid://cjkq3oktfy3rs" path="res://perks/characters/resources/points_perk_character.tres" id="1_d5crg"]
+[ext_resource type="Script" path="res://perks/resources/points/1_survival_bonus_point_perk.gd" id="2_n2s4p"]
 
 [resource]
 script = ExtResource("1_3e3r6")
 character = ExtResource("1_d5crg")
 rank = 0
 description = "Temporarily receive [color=ffe599]+1 [img=20]res://perks/icons/shitty_points_icon.png[/img] Point[/color] for [color=2de8fb]surviving disasters[/color]."
-deactivation_event = 0
+deactivation_event = 1
+execution_script = ExtResource("2_n2s4p")

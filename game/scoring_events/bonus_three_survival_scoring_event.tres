@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ScoringEvent" load_steps=2 format=3 uid="uid://bj1xjv20odrr0"]
+
+[ext_resource type="Script" path="res://game/scoring_events/scoring_event.gd" id="1_k7jqf"]
+
+[resource]
+script = ExtResource("1_k7jqf")
+title = "Disaster Survived +3 Bonus"
+rewarded_score = 3
+color = Color(1, 1, 1, 1)
