@@ -36,11 +36,11 @@ func _ready() -> void:
 
 func setup(player: Player):
 	self.player = player
-	_update_slot_value_labels()
 
 
 func toggle():
 	if visible == false:
+		_update_slot_value_labels()
 		ability_list.grab_focus()
 		visible = true
 		player.controller.freeze_input = true

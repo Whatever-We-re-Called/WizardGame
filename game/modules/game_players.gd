@@ -19,22 +19,30 @@ func _non_handshake_connect(data):
 
 func add_player(data: Dictionary):
 	if multiplayer.is_server():
+		print("[Server] GamePlayers#add_player ", data)
 		if game_manager.players.size() == 0:
 			game_manager.setup_server()
 		
-		var player = preload("res://player/player.tscn").instantiate()
-		player.name = str(data.peer_id)
-		player.peer_id = data.peer_id
-		players_root.add_child(player, true)
-		
-		if data.has("device_ids"):
-			player.set_device(data.device_ids)
+		_add_player_nodes.rpc(data)
 		
 		game_manager.game_scene.teleport_player_to_random_spawn_point.rpc_id(1, data.peer_id)
-		_handle_add_player_signals.rpc(data.peer_id)
 
 
-@rpc("authority", "call_local", "reliable")
+@rpc("call_local", "reliable", "any_peer")
+func _add_player_nodes(data: Dictionary) -> Player:
+	print("add player nodes: ", data)
+	var player = preload("res://player/player.tscn").instantiate()
+	player.name = str(data.peer_id)
+	player.peer_id = data.peer_id
+	players_root.add_child(player, true)
+	_handle_add_player_signals(data.peer_id)
+		
+	if data.has("device_ids"):
+		player.set_device(data.device_ids)
+		
+	return player
+
+
 func _handle_add_player_signals(target_peer_id: int):
 	var target_player = game_manager.get_player_from_peer_id(target_peer_id)
 	target_player.killed.connect(game_manager.game_scene._on_player_killed)

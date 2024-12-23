@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://blt14wtf4aypq"]
+[gd_scene load_steps=37 format=3 uid="uid://blt14wtf4aypq"]
 
 [ext_resource type="Script" path="res://game/game_manager.gd" id="1_juohy"]
 [ext_resource type="Resource" uid="uid://bosqyf6xpyw4r" path="res://game/settings/normal_game_settings.tres" id="2_58jvp"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" path="res://game/states/disaster_start_game_state.gd" id="6_k8xa5"]
 [ext_resource type="Script" path="res://game/states/game_start_game_state.gd" id="6_too1t"]
 [ext_resource type="Script" path="res://game/states/disaster_game_state.gd" id="6_xatxq"]
+[ext_resource type="Script" path="res://player/player_handshake.gd" id="6_xyv36"]
+[ext_resource type="Script" path="res://spells/spell_handshake.gd" id="7_yvetj"]
 [ext_resource type="Script" path="res://game/states/map_end_game_state.gd" id="8_4pkwd"]
 [ext_resource type="Script" path="res://game/states/intermission_start_game_state.gd" id="9_iy1xj"]
 [ext_resource type="Script" path="res://game/states/disaster_end_game_state.gd" id="10_pa7wn"]
@@ -259,10 +261,13 @@ unique_name_in_owner = true
 process_mode = 1
 script = ExtResource("5_xsd4s")
 
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="GamePlayers"]
-unique_name_in_owner = true
-_spawnable_scenes = PackedStringArray("res://player/player.tscn")
-spawn_path = NodePath("../PlayersRoot")
+[node name="Handshake" type="Node" parent="GamePlayers"]
+
+[node name="Players" type="Node" parent="GamePlayers/Handshake"]
+script = ExtResource("6_xyv36")
+
+[node name="Spells" type="Node" parent="GamePlayers/Handshake"]
+script = ExtResource("7_yvetj")
 
 [node name="PlayersRoot" type="Node" parent="GamePlayers"]
 unique_name_in_owner = true

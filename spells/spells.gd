@@ -18,10 +18,6 @@ var registry = {}
 func _ready():
 	_register_all()
 	
-	var handshake = SpellsHandshake.new()
-	handshake.name = "SpellsHandshake"
-	add_child(handshake)
-	
 	
 func _register_all():
 	registry.clear()
