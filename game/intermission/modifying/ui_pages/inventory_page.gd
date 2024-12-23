@@ -164,3 +164,10 @@ func _on_upgrade_spell_button_pressed() -> void:
 
 func _on_ready_button_pressed() -> void:
 	readied.emit()
+
+
+func update_from_external_source_change():
+	_update_current_spells_ui()
+	_populate_spell_list()
+	_update_select_spell_slot_buttons()
+	_update_spell_upgrade_button()

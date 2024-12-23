@@ -5,13 +5,13 @@
 [ext_resource type="Script" path="res://game/settings/game_settings.gd" id="1_vmk68"]
 [ext_resource type="Resource" uid="uid://bth2d6is5r7sp" path="res://disasters/storm/storm.tres" id="2_yx8np"]
 [ext_resource type="Resource" uid="uid://b6hi1juxbg28i" path="res://disasters/earthquake/earthquake.tres" id="3_qb3uf"]
-[ext_resource type="Resource" uid="uid://cltkqtbellrhp" path="res://perks/pools/test_perk_pool.tres" id="5_d8xrp"]
+[ext_resource type="Resource" uid="uid://d0lnm22xwxfqf" path="res://perks/pools/test_2_perk_pool.tres" id="5_5jkh6"]
 
 [resource]
 script = ExtResource("1_vmk68")
 goal_score = 25
-perk_pool = ExtResource("5_d8xrp")
-default_perk_choice_count = 100
+perk_pool = ExtResource("5_5jkh6")
+default_perk_choice_count = 1
 map_pool = Array[PackedScene]([ExtResource("1_sl5e0")])
 map_disaster_severity = 1
 disaster_duration = 0.1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://dj2y33fgklcnu"]
 
-[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/spells_page.gd" id="1_4kgu1"]
+[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/inventory_page.gd" id="1_4kgu1"]
 [ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://spells/textures/shitty_wayback_point_texture.png" id="1_5hsrt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tw3is"]
@@ -28,7 +28,7 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_u6rec"]
 
-[node name="SpellsPage" type="VBoxContainer"]
+[node name="InventoryPage" type="VBoxContainer"]
 theme_override_constants/separation = 16
 script = ExtResource("1_4kgu1")
 

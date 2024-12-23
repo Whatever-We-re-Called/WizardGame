@@ -5,6 +5,7 @@ signal perk_obtained(perk_resource_path: String)
 
 var current_page: int
 var pages: Array[VBoxContainer]
+var inventory_page: VBoxContainer
 
 
 func setup_online(player_data: Dictionary):
@@ -19,7 +20,7 @@ func setup_online(player_data: Dictionary):
 		_append_perks_page(perks)
 	
 	var player = get_tree().root.get_node_or_null(player_data["node_path"])
-	_append_spells_page(player)
+	_append_inventory_page(player)
 	
 	_append_ready_page()
 	
@@ -35,21 +36,24 @@ func _append_perks_page(perks: Array[Perk]):
 	perks_page.setup(perks)
 	perks_page.perk_chosen.connect(
 		func(perk_resource_path: String):
-			push_warning("Perk execution is temporarily disabled!")
-			#TODO perk_obtained.emit(perk_resource_path)
+			perk_obtained.emit(perk_resource_path)
+			inventory_page.update_from_external_source_change()
 			_next_page()
 	)
 	pages.append(perks_page)
 
 
-func _append_spells_page(player: Player):
-	var spells_page = preload("res://game/intermission/modifying/ui_pages/spells_page.tscn").instantiate()
-	spells_page.setup(player)
-	spells_page.readied.connect(
+func _append_inventory_page(player: Player):
+	var inventory_page = preload("res://game/intermission/modifying/ui_pages/inventory_page.tscn").instantiate()
+	inventory_page.setup(player)
+	inventory_page.readied.connect(
 		# TODO Update player ability inventory data.
+		# Currently it is being done in the page's code itself.
+		# Maybe this is fine? Maybe it needs to be changed? idk, TODO
 		func(): _next_page()
 	)
-	pages.append(spells_page)
+	pages.append(inventory_page)
+	self.inventory_page = inventory_page
 
 
 func _append_ready_page():
