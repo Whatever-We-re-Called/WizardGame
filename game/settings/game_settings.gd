@@ -3,6 +3,7 @@ class_name GameSettings extends Resource
 @export_category("Scoring")
 @export var goal_score: int
 @export_category("Perks")
+@export var perk_pool: PerkPool
 @export var default_perk_choice_count: int
 @export_category("Maps")
 @export var map_pool: Array[PackedScene]

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkPool" load_steps=3 format=3 uid="uid://cltkqtbellrhp"]
+
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_qssk1"]
+[ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_22fcv"]
+
+[resource]
+script = ExtResource("2_22fcv")
+perks = Array[ExtResource("1_qssk1")]([])
+force_equal_weights = false

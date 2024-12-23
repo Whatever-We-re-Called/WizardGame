@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Perk" load_steps=4 format=3 uid="uid://bmogxp03457ha"]
 
-[ext_resource type="Script" path="res://perks/resources/survival_points_bonus/survival_points_bonus_1_perk_execution.gd" id="1_acp1i"]
+[ext_resource type="Script" path="res://perks/resources/old/survival_points_bonus/survival_points_bonus_1_perk_execution.gd" id="1_acp1i"]
 [ext_resource type="Texture2D" uid="uid://badqk4r3pjhs7" path="res://perks/icons/shitty_default_perk_icon.png" id="2_bmsfy"]
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="3_wrpg2"]
 
