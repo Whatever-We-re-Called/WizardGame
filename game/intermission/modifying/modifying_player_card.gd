@@ -19,7 +19,7 @@ func setup_online(player_data: Dictionary):
 		_append_perks_page(perks)
 	
 	var player = get_tree().root.get_node_or_null(player_data["node_path"])
-	_append_abilities_page(player)
+	_append_spells_page(player)
 	
 	_append_ready_page()
 	
@@ -41,14 +41,14 @@ func _append_perks_page(perks: Array[Perk]):
 	pages.append(perks_page)
 
 
-func _append_abilities_page(player: Player):
-	var abilities_page = preload("res://game/intermission/modifying/ui_pages/spells_page.tscn").instantiate()
-	abilities_page.setup(player)
-	abilities_page.readied.connect(
+func _append_spells_page(player: Player):
+	var spells_page = preload("res://game/intermission/modifying/ui_pages/spells_page.tscn").instantiate()
+	spells_page.setup(player)
+	spells_page.readied.connect(
 		# TODO Update player ability inventory data.
 		func(): _next_page()
 	)
-	pages.append(abilities_page)
+	pages.append(spells_page)
 
 
 func _append_ready_page():

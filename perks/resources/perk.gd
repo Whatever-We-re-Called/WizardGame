@@ -1,6 +1,6 @@
 class_name Perk extends Resource
 
-enum Rarity { COMMON, UNCOMMON, RARE }
+enum Rarity { COMMON, RARE, EPIC, LEGENDARY }
 enum DeactivationEvent { NONE, ON_MAP_END }
 
 @export var name: String
@@ -14,10 +14,12 @@ enum DeactivationEvent { NONE, ON_MAP_END }
 func get_color() -> Color:
 	match rarity:
 		Rarity.COMMON:
-			return Color.WHITE
-		Rarity.UNCOMMON:
-			return Color.GREEN
+			return Color.LIME_GREEN
 		Rarity.RARE:
-			return Color.AQUA
+			return Color.DEEP_SKY_BLUE
+		Rarity.EPIC:
+			return Color.MEDIUM_PURPLE
+		Rarity.LEGENDARY:
+			return Color.ORANGE
 		_:
 			return Color.WHITE

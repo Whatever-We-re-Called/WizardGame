@@ -11,8 +11,8 @@ var rarity_weights: Dictionary:
 	get:
 		var result: Dictionary
 		result[Perk.Rarity.COMMON] = common_rarity_weight
-		result[Perk.Rarity.UNCOMMON] = uncommon_rarity_weight
-		result[Perk.Rarity.RARE] = rare_rarity_weight
+		result[Perk.Rarity.RARE] = uncommon_rarity_weight
+		result[Perk.Rarity.EPIC] = rare_rarity_weight
 		return result
 var rarity_weights_total: int:
 	get:
