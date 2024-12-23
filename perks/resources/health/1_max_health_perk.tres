@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://c8xo6yxd7upmt"]
+
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_0y444"]
+[ext_resource type="Resource" uid="uid://bq055hf0pekwv" path="res://perks/characters/resources/health_perk_character.tres" id="1_ft3xo"]
+
+[resource]
+script = ExtResource("1_0y444")
+character = ExtResource("1_ft3xo")
+rank = 0
+description = "Increase your [color=2de8fb]max health[/color] by [color=ea9999]+1 [img=20]res://perks/icons/shitty_health_icon.png[/img] Heart[/color]."
+deactivation_event = 0

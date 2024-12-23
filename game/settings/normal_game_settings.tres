@@ -11,7 +11,7 @@
 script = ExtResource("1_vmk68")
 goal_score = 25
 perk_pool = ExtResource("5_d8xrp")
-default_perk_choice_count = 1
+default_perk_choice_count = 100
 map_pool = Array[PackedScene]([ExtResource("1_sl5e0")])
 map_disaster_severity = 1
 disaster_duration = 0.1

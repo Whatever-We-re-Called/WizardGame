@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkCharacter" load_steps=3 format=3 uid="uid://j6j1fe443u8b"]
+
+[ext_resource type="Texture2D" uid="uid://djcoxkjctpusn" path="res://perks/characters/textures/shitty_contracts_character_icon.png" id="1_wa4m6"]
+[ext_resource type="Script" path="res://perks/characters/perk_character.gd" id="2_x2qtf"]
+
+[resource]
+script = ExtResource("2_x2qtf")
+name = "Contracts Character"
+icon = ExtResource("1_wa4m6")

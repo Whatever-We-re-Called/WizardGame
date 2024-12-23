@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkCharacter" load_steps=3 format=3 uid="uid://7s2ouf62b2m6"]
+
+[ext_resource type="Texture2D" uid="uid://bs1mnx4k7qglm" path="res://perks/characters/textures/shitty_opponent_debuffs_character_icon.png" id="1_nwuyc"]
+[ext_resource type="Script" path="res://perks/characters/perk_character.gd" id="2_ea8l3"]
+
+[resource]
+script = ExtResource("2_ea8l3")
+name = "Opponent Debuffs Character"
+icon = ExtResource("1_nwuyc")

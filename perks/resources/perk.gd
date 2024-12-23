@@ -1,30 +1,26 @@
 class_name Perk extends Resource
 
-enum Rarity { COMMON, RARE, EPIC, LEGENDARY }
+enum Rank { ONE_STAR, TWO_STAR, THREE_STAR }
 enum DeactivationEvent { NONE, ON_MAP_END }
 enum Character { 
 	SPELLS, RUNES, HEALTH, POINTS,
 	SELF_BUFFS, OPPONENT_DEBUFFS, MAP, CONTRACTS 
 }
 
-@export var name: String
-@export var icon: Texture = preload("res://perks/icons/shitty_default_perk_icon.png")
-@export var character: Character
-@export var rarity: Rarity
+@export var character: PerkCharacter
+@export var rank: Rank
 @export_multiline var description: String
 @export var deactivation_event: DeactivationEvent = DeactivationEvent.NONE
 @export var execution_script: Script
 
 
 func get_color() -> Color:
-	match rarity:
-		Rarity.COMMON:
-			return Color.LIME_GREEN
-		Rarity.RARE:
-			return Color.DEEP_SKY_BLUE
-		Rarity.EPIC:
-			return Color.MEDIUM_PURPLE
-		Rarity.LEGENDARY:
-			return Color.ORANGE
+	match rank:
+		Rank.ONE_STAR:
+			return Color("#93ef84")
+		Rank.TWO_STAR:
+			return Color("#7d9bcf")
+		Rank.THREE_STAR:
+			return Color("#b3a3d4")
 		_:
 			return Color.WHITE

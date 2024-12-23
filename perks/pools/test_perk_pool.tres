@@ -1,9 +1,30 @@
-[gd_resource type="Resource" script_class="PerkPool" load_steps=3 format=3 uid="uid://cltkqtbellrhp"]
+[gd_resource type="Resource" script_class="PerkPool" load_steps=23 format=3 uid="uid://cltkqtbellrhp"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_qssk1"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_22fcv"]
+[ext_resource type="Resource" uid="uid://tfcwg682wlm0" path="res://perks/resources/runes/1_rune_perk.tres" id="2_dju6u"]
+[ext_resource type="Resource" uid="uid://dxjnndq2f8e7e" path="res://perks/resources/runes/2_runes_perk.tres" id="3_np7qd"]
+[ext_resource type="Resource" uid="uid://hbal6dl1dhny" path="res://perks/resources/runes/3_runes_perk.tres" id="4_ypkg6"]
+[ext_resource type="Resource" uid="uid://dd2nlqmg8mr5t" path="res://perks/resources/runes/4_runes_perk.tres" id="5_mrpc3"]
+[ext_resource type="Resource" uid="uid://bptie34ql381u" path="res://perks/resources/runes/5_runes_perk.tres" id="6_vx6sk"]
+[ext_resource type="Resource" uid="uid://bjxialun5fc4m" path="res://perks/resources/spells/1_spell_page_perk.tres" id="7_3jig4"]
+[ext_resource type="Resource" uid="uid://c8xo6yxd7upmt" path="res://perks/resources/health/1_max_health_perk.tres" id="8_q46xw"]
+[ext_resource type="Resource" uid="uid://b6gtgmxl8edw3" path="res://perks/resources/health/2_max_health_perk.tres" id="9_myd0h"]
+[ext_resource type="Resource" uid="uid://clpwcalxaxo5t" path="res://perks/resources/health/3_max_health_perk.tres" id="10_h4pin"]
+[ext_resource type="Resource" uid="uid://mc1x0de5bmk1" path="res://perks/resources/points/1_survival_bonus_point_perk.tres" id="11_ta1cc"]
+[ext_resource type="Resource" uid="uid://l4lv3ceclhqb" path="res://perks/resources/points/2_survival_bonus_points_perk.tres" id="12_tmy0b"]
+[ext_resource type="Resource" uid="uid://ddtuaxsloahay" path="res://perks/resources/points/3_survival_bonus_points_perk.tres" id="13_sc11g"]
+[ext_resource type="Resource" uid="uid://c4inmltl06lo0" path="res://perks/resources/self_buffs/stronger_wand_buff_perk.tres" id="14_h02p0"]
+[ext_resource type="Resource" uid="uid://be50u7oinevqj" path="res://perks/resources/self_buffs/temporary_self_spell_levels_buff_perk.tres" id="15_cnarg"]
+[ext_resource type="Resource" uid="uid://3vc8b6qfjamk" path="res://perks/resources/opponent_debuffs/temporary_opponents_spell_levels_debuff_perk.tres" id="16_gowvt"]
+[ext_resource type="Resource" uid="uid://dtrx3fa6vuoox" path="res://perks/resources/opponent_debuffs/steal_spell_perk.tres" id="17_hbr14"]
+[ext_resource type="Resource" uid="uid://cuqbptpii76c8" path="res://perks/resources/map/spawn_medal_perk.tres" id="18_1jn7r"]
+[ext_resource type="Resource" uid="uid://t66n8ko5l1lm" path="res://perks/resources/map/increase_disaster_severity_level_perk.tres" id="19_ras5p"]
+[ext_resource type="Resource" uid="uid://dv4cpiajexw1j" path="res://perks/resources/contracts/health_limit_for_runes_contract_perk.tres" id="20_msu1f"]
+[ext_resource type="Resource" uid="uid://cqkxulqb14obw" path="res://perks/resources/contracts/spell_level_limit_for_spell_levels_contract_perk.tres" id="21_tipih"]
 
 [resource]
 script = ExtResource("2_22fcv")
-perks = Array[ExtResource("1_qssk1")]([])
+perks = Array[ExtResource("1_qssk1")]([ExtResource("2_dju6u"), ExtResource("3_np7qd"), ExtResource("4_ypkg6"), ExtResource("5_mrpc3"), ExtResource("6_vx6sk"), ExtResource("7_3jig4"), ExtResource("8_q46xw"), ExtResource("9_myd0h"), ExtResource("10_h4pin"), ExtResource("11_ta1cc"), ExtResource("12_tmy0b"), ExtResource("13_sc11g"), ExtResource("14_h02p0"), ExtResource("15_cnarg"), ExtResource("16_gowvt"), ExtResource("17_hbr14"), ExtResource("18_1jn7r"), ExtResource("19_ras5p"), ExtResource("20_msu1f"), ExtResource("21_tipih")])
 force_equal_weights = false
+force_unique_characters = true

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://t66n8ko5l1lm"]
+
+[ext_resource type="Resource" uid="uid://o4fnh8qfm4j6" path="res://perks/characters/resources/map_perk_character.tres" id="1_iuoq5"]
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="2_s2k5t"]
+
+[resource]
+script = ExtResource("2_s2k5t")
+character = ExtResource("1_iuoq5")
+rank = 1
+description = "Temporarily [color=2de8fb]increase[/color] the game's [color=f5785f][img=20]res://perks/icons/shitty_disaster_severity_level_icon.png[/img] disaster severity level[/color]."
+deactivation_event = 0

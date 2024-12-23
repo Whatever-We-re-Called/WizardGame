@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkCharacter" load_steps=3 format=3 uid="uid://b5o4o2ww386x"]
+
+[ext_resource type="Texture2D" uid="uid://b0eqto8rumonm" path="res://perks/characters/textures/shitty_runes_character_icon.png" id="1_ehbow"]
+[ext_resource type="Script" path="res://perks/characters/perk_character.gd" id="2_a5028"]
+
+[resource]
+script = ExtResource("2_a5028")
+name = "Runes Character"
+icon = ExtResource("1_ehbow")

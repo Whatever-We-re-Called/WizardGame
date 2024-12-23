@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkCharacter" load_steps=3 format=3 uid="uid://bgy8agr8m0y5y"]
+
+[ext_resource type="Texture2D" uid="uid://drohk0ee4cvlb" path="res://perks/characters/textures/shitty_self_buffs_character_icon.png" id="1_onr2l"]
+[ext_resource type="Script" path="res://perks/characters/perk_character.gd" id="2_bklf3"]
+
+[resource]
+script = ExtResource("2_bklf3")
+name = "Self Buffs Character"
+icon = ExtResource("1_onr2l")

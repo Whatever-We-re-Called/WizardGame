@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkCharacter" load_steps=3 format=3 uid="uid://cjkq3oktfy3rs"]
+
+[ext_resource type="Texture2D" uid="uid://grudvenvb6sv" path="res://perks/characters/textures/shitty_points_character_icon.png" id="1_2x8iv"]
+[ext_resource type="Script" path="res://perks/characters/perk_character.gd" id="2_oda88"]
+
+[resource]
+script = ExtResource("2_oda88")
+name = "Points Character"
+icon = ExtResource("1_2x8iv")

@@ -35,7 +35,8 @@ func _append_perks_page(perks: Array[Perk]):
 	perks_page.setup(perks)
 	perks_page.perk_chosen.connect(
 		func(perk_resource_path: String):
-			perk_obtained.emit(perk_resource_path)
+			push_warning("Perk execution is temporarily disabled!")
+			#TODO perk_obtained.emit(perk_resource_path)
 			_next_page()
 	)
 	pages.append(perks_page)

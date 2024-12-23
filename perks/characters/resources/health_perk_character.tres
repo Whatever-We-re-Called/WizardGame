@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkCharacter" load_steps=3 format=3 uid="uid://bq055hf0pekwv"]
+
+[ext_resource type="Texture2D" uid="uid://c7ej0lvgoh3fb" path="res://perks/characters/textures/shitty_health_character_icon.png" id="1_v13ia"]
+[ext_resource type="Script" path="res://perks/characters/perk_character.gd" id="2_f7l1b"]
+
+[resource]
+script = ExtResource("2_f7l1b")
+name = "Health Character"
+icon = ExtResource("1_v13ia")

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PerkCharacter" load_steps=3 format=3 uid="uid://o4fnh8qfm4j6"]
+
+[ext_resource type="Texture2D" uid="uid://b1omhqnab38hp" path="res://perks/characters/textures/shitty_map_character_icon.png" id="1_5j0qv"]
+[ext_resource type="Script" path="res://perks/characters/perk_character.gd" id="2_t1lns"]
+
+[resource]
+script = ExtResource("2_t1lns")
+name = "Map Character"
+icon = ExtResource("1_5j0qv")

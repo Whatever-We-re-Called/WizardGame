@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://hbal6dl1dhny"]
+
+[ext_resource type="Resource" uid="uid://b5o4o2ww386x" path="res://perks/characters/resources/runes_perk_character.tres" id="1_fosbt"]
+[ext_resource type="Script" path="res://perks/resources/perk.gd" id="2_rddhl"]
+
+[resource]
+script = ExtResource("2_rddhl")
+character = ExtResource("1_fosbt")
+rank = 1
+description = "Immediately receive [color=d5a6bd]+3 [img=20]res://perks/icons/shitty_runes_icon.png[/img] Runes[/color]."
+deactivation_event = 0
