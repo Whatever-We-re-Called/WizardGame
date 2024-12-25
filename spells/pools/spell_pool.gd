@@ -19,7 +19,7 @@ func get_lacking_random_spells(quantity: int, player: Player) -> Array[Spells.Ty
 	randomize()
 	spell_types_copy.shuffle()
 	for i in range(quantity):
-		if i >= spell_types_copy.size() - 1:
+		if i >= spell_types_copy.size():
 			break
 		else:
 			result.append(spell_types_copy[i])

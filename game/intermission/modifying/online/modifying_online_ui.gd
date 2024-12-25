@@ -16,15 +16,18 @@ func setup_on_server():
 
 
 func _init_modifying_player_card(player: Player):
-	# TODO Make this more dynamic.
 	var perk_page_count = intermission.game_manager.perks_manager.get_player_perk_choice_count(player)
 	var perk_pages_dictionary = _get_generated_perks_dictionary(player, perk_page_count)
+	var spell_page_count = _get_spell_page_count(player)
+	var spell_pages_dictionary = _get_spell_pages_dictionary(player, spell_page_count)
+	player.spell_inventory.set_spell_page_count(0)
 	
 	var created_player_data: Dictionary = {
 		"peer_id": player.peer_id,
 		"name": player.get_display_name(),
 		"node_path": player.get_path(),
-		"perk_pages": perk_pages_dictionary
+		"perk_pages": perk_pages_dictionary,
+		"spell_pages": spell_pages_dictionary
 	}
 	
 	_create_modifying_player_card.rpc_id(player.peer_id, created_player_data)
@@ -33,14 +36,37 @@ func _init_modifying_player_card(player: Player):
 func _get_generated_perks_dictionary(player: Player, perk_page_count: int) -> Dictionary:
 	var result: Dictionary
 	
-	var perk_pool = intermission.game_manager.get
+	var perk_pool = intermission.game_manager.game_settings.perk_pool
 	for i in range(perk_page_count):
 		var perk_page = i + 1
-		var perks = intermission.game_manager.perks_manager.get_perks_from_pool(player, 3)
+		var perks = perk_pool.get_random_perks(3, false)
 		
 		result[perk_page] = []
 		for perk in perks:
 			result[perk_page].append(perk.resource_path)
+	
+	return result
+
+
+func _get_spell_page_count(player: Player) -> int:
+	var default_spell_page_count = intermission.game_manager.game_settings.default_spell_page_count
+	var player_spell_page_count = player.spell_inventory.spell_page_count
+	return default_spell_page_count + player_spell_page_count
+
+
+func _get_spell_pages_dictionary(player: Player, spell_page_count: int) -> Dictionary:
+	var result: Dictionary
+	
+	print(player.spell_inventory.levels)
+	var spell_pool = intermission.game_manager.game_settings.spell_pool
+	for i in range(spell_page_count):
+		var spell_page = i + 1
+		var spell_types = spell_pool.get_lacking_random_spells(3, player)
+		print(spell_types)
+		
+		result[spell_page] = []
+		for spell_type in spell_types:
+			result[spell_page].append(spell_type)
 	
 	return result
 

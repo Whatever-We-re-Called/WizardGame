@@ -7,5 +7,5 @@
 script = ExtResource("2_3tojr")
 character = ExtResource("1_hnkl7")
 rank = 0
-description = "Add [color=b4a7d6]+1 [img=20]res://perks/icons/shitty_spell_page_icon.png[/img] Spells Page[/color] to your [color=2de8fb]Spellbook[/color]."
+description = "Add [color=b4a7d6]+1 [img=20]res://perks/icons/shitty_spell_page_icon.png[/img] Spell Page[/color] to your [color=2de8fb]Spellbook[/color]."
 deactivation_event = 0

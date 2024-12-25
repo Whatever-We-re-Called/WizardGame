@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://mr6xx8pxfk7v"]
 
-[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/spells_page.gd" id="1_cgf0h"]
-[ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://spells/textures/shitty_wayback_point_texture.png" id="2_ghqpy"]
+[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/spell_page.gd" id="1_bubjx"]
+[ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://spells/textures/shitty_wayback_point_texture.png" id="2_x5m6s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w4wtk"]
 font_size = 32
@@ -19,9 +19,9 @@ bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sf3nq"]
 bg_color = Color(0.392157, 0.392157, 0.392157, 1)
 
-[node name="PerksPage" type="VBoxContainer"]
+[node name="SpellPage" type="VBoxContainer"]
 theme_override_constants/separation = 16
-script = ExtResource("1_cgf0h")
+script = ExtResource("1_bubjx")
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 2
@@ -44,12 +44,12 @@ layout_mode = 2
 item_count = 3
 fixed_icon_size = Vector2i(32, 32)
 item_0/text = "Wayback Point (Level: 1/5)"
-item_0/icon = ExtResource("2_ghqpy")
+item_0/icon = ExtResource("2_x5m6s")
 item_1/text = "TEST_2"
-item_1/icon = ExtResource("2_ghqpy")
+item_1/icon = ExtResource("2_x5m6s")
 item_1/disabled = true
 item_2/text = "TEST_3"
-item_2/icon = ExtResource("2_ghqpy")
+item_2/icon = ExtResource("2_x5m6s")
 
 [node name="SpellDescriptionContainer" type="VBoxContainer" parent="AbilityContainer"]
 unique_name_in_owner = true
@@ -79,6 +79,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="SelectButton" type="Button" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(416, 75)
 layout_mode = 2
 focus_neighbor_top = NodePath("../MainMenuButton")
@@ -90,3 +91,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_h8xdq")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_cipxk")
 theme_override_styles/normal = SubResource("StyleBoxFlat_sf3nq")
 text = "Select"
+
+[connection signal="item_selected" from="AbilityContainer/SpellsList" to="." method="_on_spells_list_item_selected"]
+[connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]

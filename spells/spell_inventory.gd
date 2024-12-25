@@ -10,6 +10,7 @@ var equipped_spell_types: Array[Spells.Type]:
 			arr.append(spell.type)
 		return arr
 var runes: int = 0
+var spell_page_count: int = 0
 
 var levels = {}
 var temporary_levels = {}
@@ -188,6 +189,23 @@ func set_runes(amount: int):
 @rpc("any_peer", "call_local", "reliable")
 func _set_runes(amount: int):
 	self.runes = amount
+
+
+func add_spell_page_count(add_amount: int):
+	_set_spell_page_count.rpc(spell_page_count + add_amount)
+
+
+func remove_spell_page_count(remove_amount: int):
+	_set_spell_page_count.rpc(spell_page_count - remove_amount)
+
+
+func set_spell_page_count(amount: int):
+	_set_spell_page_count.rpc(amount)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _set_spell_page_count(amount: int):
+	self.spell_page_count = amount
 
 
 func is_spell_max_level(spell_type: Spells.Type):

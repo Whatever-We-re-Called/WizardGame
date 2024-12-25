@@ -13,15 +13,21 @@ func setup_online(player_data: Dictionary):
 	%PlayerNameLabel.text = player_data["name"]
 	
 	var perk_pages = player_data["perk_pages"]
-	for page in perk_pages:
+	for perk_page in perk_pages:
 		var perks: Array[Perk]
-		for ability_resource_path in perk_pages[page]:
+		for ability_resource_path in perk_pages[perk_page]:
 			perks.append(load(ability_resource_path))
 		
 		_append_perks_page(perks)
 	
 	# TODO Make this dynamic
-	_append_spells_page()
+	var spell_pages = player_data["spell_pages"]
+	for spell_page in spell_pages:
+		var spell_types: Array[Spells.Type]
+		for spell_type in spell_pages[spell_page]:
+			spell_types.append(spell_type)
+		
+		_append_spell_page(spell_types)
 	
 	var player = get_tree().root.get_node_or_null(player_data["node_path"])
 	_append_inventory_page(player)
@@ -36,27 +42,31 @@ func setup_online(player_data: Dictionary):
 
 
 func _append_perks_page(perks: Array[Perk]):
-	var perks_page = preload("res://game/intermission/modifying/ui_pages/perks_page.tscn").instantiate()
-	perks_page.setup(perks)
-	perks_page.perk_chosen.connect(
+	var perk_page = preload("res://game/intermission/modifying/ui_pages/perk_page.tscn").instantiate()
+	perk_page.setup(perks)
+	perk_page.perk_chosen.connect(
 		func(perk_resource_path: String):
 			perk_obtained.emit(perk_resource_path)
 			inventory_page.update_from_external_source_change()
 			_next_page()
 	)
-	pages.append(perks_page)
+	pages.append(perk_page)
 
 
-func _append_spells_page():
-	var spells_page = preload("res://game/intermission/modifying/ui_pages/spells_page.tscn").instantiate()
-	spells_page.setup()
-	spells_page.spell_chosen.connect(
+func _append_spell_page(spell_types):
+	var spell_page = preload("res://game/intermission/modifying/ui_pages/spell_page.tscn").instantiate()
+	spell_page.setup(spell_types)
+	spell_page.spell_chosen.connect(
 		func(spell_type: Spells.Type):
 			spell_obtained.emit(spell_type)
 			inventory_page.update_from_external_source_change()
 			_next_page()
 	)
-	pages.append(spells_page)
+	spell_page.skipped.connect(
+		func(spell_type: Spells.Type):
+			_next_page()
+	)
+	pages.append(spell_page)
 
 
 func _append_inventory_page(player: Player):
