@@ -98,3 +98,14 @@ func append_ready_page(unreadied_callable: Callable):
 	var ready_page = preload("res://game/intermission/modifying/ui_pages/ready_page.tscn").instantiate()
 	ready_page.unreadied.connect(unreadied_callable)
 	_append_page(ready_page, PageType.READY)
+
+
+func update_inventory_page():
+	var inventory_page = head_page
+	while inventory_page != null:
+		if inventory_page.TYPE == PageType.INVENTORY:
+			break
+		else:
+			inventory_page = inventory_page.next_page
+	
+	inventory_page.update_from_external_source_change()

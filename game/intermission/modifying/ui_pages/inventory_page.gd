@@ -1,4 +1,4 @@
-class_name InventoryPage extends SpellbookPage
+extends SpellbookPage
 
 signal readied
 

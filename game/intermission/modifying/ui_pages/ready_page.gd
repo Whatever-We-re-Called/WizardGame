@@ -1,4 +1,4 @@
-class_name ReadyPage extends SpellbookPage
+extends SpellbookPage
 
 signal unreadied
 

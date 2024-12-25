@@ -6,6 +6,10 @@ var player_data: Dictionary
 var other_players_data: Dictionary
 var readied_players: Array[int]
 
+var modifying_player_card: CenterContainer
+var perk_page_count: int
+var spell_page_count: int
+
 
 func setup_on_server():
 	if not multiplayer.is_server(): return
@@ -16,6 +20,8 @@ func setup_on_server():
 
 
 func _init_modifying_player_card(player: Player):
+	# Exists to 
+	const PAGE_COUNT_BUFFER = 1
 	var perk_page_count = intermission.game_manager.perks_manager.get_player_perk_choice_count(player)
 	var perk_pages_dictionary = _get_generated_perks_dictionary(player, perk_page_count)
 	var spell_page_count = _get_spell_page_count(player)
@@ -87,14 +93,37 @@ func _create_modifying_player_card(player_data: Dictionary):
 	for child in %SingleModifyingPlayerCardSlot.get_children():
 		child.queue_free()
 	
-	var modifying_player_card = preload("res://game/intermission/modifying/modifying_player_card.tscn").instantiate()
+	modifying_player_card = preload("res://game/intermission/modifying/modifying_player_card.tscn").instantiate()
 	%SingleModifyingPlayerCardSlot.add_child(modifying_player_card)
 	# Setup must come after ModifyingPlayerCard enters the scene
 	# tree, in order to the player scene absolute path to be valid.
-	modifying_player_card.setup_online(player_data)
+	modifying_player_card.setup(player_data)
 	modifying_player_card.page_updated.connect(_handle_page_change)
 	modifying_player_card.perk_obtained.connect(_handle_perk_obtained.bind(player_data))
 	modifying_player_card.spell_obtained.connect(_handle_spell_obtained.bind(player_data))
+	
+	var perk_pages = player_data["perk_pages"]
+	for perk_page in perk_pages:
+		modifying_player_card.create_perk_page(perk_pages[perk_page])
+		await modifying_player_card.spellbook.open_page.finished
+	
+	var spell_pages = player_data["spell_pages"]
+	for spell_page in spell_pages:
+		modifying_player_card.create_spell_page(spell_pages[spell_page])
+	
+	var player = get_tree().root.get_node_or_null(player_data["node_path"])
+	modifying_player_card.spellbook.append_inventory_page(
+		player,
+		func():
+			modifying_player_card.load_next_page()
+	)
+	
+	modifying_player_card.spellbook.append_ready_page(
+		func():
+			modifying_player_card.load_previous_page()
+	)
+	
+	_load_first_page()
 
 
 func _handle_page_change(current_page: int, max_page: int):
@@ -127,7 +156,6 @@ func _handle_perk_obtained_on_server(perk_resource_path: String, executor_peer_i
 
 
 func _handle_spell_obtained(spell_type: Spells.Type, player_data: Dictionary):
-	print("Test")
 	_handle_spell_obtained_on_server.rpc_id(1, spell_type, player_data["peer_id"])
 
 
@@ -135,6 +163,10 @@ func _handle_spell_obtained(spell_type: Spells.Type, player_data: Dictionary):
 func _handle_spell_obtained_on_server(spell_type: Spells.Type, executor_peer_id: int):
 	var executor_player = intermission.game_manager.get_player_from_peer_id(executor_peer_id)
 	executor_player.spell_inventory.set_level.rpc(spell_type, 1)
+
+
+func _go_to_perk_page():
+	
 
 
 @rpc("authority", "call_local", "reliable")

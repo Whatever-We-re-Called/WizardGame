@@ -12,9 +12,9 @@
 script = ExtResource("1_vmk68")
 goal_score = 25
 spell_pool = ExtResource("7_1t2i0")
-default_spell_page_count = 1
+default_spell_page_count = 2
 perk_pool = ExtResource("5_5jkh6")
-default_perk_choice_count = 1
+default_perk_choice_count = 2
 map_pool = Array[PackedScene]([ExtResource("1_sl5e0")])
 map_disaster_severity = 1
 disaster_duration = 0.1

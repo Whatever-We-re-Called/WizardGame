@@ -1,4 +1,4 @@
-class_name PerkPage extends SpellbookPage
+extends SpellbookPage
 
 signal perk_chosen(perk_resource_path: String)
 

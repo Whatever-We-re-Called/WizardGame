@@ -1,4 +1,4 @@
-class_name SpellPage extends SpellbookPage
+extends SpellbookPage
 
 signal spell_chosen(spell_type: Spells.Type)
 signal skipped
