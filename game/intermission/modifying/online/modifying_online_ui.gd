@@ -70,6 +70,7 @@ func _create_modifying_player_card(player_data: Dictionary):
 	modifying_player_card.setup_online(player_data)
 	modifying_player_card.page_updated.connect(_handle_page_change)
 	modifying_player_card.perk_obtained.connect(_handle_perk_obtained.bind(player_data))
+	modifying_player_card.spell_obtained.connect(_handle_spell_obtained.bind(player_data))
 
 
 func _handle_page_change(current_page: int, max_page: int):
@@ -99,6 +100,16 @@ func _handle_perk_obtained_on_server(perk_resource_path: String, executor_peer_i
 	intermission.game_manager.perks_manager.execute_perk(
 		load(perk_resource_path), executor_player
 	)
+
+
+func _handle_spell_obtained(spell_type: Spells.Type, player_data: Dictionary):
+	_handle_spell_obtained_on_server.rpc_id(1, spell_type, player_data["peer_id"])
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _handle_spell_obtained_on_server(spell_type: Spells.Type, executor_peer_id: int):
+	var executor_player = intermission.game_manager.get_player_from_peer_id(executor_peer_id)
+	executor_player.spell_inventory.set_level.rpc(spell_type, 1)
 
 
 @rpc("authority", "call_local", "reliable")

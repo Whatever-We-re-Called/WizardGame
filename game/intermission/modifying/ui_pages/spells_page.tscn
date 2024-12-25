@@ -1,0 +1,92 @@
+[gd_scene load_steps=9 format=3 uid="uid://mr6xx8pxfk7v"]
+
+[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/spells_page.gd" id="1_cgf0h"]
+[ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://spells/textures/shitty_wayback_point_texture.png" id="2_ghqpy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w4wtk"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_07qvf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_b74qo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h8xdq"]
+bg_color = Color(0.294118, 0.294118, 0.294118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cipxk"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sf3nq"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[node name="PerksPage" type="VBoxContainer"]
+theme_override_constants/separation = 16
+script = ExtResource("1_cgf0h")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+text = "Choose a New Spell"
+label_settings = SubResource("LabelSettings_w4wtk")
+horizontal_alignment = 1
+
+[node name="AbilityContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TabBar" type="TabBar" parent="AbilityContainer"]
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+
+[node name="SpellsList" type="ItemList" parent="AbilityContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(416, 320)
+layout_mode = 2
+item_count = 3
+fixed_icon_size = Vector2i(32, 32)
+item_0/text = "Wayback Point (Level: 1/5)"
+item_0/icon = ExtResource("2_ghqpy")
+item_1/text = "TEST_2"
+item_1/icon = ExtResource("2_ghqpy")
+item_1/disabled = true
+item_2/text = "TEST_3"
+item_2/icon = ExtResource("2_ghqpy")
+
+[node name="SpellDescriptionContainer" type="VBoxContainer" parent="AbilityContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AbilityContainer/SpellDescriptionContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="SpellNameLabel" type="Label" parent="AbilityContainer/SpellDescriptionContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Waypack Point"
+label_settings = SubResource("LabelSettings_07qvf")
+horizontal_alignment = 1
+
+[node name="SpellDescriptionLabel" type="Label" parent="AbilityContainer/SpellDescriptionContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(416, 0)
+layout_mode = 2
+text = "Places a point in space that you can teleport to at anytime. "
+label_settings = SubResource("LabelSettings_b74qo")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SelectButton" type="Button" parent="."]
+custom_minimum_size = Vector2(416, 75)
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../MainMenuButton")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/hover = SubResource("StyleBoxFlat_h8xdq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cipxk")
+theme_override_styles/normal = SubResource("StyleBoxFlat_sf3nq")
+text = "Select"

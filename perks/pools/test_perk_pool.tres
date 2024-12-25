@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://hbal6dl1dhny" path="res://perks/resources/runes/3_runes_perk.tres" id="4_ypkg6"]
 [ext_resource type="Resource" uid="uid://dd2nlqmg8mr5t" path="res://perks/resources/runes/4_runes_perk.tres" id="5_mrpc3"]
 [ext_resource type="Resource" uid="uid://bptie34ql381u" path="res://perks/resources/runes/5_runes_perk.tres" id="6_vx6sk"]
-[ext_resource type="Resource" uid="uid://bjxialun5fc4m" path="res://perks/resources/spells/1_spell_page_perk.tres" id="7_3jig4"]
+[ext_resource type="Resource" uid="uid://bjxialun5fc4m" path="res://perks/resources/spells/1_spells_page_perk.tres" id="7_3jig4"]
 [ext_resource type="Resource" uid="uid://c8xo6yxd7upmt" path="res://perks/resources/health/1_max_health_perk.tres" id="8_q46xw"]
 [ext_resource type="Resource" uid="uid://b6gtgmxl8edw3" path="res://perks/resources/health/2_max_health_perk.tres" id="9_myd0h"]
 [ext_resource type="Resource" uid="uid://clpwcalxaxo5t" path="res://perks/resources/health/3_max_health_perk.tres" id="10_h4pin"]

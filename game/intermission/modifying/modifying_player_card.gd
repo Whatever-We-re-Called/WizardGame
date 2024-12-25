@@ -2,6 +2,7 @@ extends CenterContainer
 
 signal page_updated(current_page: int, max_page: int)
 signal perk_obtained(perk_resource_path: String)
+signal spell_obtained(spell_type: Spells.Type)
 
 var current_page: int
 var pages: Array[VBoxContainer]
@@ -18,6 +19,9 @@ func setup_online(player_data: Dictionary):
 			perks.append(load(ability_resource_path))
 		
 		_append_perks_page(perks)
+	
+	# TODO Make this dynamic
+	_append_spells_page()
 	
 	var player = get_tree().root.get_node_or_null(player_data["node_path"])
 	_append_inventory_page(player)
@@ -41,6 +45,18 @@ func _append_perks_page(perks: Array[Perk]):
 			_next_page()
 	)
 	pages.append(perks_page)
+
+
+func _append_spells_page():
+	var spells_page = preload("res://game/intermission/modifying/ui_pages/spells_page.tscn").instantiate()
+	spells_page.setup()
+	spells_page.spell_chosen.connect(
+		func(spell_type: Spells.Type):
+			spell_obtained.emit(spell_type)
+			inventory_page.update_from_external_source_change()
+			_next_page()
+	)
+	pages.append(spells_page)
 
 
 func _append_inventory_page(player: Player):

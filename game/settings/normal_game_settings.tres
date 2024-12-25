@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GameSettings" load_steps=7 format=3 uid="uid://bosqyf6xpyw4r"]
+[gd_resource type="Resource" script_class="GameSettings" load_steps=8 format=3 uid="uid://bosqyf6xpyw4r"]
 
 [ext_resource type="Script" path="res://disasters/disaster_resource.gd" id="1_n3v6n"]
 [ext_resource type="PackedScene" uid="uid://tjmncfnms2m0" path="res://maps/prototype_second_concept_level/prototype_second_concept_level.tscn" id="1_sl5e0"]
@@ -6,10 +6,12 @@
 [ext_resource type="Resource" uid="uid://bth2d6is5r7sp" path="res://disasters/storm/storm.tres" id="2_yx8np"]
 [ext_resource type="Resource" uid="uid://b6hi1juxbg28i" path="res://disasters/earthquake/earthquake.tres" id="3_qb3uf"]
 [ext_resource type="Resource" uid="uid://d0lnm22xwxfqf" path="res://perks/pools/test_2_perk_pool.tres" id="5_5jkh6"]
+[ext_resource type="Resource" uid="uid://btdfpesw7jn" path="res://spells/pools/normal_spell_pool.tres" id="7_1t2i0"]
 
 [resource]
 script = ExtResource("1_vmk68")
 goal_score = 25
+spell_pool = ExtResource("7_1t2i0")
 perk_pool = ExtResource("5_5jkh6")
 default_perk_choice_count = 1
 map_pool = Array[PackedScene]([ExtResource("1_sl5e0")])

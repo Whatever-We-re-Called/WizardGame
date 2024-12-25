@@ -2,6 +2,9 @@ class_name GameSettings extends Resource
 
 @export_category("Scoring")
 @export var goal_score: int
+@export_category("Spells")
+@export var spell_pool: SpellPool
+@export var default_spells_page_count: int
 @export_category("Perks")
 @export var perk_pool: PerkPool
 @export var default_perk_choice_count: int

@@ -14,7 +14,6 @@ signal received_debug_input(int)
 @onready var spell_nodes: Node = %SpellNodes
 @onready var sync: Node = %Sync
 
-
 var peer_id: int
 var im: DeviceInputMap
 var can_use_abilities: bool = true
