@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://mr6xx8pxfk7v"]
 
-[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/spell_page.gd" id="1_bubjx"]
+[ext_resource type="Script" path="res://game/intermission/spellbook/ui_pages/spell_page.gd" id="1_bubjx"]
 [ext_resource type="Texture2D" uid="uid://dk5bqp8lelwcr" path="res://spells/textures/shitty_wayback_point_texture.png" id="2_x5m6s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w4wtk"]

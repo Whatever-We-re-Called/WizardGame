@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b3y67nf7klr2j"]
 
-[ext_resource type="Script" path="res://game/intermission/modifying/online/other_player_page_progress_ui.gd" id="1_imfym"]
+[ext_resource type="Script" path="res://game/intermission/spellbook/online/other_player_page_progress_ui.gd" id="1_imfym"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8paln"]
 font_size = 32

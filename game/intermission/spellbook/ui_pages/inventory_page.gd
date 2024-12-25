@@ -5,8 +5,6 @@ signal readied
 var player: Player
 var item_spell_types: Array[Spells.Type]
 
-const TYPE: Spellbook.PageType = Spellbook.PageType.INVENTORY
-
 
 func setup(player: Player):
 	self.player = player

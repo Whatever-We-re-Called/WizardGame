@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cpbbsu2vlj8j4"]
 
-[ext_resource type="Script" path="res://game/intermission/modifying/ui_pages/ready_page.gd" id="1_2acbb"]
+[ext_resource type="Script" path="res://game/intermission/spellbook/ui_pages/ready_page.gd" id="1_2acbb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hmi75"]
 font_size = 96

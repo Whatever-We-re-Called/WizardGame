@@ -5,8 +5,6 @@ signal skipped
 
 var spell_types: Array[Spells.Type]
 
-const TYPE: Spellbook.PageType = Spellbook.PageType.SPELL
-
 
 func setup(spell_types: Array[Spells.Type]):
 	if spell_types.size() == 0: skipped.emit()
