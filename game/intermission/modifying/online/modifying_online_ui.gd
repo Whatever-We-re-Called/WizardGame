@@ -57,12 +57,10 @@ func _get_spell_page_count(player: Player) -> int:
 func _get_spell_pages_dictionary(player: Player, spell_page_count: int) -> Dictionary:
 	var result: Dictionary
 	
-	print(player.spell_inventory.levels)
 	var spell_pool = intermission.game_manager.game_settings.spell_pool
 	for i in range(spell_page_count):
 		var spell_page = i + 1
 		var spell_types = spell_pool.get_lacking_random_spells(3, player)
-		print(spell_types)
 		
 		result[spell_page] = []
 		for spell_type in spell_types:
@@ -129,6 +127,7 @@ func _handle_perk_obtained_on_server(perk_resource_path: String, executor_peer_i
 
 
 func _handle_spell_obtained(spell_type: Spells.Type, player_data: Dictionary):
+	print("Test")
 	_handle_spell_obtained_on_server.rpc_id(1, spell_type, player_data["peer_id"])
 
 

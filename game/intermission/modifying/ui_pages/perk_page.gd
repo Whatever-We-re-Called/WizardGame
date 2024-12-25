@@ -1,8 +1,10 @@
-extends VBoxContainer
+class_name PerkPage extends SpellbookPage
 
 signal perk_chosen(perk_resource_path: String)
 
 var perks: Array[Perk]
+
+const TYPE: Spellbook.PageType = Spellbook.PageType.PERK
 
 
 func setup(perks: Array[Perk]):

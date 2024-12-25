@@ -1,9 +1,11 @@
-extends VBoxContainer
+class_name SpellPage extends SpellbookPage
 
 signal spell_chosen(spell_type: Spells.Type)
 signal skipped
 
 var spell_types: Array[Spells.Type]
+
+const TYPE: Spellbook.PageType = Spellbook.PageType.SPELL
 
 
 func setup(spell_types: Array[Spells.Type]):
