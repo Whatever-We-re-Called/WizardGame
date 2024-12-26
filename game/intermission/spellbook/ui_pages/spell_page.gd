@@ -1,14 +1,11 @@
 extends Container
 
 signal spell_chosen(spell_type: Spells.Type)
-signal skipped
 
 var spell_types: Array[Spells.Type]
 
 
 func setup(spell_types: Array[Spells.Type]):
-	if spell_types.size() == 0: skipped.emit()
-	
 	self.spell_types = spell_types
 	
 	_populate_spells_list()

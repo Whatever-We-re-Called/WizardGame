@@ -3,8 +3,9 @@ extends Node
 var spellbook_ui: IntermissionUI
 var players: Array[Player]
 var player_data: Dictionary
-var perk_page_count: int
 var player_sequence_continue_signals: Dictionary
+var player_perk_page_counts: Dictionary
+var player_spell_page_counts: Dictionary
 
 
 func init_all_ui_data():
@@ -30,12 +31,22 @@ func start_sequence_for_player(player: Player):
 	player_sequence_continue_signals[player.peer_id] = Signal(self, signal_name)
 	add_user_signal(signal_name)
 	
-	perk_page_count = _get_perk_page_count(player)
-	while perk_page_count > 0:
-		perk_page_count -= 1
+	player_perk_page_counts[player.peer_id] = _get_perk_page_count(player)
+	while player_perk_page_counts[player.peer_id] > 0:
+		player_perk_page_counts[player.peer_id] -= 1
 		
 		var perk_resources = _get_generated_perk_resources()
 		_load_perk_page.rpc_id(player.peer_id, perk_resources)
+		
+		await player_sequence_continue_signals[player.peer_id]
+	
+	player_spell_page_counts[player.peer_id] = _get_spell_page_count(player)
+	player.spell_inventory.set_extra_spell_page_count(0)
+	while player_spell_page_counts[player.peer_id] > 0:
+		player_spell_page_counts[player.peer_id] -= 1
+		
+		var spell_types = _get_generated_spell_types(player)
+		_load_spell_page.rpc_id(player.peer_id, spell_types)
 		
 		await player_sequence_continue_signals[player.peer_id]
 
@@ -74,7 +85,33 @@ func _load_perk_page(perk_resources: Array[String]):
 
 
 @rpc("authority", "call_local", "reliable")
-func _handle_chosen_perk(perk_resource_path):
+func _handle_chosen_perk(perk_resource_path: String):
 	var perk = load(perk_resource_path)
 	var player = get_node(player_data["node_path"])
 	spellbook_ui.intermission.game_manager.perks_manager.execute_perk(perk, player)
+
+
+func _get_spell_page_count(player: Player):
+	var default_spell_page_count = spellbook_ui.intermission.game_manager.game_settings.default_spell_page_count
+	var player_extra_spell_page_count = player.spell_inventory.extra_spell_page_count
+	return default_spell_page_count + player_extra_spell_page_count
+
+
+func _get_generated_spell_types(player: Player) -> Array[Spells.Type]:
+	return spellbook_ui.intermission.game_manager.game_settings.spell_pool.get_lacking_random_spells(3, player)
+
+
+@rpc("authority", "call_local", "reliable")
+func _load_spell_page(spell_types: Array[Spells.Type]):
+	spellbook_ui.spellbook.load_spell_page(
+		spell_types,
+		func(spell_type: Spells.Type):
+			_handle_chosen_spell.rpc_id(1, spell_type)
+			continue_sequence.rpc_id(1, player_data["peer_id"])
+	)
+
+
+@rpc("authority", "call_local", "reliable")
+func _handle_chosen_spell(spell_type: Spells.Type):
+	var player = get_node(player_data["node_path"])
+	player.spell_inventory.set_level.rpc(spell_type, 1)

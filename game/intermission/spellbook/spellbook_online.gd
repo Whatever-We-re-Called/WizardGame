@@ -17,3 +17,12 @@ func load_perk_page(perks: Array[Perk], perk_chosen_callable: Callable):
 	perk_page.setup(perks)
 	perk_page.perk_chosen.connect(perk_chosen_callable)
 	%PageContainer.add_child(perk_page)
+
+
+func load_spell_page(spell_types: Array[Spells.Type], spell_chosen_callable: Callable):
+	_unload_current_page()
+	
+	var spell_page = preload("res://game/intermission/spellbook/ui_pages/spell_page.tscn").instantiate()
+	spell_page.setup(spell_types)
+	spell_page.spell_chosen.connect(spell_chosen_callable)
+	%PageContainer.add_child(spell_page)
