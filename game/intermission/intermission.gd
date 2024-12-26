@@ -1,13 +1,12 @@
 class_name Intermission extends Node
 
-enum State { START, SCORING, RESULTS, MODIFYING_LOCAL, MODIFYING_ONLINE, END }
+enum State { START, SCORING, RESULTS, SPELLBOOK, END }
 
 @onready var multiplayer_synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var start_ui: CenterContainer = %StartUI
 @onready var scoring_ui: CenterContainer = %ScoringUI
 @onready var results_ui: CenterContainer = %ResultsUI
-@onready var modifying_local_ui: CenterContainer = %ModifyingLocalUI
-@onready var modifying_online_ui: CenterContainer = %ModifyingOnlineUI
+@onready var spellbook_ui: CenterContainer = %SpellbookUI
 @onready var end_ui: CenterContainer = %EndUI
 
 var game_manager: GameManager
@@ -24,6 +23,5 @@ func set_state(state: State):
 	start_ui.visible = (state == State.START)
 	scoring_ui.visible = (state == State.SCORING)
 	results_ui.visible = (state == State.RESULTS)
-	modifying_local_ui.visible = (state == State.MODIFYING_LOCAL)
-	modifying_online_ui.visible = (state == State.MODIFYING_ONLINE)
+	spellbook_ui.visible = (state == State.SPELLBOOK)
 	end_ui.visible = (state == State.END)

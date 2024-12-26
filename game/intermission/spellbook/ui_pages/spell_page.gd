@@ -1,4 +1,4 @@
-extends SpellbookPage
+extends Container
 
 signal spell_chosen(spell_type: Spells.Type)
 signal skipped

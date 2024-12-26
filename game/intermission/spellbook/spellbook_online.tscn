@@ -1,0 +1,78 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj3tk57280b5w"]
+
+[ext_resource type="Script" path="res://game/intermission/spellbook/spellbook_online.gd" id="1_h7m82"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k0up6"]
+font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwndy"]
+bg_color = Color(0.392157, 0.392157, 0.392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjs6e"]
+bg_color = Color(0, 0.784314, 0, 1)
+
+[node name="SpellbookOnline" type="CenterContainer"]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h7m82")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SingleModifyingPlayerCardSlot" type="CenterContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SpellbookUI" type="CenterContainer" parent="HBoxContainer/SingleModifyingPlayerCardSlot"]
+custom_minimum_size = Vector2(480, 1080)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="HBoxContainer/SingleModifyingPlayerCardSlot/SpellbookUI"]
+custom_minimum_size = Vector2(480, 1080)
+layout_mode = 2
+color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[node name="PlayerNameMarginContainer" type="MarginContainer" parent="HBoxContainer/SingleModifyingPlayerCardSlot/SpellbookUI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_bottom = 1012
+
+[node name="PlayerNameLabel" type="Label" parent="HBoxContainer/SingleModifyingPlayerCardSlot/SpellbookUI/PlayerNameMarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Player"
+label_settings = SubResource("LabelSettings_k0up6")
+horizontal_alignment = 1
+
+[node name="PageProgressMarginContainer" type="MarginContainer" parent="HBoxContainer/SingleModifyingPlayerCardSlot/SpellbookUI"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 1016
+
+[node name="PageProgressBar" type="ProgressBar" parent="HBoxContainer/SingleModifyingPlayerCardSlot/SpellbookUI/PageProgressMarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 64)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_uwndy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jjs6e")
+max_value = 2.0
+step = 1.0
+show_percentage = false
+
+[node name="PageContainer" type="VBoxContainer" parent="HBoxContainer/SingleModifyingPlayerCardSlot/SpellbookUI"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="OtherPlayerPageProgressContainer" type="VBoxContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1

@@ -1,4 +1,4 @@
-extends SpellbookPage
+extends Container
 
 signal readied
 

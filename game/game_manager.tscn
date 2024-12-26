@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://game/states/intermission_end_game_state.gd" id="17_bkyog"]
 [ext_resource type="Script" path="res://game/states/intermission_scoring_game_state.gd" id="17_kjaj5"]
 [ext_resource type="Script" path="res://game/states/intermission_results_game_state.gd" id="18_h0wvm"]
-[ext_resource type="Script" path="res://game/states/intermission_modifying_game_state.gd" id="19_lnnjd"]
+[ext_resource type="Script" path="res://game/states/intermission_spellbook_game_state.gd" id="19_lnnjd"]
 [ext_resource type="Script" path="res://game/modules/pause_manager.gd" id="19_v5m1n"]
 [ext_resource type="Script" path="res://game/modules/game_scoring.gd" id="23_q0it8"]
 
@@ -367,7 +367,7 @@ script = ExtResource("17_kjaj5")
 [node name="IntermissionResults" type="Node" parent="GameScene/GameStates"]
 script = ExtResource("18_h0wvm")
 
-[node name="IntermissionModifying" type="Node" parent="GameScene/GameStates"]
+[node name="IntermissionSpellbook" type="Node" parent="GameScene/GameStates"]
 script = ExtResource("19_lnnjd")
 
 [node name="IntermissionEnd" type="Node" parent="GameScene/GameStates"]

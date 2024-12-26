@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdoyjpxl56rrq"]
+
+[ext_resource type="Script" path="res://game/intermission/spellbook/online/spellbook_handler_online.gd" id="1_alvsn"]
+
+[node name="SpellbookHandlerOnline" type="Node"]
+script = ExtResource("1_alvsn")
