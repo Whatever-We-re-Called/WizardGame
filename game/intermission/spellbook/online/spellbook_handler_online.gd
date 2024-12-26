@@ -8,8 +8,6 @@ var player_sequence_continue_signals: Dictionary
 var player_perk_page_counts: Dictionary
 var player_spell_page_counts: Dictionary
 var readied_player_peer_ids: Array[int]
-var player_current_pages: Dictionary
-var player_max_pages: Dictionary
 
 
 func init_all_ui_data():
@@ -54,14 +52,6 @@ func start_sequence_for_player(player: Player):
 	add_user_signal(signal_name)
 	
 	player_perk_page_counts[player.peer_id] = _get_perk_page_count(player)
-	player_spell_page_counts[player.peer_id] = _get_spell_page_count(player)
-	player.spell_inventory.set_extra_spell_page_count(0)
-	
-	player_current_pages[player.peer_id] = 1
-	player_max_pages[player.peer_id] = player_perk_page_counts[player.peer_id]\
-		+ player_spell_page_counts[player.peer_id]\
-		+ 2
-	
 	while player_perk_page_counts[player.peer_id] > 0:
 		player_perk_page_counts[player.peer_id] -= 1
 		
@@ -70,6 +60,8 @@ func start_sequence_for_player(player: Player):
 		
 		await player_sequence_continue_signals[player.peer_id]
 	
+	player_spell_page_counts[player.peer_id] = _get_spell_page_count(player)
+	player.spell_inventory.set_extra_spell_page_count(0)
 	while player_spell_page_counts[player.peer_id] > 0:
 		player_spell_page_counts[player.peer_id] -= 1
 		
@@ -191,30 +183,20 @@ func _unready_player_peer_id(peer_id: int):
 
 func _update_page_progress_ui(current_page: int, max_page: int):
 	spellbook_ui.spellbook.update_page_progress_ui(current_page, max_page)
-	#for other_player_data in other_players_data:
-		#var peer_id = other_players_data[other_player_data]["peer_id"]
-		#
-		#_update_other_player_page_progress_ui.rpc_id(
-			#peer_id,
-			#player_data["peer_id"],
-			#current_page,
-			#max_page
-		#)
-
-
-@rpc("authority", "call_local", "reliable")
-func _update_other_player_page_progress_ui(other_player_peer_id: int, current_page: int, max_page: int):
 	for other_player_data in other_players_data:
 		var peer_id = other_players_data[other_player_data]["peer_id"]
-		
 		_update_other_player_page_progress_ui.rpc_id(
 			peer_id,
 			player_data["peer_id"],
 			current_page,
 			max_page
 		)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _update_other_player_page_progress_ui(other_player_peer_id: int, current_page: int, max_page: int):
 	for other_player_data in other_players_data:
 		var peer_id = other_players_data[other_player_data]["peer_id"]
 		if peer_id == other_player_peer_id:
-			var ui_node = other_players_data[other_player_data]["ui_node"]
+			var ui_node = spellbook_ui.spellbook.other_player_ui_nodes[peer_id]
 			ui_node.update(current_page, max_page)
