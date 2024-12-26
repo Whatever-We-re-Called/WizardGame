@@ -13,7 +13,7 @@ func setup_online():
 	
 	handler.init_all_ui_data()
 	for player in intermission.game_manager.players:
-		handler.start_sequence_for_player(player.peer_id)
+		handler.start_sequence_for_player(player)
 
 
 func setup_local():

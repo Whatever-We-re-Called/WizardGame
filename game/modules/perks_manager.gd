@@ -52,6 +52,7 @@ func execute_perk(perk: Perk, executor_player: Player):
 	
 	active_perk_executions.append(execution_script)
 	execution_script._on_activate()
+	print(perk, " ", executor_player)
 
 
 func clear_all_active_perk_executions():
