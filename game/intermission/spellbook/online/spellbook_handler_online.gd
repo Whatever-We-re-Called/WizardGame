@@ -3,6 +3,8 @@ extends Node
 var spellbook_ui: IntermissionUI
 var players: Array[Player]
 var player_data: Dictionary
+var perk_page_count: int
+var player_sequence_continue_signals: Dictionary
 
 
 func init_all_ui_data():
@@ -18,16 +20,29 @@ func init_all_ui_data():
 
 @rpc("authority", "call_local", "reliable")
 func _init_ui_data(player_data: Dictionary):
+	self.player_data = player_data
 	spellbook_ui.spellbook.setup(player_data)
 
 
+# Executed solely on the server, once for each player
 func start_sequence_for_player(player_peer_id: int):
-	var perk_page_count = 2
+	var signal_name = "peer_id_%s_sequence_continued" % [player_peer_id]
+	player_sequence_continue_signals[player_peer_id] = Signal(self, signal_name)
+	add_user_signal(signal_name)
+	
+	perk_page_count = 2
 	while perk_page_count > 0:
+		perk_page_count -= 1
+		
 		var perk_resources = _get_generated_perk_resources()
 		_load_perk_page.rpc_id(player_peer_id, perk_resources)
-		perk_page_count -= 1
-		return
+		
+		await player_sequence_continue_signals[player_peer_id]
+
+
+@rpc("any_peer", "call_local", "reliable")
+func continue_sequence(player_peer_id: int):
+	player_sequence_continue_signals[player_peer_id].emit()
 
 
 func _get_generated_perk_resources() -> Array[String]:
@@ -46,4 +61,8 @@ func _load_perk_page(perk_resources: Array[String]):
 	for perk_resource in perk_resources:
 		perks.append(load(perk_resource))
 	
-	spellbook_ui.spellbook.load_perk_page(perks)
+	spellbook_ui.spellbook.load_perk_page(
+		perks,
+		func(perk_resource_path: String):
+			continue_sequence.rpc_id(1, player_data["peer_id"])
+	)
