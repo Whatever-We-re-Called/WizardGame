@@ -55,7 +55,7 @@ func start_sequence_for_player(player: Player):
 
 
 @rpc("any_peer", "call_local", "reliable")
-func continue_sequence(player_peer_id: int):
+func _continue_sequence(player_peer_id: int):
 	player_sequence_continue_signals[player_peer_id].emit()
 
 
@@ -82,15 +82,15 @@ func _load_perk_page(perk_resources: Array[String]):
 	spellbook_ui.spellbook.load_perk_page(
 		perks,
 		func(perk_resource_path: String):
-			_handle_chosen_perk.rpc_id(1, perk_resource_path)
-			continue_sequence.rpc_id(1, player_data["peer_id"])
+			_handle_chosen_perk.rpc_id(1, player_data["peer_id"], perk_resource_path)
+			_continue_sequence.rpc_id(1, player_data["peer_id"])
 	)
 
 
-@rpc("authority", "call_local", "reliable")
-func _handle_chosen_perk(perk_resource_path: String):
+@rpc("any_peer", "call_local", "reliable")
+func _handle_chosen_perk(peer_id: int, perk_resource_path: String):
 	var perk = load(perk_resource_path)
-	var player = get_node(player_data["node_path"])
+	var player = spellbook_ui.intermission.game_manager.get_player_from_peer_id(peer_id)
 	spellbook_ui.intermission.game_manager.perks_manager.execute_perk(perk, player)
 
 
@@ -109,14 +109,14 @@ func _load_spell_page(spell_types: Array[Spells.Type]):
 	spellbook_ui.spellbook.load_spell_page(
 		spell_types,
 		func(spell_type: Spells.Type):
-			_handle_chosen_spell.rpc_id(1, spell_type)
-			continue_sequence.rpc_id(1, player_data["peer_id"])
+			_handle_chosen_spell.rpc_id(1, player_data["peer_id"], spell_type)
+			_continue_sequence.rpc_id(1, player_data["peer_id"])
 	)
 
 
-@rpc("authority", "call_local", "reliable")
-func _handle_chosen_spell(spell_type: Spells.Type):
-	var player = get_node(player_data["node_path"])
+@rpc("any_peer", "call_local", "reliable")
+func _handle_chosen_spell(peer_id: int, spell_type: Spells.Type):
+	var player = spellbook_ui.intermission.game_manager.get_player_from_peer_id(peer_id)
 	player.spell_inventory.set_level.rpc(spell_type, 1)
 
 

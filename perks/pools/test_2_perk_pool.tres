@@ -1,13 +1,11 @@
-[gd_resource type="Resource" script_class="PerkPool" load_steps=6 format=3 uid="uid://d0lnm22xwxfqf"]
+[gd_resource type="Resource" script_class="PerkPool" load_steps=4 format=3 uid="uid://d0lnm22xwxfqf"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_n76te"]
-[ext_resource type="Resource" uid="uid://c8xo6yxd7upmt" path="res://perks/resources/health/1_max_health_perk.tres" id="3_5vchk"]
 [ext_resource type="Resource" uid="uid://bjxialun5fc4m" path="res://perks/resources/spells/1_spell_page_perk.tres" id="4_btc1s"]
-[ext_resource type="Resource" uid="uid://mc1x0de5bmk1" path="res://perks/resources/points/1_survival_bonus_point_perk.tres" id="11_pox54"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="22_hqito"]
 
 [resource]
 script = ExtResource("22_hqito")
-perks = Array[ExtResource("1_n76te")]([ExtResource("11_pox54"), ExtResource("3_5vchk"), ExtResource("4_btc1s")])
+perks = Array[ExtResource("1_n76te")]([ExtResource("4_btc1s")])
 force_equal_weights = false
 force_unique_characters = false
