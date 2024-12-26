@@ -6,6 +6,7 @@ var player_data: Dictionary
 var player_sequence_continue_signals: Dictionary
 var player_perk_page_counts: Dictionary
 var player_spell_page_counts: Dictionary
+var readied_player_peer_ids: Array[int]
 
 
 func init_all_ui_data():
@@ -49,6 +50,8 @@ func start_sequence_for_player(player: Player):
 		_load_spell_page.rpc_id(player.peer_id, spell_types)
 		
 		await player_sequence_continue_signals[player.peer_id]
+	
+	_load_inventory_page.rpc_id(player.peer_id)
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -115,3 +118,39 @@ func _load_spell_page(spell_types: Array[Spells.Type]):
 func _handle_chosen_spell(spell_type: Spells.Type):
 	var player = get_node(player_data["node_path"])
 	player.spell_inventory.set_level.rpc(spell_type, 1)
+
+
+@rpc("authority", "call_local", "reliable")
+func _load_inventory_page():
+	spellbook_ui.spellbook.load_inventory_page(
+		get_node(player_data["node_path"]),
+		func():
+			_ready_player_peer_id.rpc_id(1, player_data["peer_id"])
+	)
+
+
+@rpc("authority", "call_local", "reliable")
+func _load_ready_page():
+	spellbook_ui.spellbook.load_ready_page(
+		func():
+			_unready_player_peer_id.rpc_id(1, player_data["peer_id"])
+	)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _ready_player_peer_id(peer_id: int):
+	if not readied_player_peer_ids.has(peer_id):
+		readied_player_peer_ids.append(peer_id)
+	
+	if readied_player_peer_ids.size() == spellbook_ui.intermission.game_manager.players.size():
+		spellbook_ui.all_players_readied.emit()
+	else:
+		_load_ready_page.rpc_id(peer_id)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _unready_player_peer_id(peer_id: int):
+	if readied_player_peer_ids.has(peer_id):
+		readied_player_peer_ids.erase(peer_id)
+	
+	_load_inventory_page.rpc_id(peer_id)

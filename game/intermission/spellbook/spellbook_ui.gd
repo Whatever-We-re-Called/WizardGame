@@ -1,6 +1,6 @@
 extends IntermissionUI
 
-signal finished
+signal all_players_readied
 signal page_completed
 
 var spellbook: Container

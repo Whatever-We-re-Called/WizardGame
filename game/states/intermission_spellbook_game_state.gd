@@ -9,6 +9,6 @@ func _enter():
 		await get_tree().create_timer(2.5).timeout
 	else:
 		game_scene.intermission.spellbook_ui.setup_online()
-		await game_scene.intermission.spellbook_ui.finished
+		await game_scene.intermission.spellbook_ui.all_players_readied
 	
 	game_scene.transition_to_state("intermissionend")

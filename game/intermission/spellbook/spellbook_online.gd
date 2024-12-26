@@ -26,3 +26,20 @@ func load_spell_page(spell_types: Array[Spells.Type], spell_chosen_callable: Cal
 	spell_page.setup(spell_types)
 	spell_page.spell_chosen.connect(spell_chosen_callable)
 	%PageContainer.add_child(spell_page)
+
+
+func load_inventory_page(player: Player, readied_callable: Callable):
+	_unload_current_page()
+	
+	var inventory_page = preload("res://game/intermission/spellbook/ui_pages/inventory_page.tscn").instantiate()
+	inventory_page.setup(player)
+	inventory_page.readied.connect(readied_callable)
+	%PageContainer.add_child(inventory_page)
+
+
+func load_ready_page(unreadied_callable: Callable):
+	_unload_current_page()
+	
+	var ready_page = preload("res://game/intermission/spellbook/ui_pages/ready_page.tscn").instantiate()
+	ready_page.unreadied.connect(unreadied_callable)
+	%PageContainer.add_child(ready_page)
