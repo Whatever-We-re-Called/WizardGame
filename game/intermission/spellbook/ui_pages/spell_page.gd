@@ -18,7 +18,6 @@ func _populate_spells_list():
 		var spell_resource = Spells.get_spell_resource(spell_type)
 		var spell_icon = spell_resource.icon_texture
 		var spell_name = spell_resource.name
-		var max_spell_level = spell_resource.max_level
 		
 		%SpellsList.add_item(spell_name, spell_icon, true)
 

@@ -12,6 +12,7 @@ func setup_online():
 	_init_online_spellbook_handlers(intermission.game_manager.players)
 	
 	handler.init_all_ui_data()
+	handler.init_all_other_players_page_progress_ui()
 	for player in intermission.game_manager.players:
 		handler.start_sequence_for_player(player)
 

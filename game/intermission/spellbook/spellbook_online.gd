@@ -43,3 +43,39 @@ func load_ready_page(unreadied_callable: Callable):
 	var ready_page = preload("res://game/intermission/spellbook/ui_pages/ready_page.tscn").instantiate()
 	ready_page.unreadied.connect(unreadied_callable)
 	%PageContainer.add_child(ready_page)
+
+
+@rpc("authority", "call_local", "reliable")
+func create_other_players_page_progress_ui(other_players_data: Dictionary):
+	for other_player_data in other_players_data:
+		var other_player_name = other_players_data[other_player_data]["name"]
+		
+		var other_player_page_progress = preload("res://game/intermission/spellbook/online/other_player_page_progress_ui.tscn").instantiate()
+		other_player_page_progress.setup(other_player_name)
+		%OtherPlayerPageProgressContainer.add_child(other_player_page_progress)
+		
+		other_players_data[other_player_data]["ui_node"] = other_player_page_progress
+
+
+func update_page_progress_ui(current_page: int, max_page: int):
+	%PageProgressBar.min_value = 0
+	%PageProgressBar.value = current_page - 1
+	%PageProgressBar.max_value = max_page - 1
+	
+	if current_page == max_page:
+		var ready_fill_style = StyleBoxFlat.new()
+		ready_fill_style.bg_color = Color.GREEN
+		%PageProgressBar.add_theme_stylebox_override("fill", ready_fill_style)
+	else:
+		var in_progress_fill_style = StyleBoxFlat.new()
+		in_progress_fill_style.bg_color = Color.WHITE
+		%PageProgressBar.add_theme_stylebox_override("fill", in_progress_fill_style)
+
+
+#@rpc("any_peer", "call_local", "reliable")
+#func _update_other_player_page_progress_ui(other_player_peer_id: int, current_page: int, max_page: int):
+	#for other_player_data in other_players_data:
+		#var peer_id = other_players_data[other_player_data]["peer_id"]
+		#if peer_id == other_player_peer_id:
+			#var ui_node = other_players_data[other_player_data]["ui_node"]
+			#ui_node.update(current_page, max_page)
