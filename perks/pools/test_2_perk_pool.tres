@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="PerkPool" load_steps=5 format=3 uid="uid://d0lnm22xwxfqf"]
 
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="1_n76te"]
-[ext_resource type="Resource" uid="uid://be50u7oinevqj" path="res://perks/resources/self_buffs/temporary_self_spell_levels_buff_perk.tres" id="3_wpg5w"]
-[ext_resource type="Resource" uid="uid://3vc8b6qfjamk" path="res://perks/resources/opponent_debuffs/temporary_opponents_spell_levels_debuff_perk.tres" id="3_xyyj3"]
+[ext_resource type="Resource" uid="uid://t66n8ko5l1lm" path="res://perks/resources/map/increase_disaster_severity_level_perk.tres" id="2_kfytq"]
+[ext_resource type="Resource" uid="uid://cuqbptpii76c8" path="res://perks/resources/map/spawn_medal_perk.tres" id="3_nat57"]
 [ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="22_hqito"]
 
 [resource]
 script = ExtResource("22_hqito")
-perks = Array[ExtResource("1_n76te")]([ExtResource("3_wpg5w"), ExtResource("3_xyyj3")])
+perks = Array[ExtResource("1_n76te")]([ExtResource("2_kfytq"), ExtResource("3_nat57")])
 force_equal_weights = false
 force_unique_characters = false
