@@ -53,7 +53,7 @@ func _populate_spell_list():
 			var spell_resource = Spells.get_spell_resource(spell_type)
 			var spell_icon = spell_resource.icon_texture
 			var spell_name = spell_resource.name
-			var spell_level = player.spell_inventory.get_true_level(spell_type)
+			var spell_level = player.spell_inventory.get_level(spell_type)
 			var max_spell_level = spell_resource.max_level
 			
 			var text = "%s (Level: %s/%s)" % [spell_name, spell_level, max_spell_level]

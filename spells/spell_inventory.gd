@@ -14,6 +14,7 @@ var extra_spell_page_count: int = 0
 
 var levels = {}
 var temporary_levels = {}
+var temporary_level_bonus = 0
 
 
 func _get_player() -> Player:
@@ -62,6 +63,7 @@ func get_level(type: Spells.Type) -> int:
 		level = max(1, levels.get(type))
 	if temporary_levels.has(type):
 		level = max(1, level + temporary_levels[type])
+	level += temporary_level_bonus
 	return level
 	
 
@@ -71,6 +73,7 @@ func get_true_level(type: Spells.Type) -> int:
 		level = levels.get(type)
 	if temporary_levels.has(type):
 		level += temporary_levels[type]
+	level += temporary_level_bonus
 	return level
 	
 	
@@ -154,8 +157,35 @@ func _add_temporary_levels(amount: int, type: Spells.Type):
 func _remove_temporary_levels(amount: int, type: Spells.Type):
 	var level = temporary_levels.get_or_add(type, 0)
 	temporary_levels[type] = level - amount
-	
-	
+
+
+func clear_temporary_level_bonus():
+	_clear_temporary_level_bonus.rpc()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _clear_temporary_level_bonus():
+	temporary_level_bonus = 0
+
+
+func add_temporary_level_bonus(amount: int):
+	_add_temporary_level_bonus.rpc(amount)
+
+
+func remove_temporary_level_bonus(amount: int):
+	_remove_temporary_level_bonus.rpc(amount)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _add_temporary_level_bonus(amount: int):
+	temporary_level_bonus += amount
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _remove_temporary_level_bonus(amount: int):
+	temporary_level_bonus -= amount
+
+
 @rpc("any_peer", "call_local", "reliable")
 func set_level(type: Spells.Type, level: int):
 	levels[type] = level
