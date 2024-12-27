@@ -63,7 +63,7 @@ func get_level(type: Spells.Type) -> int:
 		level = max(1, levels.get(type))
 	if temporary_levels.has(type):
 		level = max(1, level + temporary_levels[type])
-	level += temporary_level_bonus
+	level = max(1, level + temporary_level_bonus)
 	return level
 	
 
