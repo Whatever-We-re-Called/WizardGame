@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="Perk" load_steps=3 format=3 uid="uid://dv4cpiajexw1j"]
+[gd_resource type="Resource" script_class="Perk" load_steps=4 format=3 uid="uid://dv4cpiajexw1j"]
 
 [ext_resource type="Resource" uid="uid://j6j1fe443u8b" path="res://perks/characters/resources/contracts_perk_character.tres" id="1_0ox60"]
+[ext_resource type="Script" path="res://perks/resources/contracts/health_limit_for_runes_contract_perk.gd" id="2_ui7rh"]
 [ext_resource type="Script" path="res://perks/resources/perk.gd" id="2_w7khn"]
 
 [resource]
@@ -8,4 +9,5 @@ script = ExtResource("2_w7khn")
 character = ExtResource("1_0ox60")
 rank = 0
 description = "Temporarily set your [color=2de8fb]max health[/color] to [color=ea9999]1 [img=20]res://perks/icons/shitty_health_icon.png[/img] Heart[/color], then later receive [color=d5a6bd]+4 [img=20]res://perks/icons/shitty_runes_icon.png[/img] Runes[/color]."
-deactivation_event = 0
+deactivation_event = 1
+execution_script = ExtResource("2_ui7rh")

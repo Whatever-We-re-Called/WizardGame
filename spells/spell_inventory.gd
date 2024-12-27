@@ -14,7 +14,8 @@ var extra_spell_page_count: int = 0
 
 var levels = {}
 var temporary_levels = {}
-var temporary_level_bonus = 0
+var all_level_bonus = 0
+var all_level_override = 0
 
 
 func _get_player() -> Player:
@@ -59,11 +60,14 @@ func has(type: Spells.Type) -> bool:
 	
 func get_level(type: Spells.Type) -> int:
 	var level = 0
-	if levels.has(type):
-		level = max(1, levels.get(type))
-	if temporary_levels.has(type):
-		level = max(1, level + temporary_levels[type])
-	level = max(1, level + temporary_level_bonus)
+	if all_level_override <= 0:
+		if levels.has(type):
+			level = max(1, levels.get(type))
+		if temporary_levels.has(type):
+			level = max(1, level + temporary_levels[type])
+		level = max(1, level + all_level_bonus)
+	else:
+		level = all_level_override
 	return level
 	
 
@@ -73,7 +77,7 @@ func get_true_level(type: Spells.Type) -> int:
 		level = levels.get(type)
 	if temporary_levels.has(type):
 		level += temporary_levels[type]
-	level += temporary_level_bonus
+	level += all_level_bonus
 	return level
 	
 	
@@ -159,31 +163,49 @@ func _remove_temporary_levels(amount: int, type: Spells.Type):
 	temporary_levels[type] = level - amount
 
 
-func clear_temporary_level_bonus():
-	_clear_temporary_level_bonus.rpc()
+func clear_all_level_bonus():
+	_clear_all_level_bonus.rpc()
 
 
 @rpc("any_peer", "call_local", "reliable")
-func _clear_temporary_level_bonus():
-	temporary_level_bonus = 0
+func _clear_all_level_bonus():
+	all_level_bonus = 0
 
 
-func add_temporary_level_bonus(amount: int):
-	_add_temporary_level_bonus.rpc(amount)
+func add_all_level_bonus(amount: int):
+	_add_all_level_bonus.rpc(amount)
 
 
-func remove_temporary_level_bonus(amount: int):
-	_remove_temporary_level_bonus.rpc(amount)
-
-
-@rpc("any_peer", "call_local", "reliable")
-func _add_temporary_level_bonus(amount: int):
-	temporary_level_bonus += amount
+func remove_all_level_bonus(amount: int):
+	_remove_all_level_bonus.rpc(amount)
 
 
 @rpc("any_peer", "call_local", "reliable")
-func _remove_temporary_level_bonus(amount: int):
-	temporary_level_bonus -= amount
+func _add_all_level_bonus(amount: int):
+	all_level_bonus += amount
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _remove_all_level_bonus(amount: int):
+	all_level_bonus -= amount
+
+
+func set_all_level_override(amount: int):
+	_set_all_level_override.rpc(amount)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _set_all_level_override(amount: int):
+	all_level_override = amount
+
+
+func clear_all_level_override():
+	_clear_all_level_override.rpc()
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _clear_all_level_override():
+	all_level_override = 0
 
 
 @rpc("any_peer", "call_local", "reliable")
