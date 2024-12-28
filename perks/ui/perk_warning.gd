@@ -11,7 +11,6 @@ func _get_random_signoff() -> String:
 		"From",
 		"Sincerely",
 		"Yours truly",
-		"Peace",
 		"Fuck you",
 		"Gotta blast",
 		"Good luck",

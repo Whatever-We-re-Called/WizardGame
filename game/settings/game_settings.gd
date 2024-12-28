@@ -8,6 +8,9 @@ class_name GameSettings extends Resource
 @export_category("Perks")
 @export var perk_pool: PerkPool
 @export var default_perk_choice_count: int
+@export_category("Intermission")
+@export var intermission_start_time: float
+@export var intermission_end_time: float
 @export_category("Maps")
 @export var map_pool: Array[PackedScene]
 @export var map_disaster_severity: int
