@@ -9,5 +9,7 @@ script = ExtResource("2_ys6o6")
 character = ExtResource("1_t8wd3")
 rank = 1
 description = "Temporarily weaken all [color=2de8fb]Spells[/color] for [color=2de8fb]all leading players[/color] by [color=a0b4d3]-1 [img=20]res://perks/icons/shitty_spell_level_icon.png[/img] Level[/color]."
+has_warning = true
+warning = "All [color=2de8fb]Spells[/color] for [color=2de8fb]all leading players[/color] have been weakened by [color=a0b4d3]-1 [img=20]res://perks/icons/shitty_spell_level_icon.png[/img] Level[/color]."
 deactivation_event = 1
 execution_script = ExtResource("2_aax2e")

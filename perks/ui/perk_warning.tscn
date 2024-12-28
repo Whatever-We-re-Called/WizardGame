@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dw8t20kpcbd8c"]
+
+[ext_resource type="Script" path="res://perks/ui/perk_warning.gd" id="1_j5es3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mc0dw"]
+font_size = 24
+font_color = Color(0.686275, 0.686275, 0.686275, 1)
+
+[node name="PerkWarning" type="VBoxContainer"]
+script = ExtResource("1_j5es3")
+
+[node name="WarningText" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+text = "All [color=2de8fb]Spells[/color] for [color=2de8fb]all leading players[/color] have been weakened by [color=a0b4d3]-1 [img=20]res://perks/icons/shitty_spell_level_icon.png[/img] Level[/color]."
+fit_content = true
+
+[node name="ExecutorPlayerLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "From, Luicel"
+label_settings = SubResource("LabelSettings_mc0dw")
+horizontal_alignment = 2

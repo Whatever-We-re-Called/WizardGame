@@ -7,9 +7,14 @@ enum Character {
 	SELF_BUFFS, OPPONENT_DEBUFFS, MAP, CONTRACTS 
 }
 
+@export_category("Design")
 @export var character: PerkCharacter
 @export var rank: Rank
 @export_multiline var description: String
+@export_category("Warning")
+@export var has_warning: bool = false
+@export_multiline var warning: String
+@export_category("Execution")
 @export var deactivation_event: DeactivationEvent = DeactivationEvent.NONE
 @export var execution_script: Script
 

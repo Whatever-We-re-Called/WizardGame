@@ -113,6 +113,7 @@ func _handle_chosen_perk(peer_id: int, perk_resource_path: String):
 	var perk = load(perk_resource_path)
 	var player = spellbook_ui.intermission.game_manager.get_player_from_peer_id(peer_id)
 	spellbook_ui.intermission.game_manager.perks_manager.execute_perk(perk, player)
+	spellbook_ui.intermission.add_player_perk_execution(player, perk)
 
 
 func _get_spell_page_count(player: Player):

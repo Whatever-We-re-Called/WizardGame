@@ -9,5 +9,7 @@ script = ExtResource("1_hf0pf")
 character = ExtResource("1_87n8g")
 rank = 0
 description = "Make a [color=f8ae62][img=20]res://perks/icons/shitty_medal_icon.png[/img] Medal[/color] [color=2de8fb]spawn[/color] on the next map."
+has_warning = true
+warning = "A [color=f8ae62][img=20]res://perks/icons/shitty_medal_icon.png[/img] Medal[/color] will [color=2de8fb]spawn[/color] on the next map."
 deactivation_event = 0
 execution_script = ExtResource("2_wie5s")
