@@ -8,5 +8,5 @@
 [resource]
 script = ExtResource("22_hqito")
 perks = Array[ExtResource("1_n76te")]([ExtResource("2_1l7ng"), ExtResource("3_mngc7")])
-force_equal_weights = false
-force_unique_characters = false
+force_equal_weights = null
+force_unique_characters = null

@@ -9,5 +9,7 @@ script = ExtResource("1_g5fe8")
 character = ExtResource("1_35hvk")
 rank = 0
 description = "Temporarily make your [color=e58572][img=20]res://perks/icons/shitty_wand_icon.png[/img] Wand[/color] [color=2de8fb]stronger[/color]."
+has_warning = false
+warning = ""
 deactivation_event = 0
 execution_script = ExtResource("2_gmqw8")

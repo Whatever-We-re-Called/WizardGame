@@ -1,6 +1,6 @@
 class_name PerkPool extends Resource
 
-@export var perks: Array[Perk]
+@export var perks: Array[PerkPoolEntry]
 @export_group("Debug")
 @export var force_equal_weights: bool = false
 @export var force_unique_characters: bool = false

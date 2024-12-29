@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://game/settings/game_settings.gd" id="1_vmk68"]
 [ext_resource type="Resource" uid="uid://bth2d6is5r7sp" path="res://disasters/storm/storm.tres" id="2_yx8np"]
 [ext_resource type="Resource" uid="uid://b6hi1juxbg28i" path="res://disasters/earthquake/earthquake.tres" id="3_qb3uf"]
-[ext_resource type="Resource" uid="uid://d0lnm22xwxfqf" path="res://perks/pools/test_2_perk_pool.tres" id="5_5jkh6"]
+[ext_resource type="Resource" uid="uid://d0lnm22xwxfqf" path="res://perks/pools/resources/test_2_perk_pool.tres" id="5_5jkh6"]
 [ext_resource type="Resource" uid="uid://btdfpesw7jn" path="res://spells/pools/normal_spell_pool.tres" id="7_1t2i0"]
 
 [resource]

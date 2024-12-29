@@ -1,0 +1,124 @@
+[gd_resource type="Resource" script_class="PerkPool" load_steps=41 format=3 uid="uid://cipe06kpee3de"]
+
+[ext_resource type="Script" path="res://perks/pools/perk_pool_entry.gd" id="1_c3ju2"]
+[ext_resource type="Resource" uid="uid://bjxialun5fc4m" path="res://perks/resources/spells/1_spell_page_perk.tres" id="2_kmni8"]
+[ext_resource type="Script" path="res://perks/pools/perk_pool.gd" id="2_r28qo"]
+[ext_resource type="Resource" uid="uid://tfcwg682wlm0" path="res://perks/resources/runes/1_rune_perk.tres" id="3_xgy0m"]
+[ext_resource type="Resource" uid="uid://dxjnndq2f8e7e" path="res://perks/resources/runes/2_runes_perk.tres" id="4_g51t5"]
+[ext_resource type="Resource" uid="uid://hbal6dl1dhny" path="res://perks/resources/runes/3_runes_perk.tres" id="5_avg3y"]
+[ext_resource type="Resource" uid="uid://dd2nlqmg8mr5t" path="res://perks/resources/runes/4_runes_perk.tres" id="6_pkn83"]
+[ext_resource type="Resource" uid="uid://bptie34ql381u" path="res://perks/resources/runes/5_runes_perk.tres" id="7_ayjow"]
+[ext_resource type="Resource" uid="uid://c8xo6yxd7upmt" path="res://perks/resources/health/1_max_health_perk.tres" id="8_kbskl"]
+[ext_resource type="Resource" uid="uid://b6gtgmxl8edw3" path="res://perks/resources/health/2_max_health_perk.tres" id="9_2kyuv"]
+[ext_resource type="Resource" uid="uid://clpwcalxaxo5t" path="res://perks/resources/health/3_max_health_perk.tres" id="10_p6s81"]
+[ext_resource type="Resource" uid="uid://mc1x0de5bmk1" path="res://perks/resources/points/1_survival_bonus_point_perk.tres" id="11_ysk84"]
+[ext_resource type="Resource" uid="uid://l4lv3ceclhqb" path="res://perks/resources/points/2_survival_bonus_points_perk.tres" id="12_v8f2t"]
+[ext_resource type="Resource" uid="uid://ddtuaxsloahay" path="res://perks/resources/points/3_survival_bonus_points_perk.tres" id="13_d34oq"]
+[ext_resource type="Resource" uid="uid://c4inmltl06lo0" path="res://perks/resources/self_buffs/stronger_wand_buff_perk.tres" id="14_tvv4j"]
+[ext_resource type="Resource" uid="uid://be50u7oinevqj" path="res://perks/resources/self_buffs/temporary_self_spell_levels_buff_perk.tres" id="15_jgtfb"]
+[ext_resource type="Resource" uid="uid://3vc8b6qfjamk" path="res://perks/resources/opponent_debuffs/temporary_opponents_spell_levels_debuff_perk.tres" id="16_ya6uh"]
+[ext_resource type="Resource" uid="uid://cuqbptpii76c8" path="res://perks/resources/map/spawn_medal_perk.tres" id="17_xsru2"]
+[ext_resource type="Resource" uid="uid://t66n8ko5l1lm" path="res://perks/resources/map/increase_disaster_severity_level_perk.tres" id="18_web65"]
+[ext_resource type="Resource" uid="uid://dv4cpiajexw1j" path="res://perks/resources/contracts/health_limit_for_runes_contract_perk.tres" id="19_hxtnv"]
+[ext_resource type="Resource" uid="uid://cqkxulqb14obw" path="res://perks/resources/contracts/spell_level_limit_for_spell_levels_contract_perk.tres" id="20_je0y8"]
+
+[sub_resource type="Resource" id="Resource_g4afv"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("2_kmni8")
+group_weights = Array[int]([50, 50, 50, 50, 50, 50])
+
+[sub_resource type="Resource" id="Resource_w1ot0"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("3_xgy0m")
+group_weights = Array[int]([80, 60, 20, 0, 0, 0])
+
+[sub_resource type="Resource" id="Resource_mdx6d"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("4_g51t5")
+group_weights = Array[int]([20, 40, 60, 20, 10, 0])
+
+[sub_resource type="Resource" id="Resource_hsubn"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("5_avg3y")
+group_weights = Array[int]([0, 20, 40, 60, 40, 15])
+
+[sub_resource type="Resource" id="Resource_vp50p"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("6_pkn83")
+group_weights = Array[int]([0, 0, 0, 20, 50, 35])
+
+[sub_resource type="Resource" id="Resource_4e12q"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("7_ayjow")
+group_weights = Array[int]([0, 0, 0, 0, 0, 50])
+
+[sub_resource type="Resource" id="Resource_u6dei"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("8_kbskl")
+group_weights = Array[int]([30, 25, 15, 10, 0, 0])
+
+[sub_resource type="Resource" id="Resource_til0x"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("9_2kyuv")
+group_weights = Array[int]([0, 15, 25, 30, 20, 5])
+
+[sub_resource type="Resource" id="Resource_j162a"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("10_p6s81")
+group_weights = Array[int]([0, 0, 0, 10, 20, 25])
+
+[sub_resource type="Resource" id="Resource_prqvo"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("11_ysk84")
+group_weights = Array[int]([0, 70, 50, 30, 10, 0])
+
+[sub_resource type="Resource" id="Resource_gxew7"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("12_v8f2t")
+group_weights = Array[int]([0, 0, 20, 40, 50, 50])
+
+[sub_resource type="Resource" id="Resource_t025h"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("13_d34oq")
+group_weights = Array[int]([0, 0, 0, 0, 10, 20])
+
+[sub_resource type="Resource" id="Resource_0htcr"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("14_tvv4j")
+group_weights = Array[int]([10, 20, 30, 30, 30, 30])
+
+[sub_resource type="Resource" id="Resource_sgcrc"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("15_jgtfb")
+group_weights = Array[int]([0, 0, 10, 20, 30, 30])
+
+[sub_resource type="Resource" id="Resource_wm4js"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("16_ya6uh")
+group_weights = Array[int]([0, 10, 20, 30, 40, 50])
+
+[sub_resource type="Resource" id="Resource_4qhbd"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("17_xsru2")
+group_weights = Array[int]([30, 30, 30, 30, 30, 30])
+
+[sub_resource type="Resource" id="Resource_vu08u"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("18_web65")
+group_weights = Array[int]([20, 20, 20, 20, 20, 20])
+
+[sub_resource type="Resource" id="Resource_7d37a"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("19_hxtnv")
+group_weights = Array[int]([60, 45, 30, 15, 0, 0])
+
+[sub_resource type="Resource" id="Resource_tp1ci"]
+script = ExtResource("1_c3ju2")
+perk = ExtResource("20_je0y8")
+group_weights = Array[int]([0, 0, 60, 45, 30, 15])
+
+[resource]
+script = ExtResource("2_r28qo")
+perks = Array[ExtResource("1_c3ju2")]([SubResource("Resource_g4afv"), SubResource("Resource_w1ot0"), SubResource("Resource_mdx6d"), SubResource("Resource_hsubn"), SubResource("Resource_vp50p"), SubResource("Resource_4e12q"), SubResource("Resource_u6dei"), SubResource("Resource_til0x"), SubResource("Resource_j162a"), SubResource("Resource_prqvo"), SubResource("Resource_gxew7"), SubResource("Resource_t025h"), SubResource("Resource_0htcr"), SubResource("Resource_sgcrc"), SubResource("Resource_wm4js"), SubResource("Resource_4qhbd"), SubResource("Resource_vu08u"), SubResource("Resource_7d37a"), SubResource("Resource_tp1ci")])
+force_equal_weights = false
+force_unique_characters = false
