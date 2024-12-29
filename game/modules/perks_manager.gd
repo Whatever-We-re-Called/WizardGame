@@ -40,7 +40,7 @@ func increment_player_perk_pool_strengths():
 
 func reset_player_perk_pool_strengths():
 	for player in game_manager.players:
-		player_perk_pool_strengths[player] = 0
+		player_perk_pool_strengths[player] = 1
 
 
 func _get_player_group_by_distance(player: Player):
@@ -48,7 +48,7 @@ func _get_player_group_by_distance(player: Player):
 	
 	var group = 1
 	for minimum_distance in game_manager.game_settings.perk_pool.group_minimum_distances:
-		if score_difference <= minimum_distance:
+		if minimum_distance <= score_difference:
 			break
 		else:
 			group += 1
@@ -57,13 +57,12 @@ func _get_player_group_by_distance(player: Player):
 
 
 func _get_player_perk_pool_group(player: Player):
-	var group_by_perk_pool_strength = ceil(player_perk_pool_strengths[player])
+	var group_by_perk_pool_strength = floor(player_perk_pool_strengths[player])
 	var group_by_distance = _get_player_group_by_distance(player)
 	return max(group_by_perk_pool_strength, group_by_distance)
 
 
 func get_weighted_perks_from_pool(player: Player, perk_count: int):
-	print(player.get_display_name(), " - Group Used: ", _get_player_perk_pool_group(player))
 	return game_manager.game_settings.perk_pool.get_weighted_random_perks(
 		3, _get_player_perk_pool_group(player), false
 	)

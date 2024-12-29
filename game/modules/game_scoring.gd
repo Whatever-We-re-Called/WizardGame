@@ -75,7 +75,6 @@ func set_survival_bonus(player: Player, bonus: int):
 
 
 func add_survival_bonus(player: Player, added_bonus: int):
-	print("Added survival bonus: ", player.name, " ", added_bonus)
 	if active_survival_bonuses.has(player):
 		active_survival_bonuses[player] += added_bonus
 	else:
@@ -92,7 +91,6 @@ func clear_survival_bonuses():
 
 
 func add_player_score(player: Player, added_score: int):
-	print("Added player score: ", player.name, " ", added_score)
 	if player_scores.has(player):
 		player_scores[player] += added_score
 	else:

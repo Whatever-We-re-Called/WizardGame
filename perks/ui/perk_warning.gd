@@ -1,21 +1,6 @@
 extends VBoxContainer
 
 
-func populate(warning_text: String, executor_player_name: String):
+func populate(warning_text: String, executor_player_name: String, funny_signoff: String):
 	%WarningText.text = warning_text
-	%ExecutorPlayerLabel.text = "%s, %s" % [_get_random_signoff(), executor_player_name]
-
-
-func _get_random_signoff() -> String:
-	var options = [
-		"From",
-		"Sincerely",
-		"Yours truly",
-		"Fuck you",
-		"Gotta blast",
-		"Good luck",
-		"See you in hell",
-		"Hugs and kisses",
-		"Stay classy",
-	]
-	return options[randi_range(0, options.size() - 1)]
+	%ExecutorPlayerLabel.text = "%s, %s" % [funny_signoff, executor_player_name]
