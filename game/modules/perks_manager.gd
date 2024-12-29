@@ -63,7 +63,7 @@ func _get_player_perk_pool_group(player: Player):
 
 
 func get_weighted_perks_from_pool(player: Player, perk_count: int):
-	print(":D ", _get_player_perk_pool_group(player))
+	print(player.get_display_name(), " - Group Used: ", _get_player_perk_pool_group(player))
 	return game_manager.game_settings.perk_pool.get_weighted_random_perks(
 		3, _get_player_perk_pool_group(player), false
 	)

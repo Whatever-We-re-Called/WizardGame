@@ -10,49 +10,49 @@ class_name PerkPool extends Resource
 func get_weighted_random_perks(quantity: int, group: int, allow_repeat_characters: bool) -> Array[Perk]:
 	var result: Array[Perk]
 	
+	var perk_entry_weights = _get_perk_entry_weights(group)
 	for i in range(quantity):
-		var perk_weights = _get_perk_weights(group)
 		var total_weight = 0
 		var cumulative_weights = []
-		for perk in perk_weights:
-			var weight = perk_weights[perk]
+		for perk_entry in perk_entry_weights:
+			var weight = perk_entry_weights[perk_entry]
 			total_weight += weight
 			cumulative_weights.append(total_weight)
 		
 		var random_value = randi_range(0, total_weight - 1)
 		
 		for j in range(cumulative_weights.size()):
-			var perk = perk_weights.keys()[j]
+			var perk_entry = perk_entry_weights.keys()[j]
 			if random_value < cumulative_weights[j]:
-				result.append(perk)
-				perk_weights.erase(perk)
+				result.append(perk_entry.perk)
+				perk_entry_weights.erase(perk_entry)
 				if allow_repeat_characters == false:
-					perk_weights = _remove_character_from_perk_weights(perk_weights, perk.character)
+					perk_entry_weights = _remove_character_from_perk_entry_weights(perk_entry_weights, perk_entry.perk.character)
+				
+				break
 	
-	print(result)
 	return result
 
 
-func _get_perk_weights(group: int) -> Dictionary:
-	var perk_weights: Dictionary
+func _get_perk_entry_weights(group: int) -> Dictionary:
+	var perk_entry_weights: Dictionary
 	for perk in perks:
-		if perk.group_weights.size() > group: continue
+		if group > perk.group_weights.size(): continue
 		
 		var weight = perk.group_weights[group - 1]
 		if weight > 0:
-			perk_weights[perk] = weight
+			perk_entry_weights[perk] = weight
 	
-	return perk_weights
+	return perk_entry_weights
 
 
-func _remove_character_from_perk_weights(perk_weights: Dictionary, character: PerkCharacter) -> Dictionary:
-	var size = perk_weights.size()
-	for i in range(size):
-		var perk = perk_weights.keys()[i]
-		if perk_weights.keys()[i].character == character:
-			perk_weights.erase(perk)
+func _remove_character_from_perk_entry_weights(perk_entry_weights: Dictionary, character: PerkCharacter) -> Dictionary:
+	var perk_entry_weights_copy = perk_entry_weights.duplicate()
+	for perk_entry in perk_entry_weights_copy:
+		if perk_entry.perk.character == character:
+			perk_entry_weights.erase(perk_entry)
 	
-	return perk_weights
+	return perk_entry_weights
 
 
 func get_completely_random_perks(quantity: int, allow_repeat_characters: bool) -> Array[Perk]:
