@@ -119,6 +119,7 @@ group_weights = Array[int]([0, 0, 60, 45, 30, 15])
 
 [resource]
 script = ExtResource("2_r28qo")
+group_minimum_distances = Array[int]([0, 3, 6, 9, 12, 15])
 perks = Array[ExtResource("1_c3ju2")]([SubResource("Resource_g4afv"), SubResource("Resource_w1ot0"), SubResource("Resource_mdx6d"), SubResource("Resource_hsubn"), SubResource("Resource_vp50p"), SubResource("Resource_4e12q"), SubResource("Resource_u6dei"), SubResource("Resource_til0x"), SubResource("Resource_j162a"), SubResource("Resource_prqvo"), SubResource("Resource_gxew7"), SubResource("Resource_t025h"), SubResource("Resource_0htcr"), SubResource("Resource_sgcrc"), SubResource("Resource_wm4js"), SubResource("Resource_4qhbd"), SubResource("Resource_vu08u"), SubResource("Resource_7d37a"), SubResource("Resource_tp1ci")])
 force_equal_weights = false
 force_unique_characters = false

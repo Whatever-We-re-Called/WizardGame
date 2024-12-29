@@ -64,6 +64,12 @@ func get_highest_player_score() -> int:
 		return 0
 
 
+func get_score_difference_from_leading(player: Player):
+	var leading_score = get_player_score(get_leading_players()[0])
+	var player_score = get_player_score(player)
+	return abs(leading_score - player_score)
+
+
 func set_survival_bonus(player: Player, bonus: int):
 	active_survival_bonuses[player] = bonus
 

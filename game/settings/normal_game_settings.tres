@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://game/settings/game_settings.gd" id="1_vmk68"]
 [ext_resource type="Resource" uid="uid://bth2d6is5r7sp" path="res://disasters/storm/storm.tres" id="2_yx8np"]
 [ext_resource type="Resource" uid="uid://b6hi1juxbg28i" path="res://disasters/earthquake/earthquake.tres" id="3_qb3uf"]
-[ext_resource type="Resource" uid="uid://d0lnm22xwxfqf" path="res://perks/pools/resources/test_2_perk_pool.tres" id="5_5jkh6"]
+[ext_resource type="Resource" uid="uid://cipe06kpee3de" path="res://perks/pools/resources/normal_perk_pool.tres" id="5_2nxv5"]
 [ext_resource type="Resource" uid="uid://btdfpesw7jn" path="res://spells/pools/normal_spell_pool.tres" id="7_1t2i0"]
 
 [resource]
@@ -13,7 +13,7 @@ script = ExtResource("1_vmk68")
 goal_score = 25
 spell_pool = ExtResource("7_1t2i0")
 default_spell_page_count = 0
-perk_pool = ExtResource("5_5jkh6")
+perk_pool = ExtResource("5_2nxv5")
 default_perk_choice_count = 1
 intermission_start_time = 2.5
 intermission_end_time = 7.5

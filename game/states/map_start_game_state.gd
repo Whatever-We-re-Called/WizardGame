@@ -2,6 +2,8 @@ extends GameState
 
 
 func _enter():
+	game_scene.game_manager.map_number += 1
+	
 	game_scene.load_random_map.rpc_id(1)
 	
 	game_scene.current_disaster_number = 1

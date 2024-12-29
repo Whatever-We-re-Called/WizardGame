@@ -4,6 +4,8 @@ var countdown: float
 
 
 func _enter():
+	game_scene.game_manager.perks_manager.increment_player_perk_pool_strengths()
+	
 	countdown = game_scene.game_manager.game_settings.time_after_last_disaster
 	game_scene.game_manager.perks_manager.perform_deactivation_event(Perk.DeactivationEvent.ON_MAP_END)
 	

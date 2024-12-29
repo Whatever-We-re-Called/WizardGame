@@ -9,6 +9,8 @@ class_name GameManager extends Node
 @onready var game_scene: GameManagerModule = %GameScene
 @onready var pause_manager: GameManagerModule = %PauseManager
 
+var map_number: int = 0
+
 var players: Array[Player]:
 	get:
 		var result: Array[Player]

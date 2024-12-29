@@ -55,7 +55,7 @@ func start_sequence_for_player(player: Player):
 	while player_perk_page_counts[player.peer_id] > 0:
 		player_perk_page_counts[player.peer_id] -= 1
 		
-		var perk_resources = _get_generated_perk_resources()
+		var perk_resources = _get_generated_perk_resources(player)
 		_load_perk_page.rpc_id(player.peer_id, perk_resources)
 		
 		await player_sequence_continue_signals[player.peer_id]
@@ -82,8 +82,8 @@ func _get_perk_page_count(player: Player):
 	return spellbook_ui.intermission.game_manager.perks_manager.get_player_perk_choice_count(player)
 
 
-func _get_generated_perk_resources() -> Array[String]:
-	var perks = spellbook_ui.intermission.game_manager.game_settings.perk_pool.get_random_perks(3, false)
+func _get_generated_perk_resources(player: Player) -> Array[String]:
+	var perks = spellbook_ui.intermission.game_manager.perks_manager.get_weighted_perks_from_pool(player, 3)
 	
 	var perk_resources: Array[String]
 	for perk in perks:
