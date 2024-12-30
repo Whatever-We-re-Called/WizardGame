@@ -6,7 +6,7 @@ signal received_debug_input(int)
 
 @export var controller: PlayerController
 
-@onready var sprite_2d: Sprite2D = %Sprite2D
+@onready var sprite = %Sprite
 @onready var center_point = %CenterPoint
 @onready var change_abilities_ui: CenterContainer = $CanvasLayer/ChangeAbilitiesUI
 @onready var player_collision_shape_2d: CollisionShape2D = %PlayerCollisionShape2D

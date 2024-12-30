@@ -2,6 +2,8 @@ extends Node
 class_name PlayerController
 
 signal paused
+signal changed_directions
+signal jumped
 
 @onready var player: CharacterBody2D = $".."
 
@@ -145,6 +147,8 @@ func _handle_jump():
 		player.velocity.y = jump_velocity
 		jump_buffer.stop()
 		coyote_timer.stop()
+		
+		jumped.emit()
 
 
 func _handle_abilities(delta):
