@@ -15,7 +15,7 @@ spawn_points = NodePath("SpawnPoints")
 [node name="SpawnPoints" parent="." instance=ExtResource("1_qggt3")]
 
 [node name="Node2D" type="Node2D" parent="SpawnPoints"]
-position = Vector2(960, 800)
+position = Vector2(816, 360)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(960, 540)

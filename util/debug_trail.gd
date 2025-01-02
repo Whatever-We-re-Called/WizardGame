@@ -17,7 +17,6 @@ func _ready():
 
 
 func _process(delta: float):
-	print(global_position)
 	tracked_points.append(tracking_object.global_position)
 	
 	if tracked_points.size() > max_points:

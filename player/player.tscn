@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=22 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
@@ -6,9 +6,11 @@
 [ext_resource type="SpineAtlasResource" uid="uid://cmvt7h3elxn42" path="res://player/skeleton/skeleton.atlas" id="3_13sri"]
 [ext_resource type="SpineSkeletonFileResource" uid="uid://dwru4sldg1sqc" path="res://player/skeleton/skeleton.skel" id="4_lsioy"]
 [ext_resource type="Script" path="res://spells/spell_inventory.gd" id="5_3pvpi"]
+[ext_resource type="Script" path="res://player/controller/states/normal_player_controller_state.gd" id="6_1vpao"]
+[ext_resource type="Script" path="res://player/controller/components/gravity_component.gd" id="6_7hnky"]
 [ext_resource type="Script" path="res://player/player_sync.gd" id="6_kovcd"]
-[ext_resource type="Script" path="res://player/animations/player_animations.gd" id="6_tce3u"]
-[ext_resource type="Script" path="res://util/debug_movement_lines.gd" id="9_ywuto"]
+[ext_resource type="Script" path="res://player/controller/components/movement_component.gd" id="7_lvp7s"]
+[ext_resource type="Script" path="res://util/debug_trail.gd" id="9_ywuto"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_03ctb"]
 font_size = 48
@@ -237,9 +239,9 @@ unique_name_in_owner = true
 position = Vector2(-5.2, 73.375)
 skeleton_data_res = SubResource("SpineSkeletonDataResource_bfyds")
 preview_skin = "Default"
-preview_animation = "-- Empty --"
-preview_frame = false
-preview_time = 0.0
+preview_animation = "jump"
+preview_frame = true
+preview_time = 0.21
 
 [node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -255,22 +257,23 @@ offset_right = 75.0
 offset_bottom = -72.0
 bbcode_enabled = true
 
-[node name="PlayerController" type="Node" parent="."]
+[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("states_node")]
 process_mode = 3
 script = ExtResource("2_ist2s")
-jump_velocity = -1100.0
-coyote_time = 0.075
-jump_buffer_time = 0.1
-gravity_scale = 350.0
-movement_speed = 650.0
-ground_acceleration = 2500.0
-ground_friction = 6000.0
-ground_slide_friction = 30000.0
-air_acceleration = 2500.0
-air_friction = 4000.0
+states_node = NodePath("../PlayerControllerStates")
 
-[node name="PlayerAnimations" type="Node" parent="."]
-script = ExtResource("6_tce3u")
+[node name="GravityComponent" type="Node" parent="PlayerController"]
+script = ExtResource("6_7hnky")
+gravity = 1000.0
+
+[node name="MovementComponent" type="Node" parent="PlayerController"]
+script = ExtResource("7_lvp7s")
+speed = 400.0
+
+[node name="PlayerControllerStates" type="Node" parent="."]
+
+[node name="Normal" type="Node" parent="PlayerControllerStates"]
+script = ExtResource("6_1vpao")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.15
@@ -287,6 +290,8 @@ script = ExtResource("5_3pvpi")
 unique_name_in_owner = true
 script = ExtResource("6_kovcd")
 
-[node name="DebugMovementLines" type="Line2D" parent="."]
+[node name="DebugTrail" type="Line2D" parent="."]
 width = 5.0
+default_color = Color(1, 0, 0, 1)
 script = ExtResource("9_ywuto")
+max_points = 175
