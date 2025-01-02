@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=20 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://spells/spell_inventory.gd" id="5_3pvpi"]
 [ext_resource type="Script" path="res://player/player_sync.gd" id="6_kovcd"]
 [ext_resource type="Script" path="res://player/animations/player_animations.gd" id="6_tce3u"]
+[ext_resource type="Script" path="res://util/debug_movement_lines.gd" id="9_ywuto"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_03ctb"]
 font_size = 48
@@ -285,3 +286,7 @@ script = ExtResource("5_3pvpi")
 [node name="Sync" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("6_kovcd")
+
+[node name="DebugMovementLines" type="Line2D" parent="."]
+width = 5.0
+script = ExtResource("9_ywuto")

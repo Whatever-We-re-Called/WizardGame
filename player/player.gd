@@ -5,6 +5,8 @@ signal paused
 signal received_debug_input(int)
 
 @export var controller: PlayerController
+@export_group("Debug")
+@export var show_movement_lines: bool
 
 @onready var sprite = %Sprite
 @onready var center_point = %CenterPoint

@@ -2,6 +2,8 @@ extends Node
 
 @onready var player = get_parent() as Player
 
+# TODO I will work on getting this working while I am refactoring
+# everything else.
 
 func _ready():
 	_setup_movement_animations()
@@ -13,10 +15,11 @@ func _setup_movement_animations():
 
 
 func _setup_jump_animations():
-	player.controller.jumped.connect(
-		func():
-			_set_animation("jump", false)
-	)
+	pass
+	#player.controller.jumped.connect(
+		#func():
+			#_set_animation("jump", false)
+	#)
 
 
 func _process(delta: float):
