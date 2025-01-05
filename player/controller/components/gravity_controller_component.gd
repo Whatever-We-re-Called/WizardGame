@@ -1,4 +1,4 @@
-class_name GravityComponent extends Node
+extends Node
 
 @export var gravity: float
 

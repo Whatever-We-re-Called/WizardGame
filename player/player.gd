@@ -5,8 +5,6 @@ signal paused
 signal received_debug_input(int)
 
 @export var controller: PlayerController
-@export_group("Debug")
-@export var show_movement_lines: bool
 
 @onready var sprite = %Sprite
 @onready var center_point = %CenterPoint
@@ -80,10 +78,6 @@ func _physics_process(delta):
 
 func get_center_global_position() -> Vector2:
 	return center_point.global_position
-
-
-func get_direction() -> Vector2:
-	return controller.previous_input_direction
 
 
 func get_peer_id() -> int:

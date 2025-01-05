@@ -45,6 +45,10 @@ window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 
+[editor]
+
+run/main_run_args="--host"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gdDelaunay/plugin.cfg", "res://addons/rigidbody_auto_scaler/plugin.cfg")

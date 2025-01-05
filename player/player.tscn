@@ -1,15 +1,17 @@
-[gd_scene load_steps=22 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=24 format=3 uid="uid://5kswkk5balu6"]
 
-[ext_resource type="Script" path="res://player/player.gd" id="1_v4k2b"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_y7oif"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
 [ext_resource type="Script" path="res://player/change_abilities_ui.gd" id="2_ojypj"]
 [ext_resource type="SpineAtlasResource" uid="uid://cmvt7h3elxn42" path="res://player/skeleton/skeleton.atlas" id="3_13sri"]
 [ext_resource type="SpineSkeletonFileResource" uid="uid://dwru4sldg1sqc" path="res://player/skeleton/skeleton.skel" id="4_lsioy"]
 [ext_resource type="Script" path="res://spells/spell_inventory.gd" id="5_3pvpi"]
 [ext_resource type="Script" path="res://player/controller/states/normal_player_controller_state.gd" id="6_1vpao"]
-[ext_resource type="Script" path="res://player/controller/components/gravity_component.gd" id="6_7hnky"]
+[ext_resource type="Script" path="res://player/controller/components/gravity_controller_component.gd" id="6_7hnky"]
 [ext_resource type="Script" path="res://player/player_sync.gd" id="6_kovcd"]
-[ext_resource type="Script" path="res://player/controller/components/movement_component.gd" id="7_lvp7s"]
+[ext_resource type="Script" path="res://player/controller/components/movement_controller_component.gd" id="7_lvp7s"]
+[ext_resource type="Script" path="res://player/controller/components/jump_controller_component.gd" id="8_s8y2f"]
+[ext_resource type="Script" path="res://player/controller/components/animation_controller_component.gd" id="8_saelb"]
 [ext_resource type="Script" path="res://util/debug_trail.gd" id="9_ywuto"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_03ctb"]
@@ -49,7 +51,7 @@ collision_layer = 16
 collision_mask = 5
 floor_max_angle = 1.0472
 floor_snap_length = 16.0
-script = ExtResource("1_v4k2b")
+script = ExtResource("1_y7oif")
 controller = NodePath("PlayerController")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -262,13 +264,20 @@ process_mode = 3
 script = ExtResource("2_ist2s")
 states_node = NodePath("../PlayerControllerStates")
 
-[node name="GravityComponent" type="Node" parent="PlayerController"]
+[node name="AnimationControllerComponent" type="Node" parent="PlayerController"]
+script = ExtResource("8_saelb")
+
+[node name="GravityControllerComponent" type="Node" parent="PlayerController"]
 script = ExtResource("6_7hnky")
 gravity = 1000.0
 
-[node name="MovementComponent" type="Node" parent="PlayerController"]
+[node name="MovementControllerComponent" type="Node" parent="PlayerController"]
 script = ExtResource("7_lvp7s")
 speed = 400.0
+
+[node name="JumpControllerComponent" type="Node" parent="PlayerController"]
+script = ExtResource("8_s8y2f")
+jump_strength = -600.0
 
 [node name="PlayerControllerStates" type="Node" parent="."]
 

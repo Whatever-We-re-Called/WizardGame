@@ -1,13 +1,14 @@
-extends Node
-class_name PlayerController
+class_name PlayerController extends Node
 
 signal paused
 
 @export var states_node: Node
 
 @onready var player: Player = get_parent()
-@onready var gravity_component: GravityComponent = $GravityComponent
-@onready var movement_component: MovementComponent = $MovementComponent
+@onready var animation_component = $AnimationControllerComponent
+@onready var gravity_component = $GravityControllerComponent
+@onready var movement_component = $MovementControllerComponent
+@onready var jump_component = $JumpControllerComponent
 
 var current_state: PlayerControllerState
 var states: Dictionary
