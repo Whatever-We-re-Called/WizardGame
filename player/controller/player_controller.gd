@@ -76,8 +76,6 @@ func handle_post_physics(delta):
 
 func _get_frame_input() -> FrameInput:
 	var frame_input = FrameInput.new()
-	frame_input.is_jump_just_pressed = Input.is_action_just_pressed(player.im.jump)
-	frame_input.is_jump_pressed = Input.is_action_pressed(player.im.jump)
 	frame_input.input_direction = Input.get_vector(
 		player.im.move_left,
 		player.im.move_right, 
@@ -88,8 +86,6 @@ func _get_frame_input() -> FrameInput:
 
 
 class FrameInput:
-	var is_jump_just_pressed: bool
-	var is_jump_pressed: bool
 	var input_direction: Vector2
 
 

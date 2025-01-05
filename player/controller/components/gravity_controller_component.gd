@@ -12,4 +12,6 @@ func handle_gravity(body: CharacterBody2D, delta: float):
 		# the exception of gravity! So its handled here.
 		body.velocity.y += gravity * delta
 	
+	print(body.get_floor_angle())
+	
 	is_falling = body.velocity.y > 0 and body.is_on_floor() == false
