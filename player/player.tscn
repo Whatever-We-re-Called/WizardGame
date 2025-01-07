@@ -275,14 +275,14 @@ terminal_gravity = 2500.0
 [node name="MovementControllerComponent" type="Node" parent="PlayerController"]
 script = ExtResource("7_lvp7s")
 speed = 550.0
-floor_acceleration_speed = 72.0
+floor_acceleration_speed = 80.0
 floor_deceleration_speed = 96.0
 air_acceleration_speed = 120.0
 air_deceleration_speed = 36.0
 
 [node name="JumpControllerComponent" type="Node" parent="PlayerController"]
 script = ExtResource("8_s8y2f")
-jump_strength = -800.0
+jump_strength = -850.0
 wall_jump_strength = Vector2(-1300, -700)
 jump_buffer_time = 0.1
 coyote_time = 0.08
