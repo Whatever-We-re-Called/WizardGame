@@ -285,16 +285,15 @@ script = ExtResource("8_s8y2f")
 jump_strength = -850.0
 wall_jump_strength = Vector2(-1300, -700)
 jump_buffer_time = 0.1
-coyote_time = 0.08
+jump_coyote_time = 0.08
+wall_jump_coyote_time = 0.125
 
 [node name="PlayerControllerStates" type="Node" parent="."]
 
 [node name="Normal" type="Node" parent="PlayerControllerStates"]
 script = ExtResource("6_1vpao")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.15
-one_shot = true
+[node name="Dive" type="Node" parent="PlayerControllerStates"]
 
 [node name="SpellNodes" type="Node" parent="."]
 unique_name_in_owner = true
