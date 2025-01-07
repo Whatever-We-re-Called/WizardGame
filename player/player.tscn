@@ -43,14 +43,13 @@ atlas_res = ExtResource("3_13sri")
 skeleton_file_res = ExtResource("4_lsioy")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ehwds"]
-radius = 36.0
+radius = 24.0
 height = 144.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("controller")]
 collision_layer = 16
 collision_mask = 5
-floor_max_angle = 1.0472
-floor_snap_length = 16.0
+floor_snap_length = 8.0
 script = ExtResource("1_y7oif")
 controller = NodePath("PlayerController")
 
@@ -238,12 +237,12 @@ layout_mode = 2
 
 [node name="Sprite" type="SpineSprite" parent="."]
 unique_name_in_owner = true
-position = Vector2(-5.2, 73.375)
+position = Vector2(0, 73.375)
 skeleton_data_res = SubResource("SpineSkeletonDataResource_bfyds")
 preview_skin = "Default"
-preview_animation = "jump"
+preview_animation = "-- Empty --"
 preview_frame = true
-preview_time = 0.21
+preview_time = 0.0
 
 [node name="PlayerCollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
