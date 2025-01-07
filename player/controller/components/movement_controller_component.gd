@@ -1,4 +1,4 @@
-extends Node
+class_name MovementControllerComponent extends Node
 
 @export var speed: float
 @export var floor_acceleration_speed: float

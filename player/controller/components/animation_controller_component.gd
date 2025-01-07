@@ -1,4 +1,4 @@
-extends Node
+class_name AnimationControllerComponent extends Node
 
 
 @rpc("any_peer", "call_local", "reliable")

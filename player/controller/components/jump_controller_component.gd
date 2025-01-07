@@ -1,6 +1,7 @@
 extends Node
 
 @export var jump_strength: float
+@export var wall_jump_strength: Vector2
 @export var jump_buffer_time: float
 @export var coyote_time: float
 
@@ -18,6 +19,8 @@ func handle_jump(body: CharacterBody2D, wants_to_jump: bool, released_jump: bool
 	
 	if _is_allowed_to_jump(body, wants_to_jump):
 		_execute_jump(body)
+	
+	_try_to_wall_jump(body, wants_to_jump)
 	
 	_handle_coyote_time(body)
 	_handle_jump_buffer(body, wants_to_jump)
@@ -41,6 +44,15 @@ func _execute_jump(body: CharacterBody2D):
 	
 	jump_buffer_timer.stop()
 	coyote_timer.stop()
+
+
+func _try_to_wall_jump(body: CharacterBody2D, wants_to_jump: bool):
+	if body.is_on_wall_only() and wants_to_jump:
+		var wall_normal = body.get_wall_normal()
+		body.velocity = Vector2(
+			wall_jump_strength.x * -wall_normal.x,
+			wall_jump_strength.y
+		)
 
 
 func _handle_coyote_time(body: CharacterBody2D):
