@@ -2,7 +2,6 @@ class_name Player extends CharacterBody2D
 
 signal killed(int)
 signal paused
-signal received_debug_input(int)
 
 @export var controller: PlayerController
 
@@ -70,7 +69,6 @@ func _physics_process(delta):
 		return
 	
 	if controller != null:
-		controller.handle_debug_inputs()
 		if not is_dead:
 			controller.handle_pre_physics(delta)
 			controller.handle_physics(delta)

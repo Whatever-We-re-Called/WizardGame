@@ -46,7 +46,6 @@ func _add_player_nodes(data: Dictionary) -> Player:
 func _handle_add_player_signals(target_peer_id: int):
 	var target_player = game_manager.get_player_from_peer_id(target_peer_id)
 	target_player.killed.connect(game_manager.game_scene._on_player_killed)
-	target_player.received_debug_input.connect(game_manager._on_player_received_debug_input)
 	target_player.controller.paused.connect(game_manager.pause_manager.toggle_pause)
 
 

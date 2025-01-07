@@ -15,17 +15,15 @@ var move_right = DefaultMappings.new([_keyboard(KEY_D)], [_axis(JOY_AXIS_LEFT_X,
 var move_up = DefaultMappings.new([_keyboard(KEY_W)], [_axis(JOY_AXIS_LEFT_Y, -0.3)])
 var move_down = DefaultMappings.new([_keyboard(KEY_S)], [_axis(JOY_AXIS_LEFT_Y, 0.3)])
 var jump = DefaultMappings.new([_keyboard(KEY_SPACE)], [_controller(JOY_BUTTON_A)])
-var use_spell_1 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_LEFT)], [_controller(JOY_BUTTON_X)])
-var use_spell_2 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_MIDDLE)], [_controller(JOY_BUTTON_Y)])
-var use_spell_3 = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_RIGHT)], [_controller(JOY_BUTTON_B)])
-var change_abilities = DefaultMappings.new([_keyboard(KEY_E)], [_controller(JOY_BUTTON_RIGHT_SHOULDER)])
+var use_spell = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_LEFT)], [_controller(JOY_BUTTON_X)])
+var select_spell_slot_1 = DefaultMappings.new([_keyboard(KEY_1)], [_controller(JOY_BUTTON_DPAD_LEFT)])
+var select_spell_slot_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(JOY_BUTTON_DPAD_UP)])
+var select_spell_slot_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DPAD_RIGHT)])
+var select_next_spell_slot = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_WHEEL_DOWN)], [_controller(JOY_BUTTON_RIGHT_SHOULDER)])
+var select_previous_spell_slot = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_WHEEL_UP)], [_controller(JOY_BUTTON_LEFT_SHOULDER)])
 var pause = DefaultMappings.new([_keyboard(KEY_ESCAPE)], [_controller(JOY_BUTTON_START)])
 var invite_friend = DefaultMappings.new([], [_controller(JOY_BUTTON_DPAD_DOWN)])
-var debug_1 = DefaultMappings.new([_keyboard(KEY_1)], [_controller(JOY_BUTTON_DPAD_UP)])
-var debug_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(JOY_BUTTON_DPAD_RIGHT)])
-var debug_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DPAD_DOWN)])
-var debug_4 = DefaultMappings.new([_keyboard(KEY_4)], [_controller(JOY_BUTTON_DPAD_LEFT)])
-var debug_tab = DefaultMappings.new([_keyboard(KEY_TAB)], [_controller(JOY_BUTTON_LEFT_SHOULDER)])
+
 
 
 func _init(player: Node, peer_id: int, device_ids: Array):

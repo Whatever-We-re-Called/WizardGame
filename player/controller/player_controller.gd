@@ -9,10 +9,12 @@ signal paused
 @onready var gravity_component = $GravityControllerComponent
 @onready var movement_component = $MovementControllerComponent
 @onready var jump_component = $JumpControllerComponent
+@onready var spells_component: SpellsControllerComponent = $SpellsControllerComponent
 
 var current_state: PlayerControllerState
 var states: Dictionary
 var freeze_input: bool = false
+var selected_spell_slot: int = 1
 
 
 func _ready():
@@ -50,7 +52,7 @@ func _process(delta: float) -> void:
 	
 	current_state._handle_process(delta)
 	_handle_pause()
-	_handle_ui()
+	#_handle_ui()
 
 
 func handle_pre_physics(delta):
@@ -73,27 +75,9 @@ func _handle_pause():
 		paused.emit()
 
 
-func _handle_ui():
-	if Input.is_action_just_pressed(player.im.change_abilities):
-		player.change_abilities_ui.toggle()
-
-
-func handle_abilities(delta):
-	for spell in player.spell_inventory.equipped_spells:
-		spell.process(delta)
-
-
-func handle_debug_inputs():
-	if Input.is_action_just_pressed(player.im.debug_1):
-		player.received_debug_input.emit(1)
-	if Input.is_action_just_pressed(player.im.debug_2):
-		player.received_debug_input.emit(2)
-	if Input.is_action_just_pressed(player.im.debug_3):
-		player.received_debug_input.emit(3)
-	if Input.is_action_just_pressed(player.im.debug_4):
-		player.received_debug_input.emit(4)
-	if Input.is_action_just_pressed(player.im.debug_tab):
-		player.received_debug_input.emit(5)
+#func _handle_ui():
+	#if Input.is_action_just_pressed(player.im.change_abilities):
+		#player.change_abilities_ui.toggle()
 
 
 func get_pointer_direction() -> Vector2:
@@ -104,3 +88,24 @@ func get_pointer_direction() -> Vector2:
 			return player.get_direction()
 		_:
 			return Vector2.ZERO
+
+
+func get_selected_spells_execution() -> SpellExecution:
+	return player.spell_inventory.equipped_spells[selected_spell_slot - 1]
+
+
+func update_selected_spell_slot():
+	if Input.is_action_just_pressed(player.im.select_spell_slot_1):
+		selected_spell_slot = 1
+	elif Input.is_action_just_pressed(player.im.select_spell_slot_2):
+		selected_spell_slot = 2
+	elif Input.is_action_just_pressed(player.im.select_spell_slot_3):
+		selected_spell_slot = 3
+	elif Input.is_action_just_pressed(player.im.select_next_spell_slot):
+		_increment_selected_spell_slot(1)
+	elif Input.is_action_just_pressed(player.im.select_spell_slot_3):
+		_increment_selected_spell_slot(-1)
+
+
+func _increment_selected_spell_slot(increment_value: int):
+	selected_spell_slot = ((selected_spell_slot + increment_value - 1) % 3) + 1

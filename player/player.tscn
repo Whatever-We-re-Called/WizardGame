@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://5kswkk5balu6"]
+[gd_scene load_steps=25 format=3 uid="uid://5kswkk5balu6"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_y7oif"]
 [ext_resource type="Script" path="res://player/controller/player_controller.gd" id="2_ist2s"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://player/controller/components/jump_controller_component.gd" id="8_s8y2f"]
 [ext_resource type="Script" path="res://player/controller/components/animation_controller_component.gd" id="8_saelb"]
 [ext_resource type="Script" path="res://util/debug_trail.gd" id="9_ywuto"]
+[ext_resource type="Script" path="res://player/controller/components/spells_controller_component.gd" id="10_1yib0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_03ctb"]
 font_size = 48
@@ -287,6 +288,9 @@ wall_jump_strength = Vector2(-1300, -700)
 jump_buffer_time = 0.1
 jump_coyote_time = 0.08
 wall_jump_coyote_time = 0.125
+
+[node name="SpellsControllerComponent" type="Node" parent="PlayerController"]
+script = ExtResource("10_1yib0")
 
 [node name="PlayerControllerStates" type="Node" parent="."]
 
