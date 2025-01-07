@@ -19,7 +19,7 @@ func handle_jump(body: CharacterBody2D, wants_to_jump: bool, released_jump: bool
 	if _is_allowed_to_jump(body, wants_to_jump):
 		_execute_jump(body)
 	
-	#_handle_coyote_time(body)
+	_handle_coyote_time(body)
 	_handle_jump_buffer(body, wants_to_jump)
 	_handle_variable_jump_height(body, released_jump)
 	
@@ -62,4 +62,4 @@ func _handle_jump_buffer(body: CharacterBody2D, wants_to_jump: bool):
 
 func _handle_variable_jump_height(body: CharacterBody2D, released_jump: bool):
 	if released_jump and is_going_up:
-		body.velocity.y /= 2
+		body.velocity.y /= 2.0

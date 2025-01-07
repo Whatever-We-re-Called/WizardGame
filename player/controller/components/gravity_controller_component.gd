@@ -1,6 +1,7 @@
 extends Node
 
-@export var gravity: float
+@export var climb_gravity: float
+@export var fall_gravity: float
 
 var is_falling: bool = false
 var prevent_jump: bool = false
@@ -14,6 +15,7 @@ func handle_gravity(body: CharacterBody2D, delta: float):
 
 func _apply_gravity(body: CharacterBody2D, delta: float):
 	if body.is_on_floor() == false:
-		# CharacterBody2D.move_and_slide() handles delta, with 
-		# the exception of gravity! So its handled here.
-		body.velocity.y += gravity * delta
+		if is_falling == true:
+			body.velocity.y += fall_gravity * delta
+		else:
+			body.velocity.y += climb_gravity * delta
