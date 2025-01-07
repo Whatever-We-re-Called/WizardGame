@@ -94,10 +94,7 @@ func execute(input: String):
 			registry[command].remove_at(i)
 			continue
 		
-		if mapped_args.size() > 0:
-			reg.callable.call(mapped_args)
-		else:
-			reg.callable.call()
+		reg.callable.call(mapped_args)
 		handlers += 1
 		
 	if handlers == 0:

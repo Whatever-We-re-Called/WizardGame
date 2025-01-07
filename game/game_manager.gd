@@ -94,4 +94,4 @@ func _on_player_received_debug_input(debug_value: int) -> void:
 
 
 func _setup_console_commands():
-	CommandSystem.register("start", try_to_start_game)
+	CommandSystem.register("start", func(args): try_to_start_game())

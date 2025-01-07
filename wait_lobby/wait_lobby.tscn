@@ -1,12 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ms1v61f8e6f3"]
+[gd_scene load_steps=4 format=3 uid="uid://ms1v61f8e6f3"]
 
 [ext_resource type="Script" path="res://wait_lobby/wait_lobby.gd" id="1_ajb20"]
 [ext_resource type="PackedScene" uid="uid://iuvi6r26wbej" path="res://game/spawn_points/spawn_points.tscn" id="1_qggt3"]
-[ext_resource type="PackedScene" uid="uid://beoa0qb0ocbes" path="res://wait_lobby/interactable_area/interactable_area.tscn" id="8_yjbph"]
 [ext_resource type="PackedScene" uid="uid://c6203oy4p7wc7" path="res://maps/prototype_generic/red_box.tscn" id="11_wv8q6"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_nvr8y"]
-font_size = 108
 
 [node name="WaitLobby" type="Node" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_ajb20")
@@ -52,69 +48,3 @@ polygon = PackedVector2Array(-64, 896, -64, 1152, 1984, 1152, 1984, 704, 1984, -
 position = Vector2(512, 896)
 
 [node name="Interactables" type="Node" parent="."]
-
-[node name="StartInteractable" parent="Interactables" instance=ExtResource("8_yjbph")]
-position = Vector2(1344, 736)
-interact_action_text = "Play"
-
-[node name="CollisionPolygon2D" parent="Interactables/StartInteractable" index="0"]
-polygon = PackedVector2Array(-96, -160, 96, -160, 96, 64, -96, 64)
-
-[node name="Label" parent="Interactables/StartInteractable" index="1"]
-offset_top = -192.0
-offset_bottom = 64.0
-
-[node name="ColorRect" type="ColorRect" parent="Interactables/StartInteractable"]
-z_index = -5
-offset_left = -64.0
-offset_top = -128.0
-offset_right = 64.0
-offset_bottom = 64.0
-color = Color(0.260318, 0.682407, 0.310273, 1)
-
-[node name="Label" type="Label" parent="Interactables/StartInteractable/ColorRect"]
-layout_mode = 0
-offset_top = 8.0
-offset_right = 512.0
-offset_bottom = 173.0
-scale = Vector2(0.25, 0.25)
-text = "Start"
-label_settings = SubResource("LabelSettings_nvr8y")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SettingsInteractable" parent="Interactables" instance=ExtResource("8_yjbph")]
-position = Vector2(1728, 672)
-interact_action_text = "Edit"
-
-[node name="CollisionPolygon2D" parent="Interactables/SettingsInteractable" index="0"]
-polygon = PackedVector2Array(-96, -160, 96, -160, 96, 64, -96, 64)
-
-[node name="Label" parent="Interactables/SettingsInteractable" index="1"]
-offset_top = -192.0
-offset_bottom = 64.0
-
-[node name="ColorRect" type="ColorRect" parent="Interactables/SettingsInteractable"]
-z_index = -5
-offset_left = -64.0
-offset_top = -128.0
-offset_right = 64.0
-offset_bottom = 64.0
-color = Color(1, 0.490196, 0.211765, 1)
-
-[node name="Label" type="Label" parent="Interactables/SettingsInteractable/ColorRect"]
-layout_mode = 0
-offset_top = 8.0
-offset_right = 512.0
-offset_bottom = 173.0
-scale = Vector2(0.25, 0.25)
-text = "Settings"
-label_settings = SubResource("LabelSettings_nvr8y")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[connection signal="interacted" from="Interactables/StartInteractable" to="." method="_on_start_interactable_interacted"]
-[connection signal="interacted" from="Interactables/SettingsInteractable" to="." method="_on_settings_interactable_interacted"]
-
-[editable path="Interactables/StartInteractable"]
-[editable path="Interactables/SettingsInteractable"]
