@@ -269,7 +269,7 @@ script = ExtResource("8_saelb")
 [node name="GravityControllerComponent" type="Node" parent="PlayerController"]
 script = ExtResource("6_7hnky")
 climb_gravity = 2000.0
-fall_gravity = 3000.0
+fall_gravity = 3500.0
 terminal_gravity = 2500.0
 
 [node name="MovementControllerComponent" type="Node" parent="PlayerController"]
@@ -278,7 +278,7 @@ speed = 550.0
 floor_acceleration_speed = 72.0
 floor_deceleration_speed = 96.0
 air_acceleration_speed = 120.0
-air_deceleration_speed = 60.0
+air_deceleration_speed = 36.0
 
 [node name="JumpControllerComponent" type="Node" parent="PlayerController"]
 script = ExtResource("8_s8y2f")
