@@ -270,7 +270,7 @@ script = ExtResource("8_saelb")
 script = ExtResource("6_7hnky")
 climb_gravity = 2000.0
 fall_gravity = 3500.0
-terminal_gravity = 2500.0
+terminal_gravity = 2750.0
 
 [node name="MovementControllerComponent" type="Node" parent="PlayerController"]
 script = ExtResource("7_lvp7s")

@@ -13,9 +13,6 @@ signal paused
 var current_state: PlayerControllerState
 var states: Dictionary
 var freeze_input: bool = false
-var pre_physics_frame_input: FrameInput
-var physics_frame_input: FrameInput
-var post_physics_frame_input: FrameInput
 
 
 func _ready():
@@ -58,35 +55,17 @@ func _process(delta: float) -> void:
 
 func handle_pre_physics(delta):
 	if freeze_input == false:
-		pre_physics_frame_input = _get_frame_input()
 		current_state._handle_pre_physics_process(delta)
 
 
 func handle_physics(delta):
 	if freeze_input == false:
-		physics_frame_input = _get_frame_input()
 		current_state._handle_physics_process(delta)
 
 
 func handle_post_physics(delta):
 	if freeze_input == false:
-		post_physics_frame_input = _get_frame_input()
 		current_state._handle_post_physics_process(delta)
-
-
-func _get_frame_input() -> FrameInput:
-	var frame_input = FrameInput.new()
-	frame_input.input_direction = Input.get_vector(
-		player.im.move_left,
-		player.im.move_right, 
-		player.im.move_up,
-		player.im.move_down
-	).normalized()
-	return frame_input
-
-
-class FrameInput:
-	var input_direction: Vector2
 
 
 func _handle_pause():
