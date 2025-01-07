@@ -34,6 +34,8 @@ func _ready() -> void:
 	set_multiplayer_authority(1, true)
 	
 	SessionManager.server_closed.connect(_on_server_closed)
+	
+	_setup_console_commands()
 
 
 func is_host_or_local(data: Dictionary):
@@ -89,3 +91,7 @@ func _on_player_received_debug_input(debug_value: int) -> void:
 			pass
 		4:
 			pass
+
+
+func _setup_console_commands():
+	CommandSystem.register("start", try_to_start_game)

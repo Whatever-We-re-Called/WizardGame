@@ -5,7 +5,6 @@ class_name GravityControllerComponent extends Node
 @export var terminal_gravity: float
 
 var is_falling: bool = false
-var prevent_jump: bool = false
 
 
 func handle_gravity(body: CharacterBody2D, delta: float):

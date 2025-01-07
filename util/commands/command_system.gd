@@ -93,8 +93,11 @@ func execute(input: String):
 		if not is_instance_valid(node):
 			registry[command].remove_at(i)
 			continue
-			
-		reg.callable.call(mapped_args)
+		
+		if mapped_args.size() > 0:
+			reg.callable.call(mapped_args)
+		else:
+			reg.callable.call()
 		handlers += 1
 		
 	if handlers == 0:
