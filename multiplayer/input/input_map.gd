@@ -21,6 +21,7 @@ var select_spell_slot_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(J
 var select_spell_slot_3 = DefaultMappings.new([_keyboard(KEY_3)], [_controller(JOY_BUTTON_DPAD_RIGHT)])
 var select_next_spell_slot = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_WHEEL_DOWN)], [_controller(JOY_BUTTON_RIGHT_SHOULDER)])
 var select_previous_spell_slot = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_WHEEL_UP)], [_controller(JOY_BUTTON_LEFT_SHOULDER)])
+var change_spells = DefaultMappings.new([_keyboard(KEY_E)], [_controller(JOY_BUTTON_RIGHT_STICK)])
 var pause = DefaultMappings.new([_keyboard(KEY_ESCAPE)], [_controller(JOY_BUTTON_START)])
 var invite_friend = DefaultMappings.new([], [_controller(JOY_BUTTON_DPAD_DOWN)])
 

@@ -15,6 +15,10 @@ var current_state: PlayerControllerState
 var states: Dictionary
 var freeze_input: bool = false
 var selected_spell_slot: int = 1
+var last_frame_input: FrameInput
+
+class FrameInput:
+	var input_direction: Vector2
 
 
 func _ready():
@@ -52,22 +56,36 @@ func _process(delta: float) -> void:
 	
 	current_state._handle_process(delta)
 	_handle_pause()
-	#_handle_ui()
+	_handle_ui()
 
 
 func handle_pre_physics(delta):
 	if freeze_input == false:
+		last_frame_input = _create_frame_input()
 		current_state._handle_pre_physics_process(delta)
 
 
 func handle_physics(delta):
 	if freeze_input == false:
+		last_frame_input = _create_frame_input()
 		current_state._handle_physics_process(delta)
 
 
 func handle_post_physics(delta):
 	if freeze_input == false:
+		last_frame_input = _create_frame_input()
 		current_state._handle_post_physics_process(delta)
+
+
+func _create_frame_input():
+	var frame_input = FrameInput.new()
+	frame_input.input_direction = Input.get_vector(
+		player.im.move_left, 
+		player.im.move_right,
+		player.im.move_up,
+		player.im.move_down
+	).normalized()
+	return frame_input
 
 
 func _handle_pause():
@@ -75,9 +93,9 @@ func _handle_pause():
 		paused.emit()
 
 
-#func _handle_ui():
-	#if Input.is_action_just_pressed(player.im.change_abilities):
-		#player.change_abilities_ui.toggle()
+func _handle_ui():
+	if Input.is_action_just_pressed(player.im.change_spells):
+		player.change_abilities_ui.toggle()
 
 
 func get_pointer_direction() -> Vector2:
@@ -85,7 +103,7 @@ func get_pointer_direction() -> Vector2:
 		DeviceInputMap.DeviceType.KEYBOARD_MOUSE:
 			return player.get_center_global_position().direction_to(player.get_global_mouse_position()).normalized()
 		DeviceInputMap.DeviceType.CONTROLLER:
-			return player.get_direction()
+			return last_frame_input.input_direction
 		_:
 			return Vector2.ZERO
 
