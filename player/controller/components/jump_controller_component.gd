@@ -1,4 +1,4 @@
-extends Node
+class_name JumpControllerComponent extends Node
 
 @export var jump_strength: float
 @export var wall_jump_strength: Vector2

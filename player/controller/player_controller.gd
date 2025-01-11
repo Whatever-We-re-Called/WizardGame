@@ -2,14 +2,7 @@ class_name PlayerController extends Node
 
 signal paused
 
-@export var states_node: Node
-
 @onready var player: Player = get_parent()
-@onready var animation_component = $AnimationControllerComponent
-@onready var gravity_component = $GravityControllerComponent
-@onready var movement_component = $MovementControllerComponent
-@onready var jump_component = $JumpControllerComponent
-@onready var spells_component: SpellsControllerComponent = $SpellsControllerComponent
 
 var current_state: PlayerControllerState
 var states: Dictionary
@@ -29,7 +22,7 @@ func _ready():
 
 
 func _setup_states():
-	for child in states_node.get_children():
+	for child in get_children():
 		if child is PlayerControllerState:
 			states[child.name.to_lower()] = child
 			child.setup(player)
