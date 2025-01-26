@@ -12,7 +12,7 @@ var is_jump_just_released: bool
 
 func _enter():
 	_update_input_variables()
-	dive_component.handle_dive(player, move_direction)
+	dive_component.handle_dive(player, controller.get_last_move_direction())
 
 
 func _handle_process(delta: float):
@@ -25,7 +25,7 @@ func _handle_process(delta: float):
 func _handle_physics_process(delta: float):
 	spells_component.execute_spell(controller.get_selected_spells_execution(), delta)
 	
-	movement_component.handle_horizontal_movement(player, move_direction)
+	movement_component.handle_horizontal_movement(player, 0)
 	
 	gravity_component.handle_gravity(player, delta)
 	player.move_and_slide()

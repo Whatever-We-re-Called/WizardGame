@@ -304,11 +304,10 @@ terminal_gravity = 2750.0
 
 [node name="DiveControllerComponent" type="Node" parent="PlayerController/Dive"]
 script = ExtResource("12_gvgac")
-dive_strength = Vector2(850, -150)
+dive_strength = Vector2(900, -300)
 
 [node name="MovementControllerComponent" type="Node" parent="PlayerController/Dive"]
 script = ExtResource("7_lvp7s")
-air_acceleration_speed = 120.0
 air_deceleration_speed = 12.0
 
 [node name="SpellsControllerComponent" type="Node" parent="PlayerController/Dive"]
