@@ -50,6 +50,7 @@ func _process(delta: float) -> void:
 	current_state._handle_process(delta)
 	_handle_pause()
 	_handle_ui()
+	_update_selected_spell_slot()
 
 
 func handle_pre_physics(delta):
@@ -105,7 +106,7 @@ func get_selected_spells_execution() -> SpellExecution:
 	return player.spell_inventory.equipped_spells[selected_spell_slot - 1]
 
 
-func update_selected_spell_slot():
+func _update_selected_spell_slot():
 	if Input.is_action_just_pressed(player.im.select_spell_slot_1):
 		selected_spell_slot = 1
 	elif Input.is_action_just_pressed(player.im.select_spell_slot_2):

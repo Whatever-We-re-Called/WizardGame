@@ -15,6 +15,7 @@ var move_right = DefaultMappings.new([_keyboard(KEY_D)], [_axis(JOY_AXIS_LEFT_X,
 var move_up = DefaultMappings.new([_keyboard(KEY_W)], [_axis(JOY_AXIS_LEFT_Y, -0.3)])
 var move_down = DefaultMappings.new([_keyboard(KEY_S)], [_axis(JOY_AXIS_LEFT_Y, 0.3)])
 var jump = DefaultMappings.new([_keyboard(KEY_SPACE)], [_controller(JOY_BUTTON_A)])
+var dive = DefaultMappings.new([_keyboard(KEY_SHIFT)], [_controller(JOY_BUTTON_Y)])
 var use_spell = DefaultMappings.new([_mouse_button(MOUSE_BUTTON_LEFT)], [_controller(JOY_BUTTON_X)])
 var select_spell_slot_1 = DefaultMappings.new([_keyboard(KEY_1)], [_controller(JOY_BUTTON_DPAD_LEFT)])
 var select_spell_slot_2 = DefaultMappings.new([_keyboard(KEY_2)], [_controller(JOY_BUTTON_DPAD_UP)])
