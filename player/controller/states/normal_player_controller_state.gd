@@ -14,7 +14,7 @@ func _handle_process(delta: float):
 	_update_input_variables()
 	_handle_animations()
 	
-	if Input.is_action_just_pressed(player.im.dive):
+	if Input.is_action_just_pressed(player.im.dive) and not player.daze.is_dazed():
 		controller.transition_to_state("dive")
 
 

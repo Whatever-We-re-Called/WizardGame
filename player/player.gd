@@ -12,6 +12,7 @@ signal paused
 @onready var spell_inventory: SpellInventory = %SpellInventory
 @onready var spell_nodes: Node = %SpellNodes
 @onready var sync: Node = %Sync
+@onready var daze: Daze = $Daze
 
 
 var peer_id: int
@@ -46,6 +47,9 @@ func _ready():
 	change_abilities_ui.setup(self)
 
 	$RichTextLabel.text = "[center]" + get_display_name()
+	
+	daze.start.connect(func(): sprite.modulate = Color.DIM_GRAY)
+	daze.end.connect(func(): sprite.modulate = Color.WHITE)
 
 
 func get_display_name() -> String:
